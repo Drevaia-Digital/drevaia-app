@@ -1,0 +1,81 @@
+{
+  "meta": {
+    "version": "1.0.0",
+    "lastUpdated": "2024-03-19T00:00:00Z",
+    "totalDocuments": 48,
+    "languages": ["es", "en", "fr", "pt"]
+  },
+  "indexes": {
+    "es": {
+      "library": {
+        "source": "/src/content/library/library-es.json",
+        "type": "books",
+        "count": 6,
+        "fields": ["title", "description", "tags", "category"]
+      },
+      "blog": {
+        "source": "/src/content/blog/posts-es.json",
+        "type": "posts",
+        "count": 6,
+        "fields": ["title", "excerpt", "content", "tags", "category"]
+      }
+    },
+    "en": {
+      "library": {
+        "source": "/src/content/library/library-en.json",
+        "type": "books",
+        "count": 6,
+        "fields": ["title", "description", "tags", "category"]
+      },
+      "blog": {
+        "source": "/src/content/blog/posts-en.json",
+        "type": "posts",
+        "count": 6,
+        "fields": ["title", "excerpt", "content", "tags", "category"]
+      }
+    },
+    "fr": {
+      "library": {
+        "source": "/src/content/library/library-fr.json",
+        "type": "books",
+        "count": 6,
+        "fields": ["title", "description", "tags", "category"]
+      },
+      "blog": {
+        "source": "/src/content/blog/posts-fr.json",
+        "type": "posts",
+        "count": 6,
+        "fields": ["title", "excerpt", "content", "tags", "category"]
+      }
+    },
+    "pt": {
+      "library": {
+        "source": "/src/content/library/library-pt.json",
+        "type": "books",
+        "count": 6,
+        "fields": ["title", "description", "tags", "category"]
+      },
+      "blog": {
+        "source": "/src/content/blog/posts-pt.json",
+        "type": "posts",
+        "count": 6,
+        "fields": ["title", "excerpt", "content", "tags", "category"]
+      }
+    }
+  },
+  "categories": {
+    "es": ["Desarrollo Personal", "Crecimiento Personal", "Liderazgo", "Sanación Emocional", "Marketing Digital", "Mindfulness", "Bienestar Emocional", "Salud Digital"],
+    "en": ["Personal Development", "Personal Growth", "Leadership", "Emotional Healing", "Digital Marketing", "Mindfulness", "Emotional Wellness", "Digital Health"],
+    "fr": ["Développement Personnel", "Croissance Personnelle", "Leadership", "Guérison Émotionnelle", "Marketing Digital", "Pleine Conscience", "Bien-être Émotionnel", "Santé Digitale"],
+    "pt": ["Desenvolvimento Pessoal", "Crescimento Pessoal", "Liderança", "Cura Emocional", "Marketing Digital", "Atenção Plena", "Bem-estar Emocional", "Saúde Digital"]
+  },
+  "commonTags": [
+    "resiliencia", "resilience", "résilience", "resiliência",
+    "mindfulness", "presencia", "présence",
+    "emociones", "emotions", "émotions", "emoções",
+    "liderazgo", "leadership",
+    "sanacion", "healing", "guérison", "cura",
+    "crecimiento", "growth", "croissance", "crescimento",
+    "digital", "autoridad", "authority", "autorité"
+  ]
+}

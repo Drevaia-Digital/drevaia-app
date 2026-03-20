@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "Drevaia Digital Library",
+    "description": "24 eBooks designed to transform your life, your brand and your digital presence",
+    "language": "en",
+    "keywords": "ebooks, personal development, leadership, SEO, artificial intelligence, emotional healing"
+  },
+  "collection": {
+    "name": "English Collection",
+    "subtitle": "Personal growth, mindset and digital authority",
+    "description": "Transformative books in English for your personal and professional growth"
+  },
+  "books": [
+    {
+      "title": "From Invisible to Authority",
+      "subtitle": "Strategic architecture to transform your identity into digital authority",
+      "description": "A strategic framework to build digital authority, grow personal branding and position your knowledge online. Learn to build a solid digital presence that positions you as a reference in your field.",
+      "author": "Noa Drevaia",
+      "price": 12.99,
+      "currency": "USD",
+      "pages": 145,
+      "link": "https://payhip.com/b/8QCbG",
+      "coverImage": "/images/books/invisible-authority.jpg",
+      "tags": ["personal branding", "positioning", "digital authority", "personal SEO"],
+      "category": "Personal Development",
+      "featured": true,
+      "new": false,
+      "bestseller": true
+    },
+    {
+      "title": "Your Brand Cannot Be",
+      "subtitle": "For those who once fell, doubted, and chose",
+      "description": "A powerful reflection on resilience, identity and the courage to rebuild your path and your brand after adversity. Discover how to transform your falls into your greatest strength.",
+      "author": "Noa Drevaia",
+      "price": 9.99,
+      "currency": "USD",
+      "pages": 98,
+      "link": "https://payhip.com/b/R4MKv",
+      "coverImage": "/images/books/your-brand.jpg",
+      "tags": ["resilience", "identity", "personal brand", "overcoming"],
+      "category": "Personal Growth",
+      "featured": true,
+      "new": false,
+      "bestseller": false
+    },
+    {
+      "title": "Sympathy Weighs More",
+      "subtitle": "The power of genuine connection in modern leadership",
+      "description": "A deep exploration of emotional intelligence, leadership psychology and the real power of human connection. Learn to lead from the heart without losing effectiveness.",
+      "author": "Noa Drevaia",
+      "price": 11.99,
+      "currency": "USD",
+      "pages": 112,
+      "link": "https://payhip.com/b/DGOd6",
+      "coverImage": "/images/books/sympathy.jpg",
+      "tags": ["leadership", "emotional intelligence", "connection", "empathy"],
+      "category": "Leadership",
+      "featured": false,
+      "new": false,
+      "bestseller": true
+    },
+    {
+      "title": "Discover how your invisible wounds are shaping your reality",
+      "subtitle": "And how to free yourself from them forever",
+      "description": "A transformational guide to emotional awareness, personal healing and inner freedom. Explore how emotional wounds influence your life, decisions and identity, and learn to transform them into inner growth.",
+      "author": "Noa Drevaia",
+      "price": 14.99,
+      "currency": "USD",
+      "pages": 178,
+      "link": "https://payhip.com/b/BYviE",
+      "coverImage": "/images/books/wounds.jpg",
+      "tags": ["emotional healing", "trauma", "growth", "therapy"],
+      "category": "Emotional Healing",
+      "featured": true,
+      "new": false,
+      "bestseller": true
+    },
+    {
+      "title": "Leading Against Defeat",
+      "subtitle": "Mental architecture for times of collapse",
+      "description": "A mindset and leadership guide designed for resilience, strategic thinking and mental strength in difficult times. Learn to lead when everything seems lost.",
+      "author": "Noa Drevaia",
+      "price": 10.99,
+      "currency": "USD",
+      "pages": 134,
+      "link": "https://payhip.com/b/hUBy5",
+      "coverImage": "/images/books/defeat.jpg",
+      "tags": ["resilience", "crisis", "mindset", "strategy"],
+      "category": "Leadership",
+      "featured": false,
+      "new": false,
+      "bestseller": false
+    },
+    {
+      "title": "SEO + AI Guide to Position Your Store, Blog or Personal Brand",
+      "subtitle": "Master SEO in the age of AI",
+      "description": "Learn how to combine SEO strategy and artificial intelligence to position digital projects and attract organic traffic. The definitive guide to standing out in search engines.",
+      "author": "Noa Drevaia",
+      "price": 15.99,
+      "currency": "USD",
+      "pages": 203,
+      "link": "https://payhip.com/b/bDfr2",
+      "coverImage": "/images/books/seo-ai-guide.jpg",
+      "tags": ["SEO", "artificial intelligence", "digital marketing", "positioning"],
+      "category": "Digital Marketing",
+      "featured": true,
+      "new": true,
+      "bestseller": false
+    }
+  ]
+}

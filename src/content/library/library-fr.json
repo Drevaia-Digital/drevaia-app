@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "Bibliothèque Drevaia Digital",
+    "description": "24 eBooks conçus pour transformer votre vie, votre marque et votre présence numérique",
+    "language": "fr",
+    "keywords": "ebooks, développement personnel, leadership, SEO, intelligence artificielle, guérison émotionnelle"
+  },
+  "collection": {
+    "name": "Collection Française",
+    "subtitle": "Croissance personnelle et autorité numérique",
+    "description": "Livres transformateurs en français pour votre croissance personnelle et professionnelle"
+  },
+  "books": [
+    {
+      "title": "De l'Invisible à la Référence",
+      "subtitle": "Architecture stratégique pour transformer votre identité en autorité numérique",
+      "description": "Guide stratégique pour construire votre autorité digitale et positionner votre expertise dans l'économie numérique. Apprenez à créer une présence digitale solide qui vous positionne comme référence dans votre domaine.",
+      "author": "Noa Drevaia",
+      "price": 12.99,
+      "currency": "USD",
+      "pages": 145,
+      "link": "https://payhip.com/b/VjwyZ",
+      "coverImage": "/images/books/invisible-reference.jpg",
+      "tags": ["marque personnelle", "positionnement", "autorité digitale", "SEO personnel"],
+      "category": "Développement Personnel",
+      "featured": true,
+      "new": false,
+      "bestseller": true
+    },
+    {
+      "title": "Votre Marque Ne Peut Pas L'Être",
+      "subtitle": "Pour ceux qui sont tombés, ont douté et ont choisi",
+      "description": "Un manifeste puissant sur la résilience, l'identité et la reconstruction personnelle après l'échec. Découvrez comment transformer vos chutes en votre plus grande force.",
+      "author": "Noa Drevaia",
+      "price": 9.99,
+      "currency": "USD",
+      "pages": 98,
+      "link": "https://payhip.com/b/CDaeN",
+      "coverImage": "/images/books/votre-marque.jpg",
+      "tags": ["résilience", "identité", "marque personnelle", "dépassement"],
+      "category": "Croissance Personnelle",
+      "featured": true,
+      "new": false,
+      "bestseller": false
+    },
+    {
+      "title": "La Sympathie Pèse Davantage",
+      "subtitle": "Le pouvoir de la connexion authentique dans le leadership moderne",
+      "description": "Une réflexion sur l'intelligence émotionnelle, l'influence humaine et la puissance de la connexion authentique. Apprenez à diriger depuis le cœur sans perdre en efficacité.",
+      "author": "Noa Drevaia",
+      "price": 11.99,
+      "currency": "USD",
+      "pages": 112,
+      "link": "https://payhip.com/b/HQ1Lb",
+      "coverImage": "/images/books/sympathie.jpg",
+      "tags": ["leadership", "intelligence émotionnelle", "connexion", "empathie"],
+      "category": "Leadership",
+      "featured": false,
+      "new": false,
+      "bestseller": true
+    },
+    {
+      "title": "Découvrez comment vos blessures invisibles façonnent votre réalité",
+      "subtitle": "Et comment vous en libérer pour toujours",
+      "description": "Une exploration profonde de la guérison émotionnelle et du pouvoir de transformer ses blessures en force intérieure. Explorez comment les blessures émotionnelles influencent votre vie et apprenez à les transformer.",
+      "author": "Noa Drevaia",
+      "price": 14.99,
+      "currency": "USD",
+      "pages": 178,
+      "link": "https://payhip.com/b/6xTwV",
+      "coverImage": "/images/books/blessures.jpg",
+      "tags": ["guérison émotionnelle", "trauma", "croissance", "thérapie"],
+      "category": "Guérison Émotionnelle",
+      "featured": true,
+      "new": false,
+      "bestseller": true
+    },
+    {
+      "title": "Leader Contre la Défaite",
+      "subtitle": "Architecture mentale pour les périodes d'effondrement",
+      "description": "Un guide de résilience mentale et de leadership pour rester lucide et solide dans les moments de crise. Apprenez à diriger quand tout semble perdu.",
+      "author": "Noa Drevaia",
+      "price": 10.99,
+      "currency": "USD",
+      "pages": 134,
+      "link": "https://payhip.com/b/0qfyH",
+      "coverImage": "/images/books/defaite.jpg",
+      "tags": ["résilience", "crise", "mentalité", "stratégie"],
+      "category": "Leadership",
+      "featured": false,
+      "new": false,
+      "bestseller": false
+    },
+    {
+      "title": "Guide SEO + IA pour positionner votre magasin, blog ou marque personnelle",
+      "subtitle": "Maîtrisez le SEO à l'ère de l'IA",
+      "description": "Apprenez à utiliser le SEO moderne et l'intelligence artificielle pour développer votre visibilité en ligne. Le guide définitif pour se démarquer dans les moteurs de recherche.",
+      "author": "Noa Drevaia",
+      "price": 15.99,
+      "currency": "USD",
+      "pages": 203,
+      "link": "https://payhip.com/b/9B3r0",
+      "coverImage": "/images/books/seo-ia-fr.jpg",
+      "tags": ["SEO", "intelligence artificielle", "marketing digital", "positionnement"],
+      "category": "Marketing Digital",
+      "featured": true,
+      "new": true,
+      "bestseller": false
+    }
+  ]
+}

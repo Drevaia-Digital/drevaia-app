@@ -1,0 +1,111 @@
+{
+  "meta": {
+    "title": "Biblioteca Drevaia Digital",
+    "description": "24 eBooks diseñados para transformar tu vida, tu marca y tu presencia digital",
+    "language": "es",
+    "keywords": "ebooks, desarrollo personal, liderazgo, SEO, inteligencia artificial, sanación emocional"
+  },
+  "collection": {
+    "name": "Colección Español",
+    "subtitle": "Desarrollo personal, liderazgo y SEO",
+    "description": "Libros transformadores en español para tu crecimiento personal y profesional"
+  },
+  "books": [
+    {
+      "title": "De Invisible a Referente",
+      "subtitle": "Arquitectura estratégica para convertir tu identidad en autoridad digital",
+      "description": "Guía de posicionamiento personal y marca digital para transformar tu conocimiento en autoridad, influencia y visibilidad en internet. Aprende a construir una presencia digital sólida que te posicione como referente en tu campo.",
+      "author": "Noa Drevaia",
+      "price": 12.99,
+      "currency": "USD",
+      "pages": 145,
+      "link": "https://payhip.com/b/m0sQ3",
+      "coverImage": "/images/books/invisible-referente.jpg",
+      "tags": ["marca personal", "posicionamiento", "autoridad digital", "SEO personal"],
+      "category": "Desarrollo Personal",
+      "featured": true,
+      "new": false,
+      "bestseller": true
+    },
+    {
+      "title": "Tu Marca No Puede Serlo",
+      "subtitle": "Para todos los que alguna vez cayeron, dudaron y eligieron",
+      "description": "Un manifiesto sobre identidad, resiliencia y reconstrucción personal para quienes deciden levantarse y crear una marca con propósito. Descubre cómo transformar tus caídas en tu mayor fortaleza.",
+      "author": "Noa Drevaia",
+      "price": 9.99,
+      "currency": "USD",
+      "pages": 98,
+      "link": "https://payhip.com/b/wlN02",
+      "coverImage": "/images/books/tu-marca.jpg",
+      "tags": ["resiliencia", "identidad", "marca personal", "superación"],
+      "category": "Crecimiento Personal",
+      "featured": true,
+      "new": false,
+      "bestseller": false
+    },
+    {
+      "title": "Pesa Más la Simpatía",
+      "subtitle": "El poder de la conexión genuina en el liderazgo moderno",
+      "description": "Un análisis profundo sobre liderazgo humano, influencia emocional y cómo la conexión genuina supera a la estrategia fría. Aprende a liderar desde el corazzón sin perder efectividad.",
+      "author": "Noa Drevaia",
+      "price": 11.99,
+      "currency": "USD",
+      "pages": 112,
+      "link": "https://payhip.com/b/Y9KTs",
+      "coverImage": "/images/books/simpatia.jpg",
+      "tags": ["liderazgo", "inteligencia emocional", "conexión", "empatía"],
+      "category": "Liderazgo",
+      "featured": false,
+      "new": false,
+      "bestseller": true
+    },
+    {
+      "title": "Descubre cómo tus heridas invisibles están moldeando tu realidad",
+      "subtitle": "Y cómo liberarte de ellas para siempre",
+      "description": "Explora cómo las heridas emocionales influyen en tu vida, tus decisiones y tu identidad, y aprende a transformarlas en crecimiento interior. Un viaje de sanación profunda hacia tu verdadero potencial.",
+      "author": "Noa Drevaia",
+      "price": 14.99,
+      "currency": "USD",
+      "pages": 178,
+      "link": "https://payhip.com/b/Wz0IG",
+      "coverImage": "/images/books/heridas.jpg",
+      "tags": ["sanación emocional", "trauma", "crecimiento", "terapia"],
+      "category": "Sanación Emocional",
+      "featured": true,
+      "new": false,
+      "bestseller": true
+    },
+    {
+      "title": "Liderar Contra la Derrota",
+      "subtitle": "Arquitectura mental para tiempos de colapso",
+      "description": "Una guía de mentalidad estratégica y resiliencia para mantener claridad, liderazgo y visión en momentos de crisis. Aprende a liderar cuando todo parece perdido.",
+      "author": "Noa Drevaia",
+      "price": 10.99,
+      "currency": "USD",
+      "pages": 134,
+      "link": "https://payhip.com/b/Ftkd6",
+      "coverImage": "/images/books/derrota.jpg",
+      "tags": ["resiliencia", "crisis", "mentalidad", "estrategia"],
+      "category": "Liderazgo",
+      "featured": false,
+      "new": false,
+      "bestseller": false
+    },
+    {
+      "title": "Palabras Clave con Inteligencia",
+      "subtitle": "Domina el SEO en la era de la IA",
+      "description": "Aprende a posicionar proyectos digitales, tiendas, blogs o marcas personales combinando SEO moderno e inteligencia artificial. La guía definitiva para destacar en los buscadores.",
+      "author": "Noa Drevaia",
+      "price": 15.99,
+      "currency": "USD",
+      "pages": 203,
+      "link": "https://payhip.com/b/n9MHe",
+      "coverImage": "/images/books/seo-ia.jpg",
+      "tags": ["SEO", "inteligencia artificial", "marketing digital", "posicionamiento"],
+      "category": "Marketing Digital",
+      "featured": true,
+      "new": true,
+      "bestseller": false
+    }
+  ]
+}

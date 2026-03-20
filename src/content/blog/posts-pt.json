@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "title": "Blog Drevaia Digital",
+    "description": "Artigos sobre cura emocional, crescimento pessoal e transformação digital",
+    "language": "pt",
+    "author": "Noa Drevaia",
+    "keywords": "cura emocional, crescimento pessoal, liderança, transformação digital"
+  },
+  "posts": [
+    {
+      "title": "3 Passos para Voltar a Você Quando se Sentir Perdido",
+      "slug": "3-passos-voltar-voce",
+      "excerpt": "No meio do barulho do mundo, às vezes esquecemos quem somos. Aqui estão três passos práticos para reconectar com sua essência.",
+      "content": "<p>No meio do barulho do mundo, às vezes esquecemos quem somos realmente. Nos perdemos entre as expectativas dos outros, as pressões do dia a dia e a velocidade com que tudo parece se mover.</p><h2>Passo 1: Pare e Respire</h2><p>O primeiro passo é o mais simples, mas o mais difícil: <strong>parar</strong>. Não se trata de escapar, mas de criar um espaço onde você possa se ouvir.</p><h2>Passo 2: Pergunte-se com Honestidade</h2><p>O que eu sinto realmente? Do que eu preciso neste momento? Estas perguntas simples podem abrir portas enormes para o seu interior.</p><h2>Passo 3: Escolha um Pequeno Ato de Cuidado</h2><p>Você não precisa mudar sua vida da noite para o dia. Um pequeno ato de cuidado diário é suficiente para começar a reconstruir essa conexão consigo mesmo.</p><blockquote><p>O retorno a você não é um destino, é um caminho que você escolhe caminhar todos os dias.</p></blockquote>",
+      "category": "Cura Emocional",
+      "tags": ["autoconhecimento", "presença", "mindfulness", "retorno"],
+      "publishedDate": "2024-03-15T10:00:00Z",
+      "readingTime": 5,
+      "featured": true,
+      "coverImage": "/images/blog/voltar-voce.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Viver no Automático: Quando a Vida Passa Sem Que a Sintamos",
+      "slug": "viver-automatico",
+      "excerpt": "O modo automático nos protege, mas também nos afasta do que realmente importa. Aprenda a reconhecê-lo e sair dele.",
+      "content": "<p>Você já chegou em casa sem se lembrar do caminho? Ou comeu uma refeição inteira sem realmente saboreá-la? Isso é viver no automático.</p><h2>O Que é o Modo Automático?</h2><p>É quando nosso corpo está presente, mas nossa mente está em outro lugar. Funcionamos por hábitos, repetindo padrões sem consciência.</p><h2>Os Sinais de Alerta</h2><ul><li>Você sente que os dias se repetem sem sentido</li><li>É difícil lembrar o que fez ontem</li><li>Você se sente vazio apesar de estar ocupado</li><li>Suas emoções parecem abafadas</li></ul><h2>Como Sair do Automático</h2><p>A chave está na <strong>presença consciente</strong>. Comece a notar os pequenos detalhes, nomeie o que sente, faça as coisas com intenção.</p>",
+      "category": "Atenção Plena",
+      "tags": ["presença", "automático", "consciência", "hábitos"],
+      "publishedDate": "2024-03-10T14:00:00Z",
+      "readingTime": 7,
+      "featured": false,
+      "coverImage": "/images/blog/automatico-pt.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "O Ruído Interior: Como Encontrar Silêncio no Meio do Caos",
+      "slug": "ruido-interior-silencio",
+      "excerpt": "Nossa mente pode ser nosso pior inimigo ou nosso melhor aliado. Aprenda a acalmar o ruído interno.",
+      "content": "<p>A mente humana gera milhares de pensamentos por dia. Alguns úteis, muitos repetitivos, outros simplesmente ruído.</p><h2>Entendendo o Ruído Interior</h2><p>Aquele diálogo constante que você ouve na sua cabeça não é você. São padrões aprendidos, medos acumulados, expectativas impostas.</p><h2>Técnicas para Acalmar a Mente</h2><p><strong>1. A Observação Sem Julgamento:</strong> Observe seus pensamentos como nuvens que passam. Não se apegue a eles.</p><p><strong>2. A Ancoragem no Corpo:</strong> Seu corpo está sempre no presente. Conectar-se com ele tira você do redemoinho mental.</p><p><strong>3. A Pergunta Poderosa:</strong> Este pensamento me serve agora? Se não, solte-o.</p>",
+      "category": "Cura Emocional",
+      "tags": ["mente", "silêncio", "paz interior", "pensamentos"],
+      "publishedDate": "2024-03-05T09:00:00Z",
+      "readingTime": 6,
+      "featured": true,
+      "coverImage": "/images/blog/ruido-interior-pt.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Você Não Está Triste, Está Cansado de Segurar Tudo",
+      "slug": "cansado-segurar-tudo",
+      "excerpt": "Às vezes o que chamamos de tristeza é na verdade exaustão emocional. Reconhecê-lo é o primeiro passo para curar.",
+      "content": "<p>Aprendemos a chamar muitas coisas de tristeza que não são. Às vezes, o que sentimos é exaustão pura.</p><h2>A Carga Invisível</h2><p>Segurar tudo: as emoções dos outros, as responsabilidades, as aparências, o 'ter que estar bem'. É exaustivo.</p><h2>Sinais de Exaustão Emocional</h2><ul><li>Sensação de vazio persistente</li><li>Irritabilidade sem causa aparente</li><li>Dificuldade para dormir ou descansar</li><li>Perda de interesse no que antes gostava</li></ul><h2>Permissão para Soltar</h2><p>Você não tem que segurar tudo. Não é sua responsabilidade. Está bem pedir ajuda. Está bem descansar.</p>",
+      "category": "Bem-estar Emocional",
+      "tags": ["exaustão", "cansaço", "emoções", "descanso"],
+      "publishedDate": "2024-02-28T11:00:00Z",
+      "readingTime": 5,
+      "featured": false,
+      "coverImage": "/images/blog/cansado-pt.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Brainrot Emocional: Quando a Sobrecarga Digital te Esvazia",
+      "slug": "brainrot-emocional",
+      "excerpt": "O consumo excessivo de conteúdo digital está afetando nossa saúde mental. Descubra como se proteger.",
+      "content": "<p>Passamos horas consumindo conteúdo: vídeos, notícias, redes sociais. Mas a que custo?</p><h2>O Que é o Brainrot Emocional?</h2><p>É o deterioramento gradual de nossa capacidade de atenção, empatia e processamento emocional causado pela sobrecarga de informação digital.</p><h2>Sintomas do Brainrot</h2><ul><li>Incapacidade de se concentrar em leituras longas</li><li>Necessidade constante de estimulação</li><li>Emoções superficiais ou abafadas</li><li>Dificuldade para conectar em conversas profundas</li></ul><h2>A Desintoxicação Digital</h2><p>Não se trata de abandonar a tecnologia, mas de usá-la conscientemente. Estabelecer limites, criar espaços sem telas, recuperar o tédio.</p>",
+      "category": "Saúde Digital",
+      "tags": ["digital", "brainrot", "sobrecarga", "desintoxicação"],
+      "publishedDate": "2024-02-20T16:00:00Z",
+      "readingTime": 8,
+      "featured": true,
+      "coverImage": "/images/blog/brainrot-pt.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Como Voltar a Sentir Quando o Mundo te Entorpeceu",
+      "slug": "voltar-sentir",
+      "excerpt": "O entorpecimento emocional é uma defesa, mas também uma prisão. Aprenda a recuperar sua capacidade de sentir.",
+      "content": "<p>Depois de tanta dor, tanto estímulo, tanta intensidade, muitos de nós aprenderam a se entorpecer. É compreensível. Mas também é limitante.</p><h2>Por Que Nos Entorpecemos</h2><p>O entorpecimento é uma estratégia de sobrevivência. Se eu não sinto, não dói. Se não dói, posso continuar. Funciona... até não funcionar mais.</p><h2>O Preço do Entorpecimento</h2><p>Quando bloqueamos a dor, também bloqueamos a alegria. Quando evitamos a tristeza, perdemos a capacidade de nos conectar profundamente.</p><h2>O Caminho de Volta</h2><p>Voltar a sentir é um processo gradual. Comece com pequenos momentos de presença. Permita-se experimentar sem julgar. Tenha paciência consigo mesmo.</p>",
+      "category": "Cura Emocional",
+      "tags": ["entorpecimento", "emoções", "sentir", "conexão"],
+      "publishedDate": "2024-02-15T10:00:00Z",
+      "readingTime": 6,
+      "featured": false,
+      "coverImage": "/images/blog/voltar-sentir-pt.jpg",
+      "author": "Noa Drevaia"
+    }
+  ]
+}

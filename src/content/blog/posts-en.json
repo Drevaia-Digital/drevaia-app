@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "title": "Drevaia Digital Blog",
+    "description": "Articles on emotional healing, personal growth and digital transformation",
+    "language": "en",
+    "author": "Noa Drevaia",
+    "keywords": "emotional healing, personal growth, leadership, digital transformation"
+  },
+  "posts": [
+    {
+      "title": "3 Steps to Return to Yourself When You Feel Lost",
+      "slug": "3-steps-return-yourself",
+      "excerpt": "In the midst of the world's noise, we sometimes forget who we are. Here are three practical steps to reconnect with your essence.",
+      "content": "<p>In the midst of the world's noise, we sometimes forget who we really are. We get lost between others' expectations, daily pressures, and the speed at which everything seems to move.</p><h2>Step 1: Stop and Breathe</h2><p>The first step is the simplest but hardest: <strong>to stop</strong>. It's not about escaping, but creating a space where you can listen to yourself.</p><h2>Step 2: Ask Yourself Honestly</h2><p>What do I really feel? What do I need right now? These simple questions can open huge doors to your interior.</p><h2>Step 3: Choose a Small Act of Care</h2><p>You don't need to change your life overnight. One small act of daily care is enough to start rebuilding that connection with yourself.</p><blockquote><p>The return to yourself is not a destination, it's a path you choose to walk every day.</p></blockquote>",
+      "category": "Emotional Healing",
+      "tags": ["self-awareness", "presence", "mindfulness", "return"],
+      "publishedDate": "2024-03-15T10:00:00Z",
+      "readingTime": 5,
+      "featured": true,
+      "coverImage": "/images/blog/return-yourself.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Living on Autopilot: When Life Passes Without Us Feeling It",
+      "slug": "living-autopilot",
+      "excerpt": "Autopilot mode protects us, but also distances us from what really matters. Learn to recognize it and get out of it.",
+      "content": "<p>Have you ever arrived home without remembering the journey? Or eaten an entire meal without really tasting it? This is living on autopilot.</p><h2>What is Autopilot Mode?</h2><p>It's when our body is present, but our mind is elsewhere. We function through habits, repeating patterns without awareness.</p><h2>The Warning Signs</h2><ul><li>You feel days repeat without meaning</li><li>It's hard to remember what you did yesterday</li><li>You feel empty despite being busy</li><li>Your emotions feel muted</li></ul><h2>How to Get Out of Autopilot</h2><p>The key is <strong>conscious presence</strong>. Start noticing small details, name what you feel, do things with intention.</p>",
+      "category": "Mindfulness",
+      "tags": ["presence", "autopilot", "awareness", "habits"],
+      "publishedDate": "2024-03-10T14:00:00Z",
+      "readingTime": 7,
+      "featured": false,
+      "coverImage": "/images/blog/autopilot.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "The Inner Noise: How to Find Silence Amidst Chaos",
+      "slug": "inner-noise-silence",
+      "excerpt": "Our mind can be our worst enemy or our best ally. Learn to calm the internal noise.",
+      "content": "<p>The human mind generates thousands of thoughts per day. Some useful, many repetitive, others simply noise.</p><h2>Understanding Inner Noise</h2><p>That constant dialogue you hear in your head is not you. They are learned patterns, accumulated fears, imposed expectations.</p><h2>Techniques to Calm the Mind</h2><p><strong>1. Observation Without Judgment:</strong> Watch your thoughts like passing clouds. Don't cling to them.</p><p><strong>2. Body Anchoring:</strong> Your body is always in the present. Connecting with it pulls you out of the mental whirlwind.</p><p><strong>3. The Powerful Question:</strong> Does this thought serve me now? If not, let it go.</p>",
+      "category": "Emotional Healing",
+      "tags": ["mind", "silence", "inner peace", "thoughts"],
+      "publishedDate": "2024-03-05T09:00:00Z",
+      "readingTime": 6,
+      "featured": true,
+      "coverImage": "/images/blog/inner-noise.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "You're Not Sad, You're Tired of Holding Everything",
+      "slug": "tired-holding-everything",
+      "excerpt": "Sometimes what we call sadness is actually emotional exhaustion. Recognizing it is the first step to healing.",
+      "content": "<p>We've learned to call many things sadness that aren't. Sometimes, what we feel is pure exhaustion.</p><h2>The Invisible Burden</h2><p>Holding everything: others' emotions, responsibilities, appearances, the 'having to be okay'. It's exhausting.</p><h2>Signs of Emotional Exhaustion</h2><ul><li>Persistent feeling of emptiness</li><li>Irritability without apparent cause</li><li>Difficulty sleeping or resting</li><li>Loss of interest in what you used to enjoy</li></ul><h2>Permission to Let Go</h2><p>You don't have to hold everything. It's not your responsibility. It's okay to ask for help. It's okay to rest.</p>",
+      "category": "Emotional Wellness",
+      "tags": ["exhaustion", "tiredness", "emotions", "rest"],
+      "publishedDate": "2024-02-28T11:00:00Z",
+      "readingTime": 5,
+      "featured": false,
+      "coverImage": "/images/blog/tired.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Emotional Brainrot: When Digital Overload Empties You",
+      "slug": "emotional-brainrot",
+      "excerpt": "Excessive consumption of digital content is affecting our mental health. Discover how to protect yourself.",
+      "content": "<p>We spend hours consuming content: videos, news, social media. But at what cost?</p><h2>What is Emotional Brainrot?</h2><p>It's the gradual deterioration of our attention span, empathy, and emotional processing capacity caused by digital information overload.</p><h2>Brainrot Symptoms</h2><ul><li>Inability to concentrate on long readings</li><li>Constant need for stimulation</li><li>Superficial or muted emotions</li><li>Difficulty connecting in deep conversations</li></ul><h2>The Digital Detox</h2><p>It's not about abandoning technology, but using it consciously. Setting limits, creating screen-free spaces, reclaiming boredom.</p>",
+      "category": "Digital Health",
+      "tags": ["digital", "brainrot", "overload", "detox"],
+      "publishedDate": "2024-02-20T16:00:00Z",
+      "readingTime": 8,
+      "featured": true,
+      "coverImage": "/images/blog/brainrot-en.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "How to Feel Again When the World Has Numbed You",
+      "slug": "how-feel-again",
+      "excerpt": "Emotional numbness is a defense, but also a prison. Learn to recover your capacity to feel.",
+      "content": "<p>After so much pain, so much stimulus, so much intensity, many of us have learned to numb ourselves. It's understandable. But it's also limiting.</p><h2>Why We Numb Ourselves</h2><p>Numbness is a survival strategy. If I don't feel, it doesn't hurt. If it doesn't hurt, I can keep going. It works... until it doesn't.</p><h2>The Price of Numbness</h2><p>When we block pain, we also block joy. When we avoid sadness, we lose the ability to connect deeply.</p><h2>The Way Back</h2><p>Feeling again is a gradual process. Start with small moments of presence. Allow yourself to experience without judgment. Be patient with yourself.</p>",
+      "category": "Emotional Healing",
+      "tags": ["numbness", "emotions", "feeling", "connection"],
+      "publishedDate": "2024-02-15T10:00:00Z",
+      "readingTime": 6,
+      "featured": false,
+      "coverImage": "/images/blog/feel-again.jpg",
+      "author": "Noa Drevaia"
+    }
+  ]
+}

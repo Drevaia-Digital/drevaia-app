@@ -1,0 +1,93 @@
+{
+  "meta": {
+    "title": "Blog Drevaia Digital",
+    "description": "Artículos de sanación emocional, crecimiento personal y transformación digital",
+    "language": "es",
+    "author": "Noa Drevaia",
+    "keywords": "sanación emocional, crecimiento personal, liderazgo, transformación digital"
+  },
+  "posts": [
+    {
+      "title": "3 Pasos para Volver a Ti Cuando Te Sientes Perdido",
+      "slug": "3-pasos-volver-a-ti",
+      "excerpt": "En medio del ruido del mundo, a veces olvidamos quiénes somos. Aquí te comparto tres pasos prácticos para reconectar con tu esencia.",
+      "content": "<p>En medio del ruido del mundo, a veces olvidamos quiénes somos realmente. Nos perdemos entre las expectativas de otros, las presiones del día a día y la velocidad con la que todo parece moverse.</p><h2>Paso 1: Detente y respira</h2><p>El primer paso es el más simple pero el más difícil: <strong>detenerse</strong>. No se trata de escapar, sino de crear un espacio donde puedas escucharte.</p><h2>Paso 2: Pregúntate con honestidad</h2><p>¿Qué siento realmente? ¿Qué necesito en este momento? Estas preguntas simples pueden abrir puertas enormes hacia tu interior.</p><h2>Paso 3: Elige un pequeño acto de cuidado</h2><p>No necesitas cambiar tu vida de la noche a la mañana. Un pequeño acto de cuidado diario es suficiente para empezar a reconstruir esa conexión contigo mismo.</p><blockquote><p>El regreso a ti no es un destino, es un camino que eliges caminar cada día.</p></blockquote>",
+      "category": "Sanación Emocional",
+      "tags": ["autoconocimiento", "presencia", "mindfulness", "regreso"],
+      "publishedDate": "2024-03-15T10:00:00Z",
+      "readingTime": 5,
+      "featured": true,
+      "coverImage": "/images/blog/volver-a-ti.jpg",
+      "author": "Noa Drevaia",
+      "seo": {
+        "title": "3 Pasos para Volver a Ti | Drevaia Digital",
+        "description": "Descubre cómo reconectar con tu esencia cuando te sientes perdido. Tres pasos prácticos de sanación emocional."
+      }
+    },
+    {
+      "title": "Vivir en el Automático: Cuando la Vida Pasa Sin Que la Sintamos",
+      "slug": "vivir-en-automatico",
+      "excerpt": "El modo automático nos protege, pero también nos aleja de lo que realmente importa. Aprende a reconocerlo y salir de él.",
+      "content": "<p>¿Alguna vez has llegado a tu casa sin recordar el camino? ¿O has comido una comida entera sin saborearla realmente? Esto es vivir en automático.</p><h2>¿Qué es el modo automático?</h2><p>Es cuando nuestro cuerpo está presente, pero nuestra mente está en otro lugar. Funcionamos por hábitos, repitiendo patrones sin conciencia.</p><h2>Los signos de alerta</h2><ul><li>Sientes que los días se repiten sin sentido</li><li>Te cuesta recordar lo que hiciste ayer</li><li>Sientes vacío a pesar de estar ocupado</li><li>Tus emociones se sienten apagadas</li></ul><h2>Cómo salir del automático</h2><p>La clave está en la <strong>presencia consciente</strong>. Empezar a notar los detalles pequeños, a nombrar lo que sientes, a hacer las cosas con intención.</p>",
+      "category": "Mindfulness",
+      "tags": ["presencia", "automático", "consciencia", "hábitos"],
+      "publishedDate": "2024-03-10T14:00:00Z",
+      "readingTime": 7,
+      "featured": false,
+      "coverImage": "/images/blog/automatico.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "El Ruido Interior: Cómo Encontrar Silencio en Medio del Caos",
+      "slug": "ruido-interior-silencio",
+      "excerpt": "Nuestra mente puede ser nuestro peor enemigo o nuestro mejor aliado. Aprende a calmar el ruido interno.",
+      "content": "<p>La mente humana genera miles de pensamientos al día. Algunos útiles, muchos repetitivos, otros simplemente ruido.</p><h2>Entendiendo el ruido interior</h2><p>Ese diálogo constante que escuchas en tu cabeza no eres tú. Son patrones aprendidos, miedos acumulados, expectativas impuestas.</p><h2>Técnicas para calmar la mente</h2><p><strong>1. La observación sin juicio:</strong> Mira tus pensamientos como nubes que pasan. No te aferres a ellos.</p><p><strong>2. El anclaje en el cuerpo:</strong> Tu cuerpo siempre está en el presente. Conectar con él te saca de la vorágine mental.</p><p><strong>3. La pregunta poderosa:</strong> ¿Este pensamiento me sirve ahora? Si no, suéltalo.</p>",
+      "category": "Sanación Emocional",
+      "tags": ["mente", "silencio", "paz interior", "pensamientos"],
+      "publishedDate": "2024-03-05T09:00:00Z",
+      "readingTime": 6,
+      "featured": true,
+      "coverImage": "/images/blog/ruido-interior.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "No Estás Triste, Estás Cansado de Sostener Todo",
+      "slug": "cansado-de-sostener",
+      "excerpt": "A veces lo que llamamos tristeza es en realidad agotamiento emocional. Reconocerlo es el primer paso para sanar.",
+      "content": "<p>Hemos aprendido a llamar tristeza a muchas cosas que no lo son. A veces, lo que sentimos es agotamiento puro.</p><h2>La carga invisible</h2><p>Sostener todo: las emociones de otros, las responsabilidades, las apariencias, el 'tener que estar bien'. Es agotador.</p><h2>Señales de agotamiento emocional</h2><ul><li>Sensación de vacío persistente</li><li>Irritabilidad sin causa aparente</li><li>Dificultad para dormir o descansar</li><li>Pérdida de interés en lo que antes te gustaba</li></ul><h2>Permiso para soltar</h2><p>No tienes que sostenerlo todo. No es tu responsabilidad. Está bien pedir ayuda. Está bien descansar.</p>",
+      "category": "Bienestar Emocional",
+      "tags": ["agotamiento", "cansancio", "emociones", "descanso"],
+      "publishedDate": "2024-02-28T11:00:00Z",
+      "readingTime": 5,
+      "featured": false,
+      "coverImage": "/images/blog/cansado.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Brainrot Emocional: Cuando la Sobrecarga Digital te Vacía",
+      "slug": "brainrot-emocional",
+      "excerpt": "El consumo excesivo de contenido digital está afectando nuestra salud mental. Descubre cómo protegerte.",
+      "content": "<p>Pasamos horas consumiendo contenido: videos, noticias, redes sociales. Pero a qué costo?</p><h2>¿Qué es el brainrot emocional?</h2><p>Es el deterioro gradual de nuestra capacidad de atención, empatía y procesamiento emocional causado por la sobrecarga de información digital.</p><h2>Síntomas del brainrot</h2><ul><li>Incapacidad de concentrarse en lecturas largas</li><li>Necesidad constante de estimulación</li><li>Emociones superficiales o apagadas</li><li>Dificultad para conectar en conversaciones profundas</li></ul><h2>La desintoxicación digital</h2><p>No se trata de abandonar la tecnología, sino de usarla conscientemente. Establecer límites, crear espacios sin pantallas, recuperar el aburrimiento.</p>",
+      "category": "Salud Digital",
+      "tags": ["digital", "brainrot", "sobrecarga", "desintoxicación"],
+      "publishedDate": "2024-02-20T16:00:00Z",
+      "readingTime": 8,
+      "featured": true,
+      "coverImage": "/images/blog/brainrot.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Cómo Volver a Sentir Cuando el Mundo te Entumeció",
+      "slug": "volver-a-sentir",
+      "excerpt": "El entumecimiento emocional es una defensa, pero también una prisión. Aprende a recuperar tu capacidad de sentir.",
+      "content": "<p>Después de tanto dolor, de tanto estímulo, de tanta intensidad, muchos de nosotros hemos aprendido a entumecernos. Es comprensible. Pero también es limitante.</p><h2>¿Por qué nos entumecimos?</h2><p>El entumecimiento es una estrategia de supervivencia. Si no siento, no duele. Si no duele, puedo seguir adelante. Funciona... hasta que no.</p><h2>El precio del entumecimiento</h2><p>Cuando bloqueamos el dolor, también bloqueamos la alegría. Cuando evitamos la tristeza, perdemos la capacidad de conectar profundamente.</p><h2>El camino de regreso</h2><p>Volver a sentir es un proceso gradual. Empieza con pequeños momentos de presencia. Permítete experimentar sin juzgar. Ten paciencia contigo.</p>",
+      "category": "Sanación Emocional",
+      "tags": ["entumecimiento", "emociones", "sentir", "conexión"],
+      "publishedDate": "2024-02-15T10:00:00Z",
+      "readingTime": 6,
+      "featured": false,
+      "coverImage": "/images/blog/volver-sentir.jpg",
+      "author": "Noa Drevaia"
+    }
+  ]
+}

@@ -1,0 +1,89 @@
+{
+  "meta": {
+    "title": "Blog Drevaia Digital",
+    "description": "Articles sur la guérison émotionnelle, le développement personnel et la transformation digitale",
+    "language": "fr",
+    "author": "Noa Drevaia",
+    "keywords": "guérison émotionnelle, développement personnel, leadership, transformation digitale"
+  },
+  "posts": [
+    {
+      "title": "3 Pas pour Retourner à Vous Quand Vous Vous Sentez Perdu",
+      "slug": "3-pas-retourner-vous",
+      "excerpt": "Au milieu du bruit du monde, nous oublions parfois qui nous sommes. Voici trois étapes pratiques pour se reconnecter avec votre essence.",
+      "content": "<p>Au milieu du bruit du monde, nous oublions parfois qui nous sommes vraiment. Nous nous perdons entre les attentes des autres, les pressions du quotidien et la vitesse à laquelle tout semble bouger.</p><h2>Étape 1 : Arrêtez-vous et Respirez</h2><p>La première étape est la plus simple mais la plus difficile : <strong>s'arrêter</strong>. Il ne s'agit pas de s'échapper, mais de créer un espace où vous pouvez vous écouter.</p><h2>Étape 2 : Demandez-vous avec Honnêteté</h2><p>Que ressens-je vraiment ? De quoi ai-je besoin en ce moment ? Ces questions simples peuvent ouvrir d'immenses portes vers votre intérieur.</p><h2>Étape 3 : Choisissez un Petit Acte de Soin</h2><p>Vous n'avez pas besoin de changer votre vie du jour au lendemain. Un petit acte de soin quotidien suffit pour commencer à reconstruire cette connexion avec vous-même.</p><blockquote><p>Le retour à soi n'est pas une destination, c'est un chemin que vous choisissez de marcher chaque jour.</p></blockquote>",
+      "category": "Guérison Émotionnelle",
+      "tags": ["conscience de soi", "présence", "mindfulness", "retour"],
+      "publishedDate": "2024-03-15T10:00:00Z",
+      "readingTime": 5,
+      "featured": true,
+      "coverImage": "/images/blog/retour-vous.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Vivre en Automatique : Quand la Vie Passe Sans Que Nous la Sentions",
+      "slug": "vivre-automatique",
+      "excerpt": "Le mode automatique nous protège, mais nous éloigne aussi de ce qui compte vraiment. Apprenez à le reconnaître et en sortir.",
+      "content": "<p>Êtes-vous déjà arrivé chez vous sans vous souvenir du trajet ? Ou avez-vous mangé un repas entier sans vraiment le savourer ? C'est vivre en automatique.</p><h2>Qu'est-ce que le Mode Automatique ?</h2><p>C'est quand notre corps est présent, mais notre esprit est ailleurs. Nous fonctionnons par habitudes, répétant des schémas sans conscience.</p><h2>Les Signes d'Alerte</h2><ul><li>Vous sentez que les jours se répètent sans signification</li><li>Il est difficile de vous souvenir de ce que vous avez fait hier</li><li>Vous vous sentez vide malgré votre occupation</li><li>Vos émotions semblent atténuées</li></ul><h2>Comment Sortir de l'Automatique</h2><p>La clé est la <strong>présence consciente</strong>. Commencez à remarquer les petits détails, nommez ce que vous ressentez, faites les choses avec intention.</p>",
+      "category": "Pleine Conscience",
+      "tags": ["présence", "automatique", "conscience", "habitudes"],
+      "publishedDate": "2024-03-10T14:00:00Z",
+      "readingTime": 7,
+      "featured": false,
+      "coverImage": "/images/blog/automatique.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Le Bruit Intérieur : Comment Trouver le Silence au Milieu du Chaos",
+      "slug": "bruit-interieur-silence",
+      "excerpt": "Notre esprit peut être notre pire ennemi ou notre meilleur allié. Apprenez à calmer le bruit interne.",
+      "content": "<p>L'esprit humain génère des milliers de pensées par jour. Certaines utiles, beaucoup répétitives, d'autres simplement du bruit.</p><h2>Comprendre le Bruit Intérieur</h2><p>Ce dialogue constant que vous entendez dans votre tête n'est pas vous. Ce sont des schémas appris, des peurs accumulées, des attentes imposées.</p><h2>Techniques pour Calmer l'Esprit</h2><p><strong>1. L'Observation Sans Jugement :</strong> Regardez vos pensées comme des nuages qui passent. Ne vous y accrochez pas.</p><p><strong>2. L'Ancrage Corporel :</strong> Votre corps est toujours dans le présent. S'y connecter vous sort du tourbillon mental.</p><p><strong>3. La Question Puissante :</strong> Cette pensée me sert-elle maintenant ? Si non, laissez-la partir.</p>",
+      "category": "Guérison Émotionnelle",
+      "tags": ["esprit", "silence", "paix intérieure", "pensées"],
+      "publishedDate": "2024-03-05T09:00:00Z",
+      "readingTime": 6,
+      "featured": true,
+      "coverImage": "/images/blog/bruit-interieur.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Vous N'êtes Pas Triste, Vous êtes Fatigué de Tout Tenir",
+      "slug": "fatigue-tenir-tout",
+      "excerpt": "Parfois ce que nous appelons tristesse est en réalité de l'épuisement émotionnel. Le reconnaître est la première étape pour guérir.",
+      "content": "<p>Nous avons appris à appeler beaucoup de choses tristesse qui ne le sont pas. Parfois, ce que nous ressentons est de l'épuisement pur.</p><h2>Le Fardeau Invisible</h2><p>Tenir tout : les émotions des autres, les responsabilités, les apparences, le 'devoir aller bien'. C'est épuisant.</p><h2>Signes d'Épuisement Émotionnel</h2><ul><li>Sentiment de vide persistant</li><li>Irritabilité sans cause apparente</li><li>Difficulté à dormir ou à se reposer</li><li>Perte d'intérêt pour ce que vous aimiez</li></ul><h2>Permission de Lâcher Prise</h2><p>Vous n'avez pas à tout tenir. Ce n'est pas votre responsabilité. Il est normal de demander de l'aide. Il est normal de se reposer.</p>",
+      "category": "Bien-être Émotionnel",
+      "tags": ["épuisement", "fatigue", "émotions", "repos"],
+      "publishedDate": "2024-02-28T11:00:00Z",
+      "readingTime": 5,
+      "featured": false,
+      "coverImage": "/images/blog/fatigue.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Brainrot Émotionnel : Quand la Surcharge Digitale vous Vide",
+      "slug": "brainrot-emotionnel",
+      "excerpt": "La consommation excessive de contenu digital affecte notre santé mentale. Découvrez comment vous protéger.",
+      "content": "<p>Nous passons des heures à consommer du contenu : vidéos, actualités, réseaux sociaux. Mais à quel prix ?</p><h2>Qu'est-ce que le Brainrot Émotionnel ?</h2><p>C'est la détérioration progressive de notre capacité d'attention, d'empathie et de traitement émotionnel causée par la surcharge d'information digitale.</p><h2>Symptômes du Brainrot</h2><ul><li>Incapacité à se concentrer sur de longues lectures</li><li>Besoin constant de stimulation</li><li>Émotions superficielles ou atténuées</li><li>Difficulté à se connecter dans des conversations profondes</li></ul><h2>La Détox Digitale</h2><p>Il ne s'agit pas d'abandonner la technologie, mais de l'utiliser consciemment. Établir des limites, créer des espaces sans écran, retrouver l'ennui.</p>",
+      "category": "Santé Digitale",
+      "tags": ["digital", "brainrot", "surcharge", "détox"],
+      "publishedDate": "2024-02-20T16:00:00Z",
+      "readingTime": 8,
+      "featured": true,
+      "coverImage": "/images/blog/brainrot-fr.jpg",
+      "author": "Noa Drevaia"
+    },
+    {
+      "title": "Comment Ressentir à Nouveau Quand le Monde vous a Engourdi",
+      "slug": "ressentir-nouveau",
+      "excerpt": "L'engourdissement émotionnel est une défense, mais aussi une prison. Apprenez à récupérer votre capacité de sentir.",
+      "content": "<p>Après tant de douleur, tant de stimulus, tant d'intensité, beaucoup d'entre nous ont appris à s'engourdir. C'est compréhensible. Mais c'est aussi limitant.</p><h2>Pourquoi Nous Nous Engourdissons</h2><p>L'engourdissement est une stratégie de survie. Si je ne sens pas, ça ne fait pas mal. Si ça ne fait pas mal, je peux continuer. Ça fonctionne... jusqu'à ce que ça ne fonctionne plus.</p><h2>Le Prix de l'Engourdissement</h2><p>Quand nous bloquons la douleur, nous bloquons aussi la joie. Quand nous évitons la tristesse, nous perdons la capacité de nous connecter profondément.</p><h2>Le Chemin du Retour</h2><p>Ressentir à nouveau est un processus graduel. Commencez avec de petits moments de présence. Permettez-vous d'expérimenter sans juger. Soyez patient avec vous-même.</p>",
+      "category": "Guérison Émotionnelle",
+      "tags": ["engourdissement", "émotions", "sentir", "connexion"],
+      "publishedDate": "2024-02-15T10:00:00Z",
+      "readingTime": 6,
+      "featured": false,
+      "coverImage": "/images/blog/ressentir.jpg",
+      "author": "Noa Drevaia"
+    }
+  ]
+}

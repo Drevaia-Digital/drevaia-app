@@ -1,0 +1,109 @@
+{
+  "privacy": {
+    "title": "Política de Privacidade",
+    "lastUpdated": "2024-03-19",
+    "sections": [
+      {
+        "id": "1",
+        "title": "1. Responsável pelo Tratamento",
+        "content": "A Drevaia Digital atua como responsável pelo tratamento dos dados pessoais fornecidos voluntariamente pelos usuários, conforme a Lei 1581 de 2012 (Colômbia) e normativas aplicáveis quando corresponder.",
+        "details": [
+          { "label": "Nome comercial", "value": "Drevaia Digital" },
+          { "label": "E-mail de contato", "value": "noadrevaia@gmail.com" },
+          { "label": "Jurisdição legal", "value": "Colômbia" }
+        ]
+      },
+      {
+        "id": "2",
+        "title": "2. Natureza do Conteúdo",
+        "content": "Todo o conteúdo é informativo, reflexivo e educativo. Não substitui terapia psicológica, diagnóstico médico, tratamento profissional nem assessoria legal ou financeira."
+      },
+      {
+        "id": "3",
+        "title": "3. Propriedade Intelectual",
+        "content": "Todos os conteúdos estão protegidos por direitos autorais. A compra ou acesso não transfere direitos de propriedade intelectual. O uso é pessoal e intransferível. É proibido copiar, revender, distribuir ou modificar o conteúdo sem autorização prévia por escrito."
+      },
+      {
+        "id": "4",
+        "title": "4. Compras e Reembolsos",
+        "content": "Devido à natureza digital dos produtos, não são oferecidos reembolsos uma vez entregue ou baixado o conteúdo, salvo em caso de erro técnico comprovável ou compra duplicada. A Hotmart poderá aplicar suas próprias condições conforme o produto."
+      },
+      {
+        "id": "5",
+        "title": "5. Proteção de Dados",
+        "content": "Apenas são coletados dados fornecidos voluntariamente (por exemplo, email) e dados técnicos básicos (cookies). Finalidades: entrega de produtos, comunicações, suporte e cumprimento legal. Não vendemos dados pessoais a terceiros com fins comerciais.",
+        "providers": ["Brevo (email marketing)", "Payhip (processamento de pagamentos)", "Hotmart (plataforma de produtos)"]
+      },
+      {
+        "id": "6",
+        "title": "6. Direitos do Usuário",
+        "content": "Pode solicitar acesso, retificação, atualização, eliminação ou revogação do consentimento escrevendo para: noadrevaia@gmail.com"
+      },
+      {
+        "id": "7",
+        "title": "7. Transferências Internacionais",
+        "content": "Os dados podem ser armazenados fora da Colômbia sob padrões de segurança adequados."
+      },
+      {
+        "id": "8",
+        "title": "8. Segurança",
+        "content": "São aplicadas medidas razoáveis para proteger os dados frente a acessos não autorizados ou perdas."
+      },
+      {
+        "id": "9",
+        "title": "9. Menores de Idade",
+        "content": "O conteúdo não é dirigido a menores de 16 anos. Não coletamos conscientemente dados de menores."
+      },
+      {
+        "id": "10",
+        "title": "10. Atualizações",
+        "content": "Esta Política poderá ser atualizada quando necessário. A versão vigente é sempre publicada nesta página."
+      }
+    ]
+  },
+  "cookies": {
+    "title": "Política de Cookies",
+    "sections": [
+      {
+        "id": "1",
+        "title": "Uso de Cookies",
+        "content": "Este site utiliza cookies técnicas, funcionais e de terceiros (Payhip, Hotmart, Tidio), assim como cookies analíticas para melhorar a experiência do usuário."
+      },
+      {
+        "id": "2",
+        "title": "Tipos de Cookies",
+        "content": "Cookies técnicas: necessárias para o funcionamento do site. Cookies funcionais: preferências do usuário. Cookies analíticas: estatísticas de uso. Cookies de terceiros: integrações externas."
+      },
+      {
+        "id": "3",
+        "title": "Gestão de Cookies",
+        "content": "O usuário pode gerenciar ou eliminar cookies desde a configuração do seu navegador. Quando for legalmente obrigatório (usuários UE/EEE), será solicitado consentimento antes de usar cookies não essenciais."
+      }
+    ]
+  },
+  "refunds": {
+    "title": "Política de Reembolsos",
+    "sections": [
+      {
+        "id": "1",
+        "title": "Produtos Digitais",
+        "content": "Devido à natureza imaterial e irreproduzível dos produtos digitais (eBooks, cursos, conteúdo baixável), não são realizados reembolsos uma vez completada a entrega ou download."
+      },
+      {
+        "id": "2",
+        "title": "Exceções",
+        "content": "Serão considerados reembolsos excepcionais nos seguintes casos: (a) Erro técnico comprovável que impeça o acesso ao conteúdo, (b) Compra duplicada por erro do sistema, (c) Produto significativamente diferente de sua descrição."
+      },
+      {
+        "id": "3",
+        "title": "Processo de Solicitação",
+        "content": "Para solicitar um reembolso excepcional, contacte noadrevaia@gmail.com dentro dos 7 dias posteriores à compra, incluindo: número do pedido, descrição do problema e evidência de suporte."
+      },
+      {
+        "id": "4",
+        "title": "Plataformas de Terceiros",
+        "content": "Para compras realizadas através de Payhip ou Hotmart, aplicam-se as políticas de reembolso específicas de cada plataforma, as quais prevalecem sobre esta política."
+      }
+    ]
+  }
+}
