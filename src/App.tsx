@@ -39,9 +39,10 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <ScrollToTop /> 
+        <ScrollToTop />
         <OfflineIndicator />
         <PWAInstallPrompt />
+
         <Routes>
           <Route 
             path="/" 
@@ -53,6 +54,7 @@ function App() {
               />
             } 
           />
+
           <Route 
             path="/library" 
             element={
@@ -63,6 +65,19 @@ function App() {
               />
             } 
           />
+
+          {/* 🔥 NUEVA RUTA PARA eBooks */}
+          <Route 
+            path="/ebooks" 
+            element={
+              <LibraryPage 
+                t={t} 
+                language={language} 
+                changeLanguage={changeLanguage} 
+              />
+            } 
+          />
+
           <Route 
             path="/books/:slug" 
             element={
@@ -73,6 +88,7 @@ function App() {
               />
             } 
           />
+
           <Route 
             path="/blog" 
             element={
@@ -83,6 +99,7 @@ function App() {
               />
             } 
           />
+
           <Route 
             path="/blog/:slug" 
             element={
@@ -93,6 +110,7 @@ function App() {
               />
             } 
           />
+
           <Route 
             path="/portal" 
             element={
@@ -103,6 +121,7 @@ function App() {
               />
             } 
           />
+
           <Route 
             path="/legal/:section" 
             element={
@@ -113,7 +132,8 @@ function App() {
               />
             } 
           />
-          {/* Auth Routes */}
+
+          {/* Auth */}
           <Route 
             path="/auth/login" 
             element={
@@ -125,6 +145,7 @@ function App() {
               />
             } 
           />
+
           <Route 
             path="/auth/register" 
             element={
@@ -136,6 +157,7 @@ function App() {
               />
             } 
           />
+
           <Route 
             path="/auth/forgot-password" 
             element={
@@ -147,6 +169,7 @@ function App() {
               />
             } 
           />
+
           {/* Profile */}
           <Route 
             path="/profile" 
@@ -158,7 +181,8 @@ function App() {
               />
             } 
           />
-          {/* Checkout Success */}
+
+          {/* Checkout */}
           <Route 
             path="/checkout/success" 
             element={
@@ -169,6 +193,8 @@ function App() {
               />
             } 
           />
+
+          {/* ❗ SIEMPRE LA ÚLTIMA */}
           <Route 
             path="*" 
             element={
