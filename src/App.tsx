@@ -38,6 +38,7 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
+        <ScrollToTop /> 
         <OfflineIndicator />
         <PWAInstallPrompt />
         <Routes>
