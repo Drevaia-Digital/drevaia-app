@@ -1,3 +1,4 @@
+import { supabase } from '@/lib/supabase';
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { BookOpen, Search, Filter, ChevronRight, Star, Sparkles } from 'lucide-react';
@@ -6,7 +7,6 @@ import { Input } from '@/components/ui/input';
 import { Navigation } from '@/sections/Navigation';
 import { Footer } from '@/sections/Footer';
 import { SEO, seoConfigs } from '@/partials/SEO';
-import { libraryEngine } from '@/engines/library-engine';
 import type { Translations, Language } from '@/i18n';
 
 interface LibraryPageProps {
@@ -69,12 +69,52 @@ export function LibraryPage({ t, language, changeLanguage }: LibraryPageProps) {
   }, [searchQuery, selectedCategory, libraryData]);
 
   const loadLibrary = async () => {
-    setLoading(true);
-    const data = await libraryEngine.loadLibrary(language);
-    setLibraryData(data);
-    setFilteredBooks(data.books || []);
+  setLoading(true);
+
+  const { data, error } = await supabase
+    .from('books')
+    .select('*');
+
+  if (error) {
+    console.error(error);
     setLoading(false);
+    return;
+  }
+
+  const formatted = {
+    meta: {
+      title: "Biblioteca Drevaia",
+      description: "",
+      flag: "📚"
+    },
+    collection: {
+      name: "Colección",
+      subtitle: "",
+      description: ""
+    },
+    books: data.map((book: any) => ({
+      id: book.id,
+      title: book.title,
+      subtitle: book.subtitle || "",
+      description: book.description || "",
+      author: book.author || "Noa Drevaia",
+      price: book.price,
+      currency: "USD",
+      pages: 0,
+      slug: book.slug || book.title.toLowerCase().replace(/\s+/g, "-"),
+      coverImage: book.image,
+      tags: [],
+      category: book.category,
+      featured: true,
+      new: false,
+      bestseller: false
+    }))
   };
+
+  setLibraryData(formatted);
+  setFilteredBooks(formatted.books);
+  setLoading(false);
+};
 
   const filterBooks = () => {
     if (!libraryData) return;
