@@ -1,3 +1,4 @@
+import ScrollToTop from "./ScrollToTop"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useLanguage } from '@/hooks/useLanguage';
 import { useTheme } from '@/hooks/useTheme';
