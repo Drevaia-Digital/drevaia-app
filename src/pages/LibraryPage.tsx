@@ -1,6 +1,5 @@
 import { supabase } from '@/lib/supabase';
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { BookOpen, Search, Filter, ChevronRight, Star, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -31,6 +30,7 @@ interface Book {
   featured: boolean;
   new: boolean;
   bestseller: boolean;
+  buy_url: string; // 👈 AÑADE ESTO
 }
 
 interface Collection {
@@ -103,6 +103,7 @@ export function LibraryPage({ t, language, changeLanguage }: LibraryPageProps) {
       pages: 0,
       slug: book.slug || book.title.toLowerCase().replace(/\s+/g, "-"),
       coverImage: book.image,
+      buy_url: book.buy_url,
       tags: [],
       category: book.category,
       featured: true,
@@ -286,7 +287,7 @@ interface BookCardProps {
 
 function BookCard({ book, language }: BookCardProps) {
   return (
-    <Link to={`/books/${book.slug}`} className="group">
+    <a href={book.buy_url} target="_blank" rel="noopener noreferrer" className="group">
       <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
         {/* Cover */}
         <div className="relative h-64 bg-gradient-to-br from-purple-100 to-amber-100 dark:from-purple-900/30 dark:to-amber-900/30 flex items-center justify-center overflow-hidden">
@@ -350,6 +351,6 @@ function BookCard({ book, language }: BookCardProps) {
           </div>
         </div>
       </div>
-    </Link>
+    </a>
   );
 }
