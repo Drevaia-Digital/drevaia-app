@@ -1,3 +1,6 @@
+useEffect(() => {
+  window.scrollTo(0, 0);
+}, []);
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Shield, Cookie, RefreshCw, FileText } from 'lucide-react';
