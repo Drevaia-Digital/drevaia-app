@@ -1,3 +1,9 @@
+import { BrowserRouter } from 'react-router-dom';
+
 export default function App() {
-  return <h1>DREVAIA OK v2</h1>;
+  return (
+    <BrowserRouter>
+      <h1>DREVAIA ROUTER OK</h1>
+    </BrowserRouter>
+  );
 }
