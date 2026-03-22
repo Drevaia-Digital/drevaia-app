@@ -1,9 +1,15 @@
-import { BrowserRouter } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
+function HomePage() {
+  return <h1>HOME OK</h1>;
+}
 
 export default function App() {
   return (
     <BrowserRouter>
-      <h1>DREVAIA ROUTER OK</h1>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+      </Routes>
     </BrowserRouter>
   );
 }
