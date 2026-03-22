@@ -1,7 +1,6 @@
 import ScrollToTop from "./ScrollToTop"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useLanguage } from '@/hooks/useLanguage';
-import { useTheme } from '@/hooks/useTheme';
 import { AuthProvider } from '@/hooks/useAuth';
 
 // Pages
@@ -25,16 +24,10 @@ import './App.css';
 
 function App() {
   const { language, t, changeLanguage } = useLanguage();
-  const { mounted } = useTheme();
+  
 
   // Prevent hydration mismatch
-  if (!mounted) {
-    return (
-      <div className="min-h-screen bg-white dark:bg-gray-900">
-        <div className="animate-pulse">Loading...</div>
-      </div>
-    );
-  }
+  
 
   return (
     <AuthProvider>
