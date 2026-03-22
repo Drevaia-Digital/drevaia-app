@@ -17,8 +17,8 @@ import { CheckoutSuccessPage } from '@/pages/CheckoutSuccessPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
 // Components
-import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
-import { OfflineIndicator } from '@/components/OfflineIndicator';
+// import { PWAInstallPrompt } from '@/components/PWAInstallPrompt';
+// import { OfflineIndicator } from '@/components/OfflineIndicator';
 
 import './App.css';
 
@@ -30,13 +30,11 @@ function App() {
   
 
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <ScrollToTop />
-        <OfflineIndicator />
-        <PWAInstallPrompt />
+  <AuthProvider>
+    <BrowserRouter>
+      <ScrollToTop />
 
-        <Routes>
+      <Routes>
           <Route 
             path="/" 
             element={
