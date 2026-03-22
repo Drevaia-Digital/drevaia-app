@@ -1,7 +1,7 @@
 import ScrollToTop from "./ScrollToTop"
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { useLanguage } from '@/hooks/useLanguage';
-import { AuthProvider } from '@/hooks/useAuth';
+// import { useLanguage } from '@/hooks/useLanguage';
+// import { AuthProvider } from '@/hooks/useAuth';
 
 // Pages
 import { HomePage } from '@/pages/HomePage';
@@ -23,15 +23,17 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 import './App.css';
 
 function App() {
-  const { language, t, changeLanguage } = useLanguage();
-  
+  // const { language, t, changeLanguage } = useLanguage();
+
+  const language = "es";
+  const t = (key: string) => key;
+  const changeLanguage = () => {};
 
   // Prevent hydration mismatch
   
 
   return (
-  <AuthProvider>
-    <BrowserRouter>
+      <BrowserRouter>
       <ScrollToTop />
 
       <Routes>
@@ -198,8 +200,7 @@ function App() {
           />
         </Routes>
       </BrowserRouter>
-    </AuthProvider>
-  );
+      );
 }
 
 export default App;
