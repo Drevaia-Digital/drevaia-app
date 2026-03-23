@@ -71,7 +71,7 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
   const loadLegalData = async () => {
     setLoading(true);
     try {
-      const response = await fetch(`/src/legal/legal-${language}.json`);
+      const response = await fetch(`/legal/legal-${language}.json`);
       const data = await response.json();
       setLegalData(data[currentSection as keyof typeof data] as LegalData);
     } catch (error) {
@@ -222,7 +222,7 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
         </div>
       </section>
 
-      <Footer t={t} />
+      <Footer />
     </div>
   );
 }
