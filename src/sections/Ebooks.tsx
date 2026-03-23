@@ -87,7 +87,7 @@ export function Ebooks({}: EbooksProps) {
 
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">
-            Biblioteca Drevaia
+            Biblioteca Drevaia v2 🔥🔥🔥
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             No puedes sanar lo que no escuchas. Tu cuerpo es el diario en el que tu alma escribe.
