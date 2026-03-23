@@ -57,9 +57,9 @@ export function Navigation() {
 
         {/* BOTÓN MOBILE */}
         <button
-          className="md:hidden text-white"
-          onClick={() => setOpen(!open)}
-        >
+  className="md:hidden text-white z-50"
+  onClick={() => setOpen(!open)}
+>
           {open ? <X /> : <Menu />}
         </button>
 
@@ -67,7 +67,7 @@ export function Navigation() {
 
       {/* 🔥 MENÚ MOBILE REAL */}
       {open && (
-        <div className="md:hidden bg-purple-900/95 backdrop-blur-md px-6 py-6 space-y-4">
+        <div className="md:hidden fixed top-16 left-0 w-full h-[calc(100vh-64px)] bg-purple-900/95 backdrop-blur-md px-6 py-6 space-y-4 overflow-y-auto z-40">
 
           <Link onClick={() => setOpen(false)} to="/" className="block text-white text-lg">
             Inicio
