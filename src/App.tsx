@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HomePage } from '@/pages/HomePage';
+import { LibraryPage } from '@/pages/LibraryPage';
 
 export default function App() {
   const language = "es";
@@ -13,6 +14,17 @@ export default function App() {
           path="/" 
           element={
             <HomePage 
+              t={t}
+              language={language}
+              changeLanguage={changeLanguage}
+            />
+          } 
+        />
+
+        <Route 
+          path="/library" 
+          element={
+            <LibraryPage 
               t={t}
               language={language}
               changeLanguage={changeLanguage}
