@@ -2,18 +2,16 @@ import { useEffect, useRef } from 'react';
 import { ArrowRight, Heart, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import gsap from 'gsap';
-import { Link } from 'react-router-dom';
-import { EnergyTreeBackground } from '@/components/EnergyTreeBackground';
 
-interface HeroProps {}
-
-export function Hero({}: HeroProps) {
+export function Hero() {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
   const buttonsRef = useRef<HTMLDivElement>(null);
 
+  // 🎬 Animaciones
   useEffect(() => {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -27,72 +25,118 @@ export function Hero({}: HeroProps) {
     return () => ctx.revert();
   }, []);
 
+  // ✨ PARTÍCULAS DORADAS (ORIGINAL)
+  useEffect(() => {
+    const canvas = canvasRef.current!;
+    const ctx = canvas.getContext('2d')!;
+
+    let particles: any[] = [];
+
+    const resize = () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    };
+
+    const createParticles = () => {
+      particles = [];
+      for (let i = 0; i < 60; i++) {
+        particles.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 3 + 1,
+          speedX: (Math.random() - 0.5) * 0.5,
+          speedY: (Math.random() - 0.5) * 0.5,
+        });
+      }
+    };
+
+    const animate = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      particles.forEach(p => {
+        p.x += p.speedX;
+        p.y += p.speedY;
+
+        if (p.x < 0) p.x = canvas.width;
+        if (p.x > canvas.width) p.x = 0;
+        if (p.y < 0) p.y = canvas.height;
+        if (p.y > canvas.height) p.y = 0;
+
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255,215,150,0.5)';
+        ctx.fill();
+      });
+
+      requestAnimationFrame(animate);
+    };
+
+    resize();
+    createParticles();
+    animate();
+
+    window.addEventListener('resize', () => {
+      resize();
+      createParticles();
+    });
+  }, []);
+
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center text-center px-4 overflow-hidden bg-purple-900">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      {/* 🌳 FONDO ENERGÉTICO */}
-      <EnergyTreeBackground />
-
-      {/* ✨ GLOW DREVAIA */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute w-[500px] h-[500px] bg-purple-500 opacity-30 blur-3xl rounded-full top-[-100px] left-[-100px]" />
-        <div className="absolute w-[400px] h-[400px] bg-amber-400 opacity-20 blur-3xl rounded-full bottom-[-100px] right-[-100px]" />
+      {/* 🌌 IMAGEN DE FONDO */}
+      <div
+        className="absolute inset-0 bg-cover bg-center"
+        style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
+      >
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/70 via-purple-800/50 to-purple-900/90" />
       </div>
 
-      {/* 🧠 CONTENIDO */}
-      <div ref={contentRef} className="relative z-10 max-w-3xl">
+      {/* ✨ PARTICULAS */}
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
 
-        {/* ✨ BADGE */}
-        <div
-          ref={badgeRef}
-          className="mb-6 text-amber-300 flex items-center justify-center gap-2"
-        >
+      {/* 🧠 CONTENIDO */}
+      <div ref={contentRef} className="relative z-10 text-center max-w-4xl px-4">
+
+        <div ref={badgeRef} className="mb-6 text-amber-300 flex items-center justify-center gap-2">
           <Sparkles className="w-4 h-4" />
           <span>Transformación emocional</span>
         </div>
 
-        {/* 🧠 TÍTULO */}
-        <h1
-          ref={titleRef}
-          className="text-5xl md:text-6xl font-bold text-white mb-6 leading-tight"
-        >
-          DREVAIA DIGITAL
+        <h1 ref={titleRef} className="text-5xl md:text-7xl font-bold text-white mb-6">
+          DREVAIA <span className="text-amber-300">DIGITAL</span>
         </h1>
 
-        {/* 💬 DESCRIPCIÓN */}
-        <p
-          ref={descRef}
-          className="text-white/80 max-w-xl mx-auto mb-10 text-lg"
-        >
+        <p ref={descRef} className="text-white/80 mb-10 text-lg">
           Tu santuario digital para sanar, crecer y transformar tu vida.
         </p>
 
-        {/* 🔥 BOTONES */}
-        <div
-          ref={buttonsRef}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
-        >
+        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center">
 
-          {/* CTA PRINCIPAL (REGISTRO) */}
-          <Link to="/auth">
-            <Button className="bg-amber-500 hover:bg-amber-600 text-white px-6 py-3 rounded-full shadow-lg hover:scale-105 transition">
-              <Heart className="w-5 h-5 mr-2" />
-              Comenzar ahora
-            </Button>
-          </Link>
+          {/* ✅ CORREGIDO */}
+          <Button
+            onClick={() => scrollTo('register')}
+            className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white hover:scale-105 transition"
+          >
+            <Heart className="mr-2" />
+            Comenzar ahora
+          </Button>
 
-          {/* CTA SECUNDARIO */}
-          <Link to="/library">
-            <Button className="bg-white/20 border border-white/40 text-white px-6 py-3 rounded-full backdrop-blur-md hover:bg-white/10 transition hover:scale-105">
-              Explorar ebooks
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-          </Link>
+          <Button
+            onClick={() => scrollTo('ebooks')}
+            className="bg-white/20 border border-white/40 px-8 py-4 rounded-full text-white backdrop-blur-md"
+          >
+            Explorar ebooks
+            <ArrowRight className="ml-2" />
+          </Button>
 
         </div>
 
       </div>
-
     </section>
   );
 }
