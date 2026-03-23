@@ -4,12 +4,9 @@ import { BookOpen, Search, Filter, ChevronRight, Star, Sparkles } from 'lucide-r
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 // import { SEO, seoConfigs } from '@/partials/SEO';
-import type { Translations, Language } from '@/i18n';
-
+import type { Language } from '@/i18n';
 interface LibraryPageProps {
-  t: Translations;
   language: Language;
-  changeLanguage: (lang: Language) => void;
 }
 
 interface Book {
