@@ -1,32 +1,24 @@
+import { Navigation } from '@/sections/Navigation';
 import { Hero } from '@/sections/Hero';
 import { Ebooks } from '@/sections/Ebooks';
-import { Navigation } from '@/sections/Navigation';
 import { Testimonials } from '@/sections/Testimonials';
 import { Footer } from '@/sections/Footer';
-import { useSearchParams } from 'react-router-dom';
+import { useLanguage } from '@/context/LanguageContext';
 
 export function HomePage() {
-  const [params] = useSearchParams();
-
-  // 🌍 idioma dinámico desde URL
-  const language = params.get('lang') || 'es';
+  const { language } = useLanguage();
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900">
 
-      {/* 🔝 NAV */}
       <Navigation />
 
-      {/* 🔥 HERO */}
       <Hero />
 
-      {/* 📚 EBOOKS (YA FUNCIONA CON IDIOMA) */}
-      <Ebooks language={language as any} />
+      <Ebooks language={language} />
 
-      {/* 💬 TESTIMONIALS (AHORA TAMBIÉN) */}
       <Testimonials language={language} />
 
-      {/* 🦶 FOOTER */}
       <Footer />
 
     </div>

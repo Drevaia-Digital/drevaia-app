@@ -1,39 +1,51 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Sparkles } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
 
 export function Navigation(_: any) {
-  const navigate = useNavigate();
+  const { setLanguage } = useLanguage();
+  const [isScrolled, setIsScrolled] = useState(false);
 
-  const changeLang = (lang: string) => {
-    navigate(`/?lang=${lang}`);
-  };
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md shadow-md">
+    <nav className={`fixed top-0 w-full z-50 transition-all duration-500 ${
+      isScrolled
+        ? 'bg-white/80 backdrop-blur-md shadow-lg'
+        : 'bg-transparent'
+    }`}>
+
       <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
 
         {/* LOGO */}
         <Link to="/" className="flex items-center gap-2">
-          <Sparkles className="w-6 h-6 text-purple-600" />
-          <span className="text-xl font-bold text-gray-900">Drevaia</span>
+          <Sparkles className="text-purple-600" />
+          <span className="font-bold text-lg">Drevaia</span>
         </Link>
 
         {/* MENU */}
-        <div className="flex items-center gap-6 text-sm font-medium text-gray-700">
+        <div className="flex items-center gap-6">
 
-          <Link to="/" className="hover:text-purple-600">Inicio</Link>
-          <Link to="/library" className="hover:text-purple-600">Biblioteca</Link>
-          <a href="#ebooks" className="hover:text-purple-600">Ebooks</a>
+          <Link to="/">Inicio</Link>
+          <Link to="/library">Biblioteca</Link>
 
-          {/* 🌍 IDIOMAS */}
+          {/* 🌍 IDIOMA REAL */}
           <div className="flex gap-2 ml-4">
-            <button onClick={() => changeLang('es')}>🇪🇸</button>
-            <button onClick={() => changeLang('en')}>🇬🇧</button>
-            <button onClick={() => changeLang('fr')}>🇫🇷</button>
-            <button onClick={() => changeLang('pt')}>🇧🇷</button>
+            <button onClick={() => setLanguage('es')}>🇪🇸</button>
+            <button onClick={() => setLanguage('en')}>🇬🇧</button>
+            <button onClick={() => setLanguage('fr')}>🇫🇷</button>
+            <button onClick={() => setLanguage('pt')}>🇧🇷</button>
           </div>
 
         </div>
+
       </div>
     </nav>
   );
