@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { BookOpen, Search, Filter, ChevronRight, Star, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Navigation } from '@/sections/Navigation';
 import { Footer } from '@/sections/Footer';
 // import { SEO, seoConfigs } from '@/partials/SEO';
 import type { Translations, Language } from '@/i18n';
@@ -49,7 +48,7 @@ interface LibraryData {
   books: Book[];
 }
 
-export function LibraryPage({ t, language, changeLanguage }: LibraryPageProps) {
+export function LibraryPage({ t, language }: LibraryPageProps) {
   const [libraryData, setLibraryData] = useState<LibraryData | null>(null);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -149,7 +148,7 @@ export function LibraryPage({ t, language, changeLanguage }: LibraryPageProps) {
 
       {/* SEO desactivado temporal */}
       
-      <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+      {/* Navigation desactivado temporal */}
 
       {/* Hero Section */}
       <section className="relative py-20 md:py-32 bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden">
