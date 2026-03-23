@@ -80,10 +80,10 @@ const collections: Collection[] = [
 export function Ebooks({}: EbooksProps) {
   return (
     <section
-      id="ebooks"
-      className="relative py-24 bg-gradient-to-b from-white to-purple-50"
-    >
-      <div className="max-w-7xl mx-auto px-6">
+  id="ebooks"
+  className="relative py-24 bg-gradient-to-b from-purple-50 via-white to-purple-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"
+>
+      <div className="relative max-w-7xl mx-auto px-6">
 
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">
@@ -112,7 +112,7 @@ export function Ebooks({}: EbooksProps) {
                     key={i}
                     href={book.link}
                     target="_blank"
-                    className="p-6 bg-white rounded-2xl shadow-md hover:shadow-xl transition hover:-translate-y-1"
+                    className="p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg hover:shadow-2xl transition hover:-translate-y-1 border border-purple-100"
                   >
                     <h4 className="font-bold text-lg mb-2">{book.title}</h4>
                     <p className="text-gray-600 text-sm mb-4">
