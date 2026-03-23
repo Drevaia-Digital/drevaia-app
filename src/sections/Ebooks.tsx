@@ -77,8 +77,9 @@ const collections: Collection[] = [
   },
 ];
 
-export function Ebooks({}: EbooksProps) {
-  return (
+export function Ebooks({ language }: EbooksProps) {
+const filtered = collections.filter(col => col.id === language);  
+return (
     <section
   id="ebooks"
   className="relative py-24 bg-gradient-to-b from-purple-50 via-white to-purple-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"
@@ -87,7 +88,7 @@ export function Ebooks({}: EbooksProps) {
 
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">
-            Biblioteca Drevaia v2 🔥🔥🔥
+            Biblioteca Drevaia 🔥🔥🔥
           </h2>
           <p className="text-gray-600 max-w-2xl mx-auto">
             No puedes sanar lo que no escuchas. Tu cuerpo es el diario en el que tu alma escribe.
@@ -95,7 +96,7 @@ export function Ebooks({}: EbooksProps) {
         </div>
 
         <div className="space-y-20">
-          {collections.map((col) => (
+          {filtered.map((col) => (
             <div key={col.id}>
               
               <div className="flex items-center gap-4 mb-6">
