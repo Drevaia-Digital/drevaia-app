@@ -5,7 +5,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HomePage language="es" />} />
+        <Route path="/" element={<HomePage />} />
         <Route path="/library" element={<LibraryPage language="es" />} />
       </Routes>
     </BrowserRouter>

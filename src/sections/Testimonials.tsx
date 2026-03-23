@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Star, Quote } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import type { Translations } from '@/i18n';
 
 interface TestimonialsProps {
-  t: Translations;
+  language?: string;
 }
 
 interface Testimonial {
@@ -205,10 +204,9 @@ const getTestimonialsByLanguage = (language: string): Testimonial[] => {
   }
 };
 
-export function Testimonials({ t }: TestimonialsProps) {
+export function Testimonials({ language = 'es' }: TestimonialsProps) {
   // Get current language from document
-  const currentLang = typeof document !== 'undefined' ? document.documentElement.lang : 'es';
-  const testimonials = getTestimonialsByLanguage(currentLang);
+    const testimonials = getTestimonialsByLanguage(language);
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
@@ -258,13 +256,13 @@ export function Testimonials({ t }: TestimonialsProps) {
         <div className="text-center mb-12 md:mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 text-sm font-medium mb-6">
             <Star className="w-4 h-4 fill-amber-500" />
-            {t.testimonials.badge}
+            {"Testimonios reales"}
           </div>
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            {t.testimonials.title}
+            {"Historias de transformación real"}
           </h2>
           <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            {t.testimonials.description}
+            Personas que ya han transformado su vida desde dentro.
           </p>
         </div>
 
@@ -348,11 +346,11 @@ export function Testimonials({ t }: TestimonialsProps) {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
           {[
-            { value: '10K+', label: t.testimonials.stat1 },
-            { value: '24', label: t.testimonials.stat2 },
-            { value: '4', label: t.testimonials.stat3 },
-            { value: '98%', label: t.testimonials.stat4 },
-          ].map((stat, index) => (
+  { value: '10K+', label: 'Lectores impactados' },
+  { value: '24', label: 'Ebooks creados' },
+  { value: '4', label: 'Idiomas disponibles' },
+  { value: '98%', label: 'Satisfacción' },
+].map((stat, index) => (
             <div
               key={index}
               className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700"

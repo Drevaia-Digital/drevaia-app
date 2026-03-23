@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import { Heart, Instagram, Mail, Sparkles, BookOpen, FileText, Users, Shield } from 'lucide-react';
-import type { Translations } from '@/i18n';
 
 // Custom social media icons
 const TikTokIcon = () => (
@@ -21,11 +20,8 @@ const FacebookIcon = () => (
   </svg>
 );
 
-interface FooterProps {
-  t: Translations;
-}
 
-export function Footer({ t }: FooterProps) {
+export function Footer(_: any) {
   const currentYear = new Date().getFullYear();
 
   return (
@@ -43,7 +39,7 @@ export function Footer({ t }: FooterProps) {
               <span className="text-2xl font-bold">Drevaia Digital</span>
             </div>
             <p className="text-purple-200 text-sm leading-relaxed">
-              {t.footer.tagline}
+              Una biblioteca emocional diseñada para sanar, evolucionar y transformar tu vida desde dentro.
             </p>
             <div className="flex gap-3">
               <a
@@ -94,12 +90,12 @@ export function Footer({ t }: FooterProps) {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">{t.footer.contact}</h3>
+            <h3 className="text-lg font-semibold mb-4">Explorar</h3>
             <ul className="space-y-2 text-purple-200 text-sm">
               <li>
                 <Link to="/library" className="hover:text-white transition-colors flex items-center gap-2">
                   <BookOpen className="w-4 h-4" />
-                  {t.nav.ebooks}
+                  Ebooks
                 </Link>
               </li>
               <li>
@@ -115,9 +111,9 @@ export function Footer({ t }: FooterProps) {
                 </Link>
               </li>
               <li>
-                <Link to="/legal/privacy" className="hover:text-white transition-colors flex items-center gap-2">
+                <Link to="/Legal/privacy" className="hover:text-white transition-colors flex items-center gap-2">
                   <Shield className="w-4 h-4" />
-                  {t.nav.legal}
+                  legal
                 </Link>
               </li>
               <li>
@@ -135,7 +131,7 @@ export function Footer({ t }: FooterProps) {
 
           {/* Newsletter Mini */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">{t.footer.follow}</h3>
+            <h3 className="text-lg font-semibold mb-4">Conecta con Drevaia</h3>
             <p className="text-purple-200 text-sm mb-4">
               Recibe inspiración y novedades directamente en tu correo.
             </p>
@@ -152,7 +148,7 @@ export function Footer({ t }: FooterProps) {
         {/* Bottom Bar */}
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-purple-300 text-sm">
-            © {currentYear} Drevaia Digital. {t.footer.rights}.
+            © {currentYear} Drevaia Digital. Todos los derechos reservados.
           </p>
           <p className="text-purple-400 text-xs flex items-center gap-1">
             Hecho con <Heart className="w-3 h-3 text-rose-400 fill-rose-400" /> por Noa Drevaia
