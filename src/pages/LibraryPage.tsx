@@ -3,7 +3,6 @@ import { useState, useEffect } from 'react';
 import { BookOpen, Search, Filter, ChevronRight, Star, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Footer } from '@/sections/Footer';
 // import { SEO, seoConfigs } from '@/partials/SEO';
 import type { Translations, Language } from '@/i18n';
 
@@ -47,8 +46,8 @@ interface LibraryData {
   collection: Collection;
   books: Book[];
 }
-
-export function LibraryPage({ t, language }: LibraryPageProps) {
+export function LibraryPage({ language }: LibraryPageProps)
+ {
   const [libraryData, setLibraryData] = useState<LibraryData | null>(null);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -269,7 +268,7 @@ export function LibraryPage({ t, language }: LibraryPageProps) {
         </div>
       </section>
 
-      <Footer t={t} />
+      {/* Footer desactivado temporal */}
     </div>
   );
 }
