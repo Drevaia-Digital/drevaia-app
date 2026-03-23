@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Navigation } from '@/sections/Navigation';
 import { Footer } from '@/sections/Footer';
-import { SEO, seoConfigs } from '@/partials/SEO';
+// import { SEO, seoConfigs } from '@/partials/SEO';
 import type { Translations, Language } from '@/i18n';
 
 interface LibraryPageProps {
@@ -56,7 +56,7 @@ export function LibraryPage({ t, language, changeLanguage }: LibraryPageProps) {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
-  const seo = seoConfigs.library(language);
+  // const seo = seoConfigs.library(language);
 
   useEffect(() => {
     loadLibrary();
@@ -146,13 +146,8 @@ export function LibraryPage({ t, language, changeLanguage }: LibraryPageProps) {
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
-      <SEO 
-        title={seo.title}
-        description={seo.description}
-        keywords={seo.keywords}
-        language={language}
-        canonicalUrl={`https://drevaia.com${language === 'es' ? '' : `/${language}`}/library`}
-      />
+
+      {/* SEO desactivado temporal */}
       
       <Navigation t={t} language={language} changeLanguage={changeLanguage} />
 
