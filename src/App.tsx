@@ -1,3 +1,12 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+
 export default function App() {
-  return <h1>APP SAFE MODE</h1>;
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<h1>HOME OK</h1>} />
+        <Route path="/library" element={<h1>LIBRARY OK</h1>} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
