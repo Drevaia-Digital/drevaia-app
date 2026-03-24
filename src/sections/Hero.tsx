@@ -118,12 +118,12 @@ export function Hero() {
           className="flex flex-col sm:flex-row gap-4 justify-center items-center"
         >
 
-          <Link to="/library">
-            <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white hover:scale-105 transition">
-              <Heart className="mr-2" />
-              Comenzar ahora
-            </Button>
-          </Link>
+          <Link to="/auth/register">
+  <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white hover:scale-105 transition">
+    <Heart className="mr-2" />
+    Comenzar ahora
+  </Button>
+</Link>
 
           <Link to="/library">
             <Button className="bg-white/20 border border-white/40 px-8 py-4 rounded-full text-white backdrop-blur-md hover:bg-white/10 transition">
