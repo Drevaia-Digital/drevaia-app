@@ -26,7 +26,7 @@ export function Hero() {
     return () => ctx.revert();
   }, []);
 
-  // ✨ PARTÍCULAS DORADAS (ORIGINAL)
+  // ✨ PARTÍCULAS
   useEffect(() => {
     const canvas = canvasRef.current!;
     const ctx = canvas.getContext('2d')!;
@@ -82,14 +82,10 @@ export function Hero() {
     });
   }, []);
 
-  const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-  };
-
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      {/* 🌌 IMAGEN DE FONDO */}
+      {/* 🌌 FONDO */}
       <div
         className="absolute inset-0 bg-cover bg-center"
         style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
@@ -116,23 +112,25 @@ export function Hero() {
           Tu santuario digital para sanar, crecer y transformar tu vida.
         </p>
 
-        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center">
+        {/* 🔥 BOTONES CORREGIDOS */}
+        <div
+          ref={buttonsRef}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center"
+        >
 
-          {/* ✅ CORREGIDO */}
-         <Link to="/auth">
-           <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white hover:scale-105 transition">
-             <Heart className="mr-2" />
-             Comenzar ahora
-           </Button>
-         </Link>
+          <Link to="/library">
+            <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white hover:scale-105 transition">
+              <Heart className="mr-2" />
+              Comenzar ahora
+            </Button>
+          </Link>
 
-          <Button
-            onClick={() => scrollTo('ebooks')}
-            className="bg-white/20 border border-white/40 px-8 py-4 rounded-full text-white backdrop-blur-md"
-          >
-            Explorar ebooks
-            <ArrowRight className="ml-2" />
-          </Button>
+          <Link to="/library">
+            <Button className="bg-white/20 border border-white/40 px-8 py-4 rounded-full text-white backdrop-blur-md hover:bg-white/10 transition">
+              Explorar ebooks
+              <ArrowRight className="ml-2" />
+            </Button>
+          </Link>
 
         </div>
 
