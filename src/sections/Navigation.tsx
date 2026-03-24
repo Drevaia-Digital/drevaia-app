@@ -18,10 +18,13 @@ export function Navigation() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Detectar móvil REAL
+  // 🔥 Detectar móvil REAL (MEJORADO)
   useEffect(() => {
     const check = () => {
-      setIsMobile(window.innerWidth < 768);
+      const isSmallScreen = window.innerWidth < 1024;
+      const isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+
+      setIsMobile(isSmallScreen || isTouchDevice);
     };
 
     check();
@@ -42,7 +45,7 @@ export function Navigation() {
         {/* LOGO */}
         <Link to="/" className="flex items-center gap-2">
           <Sparkles className="text-amber-400" />
-          <span className="text-white font-bold">Drevaia</span>
+          <span className="text-white font-bold text-lg">Drevaia</span>
         </Link>
 
         {/* DESKTOP */}
@@ -77,7 +80,7 @@ export function Navigation() {
             className="text-white z-50"
             onClick={() => setOpen(!open)}
           >
-            {open ? <X /> : <Menu />}
+            {open ? <X size={28} /> : <Menu size={28} />}
           </button>
         )}
 
