@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Menu, X, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
-export function Navigation(props: any) {
+export function Navigation(_: any) {
   const { language, setLanguage } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [open, setOpen] = useState(false);
