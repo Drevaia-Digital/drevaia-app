@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { ArrowRight, Heart, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import gsap from 'gsap';
+import { Link } from 'react-router-dom';
 
 export function Hero() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -118,13 +119,12 @@ export function Hero() {
         <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center">
 
           {/* ✅ CORREGIDO */}
-          <Button
-            onClick={() => scrollTo('register')}
-            className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white hover:scale-105 transition"
-          >
-            <Heart className="mr-2" />
-            Comenzar ahora
-          </Button>
+         <Link to="/auth">
+           <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white hover:scale-105 transition">
+             <Heart className="mr-2" />
+             Comenzar ahora
+           </Button>
+         </Link>
 
           <Button
             onClick={() => scrollTo('ebooks')}
