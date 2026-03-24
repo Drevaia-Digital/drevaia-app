@@ -42,7 +42,6 @@ export function Navigation(_: any) {
     >
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
-// force deploy
 
         {/* LOGO */}
         <Link to="/" className="flex items-center gap-2">
