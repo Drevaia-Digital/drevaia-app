@@ -68,15 +68,38 @@ export function AuthPage({ t, language, changeLanguage, mode }: AuthPageProps) {
 
     try {
       if (mode === 'login') {
-        await signIn(email, password);
-        navigate(from, { replace: true });
-      } else if (mode === 'register') {
-        await signUp(email, password, fullName);
-        setSuccess(language === 'es' ? 'Cuenta creada. Revisa tu correo para confirmar.' : 'Account created. Check your email to confirm.');
-      } else if (mode === 'forgot-password') {
-        await resetPassword(email);
-        setSuccess(language === 'es' ? 'Enlace enviado. Revisa tu correo.' : 'Link sent. Check your email.');
-      }
+  await signIn(email, password);
+  navigate(from, { replace: true });
+
+} else if (mode === 'register') {
+  await signUp(email, password, fullName);
+
+  // 🔥 ENVIAR A BREVO
+  await fetch("/api/brevo", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      email,
+      fullName,
+    }),
+  });
+
+  setSuccess(
+    language === 'es'
+      ? 'Cuenta creada. Revisa tu correo para confirmar.'
+      : 'Account created. Check your email to confirm.'
+  );
+
+} else if (mode === 'forgot-password') {
+  await resetPassword(email);
+  setSuccess(
+    language === 'es'
+      ? 'Enlace enviado. Revisa tu correo.'
+      : 'Link sent. Check your email.'
+  );
+}
     } catch (err: any) {
       setError(err.message || 'An error occurred');
     }
