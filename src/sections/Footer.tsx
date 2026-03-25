@@ -115,13 +115,18 @@ export function Footer(_: any) {
           <div>
             <h3 className="text-lg font-semibold mb-4">Conecta con Drevaia</h3>
             <p className="text-purple-200 text-sm mb-4">
-              Recibe inspiración y novedades directamente en tu correo.
-            </p>
+  Da tu primer paso: Descarga este eBook gratuito.
+</p>
 
-            <Link to="/#register" className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-sm font-medium hover:opacity-90">
-              <Heart className="w-4 h-4" />
-              Suscribirme
-            </Link>
+            <a
+  href="https://payhip.com/b/Bzn24"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-sm font-medium hover:opacity-90 transition-all"
+>
+  <Heart className="w-4 h-4" />
+  Descargar ebook gratis
+</a>
           </div>
 
         </div>
