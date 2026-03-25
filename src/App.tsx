@@ -3,10 +3,12 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { HomePage } from '@/pages/HomePage';
 import { LibraryPage } from '@/pages/LibraryPage';
 import { AuthPage } from '@/pages/AuthPage';
+import { LegalPage } from '@/pages/LegalPage'; // 🔥 corregido
 import { AuthProvider } from '@/hooks/useAuth';
+import { NotFoundPage } from '@/pages/NotFoundPage';
 
 export default function App() {
-  // Props temporales (para que no rompa)
+
   const language = "es";
   const t = {} as any;
   const changeLanguage = () => {};
@@ -16,13 +18,32 @@ export default function App() {
       <BrowserRouter>
         <Routes>
 
-          {/* Home */}
           <Route path="/" element={<HomePage />} />
 
-          {/* Library */}
-          <Route path="/library" element={<LibraryPage language="es" />} />
+          <Route path="/library" element={<LibraryPage language={language} />} />
 
-          {/* Auth */}
+          <Route
+  path="/legal"
+  element={
+    <LegalPage
+      t={t}
+      language={language}
+      changeLanguage={changeLanguage}
+    />
+  }
+/>
+
+<Route
+  path="/legal/:section"
+  element={
+    <LegalPage
+      t={t}
+      language={language}
+      changeLanguage={changeLanguage}
+    />
+  }
+/>
+
           <Route
             path="/auth/login"
             element={
@@ -52,6 +73,17 @@ export default function App() {
             element={
               <AuthPage
                 mode="forgot-password"
+                t={t}
+                language={language}
+                changeLanguage={changeLanguage}
+              />
+            }
+          />
+
+          <Route
+            path="*"
+            element={
+              <NotFoundPage
                 t={t}
                 language={language}
                 changeLanguage={changeLanguage}
