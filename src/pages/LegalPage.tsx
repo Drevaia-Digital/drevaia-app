@@ -1,6 +1,3 @@
-useEffect(() => {
-  window.scrollTo(0, 0);
-}, []);
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { ArrowLeft, Shield, Cookie, RefreshCw, FileText } from 'lucide-react';
@@ -65,20 +62,33 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
   };
 
   useEffect(() => {
-    loadLegalData();
-  }, [currentSection, language]);
+  window.scrollTo(0, 0);
+
+  const fetchData = async () => {
+    await loadLegalData();
+  };
+
+  fetchData();
+}, [currentSection, language]);
 
   const loadLegalData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(`/legal/legal-${language}.json`);
-      const data = await response.json();
-      setLegalData(data[currentSection as keyof typeof data] as LegalData);
-    } catch (error) {
-      console.error('Error loading legal data:', error);
+  setLoading(true);
+  try {
+    const response = await fetch(`/legal/legal-${language}.json`);
+    const data = await response.json();
+
+    if (data && data[currentSection]) {
+      setLegalData(data[currentSection]);
+    } else {
+      setLegalData(null);
     }
-    setLoading(false);
-  };
+
+  } catch (error) {
+    console.error('Error loading legal data:', error);
+    setLegalData(null);
+  }
+  setLoading(false);
+};
 
   const Icon = icons[currentSection || 'privacy'] || FileText;
   const title = sectionTitles[currentSection || 'privacy']?.[language] || 'Legal';
