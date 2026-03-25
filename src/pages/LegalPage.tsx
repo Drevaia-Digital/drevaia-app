@@ -73,11 +73,12 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
 
   const loadLegalData = async () => {
   setLoading(true);
+
   try {
     const response = await fetch(`/legal/legal-${language}.json`);
     const data = await response.json();
 
-    if (data && data[currentSection]) {
+    if (currentSection && data[currentSection]) {
       setLegalData(data[currentSection]);
     } else {
       setLegalData(null);
@@ -87,6 +88,7 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
     console.error('Error loading legal data:', error);
     setLegalData(null);
   }
+
   setLoading(false);
 };
 
