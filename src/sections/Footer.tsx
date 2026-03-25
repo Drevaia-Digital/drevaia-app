@@ -20,140 +20,118 @@ const FacebookIcon = () => (
   </svg>
 );
 
-
 export function Footer(_: any) {
   const currentYear = new Date().getFullYear();
 
   return (
     <footer className="relative bg-gradient-to-b from-purple-900 to-purple-950 text-white overflow-hidden">
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-1/4 w-64 h-64 bg-purple-500/10 rounded-full blur-3xl" />
-      <div className="absolute top-0 right-1/4 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid md:grid-cols-3 gap-12">
+
           {/* Brand */}
           <div className="space-y-4">
             <div className="flex items-center gap-2">
               <Sparkles className="w-6 h-6 text-amber-400" />
               <span className="text-2xl font-bold">Drevaia Digital</span>
             </div>
-            <p className="text-purple-200 text-sm leading-relaxed">
+            <p className="text-purple-200 text-sm">
               Una biblioteca emocional diseñada para sanar, evolucionar y transformar tu vida desde dentro.
             </p>
+
             <div className="flex gap-3">
-              <a
-                href="https://www.tiktok.com/@drevaia.digital?_t=ZS-8xfcbd3re6C&_r=1"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                aria-label="TikTok"
-              >
+              <a href="https://www.tiktok.com/@drevaia.digital" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20">
                 <TikTokIcon />
               </a>
-              <a
-                href="https://www.instagram.com/drevaia.digital/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                aria-label="Instagram"
-              >
+              <a href="https://www.instagram.com/drevaia.digital/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20">
                 <Instagram className="w-5 h-5" />
               </a>
-              <a
-                href="https://www.youtube.com/@Drevaia"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                aria-label="YouTube"
-              >
+              <a href="https://www.youtube.com/@Drevaia" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20">
                 <YouTubeIcon />
               </a>
-              <a
-                href="https://www.facebook.com/profile.php?id=61578074633618"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                aria-label="Facebook"
-              >
+              <a href="https://www.facebook.com/profile.php?id=61578074633618" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20">
                 <FacebookIcon />
               </a>
-              <a
-                href="mailto:noadrevaia@gmail.com"
-                className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20 transition-colors"
-                aria-label="Email"
-              >
+              <a href="mailto:noadrevaia@gmail.com" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20">
                 <Mail className="w-5 h-5" />
               </a>
             </div>
           </div>
 
-          {/* Quick Links */}
+          {/* Explorar + Legal */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Explorar</h3>
+
             <ul className="space-y-2 text-purple-200 text-sm">
+
               <li>
-                <Link to="/library" className="hover:text-white transition-colors flex items-center gap-2">
-                  <BookOpen className="w-4 h-4" />
-                  Ebooks
+                <Link to="/library" className="flex items-center gap-2 hover:text-white">
+                  <BookOpen className="w-4 h-4" /> Ebooks
                 </Link>
               </li>
+
               <li>
-                <Link to="/blog" className="hover:text-white transition-colors flex items-center gap-2">
-                  <FileText className="w-4 h-4" />
-                  Blog
+                <Link to="/blog" className="flex items-center gap-2 hover:text-white">
+                  <FileText className="w-4 h-4" /> Blog
                 </Link>
               </li>
+
               <li>
-                <Link to="/portal" className="hover:text-white transition-colors flex items-center gap-2">
-                  <Users className="w-4 h-4" />
-                  Portal
+                <Link to="/portal" className="flex items-center gap-2 hover:text-white">
+                  <Users className="w-4 h-4" /> Portal
                 </Link>
               </li>
+
+              <li className="mt-4 text-white font-semibold">Legal</li>
+
               <li>
-                <Link to="/Legal/privacy" className="hover:text-white transition-colors flex items-center gap-2">
-                  <Shield className="w-4 h-4" />
-                  legal
+                <Link to="/legal/privacy" className="flex items-center gap-2 hover:text-white">
+                  <Shield className="w-4 h-4" /> Privacidad
                 </Link>
               </li>
+
               <li>
-                <a
-                  href="https://payhip.com/DrevaiaDigital"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
-                >
+                <Link to="/legal/cookies" className="flex items-center gap-2 hover:text-white">
+                  <Shield className="w-4 h-4" /> Cookies
+                </Link>
+              </li>
+
+              <li>
+                <Link to="/legal/refunds" className="flex items-center gap-2 hover:text-white">
+                  <Shield className="w-4 h-4" /> Reembolsos
+                </Link>
+              </li>
+
+              <li>
+                <a href="https://payhip.com/DrevaiaDigital" target="_blank" rel="noopener noreferrer" className="hover:text-white">
                   Tienda Payhip
                 </a>
               </li>
+
             </ul>
           </div>
 
-          {/* Newsletter Mini */}
+          {/* CTA */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Conecta con Drevaia</h3>
             <p className="text-purple-200 text-sm mb-4">
               Recibe inspiración y novedades directamente en tu correo.
             </p>
-            <Link
-              to="/#register"
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-sm font-medium hover:from-amber-600 hover:to-orange-600 transition-all"
-            >
+
+            <Link to="/#register" className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-sm font-medium hover:opacity-90">
               <Heart className="w-4 h-4" />
               Suscribirme
             </Link>
           </div>
+
         </div>
 
-        {/* Bottom Bar */}
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-col md:flex-row justify-between items-center gap-4">
-          <p className="text-purple-300 text-sm">
-            © {currentYear} Drevaia Digital. Todos los derechos reservados.
-          </p>
-          <p className="text-purple-400 text-xs flex items-center gap-1">
-            Hecho con <Heart className="w-3 h-3 text-rose-400 fill-rose-400" /> por Noa Drevaia
-          </p>
+        {/* Bottom */}
+        <div className="mt-12 pt-8 border-t border-white/10 flex justify-between text-sm text-purple-300">
+          <p>© {currentYear} Drevaia Digital</p>
+          <p>Hecho con ❤️ por Noa Drevaia</p>
         </div>
+
       </div>
     </footer>
   );
