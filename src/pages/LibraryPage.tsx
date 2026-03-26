@@ -140,7 +140,7 @@ export function LibraryPage({ language }: LibraryPageProps)
   const featuredBooks = libraryData?.books.filter(b => b.featured) || [];
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
+    <div className="min-h-screen bg-gradient-to-b from-purple-950 via-gray-900 to-black text-white">
 
       {/* SEO desactivado temporal */}
       
@@ -278,9 +278,9 @@ interface BookCardProps {
 function BookCard({ book, language }: BookCardProps) {
   return (
     <a href={book.buy_url} target="_blank" rel="noopener noreferrer" className="group">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg hover:shadow-xl border border-gray-100 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
+      <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-lg hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
         {/* Cover */}
-        <div className="relative h-64 bg-gradient-to-br from-purple-100 to-amber-100 dark:from-purple-900/30 dark:to-amber-900/30 flex items-center justify-center overflow-hidden">
+        <div className="relative h-64 bg-transparent flex items-center justify-center overflow-hidden">
           {book.coverImage ? (
             <img 
               src={book.coverImage} 

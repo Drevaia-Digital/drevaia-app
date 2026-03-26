@@ -126,11 +126,11 @@ export function Hero() {
 </Link>
 
           <Link to="/library">
-            <Button className="bg-white/20 border border-white/40 px-8 py-4 rounded-full text-white backdrop-blur-md hover:bg-white/10 transition">
-              Explorar ebooks
-              <ArrowRight className="ml-2" />
-            </Button>
-          </Link>
+  <Button className="group bg-gradient-to-r from-purple-600 to-amber-400 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300">
+    Explorar ebooks
+    <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
+  </Button>
+</Link>
 
         </div>
 
