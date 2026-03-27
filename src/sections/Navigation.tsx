@@ -9,8 +9,6 @@ export function Navigation(_: any) {
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
 
-  // Scroll navbar
-  
   // Detectar móvil correctamente
   useEffect(() => {
     const handleResize = () => {
@@ -32,119 +30,118 @@ export function Navigation(_: any) {
     setOpen(false);
   }, [location.pathname]);
 
-return (
-  <nav
-    className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      'bg-[#0f0f1a] backdrop-blur-md shadow-lg'
-    }`}
-  >
-    <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
+  return (
+    <>
+      {/* NAVBAR */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0f0f1a] border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
-      {/* LOGO */}
-      <Link to="/" className="flex items-center gap-2">
-        <Sparkles className="text-amber-400" />
-        <span className="text-white font-bold text-lg">Drevaia</span>
-      </Link>
+          {/* LOGO */}
+          <Link to="/" className="flex items-center gap-2">
+            <Sparkles className="text-amber-400" />
+            <span className="text-white font-bold text-lg">Drevaia</span>
+          </Link>
 
-      {/* DESKTOP */}
-      {!isMobile && (
-        <div className="flex items-center gap-6">
+          {/* DESKTOP */}
+          {!isMobile && (
+            <div className="flex items-center gap-6">
 
-          <Link className="text-white/80 hover:text-white transition" to="/">
+              <Link className="text-white/80 hover:text-white transition" to="/">
+                Inicio
+              </Link>
+
+              <Link className="text-white/80 hover:text-white transition" to="/library">
+                Biblioteca
+              </Link>
+
+              <Link className="text-white/80 hover:text-white transition" to="/legal">
+                Legal
+              </Link>
+
+              {/* IDIOMAS */}
+              <div className="flex gap-2 bg-white/10 px-3 py-1 rounded-full">
+                {['es','en','fr','pt'].map((lang) => (
+                  <button
+                    key={lang}
+                    onClick={() => setLanguage(lang as any)}
+                    className={`px-2 py-1 rounded-full text-sm transition ${
+                      language === lang
+                        ? 'bg-amber-400 text-black'
+                        : 'text-white/70 hover:text-white'
+                    }`}
+                  >
+                    {lang.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+
+            </div>
+          )}
+
+          {/* MOBILE BUTTON */}
+          {isMobile && (
+            <button
+              className="text-white"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <X size={28} /> : <Menu size={28} />}
+            </button>
+          )}
+
+        </div>
+      </nav>
+
+      {/* MOBILE MENU (SIN OVERLAY PROBLEMÁTICO) */}
+      {open && isMobile && (
+        <div className="fixed top-16 left-0 w-full bg-[#0f0f1a] border-t border-white/10 px-6 py-6 space-y-6 z-40">
+
+          <Link to="/" className="block text-white text-lg">
             Inicio
           </Link>
 
-          <Link className="text-white/80 hover:text-white transition" to="/library">
+          <Link to="/library" className="block text-white text-lg">
             Biblioteca
           </Link>
 
-          <Link className="text-white/80 hover:text-white transition" to="/legal">
-            Legal
-          </Link>
+          <div>
+            <p className="text-white/60 text-sm mb-2">Legal</p>
+
+            <Link to="/legal/privacy" className="block text-white text-lg">
+              Privacidad
+            </Link>
+
+            <Link to="/legal/cookies" className="block text-white text-lg">
+              Cookies
+            </Link>
+
+            <Link to="/legal/refunds" className="block text-white text-lg">
+              Reembolsos
+            </Link>
+          </div>
 
           {/* IDIOMAS */}
-          <div className="flex gap-2 bg-white/10 px-3 py-1 rounded-full">
-            {['es','en','fr','pt'].map((lang) => (
-              <button
-                key={lang}
-                onClick={() => setLanguage(lang as any)}
-                className={`px-2 py-1 rounded-full text-sm transition ${
-                  language === lang
-                    ? 'bg-amber-400 text-black'
-                    : 'text-white/70 hover:text-white'
-                }`}
-              >
-                {lang.toUpperCase()}
-              </button>
-            ))}
+          <div className="pt-4 border-t border-white/10">
+            <p className="text-white/60 text-sm mb-2">Idioma</p>
+
+            <div className="flex gap-2">
+              {['es','en','fr','pt'].map((lang) => (
+                <button
+                  key={lang}
+                  onClick={() => setLanguage(lang as any)}
+                  className={`px-3 py-2 rounded-lg transition ${
+                    language === lang
+                      ? 'bg-amber-400 text-black'
+                      : 'bg-white/10 text-white hover:bg-white/20'
+                  }`}
+                >
+                  {lang.toUpperCase()}
+                </button>
+              ))}
+            </div>
           </div>
 
         </div>
       )}
-
-      {/* MOBILE BUTTON */}
-      {isMobile && (
-        <button
-          className="text-white z-50"
-          onClick={() => setOpen(!open)}
-        >
-          {open ? <X size={28} /> : <Menu size={28} />}
-        </button>
-      )}
-
-    </div>
-
-    {/* MOBILE MENU */}
-    {open && isMobile && (
-      <div className="fixed top-16 left-0 w-full h-[calc(100vh-64px)] bg-purple-900/95 backdrop-blur-md px-6 py-6 space-y-6 overflow-y-auto z-40">
-
-        <Link to="/" className="block text-white text-lg">
-          Inicio
-        </Link>
-
-        <Link to="/library" className="block text-white text-lg">
-          Biblioteca
-        </Link>
-
-        <div>
-          <p className="text-white/60 text-sm mb-2">Legal</p>
-
-          <Link to="/legal/privacy" className="block text-white text-lg">
-            Privacidad
-          </Link>
-
-          <Link to="/legal/cookies" className="block text-white text-lg">
-            Cookies
-          </Link>
-
-          <Link to="/legal/refunds" className="block text-white text-lg">
-            Reembolsos
-          </Link>
-        </div>
-
-        {/* IDIOMAS */}
-        <div className="pt-4 border-t border-white/10">
-          <p className="text-white/60 text-sm mb-2">Idioma</p>
-
-          <div className="flex gap-2">
-            {['es','en','fr','pt'].map((lang) => (
-              <button
-                key={lang}
-                onClick={() => setLanguage(lang as any)}
-                className={`px-3 py-2 rounded-lg transition ${
-                  language === lang
-                    ? 'bg-amber-400 text-black'
-                    : 'bg-white/10 text-white hover:bg-white/20'
-                }`}
-              >
-                {lang.toUpperCase()}
-              </button>
-            ))}
-          </div>
-        </div>
-
-      </div>
-    )}
-  </nav>
-);
+    </>
+  );
 }
