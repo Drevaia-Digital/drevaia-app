@@ -47,7 +47,7 @@ export function LibraryPage({ language }: LibraryPageProps) {
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
- 
+
   useEffect(() => {
     loadLibrary();
   }, [language]);
@@ -57,7 +57,6 @@ export function LibraryPage({ language }: LibraryPageProps) {
   }, [searchQuery, selectedCategory, libraryData]);
 
   const loadLibrary = async () => {
-    
     const { data, error } = await supabase.from('books').select('*');
 
     if (error) {
@@ -98,7 +97,7 @@ export function LibraryPage({ language }: LibraryPageProps) {
 
     setLibraryData(formatted);
     setFilteredBooks(formatted.books);
-    };
+  };
 
   const filterBooks = () => {
     if (!libraryData) return;
@@ -124,29 +123,28 @@ export function LibraryPage({ language }: LibraryPageProps) {
     ? [...new Set(libraryData.books.map(b => b.category))]
     : [];
 
-  
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-gray-900 to-black text-white">
+    <div className="min-h-screen bg-[#0f0f1a] text-white">
 
       {/* HERO */}
-      <section className="py-20 text-center">
-        <h1 className="text-5xl font-bold mb-4">
+      <section className="py-16 text-center">
+        <h1 className="text-4xl md:text-5xl font-bold mb-4">
           {libraryData?.meta?.title}
         </h1>
-        <p className="text-gray-300">
+        <p className="text-gray-400">
           {libraryData?.collection?.description}
         </p>
       </section>
 
       {/* BUSCADOR */}
-      <section className="py-6 border-b border-white/10 sticky top-0 bg-black/40 backdrop-blur-md z-40">
+      <section className="py-6 border-b border-white/10 sticky top-0 bg-black/50 backdrop-blur-md z-40">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-4">
 
           <Input
             placeholder="Buscar libros..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-white/10 border border-white/20 text-white"
+            className="bg-white/10 border border-white/20 text-white placeholder:text-gray-400"
           />
 
           <div className="flex gap-2 overflow-x-auto">
@@ -156,8 +154,8 @@ export function LibraryPage({ language }: LibraryPageProps) {
               onClick={() => setSelectedCategory(null)}
               className={`${
                 selectedCategory === null
-                  ? 'bg-gradient-to-r from-purple-600 to-amber-400'
-                  : 'bg-white/10 hover:bg-white/20 border border-white/20'
+                  ? 'bg-gradient-to-r from-purple-600 to-amber-400 text-white'
+                  : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
               }`}
             >
               Todos
@@ -170,8 +168,8 @@ export function LibraryPage({ language }: LibraryPageProps) {
                 onClick={() => setSelectedCategory(category)}
                 className={`${
                   selectedCategory === category
-                    ? 'bg-gradient-to-r from-purple-600 to-amber-400'
-                    : 'bg-white/10 hover:bg-white/20 border border-white/20'
+                    ? 'bg-gradient-to-r from-purple-600 to-amber-400 text-white'
+                    : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
                 }`}
               >
                 {category}
@@ -199,25 +197,29 @@ export function LibraryPage({ language }: LibraryPageProps) {
 
 function BookCard({ book }: any) {
   return (
-    <a href={book.buy_url} target="_blank" className="group">
-      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 hover:scale-105 transition">
+    <a href={book.buy_url} target="_blank" rel="noopener noreferrer" className="group">
+      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 hover:scale-105 hover:shadow-xl transition-all duration-300">
 
         <img
           src={book.coverImage || '/fallback.jpg'}
           className="w-full h-64 object-contain mb-4"
         />
 
-        <h3 className="text-white font-bold">{book.title}</h3>
+        <h3 className="text-white font-bold mb-1">
+          {book.title}
+        </h3>
 
-        <p className="text-gray-300 text-sm">{book.subtitle}</p>
+        <p className="text-gray-400 text-sm mb-3">
+          {book.subtitle}
+        </p>
 
-        <div className="flex justify-between mt-4">
+        <div className="flex justify-between items-center mt-auto">
           <span className="text-amber-300 font-bold text-lg">
             ${book.price}
           </span>
 
           <span className="text-sm text-purple-400 flex items-center">
-            Ver más <ChevronRight className="w-4 h-4" />
+            Ver más <ChevronRight className="w-4 h-4 ml-1" />
           </span>
         </div>
 
