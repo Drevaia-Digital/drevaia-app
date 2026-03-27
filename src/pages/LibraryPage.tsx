@@ -147,7 +147,7 @@ export function LibraryPage({ language }: LibraryPageProps)
       {/* Navigation desactivado temporal */}
 
       {/* Hero Section */}
-      <section className="relative py-20 md:py-32 bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden">
+      <section className="relative py-20 md:py-32 bg-gradient-to-b from-purple-950 via-gray-900 to-black dark:from-gray-900 dark:to-gray-800 overflow-hidden">
         <div className="absolute inset-0 opacity-30">
           <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-300/30 rounded-full blur-3xl" />
           <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-300/30 rounded-full blur-3xl" />
@@ -178,7 +178,7 @@ export function LibraryPage({ language }: LibraryPageProps)
       </section>
 
       {/* Search & Filter */}
-      <section className="py-8 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
+      <section className="py-8 bg-transparent border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row gap-4 items-center">
             <div className="relative flex-1 w-full">
@@ -217,9 +217,9 @@ export function LibraryPage({ language }: LibraryPageProps)
 
       {/* Featured Books */}
       {!searchQuery && !selectedCategory && featuredBooks.length > 0 && (
-        <section className="py-16 bg-purple-50 dark:bg-gray-800/50">
+        <section className="py-16 bg-transparent">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8 flex items-center gap-2">
+            <h2 className="text-2xl font-bold text-white dark:text-white mb-8 flex items-center gap-2">
               <Star className="w-6 h-6 text-amber-500" />
               {language === 'es' ? 'Destacados' : language === 'en' ? 'Featured' : language === 'fr' ? 'En Vedette' : 'Destaques'}
             </h2>
@@ -322,12 +322,12 @@ function BookCard({ book, language }: BookCardProps) {
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">
             {book.subtitle}
           </p>
-          <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2 flex-1">
+          <p className="text-sm text-gray-300 dark:text-gray-300 mb-4 line-clamp-2 flex-1">
             {book.description}
           </p>
           
           {/* Footer */}
-          <div className="flex items-center justify-between pt-4 border-t border-gray-100 dark:border-gray-700">
+          <div className="flex items-center justify-between pt-4 border-t border-white/10">
             <div className="flex items-baseline gap-1">
               <span className="text-xl font-bold text-gray-900 dark:text-white">
                 ${book.price}

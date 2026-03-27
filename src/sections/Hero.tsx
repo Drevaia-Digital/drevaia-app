@@ -76,22 +76,33 @@ export function Hero() {
     createParticles();
     animate();
 
-    window.addEventListener('resize', () => {
-      resize();
-      createParticles();
-    });
+    const handleResize = () => {
+  resize();
+  createParticles();
+};
+
+window.addEventListener('resize', handleResize);
+
+return () => {
+  window.removeEventListener('resize', handleResize);
+};
   }, []);
 
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      {/* 🌌 FONDO */}
-      <div
-        className="absolute inset-0 bg-cover bg-center"
-        style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/70 via-purple-800/50 to-purple-900/90" />
-      </div>
+           
+{/* 🌌 FONDO BASE (SIEMPRE OSCURO) */}
+<div className="absolute inset-0 bg-gradient-to-b from-purple-950 via-gray-900 to-black" />
+
+{/* 🌫 TEXTURA (IMAGEN SUAVE) */}
+<div
+  className="absolute inset-0 bg-cover bg-center opacity-20"
+  style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
+/>
+
+{/* ✨ AURA (EFECTO PREMIUM) */}
+<div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.15),transparent_60%)]" />
 
       {/* ✨ PARTICULAS */}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
