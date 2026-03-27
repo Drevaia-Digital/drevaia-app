@@ -5,21 +5,12 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export function Navigation(_: any) {
   const { language, setLanguage } = useLanguage();
-  const [isScrolled, setIsScrolled] = useState(false);
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
 
   // Scroll navbar
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 40);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
+  
   // Detectar móvil correctamente
   useEffect(() => {
     const handleResize = () => {
@@ -44,9 +35,7 @@ export function Navigation(_: any) {
 return (
   <nav
     className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      isScrolled
-        ? 'bg-purple-900/90 backdrop-blur-md shadow-lg'
-        : 'bg-transparent'
+      'bg-[#0f0f1a] backdrop-blur-md shadow-lg'
     }`}
   >
     <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
