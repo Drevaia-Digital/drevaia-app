@@ -1,10 +1,10 @@
 import { supabase } from '@/lib/supabase';
 import { useState, useEffect } from 'react';
-import { BookOpen, Search, Filter, ChevronRight, Star, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ChevronRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-// import { SEO, seoConfigs } from '@/partials/SEO';
 import type { Language } from '@/i18n';
+
 interface LibraryPageProps {
   language: Language;
 }
@@ -25,13 +25,7 @@ interface Book {
   featured: boolean;
   new: boolean;
   bestseller: boolean;
-  buy_url: string; // 👈 AÑADE ESTO
-}
-
-interface Collection {
-  name: string;
-  subtitle: string;
-  description: string;
+  buy_url: string;
 }
 
 interface LibraryData {
@@ -40,77 +34,71 @@ interface LibraryData {
     description: string;
     flag: string;
   };
-  collection: Collection;
+  collection: {
+    name: string;
+    subtitle: string;
+    description: string;
+  };
   books: Book[];
 }
-export function LibraryPage({ language }: LibraryPageProps)
- {
+
+export function LibraryPage({ language }: LibraryPageProps) {
   const [libraryData, setLibraryData] = useState<LibraryData | null>(null);
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  // const seo = seoConfigs.library(language);
-
+ 
   useEffect(() => {
     loadLibrary();
   }, [language]);
 
   useEffect(() => {
-    if (libraryData) {
-      filterBooks();
-    }
+    if (libraryData) filterBooks();
   }, [searchQuery, selectedCategory, libraryData]);
 
   const loadLibrary = async () => {
-  setLoading(true);
+    
+    const { data, error } = await supabase.from('books').select('*');
 
-  const { data, error } = await supabase
-    .from('books')
-    .select('*');
+    if (error) {
+      console.error(error);
+      return;
+    }
 
-  if (error) {
-    console.error(error);
-    setLoading(false);
-    return;
-  }
+    const formatted = {
+      meta: {
+        title: "Biblioteca Drevaia",
+        description: "",
+        flag: "📚"
+      },
+      collection: {
+        name: "Colección",
+        subtitle: "",
+        description: ""
+      },
+      books: data.map((book: any) => ({
+        id: book.id,
+        title: book.title,
+        subtitle: book.subtitle || "",
+        description: book.description || "",
+        author: book.author || "Noa Drevaia",
+        price: book.price,
+        currency: "USD",
+        pages: 0,
+        slug: book.slug || book.title.toLowerCase().replace(/\s+/g, "-"),
+        coverImage: book.image,
+        buy_url: book.buy_url,
+        tags: [],
+        category: book.category,
+        featured: true,
+        new: false,
+        bestseller: false
+      }))
+    };
 
-  const formatted = {
-    meta: {
-      title: "Biblioteca Drevaia",
-      description: "",
-      flag: "📚"
-    },
-    collection: {
-      name: "Colección",
-      subtitle: "",
-      description: ""
-    },
-    books: data.map((book: any) => ({
-      id: book.id,
-      title: book.title,
-      subtitle: book.subtitle || "",
-      description: book.description || "",
-      author: book.author || "Noa Drevaia",
-      price: book.price,
-      currency: "USD",
-      pages: 0,
-      slug: book.slug || book.title.toLowerCase().replace(/\s+/g, "-"),
-      coverImage: book.image,
-      buy_url: book.buy_url,
-      tags: [],
-      category: book.category,
-      featured: true,
-      new: false,
-      bestseller: false
-    }))
-  };
-
-  setLibraryData(formatted);
-  setFilteredBooks(formatted.books);
-  setLoading(false);
-};
+    setLibraryData(formatted);
+    setFilteredBooks(formatted.books);
+    };
 
   const filterBooks = () => {
     if (!libraryData) return;
@@ -121,8 +109,7 @@ export function LibraryPage({ language }: LibraryPageProps)
       const query = searchQuery.toLowerCase();
       books = books.filter(book =>
         book.title.toLowerCase().includes(query) ||
-        book.description.toLowerCase().includes(query) ||
-        book.tags.some(tag => tag.toLowerCase().includes(query))
+        book.description.toLowerCase().includes(query)
       );
     }
 
@@ -137,220 +124,103 @@ export function LibraryPage({ language }: LibraryPageProps)
     ? [...new Set(libraryData.books.map(b => b.category))]
     : [];
 
-  const featuredBooks = libraryData?.books.filter(b => b.featured) || [];
-
+  
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-950 via-gray-900 to-black text-white">
+    <div className="min-h-screen bg-gradient-to-b from-purple-900 via-gray-900 to-black text-white">
 
-      {/* SEO desactivado temporal */}
-      
-      {/* Navigation desactivado temporal */}
+      {/* HERO */}
+      <section className="py-20 text-center">
+        <h1 className="text-5xl font-bold mb-4">
+          {libraryData?.meta?.title}
+        </h1>
+        <p className="text-gray-300">
+          {libraryData?.collection?.description}
+        </p>
+      </section>
 
-      {/* Hero Section */}
-      <section className="relative py-20 md:py-32 bg-gradient-to-b from-purple-950 via-gray-900 to-black dark:from-gray-900 dark:to-gray-800 overflow-hidden">
-        <div className="absolute inset-0 opacity-30">
-          <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-300/30 rounded-full blur-3xl" />
-          <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-300/30 rounded-full blur-3xl" />
-        </div>
+      {/* BUSCADOR */}
+      <section className="py-6 border-b border-white/10 sticky top-0 bg-black/40 backdrop-blur-md z-40">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-4">
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 text-sm font-medium mb-6">
-              <BookOpen className="w-4 h-4" />
-              {libraryData?.meta?.flag} {libraryData?.collection?.name}
-            </div>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-              {libraryData?.meta?.title || 'Biblioteca Drevaia'}
-            </h1>
-            <p className="text-xl text-gray-300 dark:text-gray-300 max-w-3xl mx-auto mb-8">
-              {libraryData?.collection?.description}
-            </p>
-            <div className="flex items-center justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
-              <span className="flex items-center gap-1">
-                <Sparkles className="w-4 h-4 text-amber-500" />
-                {libraryData?.books?.length || 0} eBooks
-              </span>
-              <span>•</span>
-              <span>4 idiomas</span>
-            </div>
+          <Input
+            placeholder="Buscar libros..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="bg-white/10 border border-white/20 text-white"
+          />
+
+          <div className="flex gap-2 overflow-x-auto">
+
+            <Button
+              size="sm"
+              onClick={() => setSelectedCategory(null)}
+              className={`${
+                selectedCategory === null
+                  ? 'bg-gradient-to-r from-purple-600 to-amber-400'
+                  : 'bg-white/10 hover:bg-white/20 border border-white/20'
+              }`}
+            >
+              Todos
+            </Button>
+
+            {categories.map((category) => (
+              <Button
+                key={category}
+                size="sm"
+                onClick={() => setSelectedCategory(category)}
+                className={`${
+                  selectedCategory === category
+                    ? 'bg-gradient-to-r from-purple-600 to-amber-400'
+                    : 'bg-white/10 hover:bg-white/20 border border-white/20'
+                }`}
+              >
+                {category}
+              </Button>
+            ))}
+
           </div>
         </div>
       </section>
 
-      {/* Search & Filter */}
-      <section className="py-8 bg-transparent border-b border-gray-200 dark:border-gray-700 sticky top-0 z-40">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row gap-4 items-center">
-            <div className="relative flex-1 w-full">
-              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
-              <Input
-                type="text"
-                placeholder={language === 'es' ? 'Buscar libros...' : language === 'en' ? 'Search books...' : language === 'fr' ? 'Rechercher des livres...' : 'Buscar livros...'}
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 w-full bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-md border border-white/20"
-              />
-            </div>
-            <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
+      {/* LIBROS */}
+      <section className="py-16 max-w-7xl mx-auto px-4">
 
-  <Button
-    size="sm"
-    onClick={() => setSelectedCategory(null)}
-    className={`${
-      selectedCategory === null
-        ? 'bg-gradient-to-r from-purple-600 to-amber-400 text-white'
-        : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
-    }`}
-  >
-    <Filter className="w-4 h-4 mr-1" />
-    {language === 'es' ? 'Todos' : language === 'en' ? 'All' : language === 'fr' ? 'Tous' : 'Todos'}
-  </Button>
-
-  {categories.map((category) => (
-    <Button
-      key={category}
-      size="sm"
-      onClick={() => setSelectedCategory(category)}
-      className={`${
-        selectedCategory === category
-          ? 'bg-gradient-to-r from-purple-600 to-amber-400 text-white'
-          : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
-      }`}
-    >
-      {category}
-    </Button>
-  ))}
-
-</div>
-          </div>
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {filteredBooks.map((book) => (
+            <BookCard key={book.id} book={book} />
+          ))}
         </div>
+
       </section>
 
-      {/* Featured Books */}
-      {!searchQuery && !selectedCategory && featuredBooks.length > 0 && (
-        <section className="py-16 bg-transparent">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <h2 className="text-2xl font-bold text-white dark:text-white mb-8 flex items-center gap-2">
-              <Star className="w-6 h-6 text-amber-500" />
-              {language === 'es' ? 'Destacados' : language === 'en' ? 'Featured' : language === 'fr' ? 'En Vedette' : 'Destaques'}
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredBooks.map((book) => (
-                <BookCard key={book.id} book={book} language={language} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* All Books */}
-      <section className="py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-white dark:text-white mb-8">
-            {language === 'es' ? 'Todos los Libros' : language === 'en' ? 'All Books' : language === 'fr' ? 'Tous les Livres' : 'Todos os Livros'}
-            <span className="ml-2 text-sm font-normal text-gray-500">
-              ({filteredBooks.length})
-            </span>
-          </h2>
-
-          {loading ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="animate-pulse bg-gray-200 dark:bg-gray-700 rounded-2xl h-96" />
-              ))}
-            </div>
-          ) : filteredBooks.length > 0 ? (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredBooks.map((book) => (
-                <BookCard key={book.id} book={book} language={language} />
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-16">
-              <BookOpen className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-              <p className="text-gray-500">
-                {language === 'es' ? 'No se encontraron libros' : language === 'en' ? 'No books found' : language === 'fr' ? 'Aucun livre trouvé' : 'Nenhum livro encontrado'}
-              </p>
-            </div>
-          )}
-        </div>
-      </section>
-
-      {/* Footer desactivado temporal */}
     </div>
   );
 }
 
-interface BookCardProps {
-  book: Book;
-  language: Language;
-}
-
-function BookCard({ book, language }: BookCardProps) {
+function BookCard({ book }: any) {
   return (
-    <a href={book.buy_url} target="_blank" rel="noopener noreferrer" className="group">
-      <div className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
-        {/* Cover */}
-        <div className="relative h-64 bg-transparent flex items-center justify-center overflow-hidden">
-          {book.coverImage ? (
-            <img 
-              src={book.coverImage} 
-              alt={book.title}
-              className="w-full h-full object-contain p-4"
-            />
-          ) : (
-            <div className="text-center p-6">
-              <BookOpen className="w-12 h-12 text-purple-400 mx-auto mb-3" />
-              <h3 className="text-sm font-bold text-gray-800 dark:text-gray-200 line-clamp-2">
-                {book.title}
-              </h3>
-            </div>
-          )}
-          
-          {/* Badges */}
-          <div className="absolute top-3 left-3 flex gap-2">
-            {book.new && (
-              <span className="px-2 py-1 bg-green-500 text-white text-xs font-medium rounded-full">
-                NEW
-              </span>
-            )}
-            {book.bestseller && (
-              <span className="px-2 py-1 bg-amber-500 text-white text-xs font-medium rounded-full">
-                BEST
-              </span>
-            )}
-          </div>
+    <a href={book.buy_url} target="_blank" className="group">
+      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 hover:scale-105 transition">
+
+        <img
+          src={book.coverImage || '/fallback.jpg'}
+          className="w-full h-64 object-contain mb-4"
+        />
+
+        <h3 className="text-white font-bold">{book.title}</h3>
+
+        <p className="text-gray-300 text-sm">{book.subtitle}</p>
+
+        <div className="flex justify-between mt-4">
+          <span className="text-amber-300 font-bold text-lg">
+            ${book.price}
+          </span>
+
+          <span className="text-sm text-purple-400 flex items-center">
+            Ver más <ChevronRight className="w-4 h-4" />
+          </span>
         </div>
 
-        {/* Content */}
-        <div className="p-5 flex-1 flex flex-col">
-          <div className="text-xs text-purple-600 dark:text-purple-400 font-medium mb-2">
-            {book.category}
-          </div>
-          <h3 className="text-lg font-bold text-white mb-1 line-clamp-2 group-hover:text-purple-600 transition-colors">
-            {book.title}
-          </h3>
-          <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">
-            {book.subtitle}
-          </p>
-          <p className="text-sm text-gray-300 dark:text-gray-300 mb-4 line-clamp-2 flex-1">
-            {book.description}
-          </p>
-          
-          {/* Footer */}
-          <div className="flex items-center justify-between pt-4 border-t border-white/10">
-            <div className="flex items-baseline gap-1">
-              <span className="text-xl font-bold text-gray-900 dark:text-white">
-                ${book.price}
-              </span>
-              <span className="text-xs text-gray-500">{book.currency}</span>
-            </div>
-            <div className="flex items-center gap-1 text-purple-600 dark:text-purple-400 text-sm font-medium">
-              {language === 'es' ? 'Ver más' : language === 'en' ? 'View more' : language === 'fr' ? 'Voir plus' : 'Ver mais'}
-              <ChevronRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-        </div>
       </div>
     </a>
   );

@@ -97,7 +97,7 @@ return () => {
 
 {/* 🌫 TEXTURA (IMAGEN SUAVE) */}
 <div
-  className="absolute inset-0 bg-cover bg-center opacity-20"
+  className="absolute inset-0 bg-cover bg-center opacity-40"
   style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
 />
 
