@@ -113,7 +113,7 @@ export function LibraryPage({ language }: LibraryPageProps) {
       </section>
 
       {/* BUSCADOR */}
-      <section className="py-6 border-b border-white/10 sticky top-0 bg-[#0f0f1a] z-40">
+      <section className="py-6 border-b border-white/10 relative bg-[#0f0f1a] z-10">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-4">
 
           <Input
@@ -157,7 +157,7 @@ export function LibraryPage({ language }: LibraryPageProps) {
       </section>
 
       {/* LIBROS */}
-      <section className="py-16 max-w-7xl mx-auto px-4">
+      <section className="py-16 max-w-7xl mx-auto px-4 relative z-20">
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredBooks.map((book) => (
