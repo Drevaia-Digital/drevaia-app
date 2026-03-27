@@ -162,7 +162,7 @@ export function LibraryPage({ language }: LibraryPageProps)
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-6">
               {libraryData?.meta?.title || 'Biblioteca Drevaia'}
             </h1>
-            <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto mb-8">
+            <p className="text-xl text-gray-300 dark:text-gray-300 max-w-3xl mx-auto mb-8">
               {libraryData?.collection?.description}
             </p>
             <div className="flex items-center justify-center gap-4 text-sm text-gray-500 dark:text-gray-400">
@@ -188,29 +188,40 @@ export function LibraryPage({ language }: LibraryPageProps)
                 placeholder={language === 'es' ? 'Buscar libros...' : language === 'en' ? 'Search books...' : language === 'fr' ? 'Rechercher des livres...' : 'Buscar livros...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 w-full bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:ring-2 focus:ring-purple-500"
+                className="pl-10 w-full bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-md border border-white/20"
               />
             </div>
             <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
-              <Button
-                variant={selectedCategory === null ? 'default' : 'outline'}
-                size="sm"
-                onClick={() => setSelectedCategory(null)}
-              >
-                <Filter className="w-4 h-4 mr-1" />
-                {language === 'es' ? 'Todos' : language === 'en' ? 'All' : language === 'fr' ? 'Tous' : 'Todos'}
-              </Button>
-              {categories.map((category) => (
-                <Button
-                  key={category}
-                  variant={selectedCategory === category ? 'default' : 'outline'}
-                  size="sm"
-                  onClick={() => setSelectedCategory(category)}
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
+
+  <Button
+    size="sm"
+    onClick={() => setSelectedCategory(null)}
+    className={`${
+      selectedCategory === null
+        ? 'bg-gradient-to-r from-purple-600 to-amber-400 text-white'
+        : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
+    }`}
+  >
+    <Filter className="w-4 h-4 mr-1" />
+    {language === 'es' ? 'Todos' : language === 'en' ? 'All' : language === 'fr' ? 'Tous' : 'Todos'}
+  </Button>
+
+  {categories.map((category) => (
+    <Button
+      key={category}
+      size="sm"
+      onClick={() => setSelectedCategory(category)}
+      className={`${
+        selectedCategory === category
+          ? 'bg-gradient-to-r from-purple-600 to-amber-400 text-white'
+          : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
+      }`}
+    >
+      {category}
+    </Button>
+  ))}
+
+</div>
           </div>
         </div>
       </section>
@@ -235,7 +246,7 @@ export function LibraryPage({ language }: LibraryPageProps)
       {/* All Books */}
       <section className="py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-8">
+          <h2 className="text-2xl font-bold text-white dark:text-white mb-8">
             {language === 'es' ? 'Todos los Libros' : language === 'en' ? 'All Books' : language === 'fr' ? 'Tous les Livres' : 'Todos os Livros'}
             <span className="ml-2 text-sm font-normal text-gray-500">
               ({filteredBooks.length})
@@ -278,7 +289,7 @@ interface BookCardProps {
 function BookCard({ book, language }: BookCardProps) {
   return (
     <a href={book.buy_url} target="_blank" rel="noopener noreferrer" className="group">
-      <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl shadow-lg hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
+      <div className="bg-gradient-to-b from-white/10 to-white/5 backdrop-blur-md border border-white/20 rounded-2xl shadow-lg hover:shadow-xl overflow-hidden transition-all duration-300 hover:-translate-y-1 h-full flex flex-col">
         {/* Cover */}
         <div className="relative h-64 bg-transparent flex items-center justify-center overflow-hidden">
           {book.coverImage ? (
@@ -316,7 +327,7 @@ function BookCard({ book, language }: BookCardProps) {
           <div className="text-xs text-purple-600 dark:text-purple-400 font-medium mb-2">
             {book.category}
           </div>
-          <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-1 line-clamp-2 group-hover:text-purple-600 transition-colors">
+          <h3 className="text-lg font-bold text-white mb-1 line-clamp-2 group-hover:text-purple-600 transition-colors">
             {book.title}
           </h3>
           <p className="text-sm text-gray-500 dark:text-gray-400 mb-3 line-clamp-2">
