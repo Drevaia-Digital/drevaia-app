@@ -188,7 +188,7 @@ export function LibraryPage({ language }: LibraryPageProps)
                 placeholder={language === 'es' ? 'Buscar libros...' : language === 'en' ? 'Search books...' : language === 'fr' ? 'Rechercher des livres...' : 'Buscar livros...'}
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="pl-10 w-full"
+                className="pl-10 w-full bg-white/5 border border-white/10 text-white placeholder:text-white/40 focus:ring-2 focus:ring-purple-500"
               />
             </div>
             <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
