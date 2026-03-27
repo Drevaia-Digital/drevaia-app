@@ -62,7 +62,7 @@ export function LibraryPage({ language }: LibraryPageProps) {
       currency: "USD",
       pages: 0,
       slug: book.title.toLowerCase().replace(/\s+/g, "-"),
-      coverImage: book.image,
+      coverImage: book.image, // ✅ URL directa desde Supabase
       buy_url:
         language === 'es'
           ? book.buy_url_es
@@ -106,14 +106,14 @@ export function LibraryPage({ language }: LibraryPageProps) {
     <div className="min-h-screen bg-[#0f0f1a] text-white">
 
       {/* HERO */}
-      <section className="py-16 text-center bg-[#0f0f1a]">
+      <section className="py-16 text-center">
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
           Biblioteca Drevaia
         </h1>
       </section>
 
       {/* BUSCADOR */}
-      <section className="py-6 border-b border-white/10 relative bg-[#0f0f1a] z-10">
+      <section className="py-6 border-b border-white/10 relative z-10">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-4">
 
           <Input
@@ -159,7 +159,7 @@ export function LibraryPage({ language }: LibraryPageProps) {
       {/* LIBROS */}
       <section className="py-16 max-w-7xl mx-auto px-4 relative z-20">
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredBooks.map((book) => (
             <BookCard key={book.id} book={book} />
           ))}
@@ -179,11 +179,16 @@ function BookCard({ book }: any) {
       rel="noopener noreferrer"
       className="group"
     >
-      <div className="bg-[#1a1a2e] border border-white/10 rounded-2xl p-5 hover:scale-105 hover:shadow-xl transition-all duration-300">
+      <div className="bg-[#151528] border border-white/15 shadow-md rounded-2xl p-5 
+                      hover:scale-105 hover:shadow-xl transition-all duration-300">
 
+        {/* IMAGEN CORREGIDA */}
         <img
-          src={`/images/${book.coverImage}`}
-          className="w-full h-64 object-contain mb-4"
+          src={book.coverImage}
+          alt={book.title}
+          loading="lazy"
+          decoding="async"
+          className="w-full h-64 object-cover mb-4 rounded-xl"
         />
 
         <h3 className="text-white font-bold mb-1">
