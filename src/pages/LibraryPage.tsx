@@ -155,7 +155,7 @@ export function LibraryPage({ language }: LibraryPageProps) {
               className={`${
                 selectedCategory === null
                   ? 'bg-gradient-to-r from-purple-600 to-amber-400 text-white'
-                  : 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
+                  : 'bg-[#1a1a2e] text-white hover:bg-white/20 border border-white/20'
               }`}
             >
               Todos
@@ -198,7 +198,7 @@ export function LibraryPage({ language }: LibraryPageProps) {
 function BookCard({ book }: any) {
   return (
     <a href={book.buy_url} target="_blank" rel="noopener noreferrer" className="group">
-      <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-2xl p-5 hover:scale-105 hover:shadow-xl transition-all duration-300">
+      <div className="bg-[#1a1a2e] border border-white/10 rounded-2xl p-5 hover:scale-105 hover:shadow-xl transition-all duration-300">
 
         <img
           src={book.coverImage || '/fallback.jpg'}
