@@ -137,14 +137,14 @@ export function LibraryPage({ language }: LibraryPageProps) {
       </section>
 
       {/* BUSCADOR */}
-      <section className="py-6 border-b border-white/10 sticky top-0 bg-black/50 backdrop-blur-md z-40">
+      <section className="py-6 border-b border-white/10 sticky top-0 bg-[#0f0f1a] z-40">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-4">
 
           <Input
             placeholder="Buscar libros..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-white/10 border border-white/20 text-white placeholder:text-gray-400"
+            className="bg-[#1a1a2e] border border-white/20 text-white placeholder:text-gray-400"
           />
 
           <div className="flex gap-2 overflow-x-auto">
