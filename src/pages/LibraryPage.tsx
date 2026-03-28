@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { ChevronRight, BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
-export function LibraryPage() {
+export default function LibraryPage() {
   const navigate = useNavigate();
 
   const [books, setBooks] = useState<any[]>([]);
@@ -37,7 +37,18 @@ export function LibraryPage() {
 
     const { data, error } = await supabase
       .from('books')
-      .select('*');
+      .select(`
+  id,
+  title,
+  subtitle,
+  image,
+  price,
+  category,
+  buy_url_es,
+  buy_url_en,
+  buy_url_fr,
+  buy_url_pt
+`)
 
     if (error) {
       console.error(error);
@@ -174,9 +185,10 @@ export function LibraryPage() {
                 <div className="bg-[#151528] rounded-2xl overflow-hidden hover:scale-105 hover:shadow-xl transition-all duration-300">
 
                   <img
-                    src={book.coverImage}
-                    className="w-full h-64 object-cover"
-                  />
+  src={book.coverImage}
+  loading="lazy"
+  className="w-full h-64 object-cover"
+/>
 
                   <div className="p-4">
                     <h3 className="font-bold mb-1">{book.title}</h3>

@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import { HomePage } from '@/pages/HomePage';
-import { LibraryPage } from '@/pages/LibraryPage';
+import { lazy, Suspense } from 'react';
+
+const LibraryPage = lazy(() => import('./pages/LibraryPage'));
 import { AuthPage } from '@/pages/AuthPage';
 import { LegalPage } from '@/pages/LegalPage';
 import { AuthProvider } from '@/hooks/useAuth';
@@ -22,7 +24,9 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
 
           {/* 📚 Library */}
-          <Route path="/library" element={<LibraryPage />} />
+          <Suspense fallback={<div className="text-white p-10">Cargando...</div>}>
+  <Route path="/library" element={<LibraryPage />} />
+</Suspense>
 
           {/* ⚖️ Legal */}
           <Route
