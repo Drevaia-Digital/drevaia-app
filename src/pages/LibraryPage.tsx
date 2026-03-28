@@ -126,11 +126,12 @@ export function LibraryPage() {
 
             {filteredBooks.map((book) => (
               <a
-                key={book.id}
-                href={book.buy_url}
-                target="_blank"
-                className="group"
-              >
+  key={book.id}
+  href={book.buy_url || "#"}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="group block"
+>
                 <div className="bg-[#151528] rounded-2xl overflow-hidden hover:scale-105 transition">
 
                   <img
@@ -151,6 +152,7 @@ export function LibraryPage() {
                         Ver <ChevronRight className="w-4 h-4 ml-1" />
                       </span>
                     </div>
+
                   </div>
 
                 </div>
