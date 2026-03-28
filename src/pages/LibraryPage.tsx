@@ -2,14 +2,18 @@ import { supabase } from '@/lib/supabase';
 import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, BookOpen } from 'lucide-react';
+import { ChevronRight, BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export function LibraryPage() {
+  const navigate = useNavigate();
+
   const [books, setBooks] = useState<any[]>([]);
   const [filteredBooks, setFilteredBooks] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showTop, setShowTop] = useState(false);
 
   useEffect(() => {
     loadBooks();
@@ -19,33 +23,38 @@ export function LibraryPage() {
     filterBooks();
   }, [searchQuery, selectedCategory, books]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowTop(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   const loadBooks = async () => {
     setLoading(true);
 
     const { data, error } = await supabase
-  .from('books')
-  .select('*');
-
-    console.log("DATA:", data);
-    console.log("ERROR:", error);
+      .from('books')
+      .select('*');
 
     if (error) {
+      console.error(error);
       setLoading(false);
       return;
     }
 
     const mapped = (data || []).map((book: any) => ({
-  ...book,
-  coverImage: book.image || "https://via.placeholder.com/300x400",
-
-  // 🔥 AQUÍ ESTÁ LA CLAVE
-  buy_url:
-    book.buy_url_es ||
-    book.buy_url_en ||
-    book.buy_url_fr ||
-    book.buy_url_pt ||
-    ""
-}));
+      ...book,
+      coverImage: book.image || "https://via.placeholder.com/300x400",
+      buy_url:
+        book.buy_url_es ||
+        book.buy_url_en ||
+        book.buy_url_fr ||
+        book.buy_url_pt ||
+        ""
+    }));
 
     setBooks(mapped);
     setFilteredBooks(mapped);
@@ -70,10 +79,32 @@ export function LibraryPage() {
     setFilteredBooks(result);
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  };
+
+  const goToHome = () => {
+    navigate('/');
+  };
+
   const categories = [...new Set(books.map(b => b.category))];
 
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white">
+
+      {/* 🔥 BOTÓN VOLVER AL INICIO */}
+      <div className="max-w-7xl mx-auto px-4 pt-6">
+        <button
+          onClick={goToHome}
+          className="text-sm text-gray-400 hover:text-white flex items-center gap-2 transition"
+        >
+          <ArrowLeft className="w-4 h-4" />
+          Volver al inicio
+        </button>
+      </div>
 
       {/* HERO */}
       <section className="py-16 text-center">
@@ -81,7 +112,7 @@ export function LibraryPage() {
           Biblioteca Drevaia
         </h1>
         <p className="text-gray-400">
-          {books.length} ebooks disponibles
+          {filteredBooks.length} ebooks disponibles
         </p>
       </section>
 
@@ -134,13 +165,13 @@ export function LibraryPage() {
 
             {filteredBooks.map((book) => (
               <a
-  key={book.id}
-  href={book.buy_url || "#"}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="group block"
->
-                <div className="bg-[#151528] rounded-2xl overflow-hidden hover:scale-105 transition">
+                key={book.id}
+                href={book.buy_url || "#"}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block"
+              >
+                <div className="bg-[#151528] rounded-2xl overflow-hidden hover:scale-105 hover:shadow-xl transition-all duration-300">
 
                   <img
                     src={book.coverImage}
@@ -171,6 +202,16 @@ export function LibraryPage() {
         )}
 
       </section>
+
+      {/* 🔥 BOTÓN FLOTANTE */}
+      {showTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-110 text-white p-3 rounded-full shadow-xl transition-all duration-300"
+        >
+          <ChevronUp className="w-5 h-5" />
+        </button>
+      )}
 
     </div>
   );
