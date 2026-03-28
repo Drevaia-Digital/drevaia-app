@@ -35,9 +35,17 @@ export function LibraryPage() {
     }
 
     const mapped = (data || []).map((book: any) => ({
-      ...book,
-      coverImage: book.image || "https://via.placeholder.com/300x400"
-    }));
+  ...book,
+  coverImage: book.image || "https://via.placeholder.com/300x400",
+
+  // 🔥 AQUÍ ESTÁ LA CLAVE
+  buy_url:
+    book.buy_url_es ||
+    book.buy_url_en ||
+    book.buy_url_fr ||
+    book.buy_url_pt ||
+    ""
+}));
 
     setBooks(mapped);
     setFilteredBooks(mapped);
