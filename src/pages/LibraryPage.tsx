@@ -40,7 +40,7 @@ export function LibraryPage({ language }: LibraryPageProps) {
     setLoading(true);
 
     const { data, error } = await supabase
-      .from('books')
+      .from('public.books')
       .select('id,title,subtitle,description,price,image,category,buy_url_es,buy_url_en,buy_url_fr,buy_url_pt');
 
     if (error) {
@@ -178,8 +178,7 @@ function BookCard({ book }: any) {
       rel="noopener noreferrer"
       className="group"
     >
-      <div className="bg-[#151528] border border-white/15 shadow-md rounded-2xl p-5 
-                      hover:scale-105 hover:shadow-xl transition-all duration-300">
+      <div className="bg-white text-black rounded-2xl p-5">
 
         <img
           src={book.coverImage}
