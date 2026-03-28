@@ -16,15 +16,8 @@ interface Book {
   description: string;
   author: string;
   price: number;
-  currency: string;
-  pages: number;
-  slug: string;
   coverImage: string;
-  tags: string[];
   category: string;
-  featured: boolean;
-  new: boolean;
-  bestseller: boolean;
   buy_url: string;
 }
 
@@ -33,6 +26,7 @@ export function LibraryPage({ language }: LibraryPageProps) {
   const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadBooks();
@@ -43,26 +37,28 @@ export function LibraryPage({ language }: LibraryPageProps) {
   }, [searchQuery, selectedCategory, books]);
 
   const loadBooks = async () => {
+    setLoading(true);
+
     const { data, error } = await supabase
       .from('books')
       .select('id,title,subtitle,description,price,image,category,buy_url_es,buy_url_en,buy_url_fr,buy_url_pt');
 
     if (error) {
-      console.error(error);
+      console.error("SUPABASE ERROR:", error);
+      setLoading(false);
       return;
     }
 
-    const mapped = data.map((book: any) => ({
+    console.log("DATA SUPABASE:", data);
+
+    const mapped = (data || []).map((book: any) => ({
       id: book.id,
-      title: book.title,
+      title: book.title || "Sin título",
       subtitle: book.subtitle || "",
       description: book.description || "",
       author: "Noa Drevaia",
-      price: book.price,
-      currency: "USD",
-      pages: 0,
-      slug: book.title.toLowerCase().replace(/\s+/g, "-"),
-      coverImage: book.image, // ✅ URL directa desde Supabase
+      price: book.price || 0,
+      coverImage: book.image || "https://via.placeholder.com/300x400",
       buy_url:
         language === 'es'
           ? book.buy_url_es
@@ -71,15 +67,12 @@ export function LibraryPage({ language }: LibraryPageProps) {
           : language === 'fr'
           ? book.buy_url_fr
           : book.buy_url_pt,
-      tags: [],
-      category: book.category,
-      featured: true,
-      new: false,
-      bestseller: false
+      category: book.category || "General"
     }));
 
     setBooks(mapped);
     setFilteredBooks(mapped);
+    setLoading(false);
   };
 
   const filterBooks = () => {
@@ -113,7 +106,7 @@ export function LibraryPage({ language }: LibraryPageProps) {
       </section>
 
       {/* BUSCADOR */}
-      <section className="py-6 border-b border-white/10 relative z-10">
+      <section className="py-6 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-4">
 
           <Input
@@ -128,11 +121,9 @@ export function LibraryPage({ language }: LibraryPageProps) {
             <Button
               size="sm"
               onClick={() => setSelectedCategory(null)}
-              className={`${
-                selectedCategory === null
-                  ? 'bg-gradient-to-r from-purple-600 to-amber-400'
-                  : 'bg-[#1a1a2e] border border-white/20'
-              }`}
+              className={selectedCategory === null
+                ? 'bg-gradient-to-r from-purple-600 to-amber-400'
+                : 'bg-[#1a1a2e] border border-white/20'}
             >
               Todos
             </Button>
@@ -142,11 +133,9 @@ export function LibraryPage({ language }: LibraryPageProps) {
                 key={cat}
                 size="sm"
                 onClick={() => setSelectedCategory(cat)}
-                className={`${
-                  selectedCategory === cat
-                    ? 'bg-gradient-to-r from-purple-600 to-amber-400'
-                    : 'bg-[#1a1a2e] border border-white/20'
-                }`}
+                className={selectedCategory === cat
+                  ? 'bg-gradient-to-r from-purple-600 to-amber-400'
+                  : 'bg-[#1a1a2e] border border-white/20'}
               >
                 {cat}
               </Button>
@@ -157,7 +146,17 @@ export function LibraryPage({ language }: LibraryPageProps) {
       </section>
 
       {/* LIBROS */}
-      <section className="py-16 max-w-7xl mx-auto px-4 relative z-20">
+      <section className="py-16 max-w-7xl mx-auto px-4">
+
+        {loading && (
+          <p className="text-center text-gray-400">Cargando libros...</p>
+        )}
+
+        {!loading && filteredBooks.length === 0 && (
+          <p className="text-center text-gray-500">
+            No hay libros disponibles
+          </p>
+        )}
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {filteredBooks.map((book) => (
@@ -182,12 +181,9 @@ function BookCard({ book }: any) {
       <div className="bg-[#151528] border border-white/15 shadow-md rounded-2xl p-5 
                       hover:scale-105 hover:shadow-xl transition-all duration-300">
 
-        {/* IMAGEN CORREGIDA */}
         <img
           src={book.coverImage}
           alt={book.title}
-          loading="lazy"
-          decoding="async"
           className="w-full h-64 object-cover mb-4 rounded-xl"
         />
 
