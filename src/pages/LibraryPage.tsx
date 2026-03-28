@@ -1,36 +1,19 @@
 import { supabase } from '@/lib/supabase';
 import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { ChevronRight } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import type { Language } from '@/i18n';
+import { Button } from '@/components/ui/button';
+import { ChevronRight, BookOpen } from 'lucide-react';
 
-interface LibraryPageProps {
-  language: Language;
-}
-
-interface Book {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  author: string;
-  price: number;
-  coverImage: string;
-  category: string;
-  buy_url: string;
-}
-
-export function LibraryPage({ language }: LibraryPageProps) {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [filteredBooks, setFilteredBooks] = useState<Book[]>([]);
+export function LibraryPage() {
+  const [books, setBooks] = useState<any[]>([]);
+  const [filteredBooks, setFilteredBooks] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadBooks();
-  }, [language]);
+  }, []);
 
   useEffect(() => {
     filterBooks();
@@ -40,34 +23,20 @@ export function LibraryPage({ language }: LibraryPageProps) {
     setLoading(true);
 
     const { data, error } = await supabase
-      .from('public.books')
-      .select('id,title,subtitle,description,price,image,category,buy_url_es,buy_url_en,buy_url_fr,buy_url_pt');
+  .from('books')
+  .select('*');
+
+    console.log("DATA:", data);
+    console.log("ERROR:", error);
 
     if (error) {
-      console.error("SUPABASE ERROR:", error);
       setLoading(false);
       return;
     }
 
-    console.log("DATA SUPABASE:", data);
-
     const mapped = (data || []).map((book: any) => ({
-      id: book.id,
-      title: book.title || "Sin título",
-      subtitle: book.subtitle || "",
-      description: book.description || "",
-      author: "Noa Drevaia",
-      price: book.price || 0,
-      coverImage: book.image || "https://via.placeholder.com/300x400",
-      buy_url:
-        language === 'es'
-          ? book.buy_url_es
-          : language === 'en'
-          ? book.buy_url_en
-          : language === 'fr'
-          ? book.buy_url_fr
-          : book.buy_url_pt,
-      category: book.category || "General"
+      ...book,
+      coverImage: book.image || "https://via.placeholder.com/300x400"
     }));
 
     setBooks(mapped);
@@ -81,8 +50,8 @@ export function LibraryPage({ language }: LibraryPageProps) {
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       result = result.filter(book =>
-        book.title.toLowerCase().includes(q) ||
-        book.description.toLowerCase().includes(q)
+        book.title?.toLowerCase().includes(q) ||
+        book.description?.toLowerCase().includes(q)
       );
     }
 
@@ -100,12 +69,15 @@ export function LibraryPage({ language }: LibraryPageProps) {
 
       {/* HERO */}
       <section className="py-16 text-center">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+        <h1 className="text-4xl font-bold mb-4">
           Biblioteca Drevaia
         </h1>
+        <p className="text-gray-400">
+          {books.length} ebooks disponibles
+        </p>
       </section>
 
-      {/* BUSCADOR */}
+      {/* SEARCH */}
       <section className="py-6 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-4">
 
@@ -113,98 +85,83 @@ export function LibraryPage({ language }: LibraryPageProps) {
             placeholder="Buscar libros..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-[#1a1a2e] border border-white/20 text-white placeholder:text-gray-400 w-full md:max-w-md"
+            className="bg-[#1a1a2e] border border-white/20"
           />
 
           <div className="flex gap-2 overflow-x-auto">
-
-            <Button
-              size="sm"
-              onClick={() => setSelectedCategory(null)}
-              className={selectedCategory === null
-                ? 'bg-gradient-to-r from-purple-600 to-amber-400'
-                : 'bg-[#1a1a2e] border border-white/20'}
-            >
+            <Button onClick={() => setSelectedCategory(null)}>
               Todos
             </Button>
 
             {categories.map((cat) => (
-              <Button
-                key={cat}
-                size="sm"
-                onClick={() => setSelectedCategory(cat)}
-                className={selectedCategory === cat
-                  ? 'bg-gradient-to-r from-purple-600 to-amber-400'
-                  : 'bg-[#1a1a2e] border border-white/20'}
-              >
+              <Button key={cat} onClick={() => setSelectedCategory(cat)}>
                 {cat}
               </Button>
             ))}
-
           </div>
+
         </div>
       </section>
 
-      {/* LIBROS */}
+      {/* CONTENT */}
       <section className="py-16 max-w-7xl mx-auto px-4">
 
         {loading && (
-          <p className="text-center text-gray-400">Cargando libros...</p>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            {[1,2,3,4].map(i => (
+              <div key={i} className="h-64 bg-[#1a1a2e] animate-pulse rounded-xl" />
+            ))}
+          </div>
         )}
 
         {!loading && filteredBooks.length === 0 && (
-          <p className="text-center text-gray-500">
+          <div className="text-center py-16 text-gray-400">
+            <BookOpen className="mx-auto mb-4 w-12 h-12 opacity-50" />
             No hay libros disponibles
-          </p>
+          </div>
         )}
 
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {filteredBooks.map((book) => (
-            <BookCard key={book.id} book={book} />
-          ))}
-        </div>
+        {!loading && filteredBooks.length > 0 && (
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+            {filteredBooks.map((book) => (
+              <a
+                key={book.id}
+                href={book.buy_url}
+                target="_blank"
+                className="group"
+              >
+                <div className="bg-[#151528] rounded-2xl overflow-hidden hover:scale-105 transition">
+
+                  <img
+                    src={book.coverImage}
+                    className="w-full h-64 object-cover"
+                  />
+
+                  <div className="p-4">
+                    <h3 className="font-bold mb-1">{book.title}</h3>
+                    <p className="text-sm text-gray-400">{book.subtitle}</p>
+
+                    <div className="flex justify-between mt-3">
+                      <span className="text-amber-400 font-bold">
+                        ${book.price}
+                      </span>
+
+                      <span className="flex items-center text-purple-400 text-sm">
+                        Ver <ChevronRight className="w-4 h-4 ml-1" />
+                      </span>
+                    </div>
+                  </div>
+
+                </div>
+              </a>
+            ))}
+
+          </div>
+        )}
 
       </section>
 
     </div>
-  );
-}
-
-function BookCard({ book }: any) {
-  return (
-    <a
-      href={book.buy_url || '#'}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="group"
-    >
-      <div className="bg-white text-black rounded-2xl p-5">
-
-        <img
-          src={book.coverImage}
-          alt={book.title}
-          className="w-full h-64 object-cover mb-4 rounded-xl"
-        />
-
-        <h3 className="text-white font-bold mb-1">
-          {book.title}
-        </h3>
-
-        <p className="text-gray-400 text-sm mb-3">
-          {book.subtitle}
-        </p>
-
-        <div className="flex justify-between items-center mt-auto">
-          <span className="text-amber-300 font-bold text-lg">
-            ${book.price}
-          </span>
-
-          <span className="text-sm text-purple-400 flex items-center">
-            Ver más <ChevronRight className="w-4 h-4 ml-1" />
-          </span>
-        </div>
-
-      </div>
-    </a>
   );
 }

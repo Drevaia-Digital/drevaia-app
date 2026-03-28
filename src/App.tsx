@@ -22,7 +22,7 @@ export default function App() {
           <Route path="/" element={<HomePage />} />
 
           {/* 📚 Library */}
-          <Route path="/library" element={<LibraryPage language={language} />} />
+          <Route path="/library" element={<LibraryPage />} />
 
           {/* ⚖️ Legal */}
           <Route
