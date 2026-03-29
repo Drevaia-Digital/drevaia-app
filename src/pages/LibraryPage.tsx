@@ -118,13 +118,13 @@ export default function LibraryPage() {
 
       {/* SEARCH */}
       <section className="py-6 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col md:flex-row gap-4">
+        <div className="max-w-7xl mx-auto px-4 flex flex-col gap-4 items-center">
 
           <Input
             placeholder="Buscar libros..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-[#1a1a2e] border border-white/20"
+            className="bg-[#1a1a2e] border border-white/20 w-full max-w-2xl mx-auto"
           />
 
           <div className="flex gap-2 overflow-x-auto">
