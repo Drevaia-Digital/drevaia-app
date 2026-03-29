@@ -32,18 +32,34 @@ export default function LibraryPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // 🔥 LOAD CON CACHE (SIN ROMPER NADA)
   const loadBooks = async () => {
     setLoading(true);
 
     try {
+      // ⚡ 1. CACHE INSTANTÁNEO
+      const cached = localStorage.getItem('books_cache');
+
+      if (cached) {
+        const parsed = JSON.parse(cached);
+        setBooks(parsed);
+        setFilteredBooks(parsed);
+      }
+
+      // 🌐 2. FETCH REAL
       const { data, error } = await supabase
         .from('books')
         .select('*');
 
       if (error) {
         console.error(error);
-        setBooks([]);
-        setFilteredBooks([]);
+
+        // solo limpia si no hay cache
+        if (!cached) {
+          setBooks([]);
+          setFilteredBooks([]);
+        }
+
       } else {
         const mapped = (data || []).map((book: any) => ({
           ...book,
@@ -58,11 +74,13 @@ export default function LibraryPage() {
 
         setBooks(mapped);
         setFilteredBooks(mapped);
+
+        // 💾 guardar cache
+        localStorage.setItem('books_cache', JSON.stringify(mapped));
       }
+
     } catch (err) {
       console.error("Error inesperado:", err);
-      setBooks([]);
-      setFilteredBooks([]);
     }
 
     setLoading(false);
@@ -97,8 +115,9 @@ export default function LibraryPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-white">
-        Cargando ebooks...
+      <div className="min-h-screen bg-[#0f0f1a] flex flex-col items-center justify-center text-white gap-4">
+        <div className="w-10 h-10 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+        <p className="text-sm text-gray-400">Cargando biblioteca...</p>
       </div>
     );
   }
@@ -177,17 +196,14 @@ export default function LibraryPage() {
 
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[#151528] transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-black/40">
 
-                  {/* Imagen */}
                   <img
                     src={book.coverImage}
                     loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
 
-                  {/* Gradiente */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition duration-300 pointer-events-none" />
 
-                  {/* Contenido */}
                   <div className="absolute bottom-0 left-0 right-0 p-4 
                     translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 
                     opacity-100 md:opacity-0 md:group-hover:opacity-100 
@@ -217,7 +233,6 @@ export default function LibraryPage() {
 
       </section>
 
-      {/* BOTÓN SUBIR */}
       {showTop && (
         <button
           onClick={scrollToTop}
