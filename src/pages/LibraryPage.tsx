@@ -37,7 +37,7 @@ export default function LibraryPage() {
 
     const { data, error } = await supabase
       .from('books')
-      .select('id,title,image,price,category,buy_url_es,buy_url_en,buy_url_fr,buy_url_pt')
+      .select('*')
 
     if (error) {
       console.error(error);
@@ -92,8 +92,16 @@ export default function LibraryPage() {
 
   const categories = [...new Set(books.map(b => b.category))];
 
+if (loading) {
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white">
+    <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-white">
+      Cargando ebooks...
+    </div>
+  );
+}
+
+  return (
+    <div className="min-h-screen bg-[#0f0f1a] text-white overflow-x-hidden">
 
       {/* 🔥 BOTÓN VOLVER AL INICIO */}
       <div className="max-w-7xl mx-auto px-4 pt-6">
