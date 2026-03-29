@@ -34,57 +34,49 @@ export default function LibraryPage() {
 
   // 🔥 LOAD CON CACHE (SIN ROMPER NADA)
   const loadBooks = async () => {
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      // ⚡ 1. CACHE INSTANTÁNEO
-      const cached = localStorage.getItem('books_cache');
+  try {
+    const cached = localStorage.getItem('books_cache');
 
-      if (cached) {
+    if (cached) {
+      try {
         const parsed = JSON.parse(cached);
         setBooks(parsed);
         setFilteredBooks(parsed);
+      } catch {
+        localStorage.removeItem('books_cache');
       }
-
-      // 🌐 2. FETCH REAL
-      const { data, error } = await supabase
-        .from('books')
-        .select('*');
-
-      if (error) {
-        console.error(error);
-
-        // solo limpia si no hay cache
-        if (!cached) {
-          setBooks([]);
-          setFilteredBooks([]);
-        }
-
-      } else {
-        const mapped = (data || []).map((book: any) => ({
-          ...book,
-          coverImage: book.image || "https://via.placeholder.com/300x400",
-          buy_url:
-            book.buy_url_es ||
-            book.buy_url_en ||
-            book.buy_url_fr ||
-            book.buy_url_pt ||
-            ""
-        }));
-
-        setBooks(mapped);
-        setFilteredBooks(mapped);
-
-        // 💾 guardar cache
-        localStorage.setItem('books_cache', JSON.stringify(mapped));
-      }
-
-    } catch (err) {
-      console.error("Error inesperado:", err);
     }
 
-    setLoading(false);
-  };
+    const { data, error } = await supabase
+      .from('books')
+      .select('*');
+
+    if (!error && data) {
+      const mapped = data.map((book: any) => ({
+        ...book,
+        coverImage: book.image || "https://via.placeholder.com/300x400",
+        buy_url:
+          book.buy_url_es ||
+          book.buy_url_en ||
+          book.buy_url_fr ||
+          book.buy_url_pt ||
+          ""
+      }));
+
+      setBooks(mapped);
+      setFilteredBooks(mapped);
+      localStorage.setItem('books_cache', JSON.stringify(mapped));
+    }
+
+  } catch (err) {
+    console.error("Error inesperado:", err);
+  }
+
+  // 🔥 GARANTÍA TOTAL
+  setLoading(false);
+};
 
   const filterBooks = () => {
     let result = [...books];
