@@ -21,12 +21,17 @@ export default function App() {
         <Routes>
 
           {/* 🏠 Home */}
-          <Route path="/" element={<HomePage />} />
+<Route path="/" element={<HomePage />} />
 
-          {/* 📚 Library */}
-          <Suspense fallback={<div className="text-white p-10">Cargando...</div>}>
-  <Route path="/library" element={<LibraryPage />} />
-</Suspense>
+{/* 📚 Library */}
+<Route
+  path="/library"
+  element={
+    <Suspense fallback={<div className="text-white p-10">Cargando...</div>}>
+      <LibraryPage />
+    </Suspense>
+  }
+/>
 
           {/* ⚖️ Legal */}
           <Route
