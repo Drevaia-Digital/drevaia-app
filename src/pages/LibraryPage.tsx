@@ -37,18 +37,7 @@ export default function LibraryPage() {
 
     const { data, error } = await supabase
       .from('books')
-      .select(`
-  id,
-  title,
-  subtitle,
-  image,
-  price,
-  category,
-  buy_url_es,
-  buy_url_en,
-  buy_url_fr,
-  buy_url_pt
-`)
+      .select('id,title,image,price,category,buy_url_es,buy_url_en,buy_url_fr,buy_url_pt')
 
     if (error) {
       console.error(error);
