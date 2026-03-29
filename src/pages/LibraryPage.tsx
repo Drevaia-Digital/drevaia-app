@@ -177,14 +177,15 @@ export default function LibraryPage() {
         {filteredBooks.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
-            {filteredBooks.map((book) => (
-              <a
-                key={book.id}
-                href={book.buy_url || undefined}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="group block"
-              >
+            {filteredBooks.map((book, index) => (
+  <a
+  key={book.id}
+  href={book.buy_url || undefined}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="group block fade-up"
+  style={{ animationDelay: `${index * 80}ms` }}
+>
 
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[#151528] transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-black/40">
 
