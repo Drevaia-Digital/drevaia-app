@@ -15,6 +15,7 @@ export default function LibraryPage() {
   const [loading, setLoading] = useState(true);
   const [showTop, setShowTop] = useState(false);
 
+  // 🔥 CARGAR LIBROS (FIX DEFINITIVO)
   useEffect(() => {
     loadBooks();
   }, []);
@@ -35,29 +36,36 @@ export default function LibraryPage() {
   const loadBooks = async () => {
     setLoading(true);
 
-    const { data, error } = await supabase
-      .from('books')
-      .select('*')
+    try {
+      const { data, error } = await supabase
+        .from('books')
+        .select('*');
 
-    if (error) {
-      console.error(error);
-      setLoading(false);
-      return;
+      if (error) {
+        console.error(error);
+        setBooks([]);
+        setFilteredBooks([]);
+      } else {
+        const mapped = (data || []).map((book: any) => ({
+          ...book,
+          coverImage: book.image || "https://via.placeholder.com/300x400",
+          buy_url:
+            book.buy_url_es ||
+            book.buy_url_en ||
+            book.buy_url_fr ||
+            book.buy_url_pt ||
+            ""
+        }));
+
+        setBooks(mapped);
+        setFilteredBooks(mapped);
+      }
+    } catch (err) {
+      console.error("Error inesperado:", err);
+      setBooks([]);
+      setFilteredBooks([]);
     }
 
-    const mapped = (data || []).map((book: any) => ({
-      ...book,
-      coverImage: book.image || "https://via.placeholder.com/300x400",
-      buy_url:
-        book.buy_url_es ||
-        book.buy_url_en ||
-        book.buy_url_fr ||
-        book.buy_url_pt ||
-        ""
-    }));
-
-    setBooks(mapped);
-    setFilteredBooks(mapped);
     setLoading(false);
   };
 
@@ -67,8 +75,7 @@ export default function LibraryPage() {
     if (searchQuery) {
       const q = searchQuery.toLowerCase();
       result = result.filter(book =>
-        book.title?.toLowerCase().includes(q) ||
-        book.description?.toLowerCase().includes(q)
+        book.title?.toLowerCase().includes(q)
       );
     }
 
@@ -80,10 +87,7 @@ export default function LibraryPage() {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   const goToHome = () => {
@@ -92,19 +96,20 @@ export default function LibraryPage() {
 
   const categories = [...new Set(books.map(b => b.category))];
 
-if (loading) {
-  return (
-    <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-white">
-      Cargando ebooks...
-    </div>
-  );
-}
+  // 🔥 LOADING (FIX PANTALLA NEGRA)
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-white">
+        Cargando ebooks...
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white overflow-x-hidden">
 
-      {/* 🔥 BOTÓN VOLVER AL INICIO */}
-      <div className="max-w-7xl mx-auto px-4 pt-6">
+      {/* VOLVER */}
+      <div className="max-w-7xl mx-auto px-6 pt-6">
         <button
           onClick={goToHome}
           className="text-sm text-gray-400 hover:text-white flex items-center gap-2 transition"
@@ -124,24 +129,28 @@ if (loading) {
         </p>
       </section>
 
-      {/* SEARCH */}
+      {/* BUSCADOR */}
       <section className="py-6 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col gap-4 items-center">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
 
           <Input
             placeholder="Buscar libros..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-[#1a1a2e] border border-white/20 w-full max-w-2xl mx-auto"
+            className="bg-[#1a1a2e] border border-white/20 w-full max-w-md"
           />
 
-          <div className="flex gap-2 overflow-x-auto">
-            <Button onClick={() => setSelectedCategory(null)}>
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            <Button onClick={() => setSelectedCategory(null)} className="whitespace-nowrap">
               Todos
             </Button>
 
             {categories.map((cat) => (
-              <Button key={cat} onClick={() => setSelectedCategory(cat)}>
+              <Button
+                key={cat}
+                onClick={() => setSelectedCategory(cat)}
+                className="whitespace-nowrap"
+              >
                 {cat}
               </Button>
             ))}
@@ -150,31 +159,23 @@ if (loading) {
         </div>
       </section>
 
-      {/* CONTENT */}
-      <section className="py-16 max-w-7xl mx-auto px-4">
+      {/* LIBROS */}
+      <section className="py-16 max-w-7xl mx-auto px-6 relative z-20">
 
-        {loading && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {[1,2,3,4].map(i => (
-              <div key={i} className="h-64 bg-[#1a1a2e] animate-pulse rounded-xl" />
-            ))}
-          </div>
-        )}
-
-        {!loading && filteredBooks.length === 0 && (
+        {filteredBooks.length === 0 && (
           <div className="text-center py-16 text-gray-400">
             <BookOpen className="mx-auto mb-4 w-12 h-12 opacity-50" />
             No hay libros disponibles
           </div>
         )}
 
-        {!loading && filteredBooks.length > 0 && (
+        {filteredBooks.length > 0 && (
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
             {filteredBooks.map((book) => (
               <a
                 key={book.id}
-                href={book.buy_url || "#"}
+                href={book.buy_url || undefined}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group block"
@@ -182,14 +183,13 @@ if (loading) {
                 <div className="bg-[#151528] rounded-2xl overflow-hidden hover:scale-105 hover:shadow-xl transition-all duration-300">
 
                   <img
-  src={book.coverImage}
-  loading="lazy"
-  className="w-full h-64 object-cover"
-/>
+                    src={book.coverImage}
+                    loading="lazy"
+                    className="w-full h-64 object-cover"
+                  />
 
                   <div className="p-4">
                     <h3 className="font-bold mb-1">{book.title}</h3>
-                    <p className="text-sm text-gray-400">{book.subtitle}</p>
 
                     <div className="flex justify-between mt-3">
                       <span className="text-amber-400 font-bold">
@@ -212,7 +212,7 @@ if (loading) {
 
       </section>
 
-      {/* 🔥 BOTÓN FLOTANTE */}
+      {/* BOTÓN SUBIR */}
       {showTop && (
         <button
           onClick={scrollToTop}
