@@ -15,7 +15,6 @@ export default function LibraryPage() {
   const [loading, setLoading] = useState(true);
   const [showTop, setShowTop] = useState(false);
 
-  // 🔥 CARGAR LIBROS (FIX DEFINITIVO)
   useEffect(() => {
     loadBooks();
   }, []);
@@ -96,7 +95,6 @@ export default function LibraryPage() {
 
   const categories = [...new Set(books.map(b => b.category))];
 
-  // 🔥 LOADING (FIX PANTALLA NEGRA)
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-white">
@@ -141,20 +139,15 @@ export default function LibraryPage() {
           />
 
           <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
-            <Button
-  onClick={() => setSelectedCategory(null)}
->
-  Todos
-</Button>
+            <Button onClick={() => setSelectedCategory(null)}>
+              Todos
+            </Button>
 
             {categories.map((cat) => (
-  <Button
-    key={cat}
-    onClick={() => setSelectedCategory(cat)}
-  >
-    {cat}
-  </Button>
-))}
+              <Button key={cat} onClick={() => setSelectedCategory(cat)}>
+                {cat}
+              </Button>
+            ))}
           </div>
 
         </div>
@@ -181,30 +174,41 @@ export default function LibraryPage() {
                 rel="noopener noreferrer"
                 className="group block"
               >
-                <div className="bg-[#151528] rounded-2xl overflow-hidden hover:scale-105 hover:shadow-xl transition-all duration-300">
 
+                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[#151528] transition-all duration-300 hover:scale-[1.03] hover:shadow-2xl hover:shadow-black/40">
+
+                  {/* Imagen */}
                   <img
                     src={book.coverImage}
                     loading="lazy"
-                    className="w-full h-64 object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
 
-                  <div className="p-4">
-                    <h3 className="font-bold mb-1">{book.title}</h3>
+                  {/* Gradiente */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition duration-300 pointer-events-none" />
 
-                    <div className="flex justify-between mt-3">
-                      <span className="text-amber-400 font-bold">
-                        ${book.price}
-                      </span>
+                  {/* Contenido */}
+                  <div className="absolute bottom-0 left-0 right-0 p-4 
+                    translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 
+                    opacity-100 md:opacity-0 md:group-hover:opacity-100 
+                    transition-all duration-300">
 
-                      <span className="flex items-center text-purple-400 text-sm">
-                        Ver <ChevronRight className="w-4 h-4 ml-1" />
-                      </span>
-                    </div>
+                    <h3 className="text-white text-sm font-semibold line-clamp-2">
+                      {book.title}
+                    </h3>
+
+                    <p className="text-amber-400 text-sm font-bold mt-1">
+                      ${book.price}
+                    </p>
+
+                    <span className="inline-flex items-center mt-2 text-xs text-purple-300">
+                      Ver <ChevronRight className="w-4 h-4 ml-1" />
+                    </span>
 
                   </div>
 
                 </div>
+
               </a>
             ))}
 
