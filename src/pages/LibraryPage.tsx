@@ -143,11 +143,11 @@ export default function LibraryPage() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
 
           <Input
-            placeholder="Buscar libros..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-            className="bg-[#1a1a2e] border border-white/20 w-full max-w-md"
-          />
+  placeholder="Buscar libros..."
+  value={searchQuery}
+  onChange={(e) => setSearchQuery(e.target.value)}
+  className="bg-[#1a1a2e] border border-white/20 w-full max-w-md text-base"
+/>
 
           <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
             <Button onClick={() => setSelectedCategory(null)}>
