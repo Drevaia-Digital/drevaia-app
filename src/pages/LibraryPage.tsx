@@ -140,10 +140,9 @@ export default function LibraryPage() {
             className="bg-[#1a1a2e] border border-white/20 w-full max-w-md"
           />
 
-          <div className="flex gap-2 overflow-x-auto pb-2 scrollbar-hide snap-x snap-mandatory">
+          <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
             <Button
   onClick={() => setSelectedCategory(null)}
-  className="whitespace-nowrap snap-start"
 >
   Todos
 </Button>
@@ -152,7 +151,6 @@ export default function LibraryPage() {
   <Button
     key={cat}
     onClick={() => setSelectedCategory(cat)}
-    className="whitespace-nowrap snap-start"
   >
     {cat}
   </Button>
