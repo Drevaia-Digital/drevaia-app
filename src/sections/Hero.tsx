@@ -137,7 +137,40 @@ return () => {
 </Link>
 
           <Link to="/library">
-  <Button className="group bg-gradient-to-r from-purple-600 to-amber-400 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300">
+  <Button
+    onMouseEnter={async () => {
+      if (!localStorage.getItem('books_cache')) {
+        try {
+          const res = await fetch(
+            'https://hkjiqihczalnekzuwjtw.supabase.co/rest/v1/books?select=*',
+            {
+              headers: {
+                apikey: 'sb_publishable_7xUGlgvxEncNPPSO646vsw_LB30RW5Q',
+              },
+            }
+          );
+
+          const data = await res.json();
+
+          const mapped = (data || []).map((book: any) => ({
+            ...book,
+            coverImage: book.image || "https://via.placeholder.com/300x400",
+            buy_url:
+              book.buy_url_es ||
+              book.buy_url_en ||
+              book.buy_url_fr ||
+              book.buy_url_pt ||
+              ""
+          }));
+
+          localStorage.setItem('books_cache', JSON.stringify(mapped));
+        } catch (err) {
+          console.error('Prefetch error:', err);
+        }
+      }
+    }}
+    className="group bg-gradient-to-r from-purple-600 to-amber-400 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300"
+  >
     Explorar ebooks
     <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
   </Button>

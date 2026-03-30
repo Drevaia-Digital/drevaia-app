@@ -106,13 +106,23 @@ export default function LibraryPage() {
   const categories = [...new Set(books.map(b => b.category))];
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0f0f1a] flex flex-col items-center justify-center text-white gap-4">
-        <div className="w-10 h-10 border-2 border-white/30 border-t-white rounded-full animate-spin" />
-        <p className="text-sm text-gray-400">Cargando biblioteca...</p>
+  return (
+    <div className="min-h-screen bg-[#0f0f1a] px-6 py-16">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+
+        {[...Array(8)].map((_, i) => (
+          <div
+            key={i}
+            className="relative aspect-[3/4] rounded-2xl bg-[#151528] overflow-hidden"
+          >
+            <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-white/5 to-white/10" />
+          </div>
+        ))}
+
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white overflow-x-hidden">
@@ -190,51 +200,58 @@ export default function LibraryPage() {
                 <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[#151528] transition-all duration-300 hover:scale-[1.05] hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)] hover:shadow-purple-500/20">
 
                   <img
-                    src={book.coverImage}
-                    loading="lazy"
-                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  />
+  src={book.coverImage}
+  loading="lazy"
+  onLoad={(e) => {
+    e.currentTarget.style.opacity = '1';
+  }}
+  style={{
+    opacity: 0,
+    transition: 'opacity 0.5s ease'
+  }}
+  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+/>
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition duration-300 pointer-events-none" />
+<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition duration-300 pointer-events-none" />
 
-                  <div className="absolute bottom-0 left-0 right-0 p-4 
-                    translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 
-                    opacity-100 md:opacity-0 md:group-hover:opacity-100 
-                    transition-all duration-300">
+<div className="absolute bottom-0 left-0 right-0 p-4 
+  translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 
+  opacity-100 md:opacity-0 md:group-hover:opacity-100 
+  transition-all duration-300">
 
-                    <h3 className="text-white text-sm font-semibold line-clamp-2">
-                      {book.title}
-                    </h3>
+  <h3 className="text-white text-sm font-semibold line-clamp-2">
+    {book.title}
+  </h3>
 
-                    <p className="text-amber-400 text-sm font-bold mt-1">
-                      ${book.price}
-                    </p>
+  <p className="text-amber-400 text-sm font-bold mt-1">
+    ${book.price}
+  </p>
 
-                    <span className="inline-flex items-center mt-2 text-xs text-purple-300">
-                      Ver <ChevronRight className="w-4 h-4 ml-1" />
-                    </span>
+  <span className="inline-flex items-center mt-2 text-xs text-purple-300">
+    Ver <ChevronRight className="w-4 h-4 ml-1" />
+  </span>
 
-                  </div>
+</div>
 
-                </div>
+</div>
 
-              </a>
-            ))}
+</a>
+))}
 
-          </div>
-        )}
+</div>
+)}
 
-      </section>
+</section>
 
-      {showTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-110 text-white p-3 rounded-full shadow-xl transition-all duration-300"
-        >
-          <ChevronUp className="w-5 h-5" />
-        </button>
-      )}
+{showTop && (
+<button
+  onClick={scrollToTop}
+  className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-110 text-white p-3 rounded-full shadow-xl transition-all duration-300"
+>
+  <ChevronUp className="w-5 h-5" />
+</button>
+)}
 
-    </div>
-  );
+</div>
+);
 }
