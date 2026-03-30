@@ -82,7 +82,7 @@ const filtered = collections.filter(col => col.id === language);
 return (
     <section
   id="ebooks"
-  className="relative py-24 bg-gradient-to-b from-purple-50 via-white to-purple-100 dark:from-gray-900 dark:via-gray-900 dark:to-gray-800"
+  className="relative py-24 bg-gradient-to-b from-gray-950 via-gray-950 to-black text-white"
 >
       <div className="relative max-w-7xl mx-auto px-6">
 
@@ -113,7 +113,7 @@ return (
                     key={i}
                     href={book.link}
                     target="_blank"
-                    className="p-6 bg-white/80 backdrop-blur-md rounded-2xl shadow-lg hover:shadow-2xl transition hover:-translate-y-1 border border-purple-100"
+                    className="p-6 bg-white/5 backdrop-blur-md rounded-2xl shadow-lg hover:shadow-2xl transition hover:-translate-y-1 border border-white/10"
                   >
                     <h4 className="font-bold text-lg mb-2">{book.title}</h4>
                     <p className="text-gray-600 text-sm mb-4">
