@@ -246,123 +246,130 @@ export function Testimonials({ language = 'es' }: TestimonialsProps) {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section className="relative py-20 md:py-28 bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden transition-colors duration-300">
-      {/* Background Decoration */}
-      <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-200/30 dark:bg-purple-500/10 rounded-full blur-3xl" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-200/30 dark:bg-amber-500/10 rounded-full blur-3xl" />
+  <section className="relative py-20 md:py-28 bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 text-white overflow-hidden">
 
-      <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12 md:mb-16">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-100 dark:bg-amber-900/50 text-amber-700 dark:text-amber-300 text-sm font-medium mb-6">
-            <Star className="w-4 h-4 fill-amber-500" />
-            {"Testimonios reales"}
-          </div>
-          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
-            {"Historias de transformación real"}
-          </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Personas que ya han transformado su vida desde dentro.
-          </p>
+    {/* Background */}
+    <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
+    <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-amber-500/10 rounded-full blur-3xl" />
+
+    <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      {/* Header */}
+      <div className="text-center mb-12 md:mb-16">
+        <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-300 text-sm font-medium mb-6">
+          <Star className="w-4 h-4 fill-amber-500" />
+          Testimonios reales
         </div>
 
-        {/* Testimonial Card */}
-        <div className="relative max-w-4xl mx-auto">
-          {/* Quote Icon */}
-          <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-purple-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg z-10">
-            <Quote className="w-6 h-6 text-white" />
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
+          Historias de transformación real
+        </h2>
+
+        <p className="text-lg text-gray-300 max-w-2xl mx-auto">
+          Personas que ya han transformado su vida desde dentro.
+        </p>
+      </div>
+
+      {/* Testimonial Card */}
+      <div className="relative max-w-4xl mx-auto">
+
+        <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-12 h-12 bg-gradient-to-br from-purple-500 to-amber-500 rounded-full flex items-center justify-center shadow-lg z-10">
+          <Quote className="w-6 h-6 text-white" />
+        </div>
+
+        <div className="bg-white/5 backdrop-blur-md rounded-3xl shadow-xl border border-white/10 p-8 md:p-12 pt-14">
+
+          <div className="flex justify-center gap-1 mb-6">
+            {[...Array(currentTestimonial.rating)].map((_, i) => (
+              <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
+            ))}
           </div>
 
-          <div className="bg-white dark:bg-gray-800 rounded-3xl shadow-xl border border-gray-100 dark:border-gray-700 p-8 md:p-12 pt-14">
-            {/* Rating */}
-            <div className="flex justify-center gap-1 mb-6">
-              {[...Array(currentTestimonial.rating)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 fill-amber-400 text-amber-400" />
-              ))}
+          <blockquote className="text-center mb-8">
+            <p className="text-lg md:text-xl text-gray-300 leading-relaxed italic">
+              "{currentTestimonial.content}"
+            </p>
+          </blockquote>
+
+          <div className="flex flex-col items-center">
+            <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-amber-400 rounded-full flex items-center justify-center text-2xl font-bold text-white mb-3 shadow-lg">
+              {currentTestimonial.avatar}
             </div>
 
-            {/* Content */}
-            <blockquote className="text-center mb-8">
-              <p className="text-lg md:text-xl text-gray-700 dark:text-gray-300 leading-relaxed italic">
-                "{currentTestimonial.content}"
-              </p>
-            </blockquote>
+            <h4 className="text-lg font-semibold text-white">
+              {currentTestimonial.name}
+            </h4>
 
-            {/* Author */}
-            <div className="flex flex-col items-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-amber-400 rounded-full flex items-center justify-center text-2xl font-bold text-white mb-3 shadow-lg">
-                {currentTestimonial.avatar}
-              </div>
-              <h4 className="text-lg font-semibold text-gray-900 dark:text-white">
-                {currentTestimonial.name}
-              </h4>
-              <p className="text-sm text-purple-600 dark:text-purple-400">
-                {currentTestimonial.role}
-              </p>
-            </div>
-          </div>
-
-          {/* Navigation */}
-          <div className="flex justify-center items-center gap-4 mt-8">
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={goToPrevious}
-              className="rounded-full border-purple-200 dark:border-purple-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 hover:border-purple-300 dark:hover:border-purple-600"
-            >
-              <ChevronLeft className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-            </Button>
-
-            {/* Dots */}
-            <div className="flex gap-2">
-              {testimonials.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => {
-                    stopAutoPlay();
-                    setCurrentIndex(index);
-                    setIsAutoPlaying(false);
-                  }}
-                  className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
-                    index === currentIndex
-                      ? 'bg-purple-600 w-8'
-                      : 'bg-purple-200 dark:bg-purple-700 hover:bg-purple-300 dark:hover:bg-purple-600'
-                  }`}
-                />
-              ))}
-            </div>
-
-            <Button
-              variant="outline"
-              size="icon"
-              onClick={goToNext}
-              className="rounded-full border-purple-200 dark:border-purple-700 hover:bg-purple-50 dark:hover:bg-purple-900/30 hover:border-purple-300 dark:hover:border-purple-600"
-            >
-              <ChevronRight className="w-5 h-5 text-purple-600 dark:text-purple-400" />
-            </Button>
+            <p className="text-sm text-purple-400">
+              {currentTestimonial.role}
+            </p>
           </div>
         </div>
 
-        {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
-          {[
-  { value: '10K+', label: 'Lectores impactados' },
-  { value: '24', label: 'Ebooks creados' },
-  { value: '4', label: 'Idiomas disponibles' },
-  { value: '98%', label: 'Satisfacción' },
-].map((stat, index) => (
-            <div
-              key={index}
-              className="text-center p-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md border border-gray-100 dark:border-gray-700"
-            >
-              <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-600 to-amber-500 bg-clip-text text-transparent mb-2">
-                {stat.value}
-              </div>
-              <div className="text-sm text-gray-600 dark:text-gray-400">{stat.label}</div>
-            </div>
-          ))}
+        {/* Navigation */}
+        <div className="flex justify-center items-center gap-4 mt-8">
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={goToPrevious}
+            className="rounded-full border-white/10 hover:bg-white/5"
+          >
+            <ChevronLeft className="w-5 h-5 text-white/70" />
+          </Button>
+
+          <div className="flex gap-2">
+            {testimonials.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => {
+                  stopAutoPlay();
+                  setCurrentIndex(index);
+                  setIsAutoPlaying(false);
+                }}
+                className={`w-2.5 h-2.5 rounded-full transition-all ${
+                  index === currentIndex
+                    ? 'bg-purple-500 w-8'
+                    : 'bg-white/20 hover:bg-white/40'
+                }`}
+              />
+            ))}
+          </div>
+
+          <Button
+            variant="outline"
+            size="icon"
+            onClick={goToNext}
+            className="rounded-full border-white/10 hover:bg-white/5"
+          >
+            <ChevronRight className="w-5 h-5 text-white/70" />
+          </Button>
         </div>
       </div>
-    </section>
-  );
+
+      {/* Stats */}
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
+        {[
+          { value: '10K+', label: 'Lectores impactados' },
+          { value: '24', label: 'Ebooks creados' },
+          { value: '4', label: 'Idiomas disponibles' },
+          { value: '98%', label: 'Satisfacción' },
+        ].map((stat, index) => (
+          <div
+            key={index}
+            className="text-center p-6 bg-white/5 backdrop-blur rounded-2xl border border-white/10"
+          >
+            <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-purple-400 to-amber-300 bg-clip-text text-transparent mb-2">
+              {stat.value}
+            </div>
+
+            <div className="text-sm text-gray-400">
+              {stat.label}
+            </div>
+          </div>
+        ))}
+      </div>
+
+    </div>
+ </section>
+);
 }
