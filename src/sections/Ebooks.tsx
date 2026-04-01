@@ -90,7 +90,7 @@ return (
           <h2 className="text-4xl font-bold mb-4">
             Biblioteca Drevaia 🔥🔥🔥
           </h2>
-          <p className="text-gray-600 max-w-2xl mx-auto">
+          <p className="text-gray-400 max-w-2xl mx-auto">
             No puedes sanar lo que no escuchas. Tu cuerpo es el diario en el que tu alma escribe.
           </p>
         </div>
@@ -113,16 +113,17 @@ return (
                     key={i}
                     href={book.link}
                     target="_blank"
+                    rel="noopener noreferrer"
                     className="p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 
 shadow-lg transition-all duration-300 ease-out 
 hover:-translate-y-2 hover:scale-[1.02] 
-hover:shadow-2xl hover:shadow-purple-500/10"
+hover:shadow-2xl hover:shadow-[0_0_30px_rgba(168,85,247,0.25)]cursor-pointer"
                   >
                     <h4 className="font-bold text-lg mb-2">{book.title}</h4>
-                    <p className="text-gray-600 text-sm mb-4">
+                    <p className="text-gray-300 text-sm mb-4">
                       {book.description}
                     </p>
-                    <span className="text-purple-600 font-medium">
+                    <span className="text-purple-400 font-medium hover:text-purple-300 transition">
                       Ver ebook →
                     </span>
                   </a>
