@@ -25,12 +25,12 @@ const collections: Collection[] = [
     subtitle: "Sanación emocional profunda",
     flag: "🇪🇸",
     books: [
-      { title: "Sanar desde dentro", description: "Transforma tu mundo emocional", link: "https://payhip.com/b/m0sQ3" },
-      { title: "Reconectar contigo", description: "Vuelve a tu esencia", link: "https://payhip.com/b/wlN02" },
+      { title: "Sanar desde dentro", description: "Transforma tu mundo emocional", link: "https://payhip.com/b/Wz0IG" },
+      { title: "Reconectar contigo", description: "Vuelve a tu esencia", link: "https://payhip.com/b/cFJTb" },
       { title: "El mapa invisible", description: "Descubre tu mente emocional", link: "https://payhip.com/b/Y9KTs" },
-      { title: "Liberarte de ti", description: "Rompe patrones internos", link: "https://payhip.com/b/Wz0IG" },
-      { title: "Expansión interior", description: "Evoluciona tu conciencia", link: "https://payhip.com/b/Ftkd6" },
-      { title: "Despierta tu poder", description: "Activa tu transformación", link: "https://payhip.com/b/n9MHe" },
+      { title: "Liberarte de ti", description: "Rompe patrones internos", link: "https://payhip.com/b/2g89T" },
+      { title: "Expansión interior", description: "Evoluciona tu conciencia", link: "https://payhip.com/b/kNSQa" },
+      { title: "Despierta tu poder", description: "Activa tu transformación", link: "https://payhip.com/b/m0sQ3" },
     ],
   },
   {
