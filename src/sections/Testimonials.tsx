@@ -207,9 +207,9 @@ const getTestimonialsByLanguage = (language: string): Testimonial[] => {
 export function Testimonials({ language = 'es' }: TestimonialsProps) {
   const uiText = {
   es: {
-    badge: '{t.badge}',
-    title: '{t.title}',
-    subtitle: '{t.subtitle}',
+  badge: '{t.badge}',
+  title: '{t.title}',
+  subtitle: '{t.subtitle}.',
     stats: [
       'Lectores impactados',
       'Ebooks creados',
@@ -339,6 +339,31 @@ const t = uiText[language as 'es' | 'en' | 'fr' | 'pt'];
               "{currentTestimonial.content}"
             </p>
           </blockquote>
+
+          <div className="text-center mb-8">
+  <a
+    href={
+      language === 'es'
+        ? 'https://payhip.com/b/Wz0IG'
+        : language === 'fr'
+        ? 'https://payhip.com/b/6xTwV'
+        : language === 'pt'
+        ? 'https://payhip.com/b/OWV4T'
+        : 'https://payhip.com/b/BYviE'
+    }
+    target="_blank"
+    rel="noopener noreferrer"
+    className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-semibold hover:scale-105 transition-all duration-300 shadow-lg"
+  >
+    {language === 'es'
+      ? 'Yo también quiero este cambio'
+      : language === 'fr'
+      ? 'Je veux ce changement'
+      : language === 'pt'
+      ? 'Eu quero essa mudança'
+      : 'I want this change'}
+  </a>
+</div>          
 
           <div className="flex flex-col items-center">
             <div className="w-16 h-16 bg-gradient-to-br from-purple-400 to-amber-400 rounded-full flex items-center justify-center text-2xl font-bold text-white mb-3 shadow-lg">
