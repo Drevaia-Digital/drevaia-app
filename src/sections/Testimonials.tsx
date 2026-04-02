@@ -205,6 +205,55 @@ const getTestimonialsByLanguage = (language: string): Testimonial[] => {
 };
 
 export function Testimonials({ language = 'es' }: TestimonialsProps) {
+  const uiText = {
+  es: {
+    badge: '{t.badge}',
+    title: '{t.title}',
+    subtitle: '{t.subtitle}',
+    stats: [
+      'Lectores impactados',
+      'Ebooks creados',
+      'Idiomas disponibles',
+      'Satisfacción',
+    ],
+  },
+  en: {
+    badge: 'Real testimonials',
+    title: 'Real transformation stories',
+    subtitle: 'People who have already transformed their lives from within.',
+    stats: [
+      'Readers impacted',
+      'Ebooks created',
+      'Languages available',
+      'Satisfaction',
+    ],
+  },
+  fr: {
+    badge: 'Témoignages réels',
+    title: 'Histoires de transformation réelle',
+    subtitle: 'Des personnes qui ont déjà transformé leur vie de l’intérieur.',
+    stats: [
+      'Lecteurs impactés',
+      'Ebooks créés',
+      'Langues disponibles',
+      'Satisfaction',
+    ],
+  },
+  pt: {
+    badge: 'Depoimentos reais',
+    title: 'Histórias de transformação real',
+    subtitle: 'Pessoas que já transformaram suas vidas de dentro para fora.',
+    stats: [
+      'Leitores impactados',
+      'Ebooks criados',
+      'Idiomas disponíveis',
+      'Satisfação',
+    ],
+  },
+};
+
+const t = uiText[language as 'es' | 'en' | 'fr' | 'pt'];
+
   // Get current language from document
     const testimonials = getTestimonialsByLanguage(language);
   
@@ -246,7 +295,7 @@ export function Testimonials({ language = 'es' }: TestimonialsProps) {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-  <section className="relative py-20 md:py-28 bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 text-white overflow-hidden">
+  <section id="testimonials" className="relative py-20 md:py-28 bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 text-white overflow-hidden">
 
     {/* Background */}
     <div className="absolute top-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
@@ -349,11 +398,11 @@ export function Testimonials({ language = 'es' }: TestimonialsProps) {
       {/* Stats */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16">
         {[
-          { value: '10K+', label: 'Lectores impactados' },
-          { value: '24', label: 'Ebooks creados' },
-          { value: '4', label: 'Idiomas disponibles' },
-          { value: '98%', label: 'Satisfacción' },
-        ].map((stat, index) => (
+  { value: '10K+', label: t.stats[0] },
+  { value: '24', label: t.stats[1] },
+  { value: '4', label: t.stats[2] },
+  { value: '98%', label: t.stats[3] },
+].map((stat, index) => (
           <div
             key={index}
             className="text-center p-6 bg-white/5 backdrop-blur rounded-2xl border border-white/10"
