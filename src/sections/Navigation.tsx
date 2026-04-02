@@ -11,7 +11,7 @@ export function Navigation(_: any) {
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
 
-  // Detectar móvil correctamente
+  // Detectar móvil
   useEffect(() => {
     const handleResize = () => {
       const isSmallScreen = window.innerWidth < 1024;
@@ -23,11 +23,10 @@ export function Navigation(_: any) {
 
     handleResize();
     window.addEventListener('resize', handleResize);
-
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Cerrar menú al cambiar de ruta
+  // Cerrar menú al cambiar ruta
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
@@ -45,112 +44,137 @@ export function Navigation(_: any) {
           </Link>
 
           {/* DESKTOP */}
-{!isMobile && (
-  <div className="flex items-center gap-6">
+          {!isMobile && (
+            <div className="flex items-center gap-6">
 
-    <Link className="text-white/80 hover:text-white transition" to="/">
-      {t.nav.home}
-    </Link>
+              <Link className="text-white/80 hover:text-white transition" to="/">
+                {t.nav.home}
+              </Link>
 
-    <Link className="text-white/80 hover:text-white transition" to="/library">
-      {t.nav.library}
-    </Link>
+              <Link className="text-white/80 hover:text-white transition" to="/library">
+                {t.nav.library}
+              </Link>
 
-    <Link className="text-white/80 hover:text-white transition" to="/legal">
-      {t.nav.legal}
-    </Link>
+              {/* TESTIMONIOS */}
+              <a href="#testimonials" className="text-white/80 hover:text-white transition">
+                {language === 'es'
+                  ? 'Testimonios'
+                  : language === 'fr'
+                  ? 'Témoignages'
+                  : language === 'pt'
+                  ? 'Depoimentos'
+                  : 'Testimonials'}
+              </a>
 
-    {/* IDIOMAS */}
-    <div className="flex gap-2 bg-white/10 px-3 py-1 rounded-full">
-      {['es','en','fr','pt'].map((lang) => (
-        <button
-          key={lang}
-          onClick={() => setLanguage(lang as any)}
-          className={`px-2 py-1 rounded-full text-sm transition ${
-            language === lang
-              ? 'bg-amber-400 text-black'
-              : 'text-white/70 hover:text-white'
-          }`}
-        >
-          {lang.toUpperCase()}
-        </button>
-      ))}
-    </div>
+              <Link className="text-white/80 hover:text-white transition" to="/legal">
+                {t.nav.legal}
+              </Link>
 
-  </div>
-)}
+              {/* IDIOMAS */}
+              <div className="flex gap-2 bg-white/10 px-3 py-1 rounded-full">
+                {['es','en','fr','pt'].map((lang) => (
+                  <button
+                    key={lang}
+                    onClick={() => setLanguage(lang as any)}
+                    className={`px-2 py-1 rounded-full text-sm transition ${
+                      language === lang
+                        ? 'bg-amber-400 text-black'
+                        : 'text-white/70 hover:text-white'
+                    }`}
+                  >
+                    {lang.toUpperCase()}
+                  </button>
+                ))}
+              </div>
 
-{/* MOBILE BUTTON */}
-{isMobile && (
-  <button
-    className="flex flex-col items-center text-white"
-    onClick={() => setOpen(!open)}
-  >
-    {open ? <X size={28} /> : <Menu size={28} />}
+            </div>
+          )}
 
-    <span className="text-xs mt-1 bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent font-semibold">
-      {language === 'es' && "Menú"}
-      {language === 'en' && "Menu"}
-      {language === 'fr' && "Menu"}
-      {language === 'pt' && "Menu"}
-    </span>
-  </button>
-)}
+          {/* MOBILE BUTTON */}
+          {isMobile && (
+            <button
+              className="flex flex-col items-center text-white"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <X size={28} /> : <Menu size={28} />}
 
-</div>
-</nav>
+              <span className="text-xs mt-1 bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent font-semibold">
+                {language === 'es' && "Menú"}
+                {language === 'en' && "Menu"}
+                {language === 'fr' && "Menu"}
+                {language === 'pt' && "Menu"}
+              </span>
+            </button>
+          )}
 
-{/* MOBILE MENU */}
-{open && isMobile && (
-  <div className="fixed top-16 left-0 w-full backdrop-blur-xl bg-black/60 border-t border-white/10 px-6 py-6 space-y-6 z-40 animate-fadeIn">
+        </div>
+      </nav>
 
-    <Link to="/" className="block text-white text-lg">
-      {t.nav.home}
-    </Link>
+      {/* MOBILE MENU */}
+      {open && isMobile && (
+        <div className="fixed top-16 left-0 w-full backdrop-blur-xl bg-black/60 border-t border-white/10 px-6 py-6 space-y-6 z-40 animate-fadeIn">
 
-    <Link to="/library" className="block text-white text-lg">
-      {t.nav.library}
-    </Link>
+          <Link to="/" className="block text-white text-lg">
+            {t.nav.home}
+          </Link>
 
-    <div>
-      <p className="text-white/60 text-sm mb-2">{t.nav.legal}</p>
+          <Link to="/library" className="block text-white text-lg">
+            {t.nav.library}
+          </Link>
 
-      <Link to="/legal/privacy" className="block text-white text-lg">
-        {t.nav.privacy}
-      </Link>
+          {/* TESTIMONIOS */}
+          <a href="#testimonials" className="block text-white text-lg">
+            {language === 'es'
+              ? 'Testimonios'
+              : language === 'fr'
+              ? 'Témoignages'
+              : language === 'pt'
+              ? 'Depoimentos'
+              : 'Testimonials'}
+          </a>
 
-      <Link to="/legal/cookies" className="block text-white text-lg">
-        {t.nav.cookies}
-      </Link>
+          <div>
+            <p className="text-white/60 text-sm mb-2">{t.nav.legal}</p>
 
-      <Link to="/legal/refunds" className="block text-white text-lg">
-        {t.nav.refunds}
-      </Link>
-    </div>
+            <Link to="/legal/privacy" className="block text-white text-lg">
+              {t.nav.privacy}
+            </Link>
 
-    {/* IDIOMAS */}
-    <div className="pt-4 border-t border-white/10">
-      <p className="text-white/60 text-sm mb-2">{t.nav.language}</p>
+            <Link to="/legal/cookies" className="block text-white text-lg">
+              {t.nav.cookies}
+            </Link>
 
-      <div className="flex gap-2">
-        {['es','en','fr','pt'].map((lang) => (
-          <button
-            key={lang}
-            onClick={() => setLanguage(lang as any)}
-            className={`px-3 py-2 rounded-lg transition ${
-              language === lang
-                ? 'bg-amber-400 text-black'
-                : 'bg-white/10 text-white hover:bg-white/20'
-            }`}
-          >
-            {lang.toUpperCase()}
-          </button>
-        ))}
-      </div>
-    </div>
+            <Link to="/legal/refunds" className="block text-white text-lg">
+              {t.nav.refunds}
+            </Link>
+          </div>
 
-  </div>
-)}
+          {/* IDIOMAS */}
+          <div className="pt-4 border-t border-white/10">
+            <p className="text-white/60 text-sm mb-2">{t.nav.language}</p>
+
+            <div className="flex gap-2">
+              {['es','en','fr','pt'].map((lang) => (
+                <button
+                  key={lang}
+                  onClick={() => {
+                    setLanguage(lang as any);
+                    setOpen(false); // 🔥 CIERRA MENÚ AUTOMÁTICAMENTE
+                  }}
+                  className={`px-3 py-2 rounded-lg transition ${
+                    language === lang
+                      ? 'bg-amber-400 text-black'
+                      : 'bg-white/10 text-white hover:bg-white/20'
+                  }`}
+                >
+                  {lang.toUpperCase()}
+                </button>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      )}
     </>
   );
 }
