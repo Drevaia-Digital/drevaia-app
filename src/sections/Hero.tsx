@@ -122,9 +122,16 @@ return () => {
           <span>{t.hero.badge}</span>
         </div>
 
-        <h1 ref={titleRef} className="text-5xl md:text-7xl font-bold text-white mb-6">
-          DREVAIA DIGITAL <span className="text-amber-300">{t.hero.title}</span>
-        </h1>
+        <h1
+  ref={titleRef}
+  className="text-5xl md:text-7xl font-bold text-white mb-4"
+>
+  DREVAIA DIGITAL
+</h1>
+
+<p className="text-2xl md:text-4xl text-amber-300 font-semibold mb-6">
+  {t.hero.title}
+</p>
         
         <p ref={descRef} className="text-white/80 mb-10 text-lg">
           {t.hero.description}
