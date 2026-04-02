@@ -104,13 +104,13 @@ export function EmotionalPaths() {
   const t = content[language as 'es' | 'en' | 'fr' | 'pt'];
 
   return (
-    <section className="relative py-20 px-4 text-center bg-gradient-to-b from-gray-900/40 via-gray-900/70 to-gray-900/40 backdrop-blur-md border-y border-white/5">
+    <section className="py-24 px-4 text-center bg-gray-900 text-white border-t border-white/5">
       
       <h2 className="text-2xl md:text-3xl font-bold mb-4">
         {t.title}
       </h2>
 
-      <p className="text-gray-400 mb-10 max-w-xl mx-auto">
+      <p className="text-gray-400 mb-12 max-w-xl mx-auto leading-relaxed">
         {t.subtitle}
       </p>
 
@@ -123,7 +123,7 @@ export function EmotionalPaths() {
             rel="noopener noreferrer"
             className="p-6 rounded-2xl bg-white/5 backdrop-blur hover:scale-105 transition-all duration-300 shadow-md hover:shadow-xl text-left block group"
           >
-            <h3 className="font-semibold text-lg mb-2 group-hover:text-amber-400 transition">
+            <h3 className="font-semibold text-lg mb-2 group-hover:text-orange-400 transition">
               {item.label}
             </h3>
 
