@@ -1,62 +1,37 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-
 import { HomePage } from '@/pages/HomePage';
 import { lazy, Suspense } from 'react';
-
-const LibraryPage = lazy(() => import('./pages/LibraryPage'));
 import { AuthPage } from '@/pages/AuthPage';
 import { LegalPage } from '@/pages/LegalPage';
 import { AuthProvider } from '@/hooks/useAuth';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
+const LibraryPage = lazy(() => import('./pages/LibraryPage'));
+
 export default function App() {
-
-  const language = "es";
-  const t = {} as any;
-  const changeLanguage = () => {};
-
   return (
     <AuthProvider>
       <BrowserRouter>
         <Routes>
 
           {/* 🏠 Home */}
-<Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
 
-{/* 📚 Library */}
-<Route
-  path="/library"
-  element={
-    <Suspense fallback={<div className="text-white p-10">Cargando...</div>}>
-      <LibraryPage />
-    </Suspense>
-  }
-/>
+          {/* 📚 Library */}
+          <Route
+            path="/library"
+            element={
+              <Suspense fallback={<div className="text-white p-10">Cargando...</div>}>
+                <LibraryPage />
+              </Suspense>
+            }
+          />
 
           {/* ⚖️ Legal */}
-          <Route
-            path="/legal"
-            element={
-              <LegalPage
-                t={t}
-                language={language}
-                changeLanguage={changeLanguage}
-              />
-            }
-          />
+          <Route path="/legal" element={<LegalPage />} />
+          <Route path="/legal/:section" element={<LegalPage />} />
 
-          <Route
-            path="/legal/:section"
-            element={
-              <LegalPage
-                t={t}
-                language={language}
-                changeLanguage={changeLanguage}
-              />
-            }
-          />
-
-          {/* 📝 Blog (placeholder para evitar 404) */}
+          {/* 📝 Blog */}
           <Route
             path="/blog"
             element={
@@ -67,7 +42,7 @@ export default function App() {
             }
           />
 
-          {/* 🌐 Portal (placeholder) */}
+          {/* 🌐 Portal */}
           <Route
             path="/portal"
             element={
@@ -79,53 +54,12 @@ export default function App() {
           />
 
           {/* 🔐 Auth */}
-          <Route
-            path="/auth/login"
-            element={
-              <AuthPage
-                mode="login"
-                t={t}
-                language={language}
-                changeLanguage={changeLanguage}
-              />
-            }
-          />
-
-          <Route
-            path="/auth/register"
-            element={
-              <AuthPage
-                mode="register"
-                t={t}
-                language={language}
-                changeLanguage={changeLanguage}
-              />
-            }
-          />
-
-          <Route
-            path="/auth/forgot-password"
-            element={
-              <AuthPage
-                mode="forgot-password"
-                t={t}
-                language={language}
-                changeLanguage={changeLanguage}
-              />
-            }
-          />
+          <Route path="/auth/login" element={<AuthPage mode="login" />} />
+          <Route path="/auth/register" element={<AuthPage mode="register" />} />
+          <Route path="/auth/forgot-password" element={<AuthPage mode="forgot-password" />} />
 
           {/* 🚫 404 */}
-          <Route
-            path="*"
-            element={
-              <NotFoundPage
-                t={t}
-                language={language}
-                changeLanguage={changeLanguage}
-              />
-            }
-          />
+          <Route path="*" element={<NotFoundPage />} />
 
         </Routes>
       </BrowserRouter>

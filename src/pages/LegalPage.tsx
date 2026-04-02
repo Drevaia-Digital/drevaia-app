@@ -4,13 +4,7 @@ import { ArrowLeft, Shield, Cookie, RefreshCw, FileText } from 'lucide-react';
 import { Navigation } from '@/sections/Navigation';
 import { Footer } from '@/sections/Footer';
 import { SEO } from '@/partials/SEO';
-import type { Translations, Language } from '@/i18n';
-
-interface LegalPageProps {
-  t: Translations;
-  language: Language;
-  changeLanguage: (lang: Language) => void;
-}
+import { useLanguage } from '@/context/LanguageContext';
 
 interface Section {
   id: string;
@@ -26,8 +20,10 @@ interface LegalData {
   sections: Section[];
 }
 
-export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
+export function LegalPage() {
+  const { language } = useLanguage();
   const { section } = useParams<{ section: string }>();
+
   const [legalData, setLegalData] = useState<LegalData | null>(null);
   const [loading, setLoading] = useState(true);
 
@@ -53,6 +49,27 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
       fr: 'Politique de Remboursements',
       pt: 'Política de Reembolsos',
     },
+  };
+
+  const backText: Record<string, string> = {
+    es: 'Volver al inicio',
+    en: 'Back to home',
+    fr: 'Retour à l’accueil',
+    pt: 'Voltar ao início',
+  };
+
+  const lastUpdatedText: Record<string, string> = {
+    es: 'Última actualización:',
+    en: 'Last updated:',
+    fr: 'Dernière mise à jour:',
+    pt: 'Última atualização:',
+  };
+
+  const notAvailableText: Record<string, string> = {
+    es: 'Contenido no disponible',
+    en: 'Content not available',
+    fr: 'Contenu non disponible',
+    pt: 'Conteúdo não disponível',
   };
 
   const icons: Record<string, typeof Shield> = {
@@ -87,8 +104,9 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
     setLoading(false);
   };
 
-  const Icon = icons[currentSection || 'privacy'] || FileText;
-  const title = sectionTitles[currentSection || 'privacy']?.[language] || 'Legal';
+  const Icon = icons[currentSection as keyof typeof icons] || FileText;
+  const title =
+  sectionTitles[currentSection as keyof typeof sectionTitles]?.[language] || 'Legal';
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-300">
@@ -100,14 +118,10 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
         canonicalUrl={`https://drevaia.com/legal/${currentSection}`}
       />
 
-      <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+      <Navigation />
 
       {/* HEADER */}
       <section className="relative py-16 md:py-24 bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 text-white overflow-hidden">
-
-        <div className="absolute inset-0 opacity-20">
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl" />
-        </div>
 
         <div className="relative max-w-4xl mx-auto px-4">
 
@@ -116,7 +130,7 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-all duration-300 hover:-translate-x-1 mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
-            {language === 'es' ? 'Volver al inicio' : 'Back to home'}
+            {backText[language]}
           </Link>
 
           <div className="text-center">
@@ -130,7 +144,7 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
 
             {legalData?.lastUpdated && (
               <p className="text-gray-400">
-                {language === 'es' ? 'Última actualización:' : 'Last updated:'} {legalData.lastUpdated}
+                {lastUpdatedText[language]} {legalData.lastUpdated}
               </p>
             )}
           </div>
@@ -189,29 +203,9 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
                     {sec.title}
                   </h2>
 
-                  <div className="prose prose-invert max-w-none">
-                    <p className="text-gray-300">
-                      {sec.content}
-                    </p>
-                  </div>
-
-                  {sec.details && (
-                    <div className="mt-4 bg-white/5 backdrop-blur border border-white/10 rounded-xl p-4">
-                      {sec.details.map((detail, idx) => (
-                        <div key={idx} className="text-sm text-gray-400">
-                          <strong className="text-gray-300">{detail.label}:</strong> {detail.value}
-                        </div>
-                      ))}
-                    </div>
-                  )}
-
-                  {sec.providers && (
-                    <ul className="mt-4 list-disc list-inside text-gray-400">
-                      {sec.providers.map((p, i) => (
-                        <li key={i}>{p}</li>
-                      ))}
-                    </ul>
-                  )}
+                  <p className="text-gray-300">
+                    {sec.content}
+                  </p>
 
                 </div>
               ))}
@@ -221,7 +215,7 @@ export function LegalPage({ t, language, changeLanguage }: LegalPageProps) {
           ) : (
             <div className="text-center py-16 text-gray-400">
               <FileText className="w-12 h-12 mx-auto mb-4" />
-              Contenido no disponible
+              {notAvailableText[language]}
             </div>
           )}
 
