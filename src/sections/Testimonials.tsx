@@ -311,12 +311,12 @@ const t = uiText[language as 'es' | 'en' | 'fr' | 'pt'];
         </div>
 
         <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">
-          Historias de transformación real
-        </h2>
+  {t.title}
+</h2>
 
         <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-          Personas que ya han transformado su vida desde dentro.
-        </p>
+  {t.subtitle}
+</p>
       </div>
 
       {/* Testimonial Card */}
