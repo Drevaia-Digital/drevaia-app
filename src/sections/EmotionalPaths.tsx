@@ -116,9 +116,10 @@ export function EmotionalPaths() {
       </div>
 
       {/* Contenido */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/50 via-black/40 to-black/60" />
       <div className="relative z-10">
 
-        <h2 className="text-2xl md:text-3xl font-bold mb-4 drop-shadow-lg">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 drop-shadow-[0_4px_20px_rgba(0,0,0,1)]">
           {t.title}
         </h2>
 
@@ -139,7 +140,7 @@ export function EmotionalPaths() {
                 {item.label}
               </h3>
 
-              <p className="text-sm text-white/80">
+              <p className="text-sm text-white">
                 {item.desc}
               </p>
 
