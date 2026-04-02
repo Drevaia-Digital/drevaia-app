@@ -1,7 +1,9 @@
+import { translations } from '../i18n/translations';
+import { useLanguage } from '@/context/LanguageContext';
 import { Link } from 'react-router-dom';
 import { Heart, Instagram, Mail, Sparkles, BookOpen, FileText, Users, Shield } from 'lucide-react';
 
-// Custom social media icons
+// Icons
 const TikTokIcon = () => (
   <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
     <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z"/>
@@ -21,6 +23,8 @@ const FacebookIcon = () => (
 );
 
 export function Footer(_: any) {
+  const { language } = useLanguage();
+  const t = translations[language];
   const currentYear = new Date().getFullYear();
 
   return (
@@ -35,76 +39,39 @@ export function Footer(_: any) {
               <Sparkles className="w-6 h-6 text-amber-400" />
               <span className="text-2xl font-bold">Drevaia Digital</span>
             </div>
+
             <p className="text-purple-200 text-sm">
-              Una biblioteca emocional diseñada para sanar, evolucionar y transformar tu vida desde dentro.
+              {t.footer.description}
             </p>
 
             <div className="flex gap-3">
-              <a href="https://www.tiktok.com/@drevaia.digital" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20">
-                <TikTokIcon />
-              </a>
-              <a href="https://www.instagram.com/drevaia.digital/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20">
-                <Instagram className="w-5 h-5" />
-              </a>
-              <a href="https://www.youtube.com/@Drevaia" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20">
-                <YouTubeIcon />
-              </a>
-              <a href="https://www.facebook.com/profile.php?id=61578074633618" target="_blank" rel="noopener noreferrer" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20">
-                <FacebookIcon />
-              </a>
-              <a href="mailto:noadrevaia@gmail.com" className="w-10 h-10 bg-white/10 rounded-full flex items-center justify-center hover:bg-white/20">
-                <Mail className="w-5 h-5" />
-              </a>
+              <a href="https://www.tiktok.com/@drevaia.digital" target="_blank" rel="noopener noreferrer" className="social-btn"><TikTokIcon /></a>
+              <a href="https://www.instagram.com/drevaia.digital/" target="_blank" rel="noopener noreferrer" className="social-btn"><Instagram className="w-5 h-5" /></a>
+              <a href="https://www.youtube.com/@Drevaia" target="_blank" rel="noopener noreferrer" className="social-btn"><YouTubeIcon /></a>
+              <a href="https://www.facebook.com/profile.php?id=61578074633618" target="_blank" rel="noopener noreferrer" className="social-btn"><FacebookIcon /></a>
+              <a href="mailto:noadrevaia@gmail.com" className="social-btn"><Mail className="w-5 h-5" /></a>
             </div>
           </div>
 
-          {/* Explorar + Legal */}
+          {/* Links */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Explorar</h3>
+            <h3 className="text-lg font-semibold mb-4">{t.footer.explore}</h3>
 
             <ul className="space-y-2 text-purple-200 text-sm">
 
-              <li>
-                <Link to="/library" className="flex items-center gap-2 hover:text-white">
-                  <BookOpen className="w-4 h-4" /> Ebooks
-                </Link>
-              </li>
+              <li><Link to="/library" className="footer-link"><BookOpen className="w-4 h-4" /> {t.footer.ebooks}</Link></li>
+              <li><Link to="/blog" className="footer-link"><FileText className="w-4 h-4" /> {t.footer.blog}</Link></li>
+              <li><Link to="/portal" className="footer-link"><Users className="w-4 h-4" /> {t.footer.portal}</Link></li>
+
+              <li className="mt-4 text-white font-semibold">{t.footer.legal}</li>
+
+              <li><Link to="/legal/privacy" className="footer-link"><Shield className="w-4 h-4" /> {t.footer.privacy}</Link></li>
+              <li><Link to="/legal/cookies" className="footer-link"><Shield className="w-4 h-4" /> {t.footer.cookies}</Link></li>
+              <li><Link to="/legal/refunds" className="footer-link"><Shield className="w-4 h-4" /> {t.footer.refunds}</Link></li>
 
               <li>
-                <Link to="/blog" className="flex items-center gap-2 hover:text-white">
-                  <FileText className="w-4 h-4" /> Blog
-                </Link>
-              </li>
-
-              <li>
-                <Link to="/portal" className="flex items-center gap-2 hover:text-white">
-                  <Users className="w-4 h-4" /> Portal
-                </Link>
-              </li>
-
-              <li className="mt-4 text-white font-semibold">Legal</li>
-
-              <li>
-                <Link to="/legal/privacy" className="flex items-center gap-2 hover:text-white">
-                  <Shield className="w-4 h-4" /> Privacidad
-                </Link>
-              </li>
-
-              <li>
-                <Link to="/legal/cookies" className="flex items-center gap-2 hover:text-white">
-                  <Shield className="w-4 h-4" /> Cookies
-                </Link>
-              </li>
-
-              <li>
-                <Link to="/legal/refunds" className="flex items-center gap-2 hover:text-white">
-                  <Shield className="w-4 h-4" /> Reembolsos
-                </Link>
-              </li>
-
-              <li>
-                <a href="https://payhip.com/DrevaiaDigital" target="_blank" rel="noopener noreferrer" className="hover:text-white">
-                  Tienda Payhip
+                <a href="https://payhip.com/DrevaiaDigital" target="_blank" rel="noopener noreferrer" className="footer-link">
+                  {t.footer.store}
                 </a>
               </li>
 
@@ -113,20 +80,21 @@ export function Footer(_: any) {
 
           {/* CTA */}
           <div>
-            <h3 className="text-lg font-semibold mb-4">Conecta con Drevaia</h3>
+            <h3 className="text-lg font-semibold mb-4">{t.footer.connect}</h3>
+
             <p className="text-purple-200 text-sm mb-4">
-  Da tu primer paso: Descarga este eBook gratuito.
-</p>
+              {t.footer.cta}
+            </p>
 
             <a
-  href="https://payhip.com/b/Bzn24"
-  target="_blank"
-  rel="noopener noreferrer"
-  className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-sm font-medium hover:opacity-90 transition-all"
->
-  <Heart className="w-4 h-4" />
-  Descargar ebook gratis
-</a>
+              href="https://payhip.com/b/Bzn24"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 rounded-full text-sm font-medium hover:opacity-90 transition-all"
+            >
+              <Heart className="w-4 h-4" />
+              {t.footer.cta}
+            </a>
           </div>
 
         </div>
@@ -134,7 +102,7 @@ export function Footer(_: any) {
         {/* Bottom */}
         <div className="mt-12 pt-8 border-t border-white/10 flex justify-between text-sm text-purple-300">
           <p>© {currentYear} Drevaia Digital</p>
-          <p>Hecho con ❤️ por Noa Drevaia</p>
+          <p>{t.footer.made}</p>
         </div>
 
       </div>

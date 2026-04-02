@@ -1,6 +1,6 @@
 import { translations } from '../i18n/translations';
 import { useEffect, useRef } from 'react';
-import { ArrowRight, Heart, Sparkles } from 'lucide-react';
+import { ArrowRight, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import gsap from 'gsap';
 import { Link } from 'react-router-dom';
@@ -116,11 +116,6 @@ return () => {
 
       {/* 🧠 CONTENIDO */}
       <div ref={contentRef} className="relative z-10 text-center max-w-4xl px-4">
-
-        <div ref={badgeRef} className="mb-6 text-amber-300 flex items-center justify-center gap-2">
-          <Sparkles className="w-4 h-4" />
-          <span>{t.hero.badge}</span>
-        </div>
 
         <h1
   ref={titleRef}

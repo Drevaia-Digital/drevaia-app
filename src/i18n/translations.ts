@@ -16,6 +16,21 @@ export const translations = {
       cta: "Comenzar ahora",
       explore: "Explorar ebooks",
     },
+    footer: {
+      description: "Una biblioteca emocional diseñada para sanar, evolucionar y transformar tu vida desde dentro.",
+      explore: "Explorar",
+      ebooks: "Ebooks",
+      blog: "Blog",
+      portal: "Portal",
+      legal: "Legal",
+      privacy: "Privacidad",
+      cookies: "Cookies",
+      refunds: "Reembolsos",
+      store: "Tienda Payhip",
+      connect: "Conecta con Drevaia",
+      cta: "Descargar ebook gratis",
+      made: "Hecho con ❤️ por Noa Drevaia"
+    }
   },
 
   en: {
@@ -35,6 +50,21 @@ export const translations = {
       cta: "Start now",
       explore: "Explore ebooks",
     },
+    footer: {
+      description: "An emotional library designed to heal, evolve and transform your life.",
+      explore: "Explore",
+      ebooks: "Ebooks",
+      blog: "Blog",
+      portal: "Portal",
+      legal: "Legal",
+      privacy: "Privacy",
+      cookies: "Cookies",
+      refunds: "Refunds",
+      store: "Payhip Store",
+      connect: "Connect with Drevaia",
+      cta: "Download free ebook",
+      made: "Made with ❤️ by Noa Drevaia"
+    }
   },
 
   fr: {
@@ -54,6 +84,21 @@ export const translations = {
       cta: "Commencer",
       explore: "Explorer ebooks",
     },
+    footer: {
+      description: "Une bibliothèque émotionnelle pour guérir et évoluer.",
+      explore: "Explorer",
+      ebooks: "Ebooks",
+      blog: "Blog",
+      portal: "Portail",
+      legal: "Légal",
+      privacy: "Confidentialité",
+      cookies: "Cookies",
+      refunds: "Remboursements",
+      store: "Boutique Payhip",
+      connect: "Connectez avec Drevaia",
+      cta: "Télécharger ebook gratuit",
+      made: "Fait avec ❤️ par Noa Drevaia"
+    }
   },
 
   pt: {
@@ -73,5 +118,20 @@ export const translations = {
       cta: "Começar",
       explore: "Explorar ebooks",
     },
-  },
+    footer: {
+      description: "Uma biblioteca emocional para curar e evoluir.",
+      explore: "Explorar",
+      ebooks: "Ebooks",
+      blog: "Blog",
+      portal: "Portal",
+      legal: "Legal",
+      privacy: "Privacidade",
+      cookies: "Cookies",
+      refunds: "Reembolsos",
+      store: "Loja Payhip",
+      connect: "Conecte-se com Drevaia",
+      cta: "Baixar ebook grátis",
+      made: "Feito com ❤️ por Noa Drevaia"
+    }
+  }
 };
