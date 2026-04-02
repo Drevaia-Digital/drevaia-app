@@ -111,12 +111,12 @@ export function EmotionalPaths() {
         <img
           src="/images/corazones-bg.jpg"
           alt="background"
-          className="w-full h-full object-cover opacity-20"
+          className="w-full h-full object-cover opacity-60"
         />
       </div>
 
       {/* Capa oscura */}
-      <div className="absolute inset-0 bg-gray-900/80" />
+      <div className="absolute inset-0 bg-gray-900/40" />
 
       {/* Contenido */}
       <div className="relative z-10">
