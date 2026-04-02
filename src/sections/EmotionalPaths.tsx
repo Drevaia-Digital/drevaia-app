@@ -106,7 +106,7 @@ export function EmotionalPaths() {
   return (
     <section className="relative py-24 px-4 text-center text-white border-t border-white/5 overflow-hidden">
 
-      {/* Fondo imagen corazones */}
+      {/* Fondo imagen */}
       <div className="absolute inset-0">
         <img
           src="/images/corazones-bg.jpg"
@@ -115,16 +115,14 @@ export function EmotionalPaths() {
         />
       </div>
 
-      {/* Capa oscura */}
-      
       {/* Contenido */}
       <div className="relative z-10">
 
-        <h2 className="text-2xl md:text-3xl font-bold mb-4">
+        <h2 className="text-2xl md:text-3xl font-bold mb-4 drop-shadow-lg">
           {t.title}
         </h2>
 
-        <p className="text-gray-400 mb-12 max-w-xl mx-auto leading-relaxed">
+        <p className="text-white/90 mb-12 max-w-xl mx-auto leading-relaxed drop-shadow">
           {t.subtitle}
         </p>
 
@@ -135,17 +133,17 @@ export function EmotionalPaths() {
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="p-6 rounded-2xl bg-black/40 backdrop-blur-lg hover:scale-105 transition-all duration-300 shadow-xl text-left block group"
+              className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl hover:scale-105 transition-all duration-300 shadow-2xl text-left block group"
             >
               <h3 className="font-semibold text-lg mb-2 group-hover:text-orange-400 transition">
                 {item.label}
               </h3>
 
-              <p className="text-sm text-white/60">
+              <p className="text-sm text-white/80">
                 {item.desc}
               </p>
 
-              <p className="mt-4 text-xs text-gray-80 group-hover:text-gray-400 transition">
+              <p className="mt-4 text-xs text-white/70 group-hover:text-white transition">
                 → {language === 'es'
                     ? 'Empezar ahora'
                     : language === 'fr'
@@ -158,11 +156,11 @@ export function EmotionalPaths() {
           ))}
         </div>
 
-        <p className="mt-8 text-xs text-gray-500">
+        <p className="mt-8 text-xs text-white/70 drop-shadow">
           {t.trust}
         </p>
 
-        <p className="mt-4 text-sm text-gray-500">
+        <p className="mt-4 text-sm text-white/80 drop-shadow">
           {t.footer}
         </p>
 
