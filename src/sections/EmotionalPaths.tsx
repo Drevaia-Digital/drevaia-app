@@ -104,54 +104,70 @@ export function EmotionalPaths() {
   const t = content[language as 'es' | 'en' | 'fr' | 'pt'];
 
   return (
-    <section className="py-24 px-4 text-center bg-gray-900 text-white border-t border-white/5">
-      
-      <h2 className="text-2xl md:text-3xl font-bold mb-4">
-        {t.title}
-      </h2>
+    <section className="relative py-24 px-4 text-center text-white border-t border-white/5 overflow-hidden">
 
-      <p className="text-gray-400 mb-12 max-w-xl mx-auto leading-relaxed">
-        {t.subtitle}
-      </p>
-
-      <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
-        {t.items.map((item, index) => (
-          <a
-            key={index}
-            href={item.link}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-6 rounded-2xl bg-white/5 backdrop-blur hover:scale-105 transition-all duration-300 shadow-md hover:shadow-xl text-left block group"
-          >
-            <h3 className="font-semibold text-lg mb-2 group-hover:text-orange-400 transition">
-              {item.label}
-            </h3>
-
-            <p className="text-sm text-gray-400">
-              {item.desc}
-            </p>
-
-            <p className="mt-4 text-xs text-gray-500 group-hover:text-gray-400 transition">
-              → {language === 'es'
-                  ? 'Empezar ahora'
-                  : language === 'fr'
-                  ? 'Commencer maintenant'
-                  : language === 'pt'
-                  ? 'Começar agora'
-                  : 'Start now'}
-            </p>
-          </a>
-        ))}
+      {/* Fondo imagen corazones */}
+      <div className="absolute inset-0">
+        <img
+          src="/images/corazones-bg.jpg"
+          alt="background"
+          className="w-full h-full object-cover opacity-20"
+        />
       </div>
 
-      <p className="mt-8 text-xs text-gray-500">
-        {t.trust}
-      </p>
+      {/* Capa oscura */}
+      <div className="absolute inset-0 bg-gray-900/80" />
 
-      <p className="mt-4 text-sm text-gray-500">
-        {t.footer}
-      </p>
+      {/* Contenido */}
+      <div className="relative z-10">
 
+        <h2 className="text-2xl md:text-3xl font-bold mb-4">
+          {t.title}
+        </h2>
+
+        <p className="text-gray-400 mb-12 max-w-xl mx-auto leading-relaxed">
+          {t.subtitle}
+        </p>
+
+        <div className="grid gap-6 md:grid-cols-3 max-w-5xl mx-auto">
+          {t.items.map((item, index) => (
+            <a
+              key={index}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="p-6 rounded-2xl bg-white/5 backdrop-blur hover:scale-105 transition-all duration-300 shadow-md hover:shadow-xl text-left block group"
+            >
+              <h3 className="font-semibold text-lg mb-2 group-hover:text-orange-400 transition">
+                {item.label}
+              </h3>
+
+              <p className="text-sm text-gray-400">
+                {item.desc}
+              </p>
+
+              <p className="mt-4 text-xs text-gray-500 group-hover:text-gray-400 transition">
+                → {language === 'es'
+                    ? 'Empezar ahora'
+                    : language === 'fr'
+                    ? 'Commencer maintenant'
+                    : language === 'pt'
+                    ? 'Começar agora'
+                    : 'Start now'}
+              </p>
+            </a>
+          ))}
+        </div>
+
+        <p className="mt-8 text-xs text-gray-500">
+          {t.trust}
+        </p>
+
+        <p className="mt-4 text-sm text-gray-500">
+          {t.footer}
+        </p>
+
+      </div>
     </section>
   );
 }
