@@ -83,10 +83,17 @@ export function Navigation(_: any) {
 {/* MOBILE BUTTON */}
 {isMobile && (
   <button
-    className="text-white"
+    className="text-xs mt-1 text-white/70"
     onClick={() => setOpen(!open)}
   >
     {open ? <X size={28} /> : <Menu size={28} />}
+    
+    <span className="text-xs mt-1">
+      {language === 'es' && "Menú"}
+      {language === 'en' && "Menu"}
+      {language === 'fr' && "Menu"}
+      {language === 'pt' && "Menu"}
+    </span>
   </button>
 )}
 
@@ -95,7 +102,7 @@ export function Navigation(_: any) {
 
 {/* MOBILE MENU */}
 {open && isMobile && (
-  <div className="fixed top-16 left-0 w-full bg-[#0f0f1a] border-t border-white/10 px-6 py-6 space-y-6 z-40">
+  <div className="fixed top-16 left-0 w-full backdrop-blur-xl bg-black/60 border-t border-white/10 px-6 py-6 space-y-6 z-40 animate-fadeIn">
 
     <Link to="/" className="block text-white text-lg">
       {t.nav.home}
