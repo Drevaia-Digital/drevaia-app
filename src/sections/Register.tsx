@@ -345,7 +345,7 @@ export function Register({ t, language }: RegisterProps) {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-purple-600 to-amber-500 hover:from-purple-700 hover:to-amber-600 text-white rounded-xl py-4 px-6 text-lg font-medium shadow-lg shadow-purple-500/30 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 flex items-center justify-center gap-2"
+              className="w-full hover:from-amber-500 hover:to-orange-600 hover:from-purple-700 hover:to-amber-600 text-white rounded-xl py-4 px-6 text-lg font-medium shadow-lg shadow-purple-500/30 transition-all hover:scale-[1.02] active:scale-[0.98] disabled:opacity-70 disabled:cursor-not-allowed disabled:hover:scale-100 disabled:active:scale-100 flex items-center justify-center gap-2"
             >
               {isLoading ? (
                 <>

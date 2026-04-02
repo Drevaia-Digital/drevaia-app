@@ -83,12 +83,12 @@ export function Navigation(_: any) {
 {/* MOBILE BUTTON */}
 {isMobile && (
   <button
-    className="text-xs mt-1 text-white/70"
+    className="flex flex-col items-center text-white"
     onClick={() => setOpen(!open)}
   >
     {open ? <X size={28} /> : <Menu size={28} />}
-    
-    <span className="text-xs mt-1">
+
+    <span className="text-xs mt-1 bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent font-semibold">
       {language === 'es' && "Menú"}
       {language === 'en' && "Menu"}
       {language === 'fr' && "Menu"}

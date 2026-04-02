@@ -230,7 +230,7 @@ export function Legal({ t }: LegalProps) {
 
           {/* Contact */}
           <div
-            className={`bg-gradient-to-r from-purple-600 to-amber-500 rounded-2xl shadow-lg p-6 md:p-8 text-center transition-all duration-700 ${
+            className={`bg-gradient-to-r from-amber-400 to-orange-500 rounded-2xl shadow-lg p-6 md:p-8 text-center transition-all duration-700 ${
               isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'
             }`}
             style={{ transitionDelay: '400ms' }}
