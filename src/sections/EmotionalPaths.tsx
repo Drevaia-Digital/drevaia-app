@@ -101,7 +101,7 @@ export function EmotionalPaths() {
     },
   };
 
-  const t = content[language as 'es' | 'en' | 'fr' | 'pt'];
+  const t = content[language as 'es' | 'en' | 'fr' | 'pt'] || content.es;
 
   return (
     <section className="relative py-24 px-4 text-center text-white border-t border-white/5 overflow-hidden">
@@ -120,7 +120,7 @@ export function EmotionalPaths() {
       <div className="relative z-10">
 
         <h2 className="text-2xl md:text-3xl font-bold mb-4 drop-shadow-[0_4px_20px_rgba(0,0,0,1)]">
-          {t.title}
+          {t?.title}
         </h2>
 
         <p className="text-white/90 mb-12 max-w-xl mx-auto leading-relaxed drop-shadow">

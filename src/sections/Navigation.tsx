@@ -123,15 +123,19 @@ export function Navigation(_: any) {
           </Link>
 
           {/* TESTIMONIOS */}
-          <a href="#testimonials" className="block text-white text-lg">
-            {language === 'es'
-              ? 'Testimonios'
-              : language === 'fr'
-              ? 'Témoignages'
-              : language === 'pt'
-              ? 'Depoimentos'
-              : 'Testimonials'}
-          </a>
+          <a
+  href="#testimonials"
+  onClick={() => setOpen(false)}
+  className="block text-white text-lg"
+>
+  {language === 'es'
+    ? 'Testimonios'
+    : language === 'fr'
+    ? 'Témoignages'
+    : language === 'pt'
+    ? 'Depoimentos'
+    : 'Testimonials'}
+</a>
 
           <div>
             <p className="text-white/60 text-sm mb-2">{t.nav.legal}</p>
