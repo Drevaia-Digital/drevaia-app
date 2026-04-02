@@ -13,7 +13,7 @@ export function HomePage() {
 
       <Navigation />
 
-      <Hero />
+      <Hero language={language} />
 
       <Ebooks language={language} />
 

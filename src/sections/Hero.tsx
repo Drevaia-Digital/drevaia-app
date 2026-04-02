@@ -1,10 +1,17 @@
+import { translations } from '../i18n/translations';
 import { useEffect, useRef } from 'react';
 import { ArrowRight, Heart, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import gsap from 'gsap';
 import { Link } from 'react-router-dom';
 
-export function Hero() {
+type Props = {
+  language: 'es' | 'en' | 'fr' | 'pt';
+};
+
+export function Hero({ language }: Props) {
+
+  const t = translations[language];
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
   const badgeRef = useRef<HTMLDivElement>(null);
@@ -112,15 +119,15 @@ return () => {
 
         <div ref={badgeRef} className="mb-6 text-amber-300 flex items-center justify-center gap-2">
           <Sparkles className="w-4 h-4" />
-          <span>Transformación emocional</span>
+          <span>{t.hero.badge}</span>
         </div>
 
         <h1 ref={titleRef} className="text-5xl md:text-7xl font-bold text-white mb-6">
-          DREVAIA <span className="text-amber-300">DIGITAL</span>
+          DREVAIA DIGITAL <span className="text-amber-300">{t.hero.title}</span>
         </h1>
-
+        
         <p ref={descRef} className="text-white/80 mb-10 text-lg">
-          Tu santuario digital para sanar, crecer y transformar tu vida.
+          {t.hero.description}
         </p>
 
         {/* 🔥 BOTONES CORREGIDOS */}
@@ -132,7 +139,7 @@ return () => {
           <Link to="/auth/register">
   <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white hover:scale-105 transition">
     <Heart className="mr-2" />
-    Comenzar ahora
+    {t.hero.cta}
   </Button>
 </Link>
 
@@ -156,6 +163,7 @@ return () => {
             ...book,
             coverImage: book.image || "https://via.placeholder.com/300x400",
             buy_url:
+              book[`buy_url_${language}`] ||
               book.buy_url_es ||
               book.buy_url_en ||
               book.buy_url_fr ||
@@ -171,7 +179,7 @@ return () => {
     }}
     className="group bg-gradient-to-r from-purple-600 to-amber-400 text-white px-8 py-4 rounded-full font-semibold shadow-lg hover:scale-105 hover:shadow-xl transition-all duration-300"
   >
-    Explorar ebooks
+    {t.hero.explore}
     <ArrowRight className="ml-2 transition-transform group-hover:translate-x-1" />
   </Button>
 </Link>
