@@ -104,7 +104,7 @@ export function EmotionalPaths() {
   const t = content[language as 'es' | 'en' | 'fr' | 'pt'];
 
   return (
-    <section className="py-16 px-4 text-center">
+    <section className="relative py-20 px-4 text-center bg-gradient-to-b from-gray-900/40 via-gray-900/70 to-gray-900/40 backdrop-blur-md border-y border-white/5">
       
       <h2 className="text-2xl md:text-3xl font-bold mb-4">
         {t.title}
