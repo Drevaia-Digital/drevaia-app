@@ -1,5 +1,6 @@
 import { Navigation } from '@/sections/Navigation';
 import { Hero } from '@/sections/Hero';
+import { EmotionalPaths } from '@/sections/EmotionalPaths';
 import { Ebooks } from '@/sections/Ebooks';
 import { Testimonials } from '@/sections/Testimonials';
 import { Footer } from '@/sections/Footer';
@@ -14,6 +15,8 @@ export function HomePage() {
       <Navigation />
 
       <Hero language={language} />
+
+      <EmotionalPaths />
 
       <Ebooks language={language} />
 
