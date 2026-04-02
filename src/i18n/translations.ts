@@ -1,5 +1,14 @@
 export const translations = {
   es: {
+    nav: {
+      home: "Inicio",
+      library: "Biblioteca",
+      legal: "Legal",
+      privacy: "Privacidad",
+      cookies: "Cookies",
+      refunds: "Reembolsos",
+      language: "Idioma"
+    },
     hero: {
       badge: "Transformación emocional",
       title: "Donde tu historia empieza a cambiar",
@@ -8,7 +17,17 @@ export const translations = {
       explore: "Explorar ebooks",
     },
   },
+
   en: {
+    nav: {
+      home: "Home",
+      library: "Library",
+      legal: "Legal",
+      privacy: "Privacy",
+      cookies: "Cookies",
+      refunds: "Refunds",
+      language: "Language"
+    },
     hero: {
       badge: "Emotional transformation",
       title: "Where your story begins to change",
@@ -17,7 +36,17 @@ export const translations = {
       explore: "Explore ebooks",
     },
   },
+
   fr: {
+    nav: {
+      home: "Accueil",
+      library: "Bibliothèque",
+      legal: "Mentions légales",
+      privacy: "Confidentialité",
+      cookies: "Cookies",
+      refunds: "Remboursements",
+      language: "Langue"
+    },
     hero: {
       badge: "Transformation émotionnelle",
       title: "Là où ton histoire commence à changer",
@@ -26,7 +55,17 @@ export const translations = {
       explore: "Explorer ebooks",
     },
   },
+
   pt: {
+    nav: {
+      home: "Início",
+      library: "Biblioteca",
+      legal: "Legal",
+      privacy: "Privacidade",
+      cookies: "Cookies",
+      refunds: "Reembolsos",
+      language: "Idioma"
+    },
     hero: {
       badge: "Transformação emocional",
       title: "Onde sua história começa a mudar",

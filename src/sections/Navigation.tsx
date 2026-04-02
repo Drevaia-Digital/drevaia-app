@@ -1,3 +1,4 @@
+import { translations } from '../i18n/translations';
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sparkles } from 'lucide-react';
@@ -5,6 +6,7 @@ import { useLanguage } from '@/context/LanguageContext';
 
 export function Navigation(_: any) {
   const { language, setLanguage } = useLanguage();
+  const t = translations[language];
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
@@ -43,105 +45,105 @@ export function Navigation(_: any) {
           </Link>
 
           {/* DESKTOP */}
-          {!isMobile && (
-            <div className="flex items-center gap-6">
+{!isMobile && (
+  <div className="flex items-center gap-6">
 
-              <Link className="text-white/80 hover:text-white transition" to="/">
-                Inicio
-              </Link>
+    <Link className="text-white/80 hover:text-white transition" to="/">
+      {t.nav.home}
+    </Link>
 
-              <Link className="text-white/80 hover:text-white transition" to="/library">
-                Biblioteca
-              </Link>
+    <Link className="text-white/80 hover:text-white transition" to="/library">
+      {t.nav.library}
+    </Link>
 
-              <Link className="text-white/80 hover:text-white transition" to="/legal">
-                Legal
-              </Link>
+    <Link className="text-white/80 hover:text-white transition" to="/legal">
+      {t.nav.legal}
+    </Link>
 
-              {/* IDIOMAS */}
-              <div className="flex gap-2 bg-white/10 px-3 py-1 rounded-full">
-                {['es','en','fr','pt'].map((lang) => (
-                  <button
-                    key={lang}
-                    onClick={() => setLanguage(lang as any)}
-                    className={`px-2 py-1 rounded-full text-sm transition ${
-                      language === lang
-                        ? 'bg-amber-400 text-black'
-                        : 'text-white/70 hover:text-white'
-                    }`}
-                  >
-                    {lang.toUpperCase()}
-                  </button>
-                ))}
-              </div>
+    {/* IDIOMAS */}
+    <div className="flex gap-2 bg-white/10 px-3 py-1 rounded-full">
+      {['es','en','fr','pt'].map((lang) => (
+        <button
+          key={lang}
+          onClick={() => setLanguage(lang as any)}
+          className={`px-2 py-1 rounded-full text-sm transition ${
+            language === lang
+              ? 'bg-amber-400 text-black'
+              : 'text-white/70 hover:text-white'
+          }`}
+        >
+          {lang.toUpperCase()}
+        </button>
+      ))}
+    </div>
 
-            </div>
-          )}
+  </div>
+)}
 
-          {/* MOBILE BUTTON */}
-          {isMobile && (
-            <button
-              className="text-white"
-              onClick={() => setOpen(!open)}
-            >
-              {open ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          )}
+{/* MOBILE BUTTON */}
+{isMobile && (
+  <button
+    className="text-white"
+    onClick={() => setOpen(!open)}
+  >
+    {open ? <X size={28} /> : <Menu size={28} />}
+  </button>
+)}
 
-        </div>
-      </nav>
+</div>
+</nav>
 
-      {/* MOBILE MENU (SIN OVERLAY PROBLEMÁTICO) */}
-      {open && isMobile && (
-        <div className="fixed top-16 left-0 w-full bg-[#0f0f1a] border-t border-white/10 px-6 py-6 space-y-6 z-40">
+{/* MOBILE MENU */}
+{open && isMobile && (
+  <div className="fixed top-16 left-0 w-full bg-[#0f0f1a] border-t border-white/10 px-6 py-6 space-y-6 z-40">
 
-          <Link to="/" className="block text-white text-lg">
-            Inicio
-          </Link>
+    <Link to="/" className="block text-white text-lg">
+      {t.nav.home}
+    </Link>
 
-          <Link to="/library" className="block text-white text-lg">
-            Biblioteca
-          </Link>
+    <Link to="/library" className="block text-white text-lg">
+      {t.nav.library}
+    </Link>
 
-          <div>
-            <p className="text-white/60 text-sm mb-2">Legal</p>
+    <div>
+      <p className="text-white/60 text-sm mb-2">{t.nav.legal}</p>
 
-            <Link to="/legal/privacy" className="block text-white text-lg">
-              Privacidad
-            </Link>
+      <Link to="/legal/privacy" className="block text-white text-lg">
+        {t.nav.privacy}
+      </Link>
 
-            <Link to="/legal/cookies" className="block text-white text-lg">
-              Cookies
-            </Link>
+      <Link to="/legal/cookies" className="block text-white text-lg">
+        {t.nav.cookies}
+      </Link>
 
-            <Link to="/legal/refunds" className="block text-white text-lg">
-              Reembolsos
-            </Link>
-          </div>
+      <Link to="/legal/refunds" className="block text-white text-lg">
+        {t.nav.refunds}
+      </Link>
+    </div>
 
-          {/* IDIOMAS */}
-          <div className="pt-4 border-t border-white/10">
-            <p className="text-white/60 text-sm mb-2">Idioma</p>
+    {/* IDIOMAS */}
+    <div className="pt-4 border-t border-white/10">
+      <p className="text-white/60 text-sm mb-2">{t.nav.language}</p>
 
-            <div className="flex gap-2">
-              {['es','en','fr','pt'].map((lang) => (
-                <button
-                  key={lang}
-                  onClick={() => setLanguage(lang as any)}
-                  className={`px-3 py-2 rounded-lg transition ${
-                    language === lang
-                      ? 'bg-amber-400 text-black'
-                      : 'bg-white/10 text-white hover:bg-white/20'
-                  }`}
-                >
-                  {lang.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
+      <div className="flex gap-2">
+        {['es','en','fr','pt'].map((lang) => (
+          <button
+            key={lang}
+            onClick={() => setLanguage(lang as any)}
+            className={`px-3 py-2 rounded-lg transition ${
+              language === lang
+                ? 'bg-amber-400 text-black'
+                : 'bg-white/10 text-white hover:bg-white/20'
+            }`}
+          >
+            {lang.toUpperCase()}
+          </button>
+        ))}
+      </div>
+    </div>
 
-        </div>
-      )}
+  </div>
+)}
     </>
   );
 }
