@@ -19,39 +19,45 @@ const testimonialsES: Testimonial[] = [
     id: 1,
     name: 'María González',
     role: 'Emprendedora Digital',
-    content: 'Este contenido cambió completamente mi forma de ver mi vida y mi negocio.',
+    content: 'Los eBooks de Drevaia Digital transformaron completamente mi forma de ver el marketing.',
     rating: 5,
     avatar: 'M',
   },
   {
     id: 2,
+    name: 'Lucas Silva',
+    role: 'Coach de Vida',
+    content: 'Cada libro tiene una profundidad que realmente toca el alma.',
+    rating: 5,
+    avatar: 'L',
+  },
+  {
+    id: 3,
+    name: 'Sophie Martin',
+    role: 'Consultora SEO',
+    content: 'La combinación de SEO + IA es brillante. Me ayudó muchísimo.',
+    rating: 5,
+    avatar: 'S',
+  },
+  {
+    id: 4,
+    name: 'Emma Thompson',
+    role: 'Content Creator',
+    content: 'Me abrió los ojos al poder de la conexión emocional.',
+    rating: 5,
+    avatar: 'E',
+  },
+  {
+    id: 5,
     name: 'Carlos Mendoza',
     role: 'Psicólogo',
-    content: 'Una experiencia profunda que realmente transforma tu forma de pensar.',
+    content: 'Una obra profunda que realmente transforma.',
     rating: 5,
     avatar: 'C',
   },
 ];
 
-const testimonialsEN: Testimonial[] = [
-  {
-    id: 1,
-    name: 'Maria Gonzalez',
-    role: 'Digital Entrepreneur',
-    content: 'This content completely changed how I see my life and business.',
-    rating: 5,
-    avatar: 'M',
-  },
-  {
-    id: 2,
-    name: 'Charles Mendoza',
-    role: 'Psychologist',
-    content: 'A powerful experience that truly transforms your mindset.',
-    rating: 5,
-    avatar: 'C',
-  },
-];
-
+const testimonialsEN: Testimonial[] = testimonialsES;
 const testimonialsFR: Testimonial[] = testimonialsES;
 const testimonialsPT: Testimonial[] = testimonialsES;
 
@@ -113,7 +119,7 @@ export function Testimonials() {
 
     intervalRef.current = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    }, 8000);
+    }, 6000);
   };
 
   const stopAutoPlay = () => {
