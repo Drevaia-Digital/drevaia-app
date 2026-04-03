@@ -8,7 +8,7 @@ interface Testimonial {
   content: string;
 }
 
-// ===== TESTIMONIOS (5) =====
+// ===== TESTIMONIOS =====
 
 const testimonialsES: Testimonial[] = [
   { id: 1, name: 'María González', role: 'Emprendedora Digital', content: 'Los eBooks de Drevaia Digital transformaron completamente mi forma de ver el marketing.' },
@@ -75,6 +75,8 @@ export function Testimonials() {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
+    if (!testimonials.length) return;
+
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % testimonials.length);
     }, 4000);
@@ -84,13 +86,15 @@ export function Testimonials() {
 
   const current = testimonials[index];
 
+  if (!current) return null; // 🔥 evita crash
+
   return (
     <section id="testimonials" className="py-20 text-white">
       <div className="text-center mb-12">
-        <div>{t.badge}</div>
-        <h2>{t.title}</h2>
-        <p>{t.subtitle}</p>
-        <p>{t.small}</p>
+        <div className="text-amber-400 font-semibold">{t.badge}</div>
+        <h2 className="text-3xl font-bold mt-2">{t.title}</h2>
+        <p className="text-gray-400 mt-2">{t.subtitle}</p>
+        <p className="text-gray-500 text-sm mt-2">{t.small}</p>
       </div>
 
       <div className="text-center max-w-xl mx-auto">
