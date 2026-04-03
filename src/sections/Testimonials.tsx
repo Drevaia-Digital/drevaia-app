@@ -1,5 +1,5 @@
 import { useLanguage } from '@/context/LanguageContext';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -23,6 +23,14 @@ const testimonialsES: Testimonial[] = [
     rating: 5,
     avatar: 'M',
   },
+  {
+    id: 2,
+    name: 'Carlos Mendoza',
+    role: 'Psicólogo',
+    content: 'Una experiencia profunda que realmente transforma tu forma de pensar.',
+    rating: 5,
+    avatar: 'C',
+  },
 ];
 
 const testimonialsEN: Testimonial[] = [
@@ -33,6 +41,14 @@ const testimonialsEN: Testimonial[] = [
     content: 'This content completely changed how I see my life and business.',
     rating: 5,
     avatar: 'M',
+  },
+  {
+    id: 2,
+    name: 'Charles Mendoza',
+    role: 'Psychologist',
+    content: 'A powerful experience that truly transforms your mindset.',
+    rating: 5,
+    avatar: 'C',
   },
 ];
 
@@ -50,10 +66,11 @@ const getTestimonialsByLanguage = (language: string): Testimonial[] => {
 
 export function Testimonials() {
   const { language } = useLanguage();
-
   const testimonials = getTestimonialsByLanguage(language);
 
-  // 🔥 TEXTOS UI
+  const hasTestimonials = testimonials.length > 0;
+
+  // ===== TEXTOS =====
   const uiText = {
     es: {
       badge: 'Testimonios reales',
@@ -87,55 +104,30 @@ export function Testimonials() {
 
   const t = uiText[language as 'es' | 'en' | 'fr' | 'pt'] || uiText.es;
 
-  // ===== CARRUSEL =====
+  // ===== CARRUSEL (FIX REAL) =====
   const [currentIndex, setCurrentIndex] = useState(0);
-  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-
-  const hasTestimonials = testimonials.length > 0;
-
-  const startAutoPlay = () => {
-  if (!hasTestimonials || testimonials.length <= 1) return;
-
-  stopAutoPlay(); // 🔥 evita duplicados
-
-  intervalRef.current = setInterval(() => {
-    setCurrentIndex((prev) => {
-      const next = (prev + 1) % testimonials.length;
-      return next;
-    });
-  }, 8000); // ⏱️ MÁS LENTO (8 segundos)
-};
-
-  const stopAutoPlay = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
-  };
 
   useEffect(() => {
-  startAutoPlay();
-  return () => stopAutoPlay();
-}, [testimonials.length]);
+    if (!hasTestimonials || testimonials.length <= 1) return;
 
-  const goToPrevious = () => {
-  if (!hasTestimonials) return;
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, 8000); // ⏱️ velocidad
 
-  stopAutoPlay();
-
-  setCurrentIndex((prev) =>
-    (prev - 1 + testimonials.length) % testimonials.length
-  );
-
-  startAutoPlay(); // 🔥 vuelve a activar autoplay
-};
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
 
   const goToNext = () => {
-  if (!hasTestimonials) return;
+    if (!hasTestimonials) return;
+    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+  };
 
-  stopAutoPlay();
-
-  setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-
-  startAutoPlay(); // 🔥 vuelve a activar autoplay
-};
+  const goToPrevious = () => {
+    if (!hasTestimonials) return;
+    setCurrentIndex((prev) =>
+      (prev - 1 + testimonials.length) % testimonials.length
+    );
+  };
 
   const currentTestimonial = hasTestimonials ? testimonials[currentIndex] : null;
 
@@ -147,7 +139,6 @@ export function Testimonials() {
 
       {/* HEADER */}
       <div className="text-center mb-12 md:mb-16">
-
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-amber-500/10 text-amber-300 text-sm font-medium mb-6">
           <Star className="w-4 h-4 fill-amber-500" />
           {t.badge}
@@ -164,10 +155,9 @@ export function Testimonials() {
 
       {/* CARD */}
       <div className="relative max-w-4xl mx-auto">
-
         <div className="bg-white/5 backdrop-blur-md rounded-3xl shadow-xl border border-white/10 p-8 md:p-12">
 
-          {currentTestimonial ? (
+          {currentTestimonial && (
             <>
               <div className="flex justify-center gap-1 mb-6">
                 {[...Array(currentTestimonial.rating)].map((_, i) => (
@@ -184,10 +174,6 @@ export function Testimonials() {
                 <p className="text-sm text-gray-400">{currentTestimonial.role}</p>
               </div>
             </>
-          ) : (
-            <p className="text-center text-gray-400">
-              No testimonials available yet.
-            </p>
           )}
 
           {/* CTA */}
