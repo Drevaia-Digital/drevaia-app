@@ -1,5 +1,5 @@
 import { useLanguage } from '@/context/LanguageContext';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
@@ -104,29 +104,45 @@ export function Testimonials() {
 
   const t = uiText[language as 'es' | 'en' | 'fr' | 'pt'] || uiText.es;
 
-  // ===== CARRUSEL (FIX REAL) =====
+  // ===== CARRUSEL REAL (FIX DEFINITIVO) =====
   const [currentIndex, setCurrentIndex] = useState(0);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  const startAutoPlay = () => {
+    if (intervalRef.current) return;
+
+    intervalRef.current = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    }, 8000);
+  };
+
+  const stopAutoPlay = () => {
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+  };
 
   useEffect(() => {
     if (!hasTestimonials || testimonials.length <= 1) return;
 
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    }, 8000); // ⏱️ velocidad
+    startAutoPlay();
 
-    return () => clearInterval(interval);
+    return () => stopAutoPlay();
   }, [testimonials.length]);
 
   const goToNext = () => {
-    if (!hasTestimonials) return;
+    stopAutoPlay();
     setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+    startAutoPlay();
   };
 
   const goToPrevious = () => {
-    if (!hasTestimonials) return;
+    stopAutoPlay();
     setCurrentIndex((prev) =>
       (prev - 1 + testimonials.length) % testimonials.length
     );
+    startAutoPlay();
   };
 
   const currentTestimonial = hasTestimonials ? testimonials[currentIndex] : null;
