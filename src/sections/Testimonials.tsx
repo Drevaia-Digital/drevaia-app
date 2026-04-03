@@ -1,7 +1,6 @@
 import { useLanguage } from '@/context/LanguageContext';
 import { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight, Star, ArrowUp } from 'lucide-react';import { Button } from '@/components/ui/button';
 
 interface Testimonial {
   id: number;
@@ -77,36 +76,44 @@ export function Testimonials() {
   const hasTestimonials = testimonials.length > 0;
 
   // ===== TEXTOS =====
-  const uiText = {
-    es: {
-      badge: 'Testimonios reales',
-      title: 'Historias de transformación real',
-      subtitle: 'Personas que ya han transformado su vida desde dentro.',
-      stats: ['Lectores impactados', 'Ebooks creados', 'Idiomas disponibles', 'Satisfacción'],
-      cta: 'Yo también quiero este cambio',
-    },
-    en: {
-      badge: 'Real testimonials',
-      title: 'Real transformation stories',
-      subtitle: 'People who have already transformed their lives from within.',
-      stats: ['Readers impacted', 'Ebooks created', 'Languages available', 'Satisfaction'],
-      cta: 'I want this change',
-    },
-    fr: {
-      badge: 'Témoignages réels',
-      title: 'Histoires de transformation réelle',
-      subtitle: 'Des personnes qui ont déjà transformé leur vie.',
-      stats: ['Lecteurs impactés', 'Ebooks créés', 'Langues disponibles', 'Satisfaction'],
-      cta: 'Je veux ce changement',
-    },
-    pt: {
-      badge: 'Depoimentos reais',
-      title: 'Histórias de transformação real',
-      subtitle: 'Pessoas que já transformaram suas vidas.',
-      stats: ['Leitores impactados', 'Ebooks criados', 'Idiomas disponíveis', 'Satisfação'],
-      cta: 'Eu quero essa mudança',
-    },
-  };
+const uiText = {
+  es: {
+    badge: 'Testimonios reales',
+    title: 'Historias de transformación real',
+    subtitle: 'Personas que ya han transformado su vida desde dentro.',
+    testimonialsSubtitle: 'Contenido emocional profundo · Léelo con presencia',
+    stats: ['Lectores impactados', 'Ebooks creados', 'Idiomas disponibles', 'Satisfacción'],
+    cta: 'Yo también quiero este cambio',
+    backToTop: 'Volver al inicio',
+  },
+  en: {
+    badge: 'Real testimonials',
+    title: 'Real transformation stories',
+    subtitle: 'People who have already transformed their lives from within.',
+    testimonialsSubtitle: 'Deep emotional content · Read it with presence',
+    stats: ['Readers impacted', 'Ebooks created', 'Languages available', 'Satisfaction'],
+    cta: 'I want this change',
+    backToTop: 'Back to top',
+  },
+  fr: {
+    badge: 'Témoignages réels',
+    title: 'Histoires de transformation réelle',
+    subtitle: 'Des personnes qui ont déjà transformé leur vie.',
+    testimonialsSubtitle: 'Contenu émotionnel profond · Lisez avec présence',
+    stats: ['Lecteurs impactés', 'Ebooks créés', 'Langues disponibles', 'Satisfaction'],
+    cta: 'Je veux ce changement',
+    backToTop: 'Retour en haut',
+  },
+  pt: {
+    badge: 'Depoimentos reais',
+    title: 'Histórias de transformação real',
+    subtitle: 'Pessoas que já transformaram suas vidas.',
+    testimonialsSubtitle: 'Conteúdo emocional profundo · Leia com presença',
+    stats: ['Leitores impactados', 'Ebooks criados', 'Idiomas disponíveis', 'Satisfação'],
+    cta: 'Eu quero essa mudança',
+    backToTop: 'Voltar ao topo',
+  },
+};
 
   const t = uiText[language as 'es' | 'en' | 'fr' | 'pt'] || uiText.es;
 
@@ -151,6 +158,10 @@ export function Testimonials() {
     startAutoPlay();
   };
 
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+
   const currentTestimonial = hasTestimonials ? testimonials[currentIndex] : null;
 
   return (
@@ -174,7 +185,7 @@ export function Testimonials() {
   {t.subtitle}
 </p>
 <p className="text-sm text-white/50 opacity-0 animate-fadeInUpSoft [animation-delay:0.3s]">
-  Contenido emocional profundo · Léelo con presencia
+  {t.testimonialsSubtitle}
 </p>  
       </div>
 
@@ -237,6 +248,16 @@ export function Testimonials() {
           </div>
         ))}
       </div>
+
+    <div className="mt-16 flex justify-center">
+  <button
+    onClick={scrollToTop}
+    className="group flex items-center gap-2 text-sm text-white/60 hover:text-white transition-all duration-300"
+  >
+    <ArrowUp className="w-4 h-4 transition-transform duration-300 group-hover:-translate-y-1" />
+    {t.backToTop}
+  </button>
+</div>     
 
     </section>
   );
