@@ -89,7 +89,10 @@ export function Testimonials() {
   if (!current) return null; // 🔥 evita crash
 
   return (
-    <section id="testimonials" className="py-20 text-white">
+    <section
+  id="testimonials"
+  className="py-20 bg-gray-900 text-white"
+>
       <div className="text-center mb-12">
         <div className="text-amber-400 font-semibold">{t.badge}</div>
         <h2 className="text-3xl font-bold mt-2">{t.title}</h2>
