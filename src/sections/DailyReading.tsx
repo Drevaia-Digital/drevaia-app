@@ -44,15 +44,15 @@ export function DailyReading() {
         </p>
 
         {/* BOTÓN VOLVER */}
-        <a
-          href="#top"
-          className="inline-block mt-10 px-6 py-3 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-medium hover:scale-105 transition"
-        >
-          {language === 'es' && 'Volver al inicio'}
-          {language === 'en' && 'Back to top'}
-          {language === 'fr' && 'Retour en haut'}
-          {language === 'pt' && 'Voltar ao início'}
-        </a>
+       <a
+  href="#top"
+  className="inline-block mt-10 px-6 py-3 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-medium hover:scale-105 transition"
+>
+  {language === 'es' && 'Volver al inicio'}
+  {language === 'en' && 'Back to top'}
+  {language === 'fr' && 'Retour en haut'}
+  {language === 'pt' && 'Voltar ao início'}
+</a>
 
       </div>
     </section>

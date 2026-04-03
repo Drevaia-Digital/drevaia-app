@@ -55,15 +55,15 @@ export function Navigation(_: any) {
                 {t.nav.library}
               </Link>
 
-              {/* LECTURA DEL DÍA */}
+              {/* Lectura Diaria */}
               <a href="#daily" className="text-white/80 hover:text-white transition">
                 {language === 'es'
-                  ? 'Lectura'
-                  : language === 'fr'
-                  ? 'Lecture'
-                  : language === 'pt'
-                  ? 'Leitura'
-                  : 'Reading'}
+  ? 'Lectura diaria'
+  : language === 'fr'
+  ? 'Lecture du jour'
+  : language === 'pt'
+  ? 'Leitura diária'
+  : 'Daily reading'}
               </a>
 
               {/* TESTIMONIOS */}
