@@ -11,7 +11,7 @@ export function HomePage() {
   const { language } = useLanguage();
 
   return (
-    <div className="min-h-screen bg-white dark:bg-gray-900">
+  <div id="top" className="min-h-screen bg-white dark:bg-gray-900">
 
       <Navigation />
 

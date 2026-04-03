@@ -26,20 +26,33 @@ export function DailyReading() {
   return (
     <section
       id="daily"
-      className="py-20 text-center bg-gradient-to-b from-gray-900 to-gray-800 text-white"
+      className="py-20 md:py-28 text-center bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 text-white"
     >
       <div className="max-w-3xl mx-auto px-6">
 
-        <h2 className="text-2xl md:text-3xl font-semibold mb-6">
+        {/* TÍTULO */}
+        <h2 className="text-2xl md:text-3xl font-semibold mb-6 bg-gradient-to-r from-amber-300 to-orange-400 bg-clip-text text-transparent">
           {language === 'es' && 'Lectura del día'}
           {language === 'en' && 'Daily reading'}
           {language === 'fr' && 'Lecture du jour'}
           {language === 'pt' && 'Leitura do dia'}
         </h2>
 
-        <p className="text-xl text-gray-300 italic transition-opacity duration-500">
+        {/* TEXTO */}
+        <p className="text-xl md:text-2xl text-gray-300 italic leading-relaxed transition-opacity duration-500">
           "{displayText}"
         </p>
+
+        {/* BOTÓN VOLVER */}
+        <a
+          href="#top"
+          className="inline-block mt-10 px-6 py-3 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-medium hover:scale-105 transition"
+        >
+          {language === 'es' && 'Volver al inicio'}
+          {language === 'en' && 'Back to top'}
+          {language === 'fr' && 'Retour en haut'}
+          {language === 'pt' && 'Voltar ao início'}
+        </a>
 
       </div>
     </section>
