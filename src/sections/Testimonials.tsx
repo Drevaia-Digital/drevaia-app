@@ -89,40 +89,53 @@ export function Testimonials() {
 
   // ===== CARRUSEL =====
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const hasTestimonials = testimonials.length > 0;
 
   const startAutoPlay = () => {
-    if (!hasTestimonials) return;
-    intervalRef.current = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-  };
+  if (!hasTestimonials || testimonials.length <= 1) return;
+
+  stopAutoPlay(); // 🔥 evita duplicados
+
+  intervalRef.current = setInterval(() => {
+    setCurrentIndex((prev) => {
+      const next = (prev + 1) % testimonials.length;
+      return next;
+    });
+  }, 8000); // ⏱️ MÁS LENTO (8 segundos)
+};
 
   const stopAutoPlay = () => {
     if (intervalRef.current) clearInterval(intervalRef.current);
   };
 
   useEffect(() => {
-    if (isAutoPlaying && hasTestimonials) startAutoPlay();
-    return () => stopAutoPlay();
-  }, [isAutoPlaying, testimonials.length]);
+  startAutoPlay();
+  return () => stopAutoPlay();
+}, [testimonials.length]);
 
   const goToPrevious = () => {
-    if (!hasTestimonials) return;
-    stopAutoPlay();
-    setCurrentIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
-    setIsAutoPlaying(false);
-  };
+  if (!hasTestimonials) return;
+
+  stopAutoPlay();
+
+  setCurrentIndex((prev) =>
+    (prev - 1 + testimonials.length) % testimonials.length
+  );
+
+  startAutoPlay(); // 🔥 vuelve a activar autoplay
+};
 
   const goToNext = () => {
-    if (!hasTestimonials) return;
-    stopAutoPlay();
-    setCurrentIndex((prev) => (prev + 1) % testimonials.length);
-    setIsAutoPlaying(false);
-  };
+  if (!hasTestimonials) return;
+
+  stopAutoPlay();
+
+  setCurrentIndex((prev) => (prev + 1) % testimonials.length);
+
+  startAutoPlay(); // 🔥 vuelve a activar autoplay
+};
 
   const currentTestimonial = hasTestimonials ? testimonials[currentIndex] : null;
 
