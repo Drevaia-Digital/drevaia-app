@@ -55,6 +55,17 @@ export function Navigation(_: any) {
                 {t.nav.library}
               </Link>
 
+              {/* LECTURA DEL DÍA */}
+              <a href="#daily" className="text-white/80 hover:text-white transition">
+                {language === 'es'
+                  ? 'Lectura'
+                  : language === 'fr'
+                  ? 'Lecture'
+                  : language === 'pt'
+                  ? 'Leitura'
+                  : 'Reading'}
+              </a>
+
               {/* TESTIMONIOS */}
               <a href="#testimonials" className="text-white/80 hover:text-white transition">
                 {language === 'es'
@@ -122,20 +133,35 @@ export function Navigation(_: any) {
             {t.nav.library}
           </Link>
 
+          {/* LECTURA */}
+          <a
+            href="#daily"
+            onClick={() => setOpen(false)}
+            className="block text-white text-lg"
+          >
+            {language === 'es'
+              ? 'Lectura'
+              : language === 'fr'
+              ? 'Lecture'
+              : language === 'pt'
+              ? 'Leitura'
+              : 'Reading'}
+          </a>
+
           {/* TESTIMONIOS */}
           <a
-  href="#testimonials"
-  onClick={() => setOpen(false)}
-  className="block text-white text-lg"
->
-  {language === 'es'
-    ? 'Testimonios'
-    : language === 'fr'
-    ? 'Témoignages'
-    : language === 'pt'
-    ? 'Depoimentos'
-    : 'Testimonials'}
-</a>
+            href="#testimonials"
+            onClick={() => setOpen(false)}
+            className="block text-white text-lg"
+          >
+            {language === 'es'
+              ? 'Testimonios'
+              : language === 'fr'
+              ? 'Témoignages'
+              : language === 'pt'
+              ? 'Depoimentos'
+              : 'Testimonials'}
+          </a>
 
           <div>
             <p className="text-white/60 text-sm mb-2">{t.nav.legal}</p>
@@ -163,7 +189,7 @@ export function Navigation(_: any) {
                   key={lang}
                   onClick={() => {
                     setLanguage(lang as any);
-                    setOpen(false); // 🔥 CIERRA MENÚ AUTOMÁTICAMENTE
+                    setOpen(false);
                   }}
                   className={`px-3 py-2 rounded-lg transition ${
                     language === lang
