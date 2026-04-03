@@ -170,9 +170,12 @@ export function Testimonials() {
           {t.title}
         </h2>
 
-        <p className="text-lg text-gray-300 max-w-2xl mx-auto">
-          {t.subtitle}
-        </p>
+        <p className="text-lg text-gray-300 max-w-2xl mx-auto mb-4">
+  {t.subtitle}
+</p>
+<p className="text-sm text-white/50 opacity-0 animate-fadeInUpSoft [animation-delay:0.3s]">
+  Contenido emocional profundo · Léelo con presencia
+</p>  
       </div>
 
       {/* CARD */}
