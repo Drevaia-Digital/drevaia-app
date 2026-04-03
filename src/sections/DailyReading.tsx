@@ -44,14 +44,17 @@ export function DailyReading() {
         </p>
 
         {/* BOTÓN VOLVER */}
-       <a
+<a
   href="#top"
-  className="inline-block mt-10 px-6 py-3 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-black font-medium hover:scale-105 transition"
+  className="inline-block mt-10 text-sm text-white/60 hover:text-white transition"
 >
-  {language === 'es' && 'Volver al inicio'}
+<span className="text-lg">←</span>
+  <span>
+  ← {language === 'es' && 'Volver al inicio'}
   {language === 'en' && 'Back to top'}
   {language === 'fr' && 'Retour en haut'}
   {language === 'pt' && 'Voltar ao início'}
+</span>
 </a>
 
       </div>

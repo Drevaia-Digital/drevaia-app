@@ -11,6 +11,19 @@ export function Navigation(_: any) {
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
 
+  // 🔥 SCROLL PRO (ARREGLADO)
+  const scrollToSection = (id: string) => {
+    if (id === 'top') {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+
+    const el = document.getElementById(id);
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   // Detectar móvil
   useEffect(() => {
     const handleResize = () => {
@@ -38,36 +51,49 @@ export function Navigation(_: any) {
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
           {/* LOGO */}
-          <Link to="/" className="flex items-center gap-2">
+          <button
+            onClick={() => scrollToSection('top')}
+            className="flex items-center gap-2"
+          >
             <Sparkles className="text-amber-400" />
             <span className="text-white font-bold text-lg">Drevaia</span>
-          </Link>
+          </button>
 
           {/* DESKTOP */}
           {!isMobile && (
             <div className="flex items-center gap-6">
 
-              <Link className="text-white/80 hover:text-white transition" to="/">
+              {/* INICIO */}
+              <button
+                onClick={() => scrollToSection('top')}
+                className="text-white/80 hover:text-white transition cursor-pointer"
+              >
                 {t.nav.home}
-              </Link>
+              </button>
 
               <Link className="text-white/80 hover:text-white transition" to="/library">
                 {t.nav.library}
               </Link>
 
-              {/* Lectura Diaria */}
-              <a href="#daily" className="text-white/80 hover:text-white transition">
+              {/* LECTURA */}
+              <button
+                onClick={() => scrollToSection('daily')}
+                className="text-white/80 hover:text-white transition cursor-pointer"
+              >
                 {language === 'es'
-  ? 'Lectura diaria'
-  : language === 'fr'
-  ? 'Lecture du jour'
-  : language === 'pt'
-  ? 'Leitura diária'
-  : 'Daily reading'}
-              </a>
+                  ? 'Lectura diaria'
+                  : language === 'fr'
+                  ? 'Lecture du jour'
+                  : language === 'pt'
+                  ? 'Leitura diária'
+                  : 'Daily reading'}
+              </button>
 
               {/* TESTIMONIOS */}
-              <a href="#testimonials" className="text-white/80 hover:text-white transition">
+              <button
+                onClick={() => scrollToSection('testimonials')}
+                className="text-white/80 hover:text-white transition cursor-pointer"
+              >
                 {language === 'es'
                   ? 'Testimonios'
                   : language === 'fr'
@@ -75,7 +101,7 @@ export function Navigation(_: any) {
                   : language === 'pt'
                   ? 'Depoimentos'
                   : 'Testimonials'}
-              </a>
+              </button>
 
               <Link className="text-white/80 hover:text-white transition" to="/legal">
                 {t.nav.legal}
@@ -125,18 +151,27 @@ export function Navigation(_: any) {
       {open && isMobile && (
         <div className="fixed top-16 left-0 w-full backdrop-blur-xl bg-black/60 border-t border-white/10 px-6 py-6 space-y-6 z-40 animate-fadeIn">
 
-          <Link to="/" className="block text-white text-lg">
+          {/* INICIO */}
+          <button
+            onClick={() => {
+              scrollToSection('top');
+              setOpen(false);
+            }}
+            className="block text-white text-lg"
+          >
             {t.nav.home}
-          </Link>
+          </button>
 
           <Link to="/library" className="block text-white text-lg">
             {t.nav.library}
           </Link>
 
           {/* LECTURA */}
-          <a
-            href="#daily"
-            onClick={() => setOpen(false)}
+          <button
+            onClick={() => {
+              scrollToSection('daily');
+              setOpen(false);
+            }}
             className="block text-white text-lg"
           >
             {language === 'es'
@@ -146,12 +181,14 @@ export function Navigation(_: any) {
               : language === 'pt'
               ? 'Leitura'
               : 'Reading'}
-          </a>
+          </button>
 
           {/* TESTIMONIOS */}
-          <a
-            href="#testimonials"
-            onClick={() => setOpen(false)}
+          <button
+            onClick={() => {
+              scrollToSection('testimonials');
+              setOpen(false);
+            }}
             className="block text-white text-lg"
           >
             {language === 'es'
@@ -161,7 +198,7 @@ export function Navigation(_: any) {
               : language === 'pt'
               ? 'Depoimentos'
               : 'Testimonials'}
-          </a>
+          </button>
 
           <div>
             <p className="text-white/60 text-sm mb-2">{t.nav.legal}</p>
