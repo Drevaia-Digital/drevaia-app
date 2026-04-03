@@ -20,7 +20,7 @@ export function HomePage() {
 
       <Ebooks language={language} />
 
-      <Testimonials language={language} />
+      <Testimonials />
 
       <Footer />
 
