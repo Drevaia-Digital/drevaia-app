@@ -1,5 +1,6 @@
 import { dailyReadings } from '@/content/dailyReadings';
 import { useLanguage } from '@/context/LanguageContext';
+import { useEffect, useState } from 'react';
 
 export function DailyReading() {
   const { language } = useLanguage();
@@ -10,6 +11,17 @@ export function DailyReading() {
   const index = today % readings.length;
 
   const text = readings[index];
+
+  const [displayText, setDisplayText] = useState(text);
+
+  useEffect(() => {
+    setDisplayText('');
+    const timeout = setTimeout(() => {
+      setDisplayText(text);
+    }, 200);
+
+    return () => clearTimeout(timeout);
+  }, [text]);
 
   return (
     <section
@@ -25,8 +37,8 @@ export function DailyReading() {
           {language === 'pt' && 'Leitura do dia'}
         </h2>
 
-        <p className="text-xl text-gray-300 italic">
-          "{text}"
+        <p className="text-xl text-gray-300 italic transition-opacity duration-500">
+          "{displayText}"
         </p>
 
       </div>
