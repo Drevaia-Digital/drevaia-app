@@ -108,7 +108,10 @@ export function Testimonials() {
   const currentTestimonial = testimonials[currentIndex];
 
   return (
-    <section className="py-20 text-white">
+    <section
+  id="testimonials"
+  className="py-20 text-white"
+>
       <div className="text-center mb-12">
         <div>{t.badge}</div>
         <h2>{t.title}</h2>
