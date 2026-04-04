@@ -1,8 +1,10 @@
+import { EbookCard } from '@/components/EbookCard';
+import { BookPreviewModal } from '@/components/BookPreviewModal';
 import { supabase } from '@/lib/supabase';
 import { useState, useEffect } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ChevronRight, BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
+import { BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 export default function LibraryPage() {
@@ -14,6 +16,10 @@ export default function LibraryPage() {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [showTop, setShowTop] = useState(false);
+
+  // 🔥 NUEVO (CLAVE)
+  const [selectedBook, setSelectedBook] = useState<any | null>(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     loadBooks();
@@ -32,51 +38,50 @@ export default function LibraryPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 🔥 LOAD CON CACHE (SIN ROMPER NADA)
+  // 🔥 LOAD CON CACHE
   const loadBooks = async () => {
-  setLoading(true);
+    setLoading(true);
 
-  try {
-    const cached = localStorage.getItem('books_cache');
+    try {
+      const cached = localStorage.getItem('books_cache');
 
-    if (cached) {
-      try {
-        const parsed = JSON.parse(cached);
-        setBooks(parsed);
-        setFilteredBooks(parsed);
-      } catch {
-        localStorage.removeItem('books_cache');
+      if (cached) {
+        try {
+          const parsed = JSON.parse(cached);
+          setBooks(parsed);
+          setFilteredBooks(parsed);
+        } catch {
+          localStorage.removeItem('books_cache');
+        }
       }
+
+      const { data, error } = await supabase
+        .from('books')
+        .select('*');
+
+      if (!error && data) {
+        const mapped = data.map((book: any) => ({
+          ...book,
+          coverImage: book.image || "https://via.placeholder.com/300x400",
+          buy_url:
+            book.buy_url_es ||
+            book.buy_url_en ||
+            book.buy_url_fr ||
+            book.buy_url_pt ||
+            ""
+        }));
+
+        setBooks(mapped);
+        setFilteredBooks(mapped);
+        localStorage.setItem('books_cache', JSON.stringify(mapped));
+      }
+
+    } catch (err) {
+      console.error("Error inesperado:", err);
     }
 
-    const { data, error } = await supabase
-      .from('books')
-      .select('*');
-
-    if (!error && data) {
-      const mapped = data.map((book: any) => ({
-        ...book,
-        coverImage: book.image || "https://via.placeholder.com/300x400",
-        buy_url:
-          book.buy_url_es ||
-          book.buy_url_en ||
-          book.buy_url_fr ||
-          book.buy_url_pt ||
-          ""
-      }));
-
-      setBooks(mapped);
-      setFilteredBooks(mapped);
-      localStorage.setItem('books_cache', JSON.stringify(mapped));
-    }
-
-  } catch (err) {
-    console.error("Error inesperado:", err);
-  }
-
-  // 🔥 GARANTÍA TOTAL
-  setLoading(false);
-};
+    setLoading(false);
+  };
 
   const filterBooks = () => {
     let result = [...books];
@@ -95,6 +100,17 @@ export default function LibraryPage() {
     setFilteredBooks(result);
   };
 
+  // 🔥 CONTROL MODAL
+  const openPreview = (book: any) => {
+    setSelectedBook(book);
+    setIsModalOpen(true);
+  };
+
+  const closePreview = () => {
+    setIsModalOpen(false);
+    setTimeout(() => setSelectedBook(null), 200);
+  };
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -105,24 +121,23 @@ export default function LibraryPage() {
 
   const categories = [...new Set(books.map(b => b.category))];
 
+  // 🔥 LOADING
   if (loading) {
-  return (
-    <div className="min-h-screen bg-[#0f0f1a] px-6 py-16">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
-        {[...Array(8)].map((_, i) => (
-          <div
-            key={i}
-            className="relative aspect-[3/4] rounded-2xl bg-[#151528] overflow-hidden"
-          >
-            <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-white/5 to-white/10" />
-          </div>
-        ))}
-
+    return (
+      <div className="min-h-screen bg-[#0f0f1a] px-6 py-16">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {[...Array(8)].map((_, i) => (
+            <div
+              key={i}
+              className="relative aspect-[3/4] rounded-2xl bg-[#151528] overflow-hidden"
+            >
+              <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-white/5 to-white/10" />
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white overflow-x-hidden">
@@ -153,11 +168,11 @@ export default function LibraryPage() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
 
           <Input
-  placeholder="Buscar libros..."
-  value={searchQuery}
-  onChange={(e) => setSearchQuery(e.target.value)}
-  className="bg-[#1a1a2e] border border-white/20 w-full max-w-md text-base"
-/>
+            placeholder="Buscar libros..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="bg-[#1a1a2e] border border-white/20 w-full max-w-md text-base"
+          />
 
           <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
             <Button onClick={() => setSelectedCategory(null)}>
@@ -185,73 +200,57 @@ export default function LibraryPage() {
         )}
 
         {filteredBooks.length > 0 && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 group">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
             {filteredBooks.map((book, index) => (
-  <a
-  key={book.id}
-  href={book.buy_url || undefined}
-  target="_blank"
-  rel="noopener noreferrer"
-  className="group block fade-up transition-all duration-300 group-hover:opacity-60 hover:!opacity-100"
-  style={{ animationDelay: `${index * 80}ms` }}
->
+              <div
+                key={book.id}
+                className="fade-up"
+                style={{ animationDelay: `${index * 80}ms` }}
+              >
+                <EbookCard
+                  id={book.id}
+                  title={book.title}
+                  cover={book.coverImage}
+                  price={book.price}
+                  onClick={() => openPreview(book)}
+                />
+              </div>
+            ))}
 
-                <div className="relative aspect-[3/4] rounded-2xl overflow-hidden bg-[#151528] transition-all duration-300 hover:scale-[1.05] hover:-translate-y-1 hover:shadow-[0_20px_40px_rgba(0,0,0,0.6)] hover:shadow-purple-500/20">
+          </div>
+        )}
 
-                  <img
-  src={book.coverImage}
-  loading="lazy"
-  onLoad={(e) => {
-    e.currentTarget.style.opacity = '1';
-  }}
-  style={{
-    opacity: 0,
-    transition: 'opacity 0.5s ease'
-  }}
-  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-/>
+      </section>
 
-<div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-100 md:opacity-0 md:group-hover:opacity-100 transition duration-300 pointer-events-none" />
+      {/* BOTÓN SCROLL */}
+      {showTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-110 text-white p-3 rounded-full shadow-xl transition-all duration-300"
+        >
+          <ChevronUp className="w-5 h-5" />
+        </button>
+      )}
 
-<div className="absolute bottom-0 left-0 right-0 p-4 
-  translate-y-0 md:translate-y-4 md:group-hover:translate-y-0 
-  opacity-100 md:opacity-0 md:group-hover:opacity-100 
-  transition-all duration-300">
+      {/* 🔥 MODAL */}
+      <BookPreviewModal
+        isOpen={isModalOpen}
+        onClose={closePreview}
+        book={
+          selectedBook
+            ? {
+                id: selectedBook.id,
+                title: selectedBook.title,
+                description: selectedBook.description || "Descripción no disponible",
+                link: selectedBook.buy_url,
+                collection: selectedBook.category || "Colección",
+                cover: selectedBook.coverImage,
+              }
+            : null
+        }
+      />
 
-  <h3 className="text-white text-sm font-semibold line-clamp-2">
-    {book.title}
-  </h3>
-
-  <p className="text-amber-400 text-sm font-bold mt-1">
-    ${book.price}
-  </p>
-
-  <span className="inline-flex items-center mt-2 text-xs text-purple-300">
-    Ver <ChevronRight className="w-4 h-4 ml-1" />
-  </span>
-
-</div>
-
-</div>
-
-</a>
-))}
-
-</div>
-)}
-
-</section>
-
-{showTop && (
-<button
-  onClick={scrollToTop}
-  className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-110 text-white p-3 rounded-full shadow-xl transition-all duration-300"
->
-  <ChevronUp className="w-5 h-5" />
-</button>
-)}
-
-</div>
-);
+    </div>
+  );
 }

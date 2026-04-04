@@ -13,16 +13,19 @@ export function Navigation(_: any) {
 
   // 🔥 SCROLL PRO (ARREGLADO)
   const scrollToSection = (id: string) => {
-    if (id === 'top') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      return;
-    }
+  if (id === 'top') {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    return;
+  }
 
-    const el = document.getElementById(id);
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
+  const el = document.getElementById(id);
+  if (el) {
+    window.scrollTo({
+      top: el.offsetTop,
+      behavior: 'auto',
+    });
+  }
+};
 
   // Detectar móvil
   useEffect(() => {
