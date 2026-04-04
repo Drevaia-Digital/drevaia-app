@@ -1,29 +1,32 @@
 import { useLanguage } from '@/context/LanguageContext';
 import { useState, useEffect } from 'react';
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 
 interface Testimonial {
   id: number;
   name: string;
   role: string;
   content: string;
+  rating: number;
+  avatar: string;
 }
 
 // ===== TESTIMONIOS =====
 
 const testimonialsES: Testimonial[] = [
-  { id: 1, name: 'María González', role: 'Emprendedora Digital', content: 'Los eBooks de Drevaia Digital transformaron completamente mi forma de ver el marketing.' },
-  { id: 2, name: 'Lucas Silva', role: 'Coach de Vida', content: 'Cada libro tiene una profundidad que realmente toca el alma.' },
-  { id: 3, name: 'Sophie Martin', role: 'Consultora SEO', content: 'La combinación de SEO + IA es brillante. Me ayudó muchísimo.' },
-  { id: 4, name: 'Emma Thompson', role: 'Content Creator', content: 'Me abrió los ojos al poder de la conexión emocional.' },
-  { id: 5, name: 'Carlos Mendoza', role: 'Psicólogo', content: 'Una obra profunda que realmente transforma.' },
+  { id: 1, name: 'María González', role: 'Emprendedora Digital', content: 'Los eBooks de Drevaia Digital transformaron completamente mi forma de ver el marketing.', rating: 5, avatar: 'M' },
+  { id: 2, name: 'Lucas Silva', role: 'Coach de Vida', content: 'Cada libro tiene una profundidad que realmente toca el alma.', rating: 5, avatar: 'L' },
+  { id: 3, name: 'Sophie Martin', role: 'Consultora SEO', content: 'La combinación de SEO + IA es brillante. Me ayudó muchísimo.', rating: 5, avatar: 'S' },
+  { id: 4, name: 'Emma Thompson', role: 'Content Creator', content: 'Me abrió los ojos al poder de la conexión emocional.', rating: 5, avatar: 'E' },
+  { id: 5, name: 'Carlos Mendoza', role: 'Psicólogo', content: 'Una obra profunda que realmente transforma.', rating: 5, avatar: 'C' },
 ];
 
 const testimonialsEN: Testimonial[] = [
-  { id: 1, name: 'Emily Carter', role: 'Digital Entrepreneur', content: 'Drevaia Digital completely changed how I see marketing.' },
-  { id: 2, name: 'James Walker', role: 'Life Coach', content: 'Each book has a depth that truly touches the soul.' },
-  { id: 3, name: 'Sophie Martin', role: 'SEO Consultant', content: 'The SEO + AI combination is brilliant. It helped me a lot.' },
-  { id: 4, name: 'Emma Thompson', role: 'Content Creator', content: 'It opened my eyes to the power of emotional connection.' },
-  { id: 5, name: 'Carlos Mendoza', role: 'Psychologist', content: 'A deep work that truly transforms.' },
+  { id: 1, name: 'Emily Carter', role: 'Digital Entrepreneur', content: 'Drevaia Digital completely changed how I see marketing.', rating: 5, avatar: 'E' },
+  { id: 2, name: 'James Walker', role: 'Life Coach', content: 'Each book has a depth that truly touches the soul.', rating: 5, avatar: 'J' },
+  { id: 3, name: 'Sophie Martin', role: 'SEO Consultant', content: 'The SEO + AI combination is brilliant. It helped me a lot.', rating: 5, avatar: 'S' },
+  { id: 4, name: 'Emma Thompson', role: 'Content Creator', content: 'It opened my eyes to the power of emotional connection.', rating: 5, avatar: 'E' },
+  { id: 5, name: 'Carlos Mendoza', role: 'Psychologist', content: 'A deep work that truly transforms.', rating: 5, avatar: 'C' },
 ];
 
 const testimonialsFR = testimonialsEN;
@@ -45,25 +48,21 @@ const uiText = {
     badge: 'Testimonios reales',
     title: 'Historias de transformación real',
     subtitle: 'Personas que ya han transformado su vida desde dentro.',
-    small: 'Contenido emocional profundo · Léelo con presencia',
   },
   en: {
     badge: 'Real testimonials',
     title: 'Real transformation stories',
     subtitle: 'People who have transformed their lives from within.',
-    small: 'Deep emotional content · Read with presence',
   },
   fr: {
     badge: 'Témoignages réels',
     title: 'Histoires de transformation réelle',
     subtitle: 'Des personnes qui ont transformé leur vie.',
-    small: 'Contenu émotionnel profond',
   },
   pt: {
     badge: 'Depoimentos reais',
     title: 'Histórias de transformação real',
     subtitle: 'Pessoas que transformaram suas vidas.',
-    small: 'Conteúdo emocional profundo',
   },
 };
 
@@ -73,52 +72,86 @@ export function Testimonials() {
 
   const testimonials = getTestimonialsByLanguage(language);
   const [index, setIndex] = useState(0);
-  const [fade, setFade] = useState(true);
 
-useEffect(() => {
-  if (!testimonials.length) return;
+  // AUTO PLAY SUAVE
+  useEffect(() => {
+    if (!testimonials.length) return;
 
-  const interval = setInterval(() => {
-    setFade(false);
-
-    setTimeout(() => {
+    const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % testimonials.length);
-      setFade(true);
-    }, 200);
-  }, 4000);
+    }, 6000);
 
-  return () => clearInterval(interval);
-}, [testimonials.length]);
+    return () => clearInterval(interval);
+  }, [testimonials.length]);
 
   const current = testimonials[index];
 
-  if (!current) return null; // 🔥 evita crash
+  const next = () => {
+    setIndex((prev) => (prev + 1) % testimonials.length);
+  };
+
+  const prev = () => {
+    setIndex((prev) =>
+      (prev - 1 + testimonials.length) % testimonials.length
+    );
+  };
+
+  if (!current) return null;
 
   return (
     <section
-  id="testimonials"
-  className="py-20 bg-gray-900 text-white"
->
+      id="testimonials"
+      className="py-20 bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 text-white"
+    >
+      {/* HEADER */}
       <div className="text-center mb-12">
         <div className="text-amber-400 font-semibold">{t.badge}</div>
         <h2 className="text-3xl font-bold mt-2">{t.title}</h2>
         <p className="text-gray-400 mt-2">{t.subtitle}</p>
-        <p className="text-gray-500 text-sm mt-2">{t.small}</p>
       </div>
 
-      <div className={`text-center max-w-xl mx-auto transition-all duration-500 ${
-  fade ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
-}`}>
-        <p className="italic mb-4">"{current.content}"</p>
-        <div className="flex flex-col items-center gap-2 mt-4">
-  <div className="w-12 h-12 rounded-full bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-amber-300 font-semibold">
-    {current.name.charAt(0)}
-  </div>
+      {/* CARD */}
+      <div className="max-w-xl mx-auto bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-lg">
+        
+        {/* STARS */}
+        <div className="flex justify-center gap-1 mb-4">
+          {[...Array(current.rating)].map((_, i) => (
+            <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
+          ))}
+        </div>
 
-  <h4 className="font-semibold">{current.name}</h4>
-  <p className="text-sm opacity-70">{current.role}</p>
-  </div>
-</div>
-     </section>
+        {/* CONTENT */}
+        <p className="text-center italic text-gray-300 mb-6">
+          "{current.content}"
+        </p>
+
+        {/* USER */}
+        <div className="flex flex-col items-center gap-3">
+          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400/30 to-orange-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-semibold">
+            {current.avatar}
+          </div>
+
+          <h4 className="font-semibold">{current.name}</h4>
+          <p className="text-sm text-gray-400">{current.role}</p>
+        </div>
+
+        {/* CONTROLES */}
+        <div className="flex justify-center gap-4 mt-8">
+          <button
+            onClick={prev}
+            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+          >
+            <ChevronLeft />
+          </button>
+
+          <button
+            onClick={next}
+            className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+          >
+            <ChevronRight />
+          </button>
+        </div>
+      </div>
+    </section>
   );
 }
