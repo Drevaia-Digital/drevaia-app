@@ -73,16 +73,22 @@ export function Testimonials() {
 
   const testimonials = getTestimonialsByLanguage(language);
   const [index, setIndex] = useState(0);
+  const [fade, setFade] = useState(true);
 
-  useEffect(() => {
-    if (!testimonials.length) return;
+useEffect(() => {
+  if (!testimonials.length) return;
 
-    const interval = setInterval(() => {
+  const interval = setInterval(() => {
+    setFade(false);
+
+    setTimeout(() => {
       setIndex((prev) => (prev + 1) % testimonials.length);
-    }, 4000);
+      setFade(true);
+    }, 200);
+  }, 4000);
 
-    return () => clearInterval(interval);
-  }, [testimonials.length]);
+  return () => clearInterval(interval);
+}, [testimonials.length]);
 
   const current = testimonials[index];
 
@@ -100,11 +106,19 @@ export function Testimonials() {
         <p className="text-gray-500 text-sm mt-2">{t.small}</p>
       </div>
 
-      <div className="text-center max-w-xl mx-auto">
+      <div className={`text-center max-w-xl mx-auto transition-all duration-500 ${
+  fade ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+}`}>
         <p className="italic mb-4">"{current.content}"</p>
-        <h4 className="font-semibold">{current.name}</h4>
-        <p className="text-sm opacity-70">{current.role}</p>
-      </div>
-    </section>
+        <div className="flex flex-col items-center gap-2 mt-4">
+  <div className="w-12 h-12 rounded-full bg-amber-400/20 border border-amber-400/30 flex items-center justify-center text-amber-300 font-semibold">
+    {current.name.charAt(0)}
+  </div>
+
+  <h4 className="font-semibold">{current.name}</h4>
+  <p className="text-sm opacity-70">{current.role}</p>
+  </div>
+</div>
+     </section>
   );
 }
