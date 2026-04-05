@@ -1,6 +1,7 @@
 import { useLanguage } from '@/context/LanguageContext';
 import { useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface Testimonial {
   id: number;
@@ -12,7 +13,6 @@ interface Testimonial {
 }
 
 // ===== TESTIMONIOS =====
-
 const testimonialsES: Testimonial[] = [
   { id: 1, name: 'María González', role: 'Emprendedora Digital', content: 'Los eBooks de Drevaia Digital transformaron completamente mi forma de ver el marketing.', rating: 5, avatar: 'M' },
   { id: 2, name: 'Lucas Silva', role: 'Coach de Vida', content: 'Cada libro tiene una profundidad que realmente toca el alma.', rating: 5, avatar: 'L' },
@@ -21,16 +21,9 @@ const testimonialsES: Testimonial[] = [
   { id: 5, name: 'Carlos Mendoza', role: 'Psicólogo', content: 'Una obra profunda que realmente transforma.', rating: 5, avatar: 'C' },
 ];
 
-const testimonialsEN: Testimonial[] = [
-  { id: 1, name: 'Emily Carter', role: 'Digital Entrepreneur', content: 'Drevaia Digital completely changed how I see marketing.', rating: 5, avatar: 'E' },
-  { id: 2, name: 'James Walker', role: 'Life Coach', content: 'Each book has a depth that truly touches the soul.', rating: 5, avatar: 'J' },
-  { id: 3, name: 'Sophie Martin', role: 'SEO Consultant', content: 'The SEO + AI combination is brilliant. It helped me a lot.', rating: 5, avatar: 'S' },
-  { id: 4, name: 'Emma Thompson', role: 'Content Creator', content: 'It opened my eyes to the power of emotional connection.', rating: 5, avatar: 'E' },
-  { id: 5, name: 'Carlos Mendoza', role: 'Psychologist', content: 'A deep work that truly transforms.', rating: 5, avatar: 'C' },
-];
-
-const testimonialsFR = testimonialsEN;
-const testimonialsPT = testimonialsEN;
+const testimonialsEN = testimonialsES;
+const testimonialsFR = testimonialsES;
+const testimonialsPT = testimonialsES;
 
 const getTestimonialsByLanguage = (language: string): Testimonial[] => {
   switch (language) {
@@ -42,7 +35,6 @@ const getTestimonialsByLanguage = (language: string): Testimonial[] => {
 };
 
 // ===== TEXTOS =====
-
 const uiText = {
   es: {
     badge: 'Testimonios reales',
@@ -73,13 +65,13 @@ export function Testimonials() {
   const testimonials = getTestimonialsByLanguage(language);
   const [index, setIndex] = useState(0);
 
-  // AUTO PLAY SUAVE
+  // 🔥 AUTO PLAY PRO
   useEffect(() => {
     if (!testimonials.length) return;
 
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % testimonials.length);
-    }, 6000);
+    }, 4500); // 👈 MÁS PREMIUM
 
     return () => clearInterval(interval);
   }, [testimonials.length]);
@@ -101,39 +93,52 @@ export function Testimonials() {
   return (
     <section
       id="testimonials"
-      className="py-20 bg-gradient-to-b from-gray-900 via-gray-900 to-gray-800 text-white"
+      className="py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white"
     >
       {/* HEADER */}
-      <div className="text-center mb-12">
+      <div className="text-center mb-14">
         <div className="text-amber-400 font-semibold">{t.badge}</div>
         <h2 className="text-3xl font-bold mt-2">{t.title}</h2>
         <p className="text-gray-400 mt-2">{t.subtitle}</p>
       </div>
 
       {/* CARD */}
-      <div className="max-w-xl mx-auto bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-lg">
-        
-        {/* STARS */}
-        <div className="flex justify-center gap-1 mb-4">
-          {[...Array(current.rating)].map((_, i) => (
-            <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
-          ))}
-        </div>
+      <div className="max-w-xl mx-auto">
 
-        {/* CONTENT */}
-        <p className="text-center italic text-gray-300 mb-6">
-          "{current.content}"
-        </p>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={current.id}
+            initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
+            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: -20, filter: "blur(6px)" }}
+            transition={{ duration: 0.45 }}
+            className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-lg"
+          >
 
-        {/* USER */}
-        <div className="flex flex-col items-center gap-3">
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400/30 to-orange-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-semibold">
-            {current.avatar}
-          </div>
+            {/* STARS */}
+            <div className="flex justify-center gap-1 mb-4">
+              {[...Array(current.rating)].map((_, i) => (
+                <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
+              ))}
+            </div>
 
-          <h4 className="font-semibold">{current.name}</h4>
-          <p className="text-sm text-gray-400">{current.role}</p>
-        </div>
+            {/* CONTENT */}
+            <p className="text-center italic text-gray-300 mb-6">
+              "{current.content}"
+            </p>
+
+            {/* USER */}
+            <div className="flex flex-col items-center gap-3">
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400/30 to-orange-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-semibold">
+                {current.avatar}
+              </div>
+
+              <h4 className="font-semibold">{current.name}</h4>
+              <p className="text-sm text-gray-400">{current.role}</p>
+            </div>
+
+          </motion.div>
+        </AnimatePresence>
 
         {/* CONTROLES */}
         <div className="flex justify-center gap-4 mt-8">
@@ -151,6 +156,7 @@ export function Testimonials() {
             <ChevronRight />
           </button>
         </div>
+
       </div>
     </section>
   );
