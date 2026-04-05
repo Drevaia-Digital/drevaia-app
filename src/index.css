@@ -124,3 +124,7 @@ html {
 .animate-fadeInUpSoft {
   animation: fadeInUpSoft 1s ease forwards;
 }
+
+input, textarea {
+  font-size: 16px !important;
+}
