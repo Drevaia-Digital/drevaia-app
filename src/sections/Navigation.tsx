@@ -1,5 +1,5 @@
 import { translations } from '../i18n/translations';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
@@ -10,50 +10,34 @@ export function Navigation(_: any) {
   const t = translations[language];
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [active, setActive] = useState('top');
   const location = useLocation();
 
-  const navRef = useRef<HTMLDivElement>(null);
+  // 🔥 SCROLL PRO: instantáneo + sensación premium
+const scrollToSection = (id: string) => {
+  if (id === 'top') {
+    window.scrollTo({ top: 0, behavior: 'auto' });
+    return;
+  }
 
-  // 🔥 SCROLL SUAVE PRO
-  const scrollToSection = (id: string) => {
-    const el = document.getElementById(id);
-    if (!el) return;
+  const el = document.getElementById(id);
+  if (!el) return;
 
-    el.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
-    });
-  };
+  // salto inmediato
+  window.scrollTo({
+    top: el.offsetTop,
+    behavior: 'auto',
+  });
 
-  // 🔥 DETECTAR SECCIÓN ACTIVA (SCROLL SPY)
-  useEffect(() => {
-    const sections = ['top', 'daily', 'testimonials'];
+  // micro feedback visual (no rompe nada)
+  el.style.transform = 'scale(0.98)';
+  el.style.transition = 'transform 0.18s ease-out';
 
-    const handleScroll = () => {
-      let current = 'top';
+  setTimeout(() => {
+    el.style.transform = 'scale(1)';
+  }, 120);
+};
 
-      for (const id of sections) {
-        const el = document.getElementById(id);
-        if (!el) continue;
-
-        const rect = el.getBoundingClientRect();
-
-        if (rect.top <= 120) {
-          current = id;
-        }
-      }
-
-      setActive(current);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // 🔥 DETECTAR MÓVIL
+  // Detectar móvil
   useEffect(() => {
     const handleResize = () => {
       const isSmallScreen = window.innerWidth < 1024;
@@ -68,41 +52,15 @@ export function Navigation(_: any) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // Cerrar menú al cambiar ruta
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
 
-  // 🔥 LINK ITEM
-  const NavItem = ({
-    id,
-    label,
-  }: {
-    id: string;
-    label: string;
-  }) => {
-    const isActive = active === id;
-
-    return (
-      <button
-        onClick={() => scrollToSection(id)}
-        className="relative text-white/80 hover:text-white transition cursor-pointer px-1"
-      >
-        {label}
-
-        {isActive && (
-          <motion.div
-            layoutId="nav-indicator"
-            className="absolute left-0 right-0 -bottom-1 h-[2px] bg-amber-400 rounded-full"
-            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-          />
-        )}
-      </button>
-    );
-  };
-
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0f0f1a]/80 backdrop-blur-xl border-b border-white/10">
+      {/* NAVBAR */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0f0f1a] border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
           {/* LOGO */}
@@ -116,54 +74,37 @@ export function Navigation(_: any) {
 
           {/* DESKTOP */}
           {!isMobile && (
-            <div ref={navRef} className="flex items-center gap-6">
+            <div className="flex items-center gap-6">
 
-              <NavItem id="top" label={t.nav.home} />
+              <button onClick={() => scrollToSection('top')} className="text-white/80 hover:text-white">
+                {t.nav.home}
+              </button>
 
-              <Link className="text-white/80 hover:text-white transition" to="/library">
+              <Link to="/library" className="text-white/80 hover:text-white">
                 {t.nav.library}
               </Link>
 
-              <NavItem
-                id="daily"
-                label={
-                  language === 'es'
-                    ? 'Lectura diaria'
-                    : language === 'fr'
-                    ? 'Lecture du jour'
-                    : language === 'pt'
-                    ? 'Leitura diária'
-                    : 'Daily reading'
-                }
-              />
+              <button onClick={() => scrollToSection('daily')} className="text-white/80 hover:text-white">
+                {language === 'es' ? 'Lectura diaria' : 'Daily reading'}
+              </button>
 
-              <NavItem
-                id="testimonials"
-                label={
-                  language === 'es'
-                    ? 'Testimonios'
-                    : language === 'fr'
-                    ? 'Témoignages'
-                    : language === 'pt'
-                    ? 'Depoimentos'
-                    : 'Testimonials'
-                }
-              />
+              <button onClick={() => scrollToSection('testimonials')} className="text-white/80 hover:text-white">
+                {language === 'es' ? 'Testimonios' : 'Testimonials'}
+              </button>
 
-              <Link className="text-white/80 hover:text-white transition" to="/legal">
+              <Link to="/legal" className="text-white/80 hover:text-white">
                 {t.nav.legal}
               </Link>
 
-              {/* IDIOMAS */}
               <div className="flex gap-2 bg-white/10 px-3 py-1 rounded-full">
                 {['es','en','fr','pt'].map((lang) => (
                   <button
                     key={lang}
                     onClick={() => setLanguage(lang as any)}
-                    className={`px-2 py-1 rounded-full text-sm transition ${
+                    className={`px-2 py-1 rounded-full ${
                       language === lang
                         ? 'bg-amber-400 text-black'
-                        : 'text-white/70 hover:text-white'
+                        : 'text-white/70'
                     }`}
                   >
                     {lang.toUpperCase()}
@@ -176,47 +117,68 @@ export function Navigation(_: any) {
 
           {/* MOBILE BUTTON */}
           {isMobile && (
-            <button
-              className="flex flex-col items-center text-white"
-              onClick={() => setOpen(!open)}
-            >
+            <button onClick={() => setOpen(!open)} className="text-white">
               {open ? <X size={28} /> : <Menu size={28} />}
-
-              <span className="text-xs mt-1 bg-gradient-to-r from-amber-400 to-orange-500 bg-clip-text text-transparent font-semibold">
-                {language === 'es' && "Menú"}
-                {language === 'en' && "Menu"}
-                {language === 'fr' && "Menu"}
-                {language === 'pt' && "Menu"}
-              </span>
             </button>
           )}
+
         </div>
       </nav>
 
       {/* MOBILE MENU */}
       {open && isMobile && (
         <motion.div
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0 }}
-          className="fixed top-16 left-0 w-full backdrop-blur-xl bg-black/60 border-t border-white/10 px-6 py-6 space-y-6 z-40"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed top-16 left-0 w-full bg-black/80 backdrop-blur-xl px-6 py-6 space-y-6 z-40"
         >
 
-          <button onClick={() => scrollToSection('top')} className="block text-white text-lg">
+          <button
+            onClick={() => {
+              scrollToSection('top');
+              setOpen(false); // 🔥 CERRAR
+            }}
+            className="block text-white text-lg"
+          >
             {t.nav.home}
           </button>
 
-          <Link to="/library" className="block text-white text-lg">
+          <Link
+            to="/library"
+            className="block text-white text-lg"
+            onClick={() => setOpen(false)}
+          >
             {t.nav.library}
           </Link>
 
-          <button onClick={() => scrollToSection('daily')} className="block text-white text-lg">
+          <button
+            onClick={() => {
+              scrollToSection('daily');
+              setOpen(false);
+            }}
+            className="block text-white text-lg"
+          >
             {language === 'es' ? 'Lectura diaria' : 'Daily reading'}
           </button>
 
-          <button onClick={() => scrollToSection('testimonials')} className="block text-white text-lg">
+          <button
+            onClick={() => {
+              scrollToSection('testimonials');
+              setOpen(false);
+            }}
+            className="block text-white text-lg"
+          >
             {language === 'es' ? 'Testimonios' : 'Testimonials'}
           </button>
+
+          {/* 🔥 LEGAL RESTAURADO */}
+          <Link
+            to="/legal"
+            className="block text-white text-lg"
+            onClick={() => setOpen(false)}
+          >
+            {t.nav.legal}
+          </Link>
 
         </motion.div>
       )}
