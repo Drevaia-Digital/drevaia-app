@@ -172,6 +172,7 @@ export default function LibraryPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             className="bg-[#1a1a2e] border border-white/20 w-full max-w-md text-base"
+            style={{ fontSize: '16px' }} // 🔥 ESTE ES EL FIX
           />
 
           <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
