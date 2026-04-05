@@ -1,33 +1,59 @@
 import { translations } from '../i18n/translations';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { motion } from 'framer-motion';
 
 export function Navigation(_: any) {
   const { language, setLanguage } = useLanguage();
   const t = translations[language];
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [active, setActive] = useState('top');
   const location = useLocation();
 
-  // 🔥 SCROLL PRO (ARREGLADO)
+  const navRef = useRef<HTMLDivElement>(null);
+
+  // 🔥 SCROLL SUAVE PRO
   const scrollToSection = (id: string) => {
-  if (id === 'top') {
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    return;
-  }
+    const el = document.getElementById(id);
+    if (!el) return;
 
-  const el = document.getElementById(id);
-  if (el) {
-    window.scrollTo({
-      top: el.offsetTop,
-      behavior: 'auto',
+    el.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
     });
-  }
-};
+  };
 
-  // Detectar móvil
+  // 🔥 DETECTAR SECCIÓN ACTIVA (SCROLL SPY)
+  useEffect(() => {
+    const sections = ['top', 'daily', 'testimonials'];
+
+    const handleScroll = () => {
+      let current = 'top';
+
+      for (const id of sections) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+
+        const rect = el.getBoundingClientRect();
+
+        if (rect.top <= 120) {
+          current = id;
+        }
+      }
+
+      setActive(current);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll();
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // 🔥 DETECTAR MÓVIL
   useEffect(() => {
     const handleResize = () => {
       const isSmallScreen = window.innerWidth < 1024;
@@ -42,15 +68,41 @@ export function Navigation(_: any) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Cerrar menú al cambiar ruta
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
 
+  // 🔥 LINK ITEM
+  const NavItem = ({
+    id,
+    label,
+  }: {
+    id: string;
+    label: string;
+  }) => {
+    const isActive = active === id;
+
+    return (
+      <button
+        onClick={() => scrollToSection(id)}
+        className="relative text-white/80 hover:text-white transition cursor-pointer px-1"
+      >
+        {label}
+
+        {isActive && (
+          <motion.div
+            layoutId="nav-indicator"
+            className="absolute left-0 right-0 -bottom-1 h-[2px] bg-amber-400 rounded-full"
+            transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+          />
+        )}
+      </button>
+    );
+  };
+
   return (
     <>
-      {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0f0f1a] border-b border-white/10">
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0f0f1a]/80 backdrop-blur-xl border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
           {/* LOGO */}
@@ -64,47 +116,39 @@ export function Navigation(_: any) {
 
           {/* DESKTOP */}
           {!isMobile && (
-            <div className="flex items-center gap-6">
+            <div ref={navRef} className="flex items-center gap-6">
 
-              {/* INICIO */}
-              <button
-                onClick={() => scrollToSection('top')}
-                className="text-white/80 hover:text-white transition cursor-pointer"
-              >
-                {t.nav.home}
-              </button>
+              <NavItem id="top" label={t.nav.home} />
 
               <Link className="text-white/80 hover:text-white transition" to="/library">
                 {t.nav.library}
               </Link>
 
-              {/* LECTURA */}
-              <button
-                onClick={() => scrollToSection('daily')}
-                className="text-white/80 hover:text-white transition cursor-pointer"
-              >
-                {language === 'es'
-                  ? 'Lectura diaria'
-                  : language === 'fr'
-                  ? 'Lecture du jour'
-                  : language === 'pt'
-                  ? 'Leitura diária'
-                  : 'Daily reading'}
-              </button>
+              <NavItem
+                id="daily"
+                label={
+                  language === 'es'
+                    ? 'Lectura diaria'
+                    : language === 'fr'
+                    ? 'Lecture du jour'
+                    : language === 'pt'
+                    ? 'Leitura diária'
+                    : 'Daily reading'
+                }
+              />
 
-              {/* TESTIMONIOS */}
-              <button
-                onClick={() => scrollToSection('testimonials')}
-                className="text-white/80 hover:text-white transition cursor-pointer"
-              >
-                {language === 'es'
-                  ? 'Testimonios'
-                  : language === 'fr'
-                  ? 'Témoignages'
-                  : language === 'pt'
-                  ? 'Depoimentos'
-                  : 'Testimonials'}
-              </button>
+              <NavItem
+                id="testimonials"
+                label={
+                  language === 'es'
+                    ? 'Testimonios'
+                    : language === 'fr'
+                    ? 'Témoignages'
+                    : language === 'pt'
+                    ? 'Depoimentos'
+                    : 'Testimonials'
+                }
+              />
 
               <Link className="text-white/80 hover:text-white transition" to="/legal">
                 {t.nav.legal}
@@ -146,22 +190,19 @@ export function Navigation(_: any) {
               </span>
             </button>
           )}
-
         </div>
       </nav>
 
       {/* MOBILE MENU */}
       {open && isMobile && (
-        <div className="fixed top-16 left-0 w-full backdrop-blur-xl bg-black/60 border-t border-white/10 px-6 py-6 space-y-6 z-40 animate-fadeIn">
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0 }}
+          className="fixed top-16 left-0 w-full backdrop-blur-xl bg-black/60 border-t border-white/10 px-6 py-6 space-y-6 z-40"
+        >
 
-          {/* INICIO */}
-          <button
-            onClick={() => {
-              scrollToSection('top');
-              setOpen(false);
-            }}
-            className="block text-white text-lg"
-          >
+          <button onClick={() => scrollToSection('top')} className="block text-white text-lg">
             {t.nav.home}
           </button>
 
@@ -169,81 +210,15 @@ export function Navigation(_: any) {
             {t.nav.library}
           </Link>
 
-          {/* LECTURA */}
-          <button
-            onClick={() => {
-              scrollToSection('daily');
-              setOpen(false);
-            }}
-            className="block text-white text-lg"
-          >
-            {language === 'es'
-              ? 'Lectura'
-              : language === 'fr'
-              ? 'Lecture'
-              : language === 'pt'
-              ? 'Leitura'
-              : 'Reading'}
+          <button onClick={() => scrollToSection('daily')} className="block text-white text-lg">
+            {language === 'es' ? 'Lectura diaria' : 'Daily reading'}
           </button>
 
-          {/* TESTIMONIOS */}
-          <button
-            onClick={() => {
-              scrollToSection('testimonials');
-              setOpen(false);
-            }}
-            className="block text-white text-lg"
-          >
-            {language === 'es'
-              ? 'Testimonios'
-              : language === 'fr'
-              ? 'Témoignages'
-              : language === 'pt'
-              ? 'Depoimentos'
-              : 'Testimonials'}
+          <button onClick={() => scrollToSection('testimonials')} className="block text-white text-lg">
+            {language === 'es' ? 'Testimonios' : 'Testimonials'}
           </button>
 
-          <div>
-            <p className="text-white/60 text-sm mb-2">{t.nav.legal}</p>
-
-            <Link to="/legal/privacy" className="block text-white text-lg">
-              {t.nav.privacy}
-            </Link>
-
-            <Link to="/legal/cookies" className="block text-white text-lg">
-              {t.nav.cookies}
-            </Link>
-
-            <Link to="/legal/refunds" className="block text-white text-lg">
-              {t.nav.refunds}
-            </Link>
-          </div>
-
-          {/* IDIOMAS */}
-          <div className="pt-4 border-t border-white/10">
-            <p className="text-white/60 text-sm mb-2">{t.nav.language}</p>
-
-            <div className="flex gap-2">
-              {['es','en','fr','pt'].map((lang) => (
-                <button
-                  key={lang}
-                  onClick={() => {
-                    setLanguage(lang as any);
-                    setOpen(false);
-                  }}
-                  className={`px-3 py-2 rounded-lg transition ${
-                    language === lang
-                      ? 'bg-amber-400 text-black'
-                      : 'bg-white/10 text-white hover:bg-white/20'
-                  }`}
-                >
-                  {lang.toUpperCase()}
-                </button>
-              ))}
-            </div>
-          </div>
-
-        </div>
+        </motion.div>
       )}
     </>
   );
