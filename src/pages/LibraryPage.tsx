@@ -165,19 +165,7 @@ export default function LibraryPage() {
   onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
     setSearchQuery(e.target.value)
   }
-  className="bg-[#1a1a2e] border border-white/20 w-full max-w-md h-12 text-base"
-  inputMode="search"
-  autoComplete="off"
-  onFocus={(e) => {
-    const el = e.currentTarget;
-
-    setTimeout(() => {
-      el.scrollIntoView({
-        block: "center",
-        behavior: "instant",
-      });
-    }, 50);
-  }}
+  className="bg-[#1a1a2e] border border-white/20 w-full max-w-md"
 />
 
           <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
