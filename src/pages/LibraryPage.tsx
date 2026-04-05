@@ -17,7 +17,6 @@ export default function LibraryPage() {
   const [loading, setLoading] = useState(true);
   const [showTop, setShowTop] = useState(false);
 
-  // 🔥 NUEVO (CLAVE)
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -38,7 +37,6 @@ export default function LibraryPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 🔥 LOAD CON CACHE
   const loadBooks = async () => {
     setLoading(true);
 
@@ -55,9 +53,7 @@ export default function LibraryPage() {
         }
       }
 
-      const { data, error } = await supabase
-        .from('books')
-        .select('*');
+      const { data, error } = await supabase.from('books').select('*');
 
       if (!error && data) {
         const mapped = data.map((book: any) => ({
@@ -100,7 +96,6 @@ export default function LibraryPage() {
     setFilteredBooks(result);
   };
 
-  // 🔥 CONTROL MODAL
   const openPreview = (book: any) => {
     setSelectedBook(book);
     setIsModalOpen(true);
@@ -121,16 +116,12 @@ export default function LibraryPage() {
 
   const categories = [...new Set(books.map(b => b.category))];
 
-  // 🔥 LOADING
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0f0f1a] px-6 py-16">
         <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {[...Array(8)].map((_, i) => (
-            <div
-              key={i}
-              className="relative aspect-[3/4] rounded-2xl bg-[#151528] overflow-hidden"
-            >
+            <div key={i} className="relative aspect-[3/4] rounded-2xl bg-[#151528] overflow-hidden">
               <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-white/5 to-white/10" />
             </div>
           ))}
@@ -167,14 +158,17 @@ export default function LibraryPage() {
       <section className="py-6 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
 
+          {/* 🔥 INPUT FIX DEFINITIVO */}
           <Input
-  placeholder="Buscar libros..."
-  value={searchQuery}
-  onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-  setSearchQuery(e.target.value)
-}
-  className="bg-[#1a1a2e] border border-white/20 w-full max-w-md"
-/>
+            placeholder="Buscar libros..."
+            value={searchQuery}
+            onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+              setSearchQuery(e.target.value)
+            }
+            className="bg-[#1a1a2e] border border-white/20 w-full max-w-md h-12 text-base"
+            inputMode="search"
+            autoComplete="off"
+          />
 
           <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
             <Button onClick={() => setSelectedCategory(null)}>
@@ -235,7 +229,7 @@ export default function LibraryPage() {
         </button>
       )}
 
-      {/* 🔥 MODAL */}
+      {/* MODAL */}
       <BookPreviewModal
         isOpen={isModalOpen}
         onClose={closePreview}
