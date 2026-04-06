@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useDeferredValue } from "react";
 
 export default function LibraryPage() {
   const navigate = useNavigate();
@@ -20,13 +21,19 @@ export default function LibraryPage() {
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // 🔥 NUEVO
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  // 🔥 PERFORMANCE PRO
+  const deferredSearch = useDeferredValue(searchQuery);
+
   useEffect(() => {
     loadBooks();
   }, []);
 
   useEffect(() => {
     filterBooks();
-  }, [searchQuery, selectedCategory, books]);
+  }, [deferredSearch, selectedCategory, books]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -82,8 +89,8 @@ export default function LibraryPage() {
   const filterBooks = () => {
     let result = [...books];
 
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
+    if (deferredSearch) {
+      const q = deferredSearch.toLowerCase();
       result = result.filter(book =>
         book.title?.toLowerCase().includes(q)
       );
@@ -158,12 +165,32 @@ export default function LibraryPage() {
       <section className="py-10 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
 
+          {/* 🔥 INPUT FAKE */}
+          <div
+            onClick={() => setIsSearchOpen(true)}
+            className="w-full md:w-80 cursor-text bg-neutral-900/60 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400 hover:border-neutral-500 transition"
+          >
+            Buscar en Drevaia Digital...
+          </div>
+
           {/* 🔥 PREMIUM SEARCH */}
-  
-<PremiumSearch
-  value={searchQuery}
-  onChange={setSearchQuery}
-/>
+          <PremiumSearch
+            isOpen={isSearchOpen}
+            onClose={() => setIsSearchOpen(false)}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            results={filteredBooks.map(book => ({
+              id: book.id,
+              title: book.title,
+              cover: book.coverImage,
+              author: book.author || ""
+            }))}
+            onSelectBook={(book: { id: number }) => {
+              const realBook = books.find(b => b.id === book.id);
+              if (realBook) openPreview(realBook);
+              setIsSearchOpen(false);
+            }}
+          />
 
           <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
             <Button onClick={() => setSelectedCategory(null)}>

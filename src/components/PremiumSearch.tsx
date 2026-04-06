@@ -1,89 +1,110 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useState, useRef, useEffect } from "react";
-import { Search, X } from "lucide-react";
+import { useEffect, useRef } from "react";
 
-type Props = {
-  value: string;
-  onChange: (value: string) => void;
-};
+interface Book {
+  id: number;
+  title: string;
+  cover: string;
+  author?: string;
+}
 
-export function PremiumSearch({ value, onChange }: Props) {
-  const [open, setOpen] = useState(false);
+interface Props {
+  isOpen: boolean;
+  onClose: () => void;
+  searchQuery: string;
+  setSearchQuery: (value: string) => void;
+  results: Book[];
+  onSelectBook: (book: Book) => void;
+}
+
+export function PremiumSearch({
+  isOpen,
+  onClose,
+  searchQuery,
+  setSearchQuery,
+  results,
+  onSelectBook,
+}: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // 🔥 cerrar con ESC
   useEffect(() => {
-    const handleKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setOpen(false);
-    };
-
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, []);
-
-  // 🔥 focus automático
-  useEffect(() => {
-    if (open) {
-      setTimeout(() => inputRef.current?.focus(), 150);
+    if (isOpen) {
+      setTimeout(() => inputRef.current?.focus(), 100);
     }
-  }, [open]);
+  }, [isOpen]);
 
   return (
-    <>
-      {/* 🔹 BOTÓN COMPACTO */}
-      {!open && (
-        <button
-          onClick={() => setOpen(true)}
-          className="flex items-center gap-2 bg-[#1a1a2e] border border-white/20 px-4 py-3 rounded-xl w-full max-w-md text-gray-400 hover:text-white transition"
+    <AnimatePresence>
+      {isOpen && (
+        <motion.div
+          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xl flex items-start justify-center pt-32"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          onClick={onClose}
         >
-          <Search className="w-4 h-4" />
-          Buscar libros...
-        </button>
+          <motion.div
+            className="w-full max-w-2xl px-4"
+            initial={{ scale: 0.95, y: -20, opacity: 0 }}
+            animate={{ scale: 1, y: 0, opacity: 1 }}
+            exit={{ scale: 0.95, y: -20, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* INPUT */}
+            <div className="bg-neutral-900/80 border border-neutral-700 rounded-2xl p-4 shadow-2xl">
+              <input
+                ref={inputRef}
+                type="text"
+                placeholder="Buscar en Drevaia Digital..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full bg-transparent text-white text-lg outline-none placeholder:text-neutral-400"
+              />
+            </div>
+
+            {/* RESULTADOS */}
+            <div className="mt-4 max-h-[400px] overflow-y-auto space-y-2">
+              {searchQuery.length > 0 && results.length === 0 && (
+                <p className="text-neutral-400 text-sm px-2">
+                  No se encontraron resultados
+                </p>
+              )}
+
+              <AnimatePresence>
+                {results.map((book) => (
+                  <motion.div
+                    key={book.id}
+                    className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 cursor-pointer transition"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0 }}
+                    whileHover={{ scale: 1.02 }}
+                    onClick={() => onSelectBook(book)}
+                  >
+                    <img
+                      src={book.cover}
+                      alt={book.title}
+                      className="w-12 h-16 object-cover rounded-lg"
+                    />
+
+                    <div>
+                      <h3 className="text-white text-sm font-medium">
+                        {book.title}
+                      </h3>
+                      {book.author && (
+                        <p className="text-neutral-400 text-xs">
+                          {book.author}
+                        </p>
+                      )}
+                    </div>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            </div>
+          </motion.div>
+        </motion.div>
       )}
-
-      {/* 🔹 OVERLAY */}
-      <AnimatePresence>
-        {open && (
-          <>
-            {/* Fondo blur */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={() => setOpen(false)}
-              className="fixed inset-0 bg-black/60 backdrop-blur-md z-40"
-            />
-
-            {/* Input expandido */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95, y: -20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              transition={{ duration: 0.25 }}
-              className="fixed top-20 left-1/2 -translate-x-1/2 w-full max-w-xl px-6 z-50"
-            >
-              <div className="relative">
-                <input
-                  ref={inputRef}
-                  value={value}
-                  onChange={(e) => onChange(e.target.value)}
-                  placeholder="Buscar libros..."
-                  style={{ fontSize: "16px" }}
-                  className="w-full bg-[#1a1a2e] border border-white/20 rounded-2xl px-5 py-4 text-white outline-none"
-                />
-
-                {/* Botón cerrar */}
-                <button
-                  onClick={() => setOpen(false)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-white"
-                >
-                  <X />
-                </button>
-              </div>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </>
+    </AnimatePresence>
   );
 }
