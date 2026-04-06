@@ -44,6 +44,18 @@ export default function LibraryPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+useEffect(() => {
+  const handleKey = (e: KeyboardEvent) => {
+    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+      e.preventDefault();
+      setIsSearchOpen(true);
+    }
+  };
+
+  window.addEventListener("keydown", handleKey);
+  return () => window.removeEventListener("keydown", handleKey);
+}, []);
+
   const loadBooks = async () => {
     setLoading(true);
 
