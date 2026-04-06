@@ -59,7 +59,7 @@ export function PremiumSearch({
                 placeholder="Buscar en Drevaia Digital..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent text-white text-lg outline-none placeholder:text-neutral-400"
+                className="w-full bg-transparent text-white text-[18px] md:text-xl outline-none placeholder:text-neutral-400"
               />
             </div>
 
