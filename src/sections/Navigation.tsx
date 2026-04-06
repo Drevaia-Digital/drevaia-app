@@ -116,11 +116,18 @@ const scrollToSection = (id: string) => {
           )}
 
           {/* MOBILE BUTTON */}
-          {isMobile && (
-            <button onClick={() => setOpen(!open)} className="text-white">
-              {open ? <X size={28} /> : <Menu size={28} />}
-            </button>
-          )}
+{isMobile && (
+  <button
+    onClick={() => setOpen(!open)}
+    className="flex flex-col items-center justify-center text-neutral-400 hover:text-white transition"
+  >
+    {open ? <X size={26} /> : <Menu size={26} />}
+
+    <span className="text-[10px] mt-1 leading-none">
+      {open ? "Cerrar" : "Menú"}
+    </span>
+  </button>
+)}
 
         </div>
       </nav>
