@@ -97,8 +97,12 @@ export default function LibraryPage() {
     }
 
     if (selectedCategory) {
-      result = result.filter(book => book.category === selectedCategory);
-    }
+  const selected = selectedCategory.toLowerCase().trim();
+
+  result = result.filter(book =>
+    book.category?.toLowerCase().trim() === selected
+  );
+}
 
     setFilteredBooks(result);
   };
@@ -121,7 +125,14 @@ export default function LibraryPage() {
     navigate('/');
   };
 
-  const categories = [...new Set(books.map(b => b.category))];
+  const categories = Array.from(
+  new Map(
+    books.map(b => [
+      b.category?.trim().toLowerCase(),
+      b.category?.trim()
+    ])
+  ).values()
+);
 
   if (loading) {
     return (
