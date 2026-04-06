@@ -118,10 +118,12 @@ const scrollToSection = (id: string) => {
           {/* MOBILE BUTTON */}
 {isMobile && (
   <button
-    onClick={() => setOpen(!open)}
-    className="flex flex-col items-center justify-center text-neutral-400 hover:text-white transition"
+    onClick={() => setOpen(prev => !prev)}
+    className="flex flex-col items-center justify-center text-neutral-400 hover:text-white transition-all duration-200"
   >
-    {open ? <X size={26} /> : <Menu size={26} />}
+    <div className="flex items-center justify-center h-6">
+      {open ? <X size={24} /> : <Menu size={24} />}
+    </div>
 
     <span className="text-[10px] mt-1 leading-none">
       {open ? "Cerrar" : "Menú"}
