@@ -1,0 +1,24 @@
+{
+  "redirects": [
+    {
+      "source": "/:path*.html",
+      "destination": "/library",
+      "permanent": true
+    },
+    {
+      "source": "/en/:path*",
+      "destination": "/library",
+      "permanent": true
+    },
+    {
+      "source": "/fr/:path*",
+      "destination": "/library",
+      "permanent": true
+    },
+    {
+      "source": "/pt/:path*",
+      "destination": "/library",
+      "permanent": true
+    }
+  ]
+}
