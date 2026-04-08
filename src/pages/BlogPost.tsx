@@ -8,6 +8,20 @@ export default function BlogPost() {
 
   const post = getArticleBySlug(slug || "", lang);
 
+// 🔥 SEO dinámico
+if (post) {
+  document.title = post.seo?.title || post.title;
+
+  const metaDescription = document.querySelector("meta[name='description']");
+  
+  if (metaDescription) {
+    metaDescription.setAttribute(
+      "content",
+      post.seo?.description || post.excerpt
+    );
+  }
+}
+
   if (!post) {
     return (
       <div className="text-center py-20 text-white">

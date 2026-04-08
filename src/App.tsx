@@ -1,5 +1,5 @@
 import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { AuthProvider } from '@/hooks/useAuth';
 
@@ -33,11 +33,8 @@ export default function App() {
               }
             />
 
-            {/* 🔁 REDIRECT DEFAULT LANG */}
-            <Route path="/blog/:slug" element={<Navigate to="/es/blog/:slug" replace />} />
-
-            {/* 🌍 BLOG MULTILENGUAJE (🔥 CORE) */}
-            <Route path="/:lang/blog/:slug" element={<BlogPost />} />
+            {/* 🔥 BLOG DINÁMICO */}
+            <Route path="/blog/:slug" element={<BlogPost />} />
 
             {/* 📝 BLOG ROOT */}
             <Route
