@@ -1,4 +1,4 @@
-import { dailyReadings } from '@/content/dailyReadings';
+import { dailyReadings } from '@/content/blog/dailyReadings';
 import { useLanguage } from '@/context/LanguageContext';
 import { useEffect, useState } from 'react';
 

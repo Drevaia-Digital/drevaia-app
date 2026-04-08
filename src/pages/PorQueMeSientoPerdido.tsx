@@ -1,29 +1,8 @@
-import { Helmet } from 'react-helmet-async';
+import { Link } from 'react-router-dom';
 
 export default function PorQueMeSientoPerdido() {
   return (
     <>
-      <Helmet>
-        <title>¿Por qué me siento perdido? | Drevaia Digital</title>
-
-        <meta
-          name="description"
-          content="Sentirse perdido en la vida es más común de lo que parece. Descubre qué puede estar detrás de esta sensación y cómo empezar a comprenderla."
-        />
-
-        <link
-          rel="canonical"
-          href="https://drevaia.com/blog/por-que-me-siento-perdido"
-        />
-
-        <meta property="og:title" content="¿Por qué me siento perdido? | Drevaia Digital" />
-        <meta
-          property="og:description"
-          content="Explora la sensación de estar perdido y lo que puede significar en tu vida."
-        />
-        <meta property="og:type" content="article" />
-      </Helmet>
-
       <div className="min-h-screen bg-[#0f0f1a] text-white px-6 py-16">
         <div className="max-w-3xl mx-auto">
 
@@ -58,14 +37,33 @@ export default function PorQueMeSientoPerdido() {
             A veces es una señal de que estás dejando atrás una versión antigua de ti.
           </p>
 
+          {/* 🔥 CONEXIÓN SEO */}
+          <h2 className="text-2xl font-semibold mt-12 mb-4">
+            Explorar más emociones
+          </h2>
+
+          <div className="space-y-3 text-purple-400 mb-10">
+            <Link to="/blog/por-que-me-siento-vacio" className="block hover:underline">
+              → ¿Por qué me siento vacío?
+            </Link>
+
+            <span className="block opacity-50">
+              → ¿Por qué me siento solo?
+            </span>
+
+            <span className="block opacity-50">
+              → ¿Por qué me siento cansado de todo?
+            </span>
+          </div>
+
           {/* CTA */}
           <div className="mt-12 text-center">
-            <a
-              href="/library"
-              className="inline-block bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-3 rounded-xl text-white"
+            <Link
+              to="/library"
+              className="inline-block bg-gradient-to-r from-purple-600 to-indigo-600 px-6 py-3 rounded-xl text-white hover:scale-105 transition"
             >
               Explorar lecturas en Drevaia
-            </a>
+            </Link>
           </div>
 
           {/* Marca */}

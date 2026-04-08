@@ -1,31 +1,7 @@
-import { Helmet } from 'react-helmet-async';
-
 export default function PorQueMeSientoVacio() {
   return (
     <>
-      <Helmet>
-        <title>¿Por qué me siento vacío? | Drevaia Digital</title>
-
-        <meta
-          name="description"
-          content="Sentirse vacío por dentro es una experiencia emocional común. Descubre posibles causas y reflexiones para comprender lo que estás sintiendo."
-        />
-
-        {/* 🔥 Canonical (muy importante para SEO) */}
-        <link
-          rel="canonical"
-          href="https://drevaia.com/blog/por-que-me-siento-vacio"
-        />
-
-        {/* 🔥 Open Graph */}
-        <meta property="og:title" content="¿Por qué me siento vacío? | Drevaia Digital" />
-        <meta
-          property="og:description"
-          content="Explora el vacío emocional y lo que puede estar intentando decirte."
-        />
-        <meta property="og:type" content="article" />
-      </Helmet>
-
+      
       <div className="min-h-screen bg-[#0f0f1a] text-white px-6 py-16">
         
         <div className="max-w-3xl mx-auto">
@@ -98,8 +74,17 @@ export default function PorQueMeSientoVacio() {
           </h2>
 
           <div className="space-y-3 text-purple-400 mb-10">
-            <p>→ ¿Por qué me siento solo?</p>
-            <p>→ ¿Por qué me siento cansado de todo?</p>
+            <a href="/blog/por-que-me-siento-perdido" className="block hover:underline">
+  → ¿Por qué me siento perdido?
+</a>
+
+<a href="#" className="block hover:underline">
+  → ¿Por qué me siento solo?
+</a>
+
+<a href="#" className="block hover:underline">
+  → ¿Por qué me siento cansado de todo?
+</a>
           </div>
 
           <div className="mt-12 text-center">

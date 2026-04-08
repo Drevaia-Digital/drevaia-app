@@ -1,5 +1,5 @@
 import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { AuthProvider } from '@/hooks/useAuth';
 
@@ -8,8 +8,7 @@ import { HomePage } from '@/pages/HomePage';
 import { AuthPage } from '@/pages/AuthPage';
 import { LegalPage } from '@/pages/LegalPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
-import PorQueMeSientoVacio from '@/pages/PorQueMeSientoVacio';
-import PorQueMeSientoPerdido from '@/pages/PorQueMeSientoPerdido';
+import BlogPost from "@/pages/BlogPost";
 
 // ⚡ Lazy
 const LibraryPage = lazy(() => import('@/pages/LibraryPage'));
@@ -34,6 +33,12 @@ export default function App() {
               }
             />
 
+            {/* 🔁 REDIRECT DEFAULT LANG */}
+            <Route path="/blog/:slug" element={<Navigate to="/es/blog/:slug" replace />} />
+
+            {/* 🌍 BLOG MULTILENGUAJE (🔥 CORE) */}
+            <Route path="/:lang/blog/:slug" element={<BlogPost />} />
+
             {/* 📝 BLOG ROOT */}
             <Route
               path="/blog"
@@ -45,17 +50,6 @@ export default function App() {
                   </div>
                 </div>
               }
-            />
-
-            {/* 🔥 BLOG POSTS */}
-            <Route
-              path="/blog/por-que-me-siento-vacio"
-              element={<PorQueMeSientoVacio />}
-            />
-
-            <Route
-              path="/blog/por-que-me-siento-perdido"
-              element={<PorQueMeSientoPerdido />}
             />
 
             {/* ⚖️ LEGAL */}
