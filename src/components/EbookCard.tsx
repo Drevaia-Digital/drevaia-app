@@ -19,10 +19,10 @@ function EbookCardComponent({
   return (
     <motion.article
       onClick={onClick}
-      whileHover={{ y: -4 }}
+      whileHover={{ y: -6 }}
       whileTap={{ scale: 0.98 }}
-      transition={{ duration: 0.25, ease: "easeOut" }}
-      className="group w-full max-w-[220px] transform-gpu cursor-pointer rounded-2xl bg-[#1a1a2e] shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
+      transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+      className="group w-full max-w-[220px] select-none transform-gpu cursor-pointer rounded-2xl bg-[#1a1a2e] shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
       role="button"
       tabIndex={0}
       aria-label={`Abrir ebook ${title}`}
@@ -40,6 +40,7 @@ function EbookCardComponent({
       {/* IMAGEN */}
       <div className="w-full aspect-[3/4] bg-gray-900">
         <img
+          style={{ contentVisibility: "auto" }}
           src={cover}
           alt={title}
           loading="lazy"

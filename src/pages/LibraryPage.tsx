@@ -231,7 +231,7 @@ useEffect(() => {
       </section>
 
       {/* LIBROS */}
-      <section className="py-16 max-w-7xl mx-auto px-6 relative z-20">
+      <section className="py-14 max-w-7xl mx-auto px-4 sm:px-6 relative z-20">
 
         {filteredBooks.length === 0 && (
           <div className="text-center py-16 text-gray-400">
@@ -241,7 +241,7 @@ useEffect(() => {
         )}
 
         {filteredBooks.length > 0 && (
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-6">
 
             {filteredBooks.map((book, index) => (
               <div
