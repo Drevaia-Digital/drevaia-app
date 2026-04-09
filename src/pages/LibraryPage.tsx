@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useDeferredValue } from "react";
+import { SkeletonCard } from "@/components/SkeletonCard";
 
 export default function LibraryPage() {
   const navigate = useNavigate();
@@ -120,10 +121,12 @@ useEffect(() => {
   };
 
   const openPreview = (book: any) => {
+  requestAnimationFrame(() => {
     setSelectedBook(book);
     setIsModalOpen(true);
-  };
-
+  });
+};
+    
   const closePreview = () => {
     setIsModalOpen(false);
     setTimeout(() => setSelectedBook(null), 200);
@@ -147,18 +150,16 @@ useEffect(() => {
 );
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0f0f1a] px-6 py-16">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {[...Array(8)].map((_, i) => (
-            <div key={i} className="relative aspect-[3/4] rounded-2xl bg-[#151528] overflow-hidden">
-              <div className="absolute inset-0 animate-pulse bg-gradient-to-br from-white/5 to-white/10" />
-            </div>
-          ))}
-        </div>
+  return (
+    <div className="min-h-screen bg-[#0f0f1a] px-4 sm:px-6 py-14">
+      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-6">
+        {[...Array(10)].map((_, i) => (
+          <SkeletonCard key={i} />
+        ))}
       </div>
-    );
-  }
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white overflow-x-hidden">

@@ -19,6 +19,10 @@ function EbookCardComponent({
   return (
     <motion.article
       onClick={onClick}
+      onMouseEnter={() => {
+  const img = new Image();
+  img.src = cover;
+}}
       whileHover={{ y: -6 }}
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
