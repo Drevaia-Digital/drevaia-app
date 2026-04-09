@@ -100,25 +100,27 @@ useEffect(() => {
   };
 
   const filterBooks = () => {
-    let result = [...books];
+  let result = [...books];
 
-    if (deferredSearch) {
-      const q = deferredSearch.toLowerCase();
-      result = result.filter(book =>
-        book.title?.toLowerCase().includes(q)
-      );
-    }
+  if (deferredSearch) {
+    const q = deferredSearch.toLowerCase();
 
-    if (selectedCategory) {
-  const selected = selectedCategory.toLowerCase().trim();
+    result = result.filter(book =>
+      book.title?.toLowerCase().includes(q) ||
+      book.author?.toLowerCase().includes(q)
+    );
+  }
 
-  result = result.filter(book =>
-    book.category?.toLowerCase().trim() === selected
-  );
-}
+  if (selectedCategory) {
+    const selected = selectedCategory.toLowerCase().trim();
 
-    setFilteredBooks(result);
-  };
+    result = result.filter(book =>
+      book.category?.toLowerCase().trim() === selected
+    );
+  }
+
+  setFilteredBooks(result);
+};
 
   const openPreview = (book: any) => {
   requestAnimationFrame(() => {

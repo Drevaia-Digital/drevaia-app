@@ -38,6 +38,13 @@ export function PremiumSearch({
     }
   }, [isOpen]);
 
+// 🔥 LIMPIAR INPUT AL ABRIR
+useEffect(() => {
+  if (isOpen) {
+    setSearchQuery("");
+  }
+}, [isOpen]);
+
   // 🔥 TECLADO PRO (↑ ↓ ENTER ESC)
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
