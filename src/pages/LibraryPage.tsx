@@ -151,6 +151,13 @@ useEffect(() => {
   ).values()
 );
 
+const searchResults = filteredBooks.map(book => ({
+  id: book.id,
+  title: book.title,
+  cover: book.coverImage,
+  author: book.author || ""
+}));
+
   if (loading) {
   return (
     <div className="min-h-screen bg-[#0f0f1a] px-4 sm:px-6 py-14">
@@ -205,17 +212,17 @@ useEffect(() => {
             onClose={() => setIsSearchOpen(false)}
             searchQuery={searchQuery}
             setSearchQuery={setSearchQuery}
-            results={filteredBooks.map(book => ({
-              id: book.id,
-              title: book.title,
-              cover: book.coverImage,
-              author: book.author || ""
-            }))}
-            onSelectBook={(book: { id: number }) => {
-              const realBook = books.find(b => b.id === book.id);
-              if (realBook) openPreview(realBook);
-              setIsSearchOpen(false);
-            }}
+            results={searchResults}
+            onSelectBook={(book) => {
+  const realBook = books.find(b => b.id === book.id);
+  if (!realBook) return;
+
+  setIsSearchOpen(false); // 🔥 primero cerramos
+
+  requestAnimationFrame(() => {
+    openPreview(realBook); // 🔥 luego abrimos fluido
+  });
+}}
           />
 
           <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
