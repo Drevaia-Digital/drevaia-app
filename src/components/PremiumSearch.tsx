@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 interface Book {
   id: number;
@@ -26,12 +26,62 @@ export function PremiumSearch({
   onSelectBook,
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
+  const listRef = useRef<HTMLDivElement>(null);
 
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  // 🔥 AUTO FOCUS
   useEffect(() => {
     if (isOpen) {
       setTimeout(() => inputRef.current?.focus(), 80);
+      setActiveIndex(0);
     }
   }, [isOpen]);
+
+  // 🔥 TECLADO PRO (↑ ↓ ENTER ESC)
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if (!isOpen) return;
+
+      if (e.key === "ArrowDown") {
+        e.preventDefault();
+        setActiveIndex((prev) =>
+          prev < results.length - 1 ? prev + 1 : prev
+        );
+      }
+
+      if (e.key === "ArrowUp") {
+        e.preventDefault();
+        setActiveIndex((prev) => (prev > 0 ? prev - 1 : 0));
+      }
+
+      if (e.key === "Enter") {
+        if (results[activeIndex]) {
+          onSelectBook(results[activeIndex]);
+        }
+      }
+
+      if (e.key === "Escape") {
+        onClose();
+      }
+    };
+
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, [isOpen, results, activeIndex]);
+
+  // 🔥 SCROLL AUTOMÁTICO AL ITEM ACTIVO
+  useEffect(() => {
+    const container = listRef.current;
+    if (!container) return;
+
+    const activeItem = container.children[activeIndex] as HTMLElement;
+    if (!activeItem) return;
+
+    activeItem.scrollIntoView({
+      block: "nearest",
+    });
+  }, [activeIndex]);
 
   return (
     <AnimatePresence>
@@ -67,9 +117,10 @@ export function PremiumSearch({
               </div>
 
               {/* RESULTADOS */}
-              <div className="max-h-[60vh] overflow-y-auto px-2 py-2 space-y-1 scrollbar-thin scrollbar-thumb-white/10">
-
-                {/* SIN RESULTADOS */}
+              <div
+                ref={listRef}
+                className="max-h-[60vh] overflow-y-auto px-2 py-2 space-y-1 scrollbar-thin scrollbar-thumb-white/10"
+              >
                 {searchQuery.length > 0 && results.length === 0 && (
                   <p className="text-gray-400 text-sm px-3 py-2">
                     No se encontraron resultados
@@ -77,23 +128,25 @@ export function PremiumSearch({
                 )}
 
                 <AnimatePresence>
-                  {results.map((book) => (
+                  {results.map((book, index) => (
                     <motion.div
                       key={book.id}
                       onClick={() => onSelectBook(book)}
-                      className="
+                      className={`
                         flex items-center gap-3
                         px-3 py-2
                         rounded-xl
-                        hover:bg-white/5
-                        active:scale-[0.98]
-                        transition
                         cursor-pointer
-                      "
+                        transition
+                        ${
+                          index === activeIndex
+                            ? "bg-white/10"
+                            : "hover:bg-white/5"
+                        }
+                      `}
                       initial={{ opacity: 0, y: 8 }}
                       animate={{ opacity: 1, y: 0 }}
                       exit={{ opacity: 0 }}
-                      whileHover={{ scale: 1.01 }}
                     >
                       <img
                         src={book.cover}
@@ -102,7 +155,7 @@ export function PremiumSearch({
                       />
 
                       <div className="flex flex-col">
-                        <span className="text-sm text-white font-medium leading-tight">
+                        <span className="text-sm text-white font-medium">
                           {book.title}
                         </span>
 
@@ -115,7 +168,6 @@ export function PremiumSearch({
                     </motion.div>
                   ))}
                 </AnimatePresence>
-
               </div>
             </div>
           </motion.div>
