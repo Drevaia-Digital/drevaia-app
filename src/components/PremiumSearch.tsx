@@ -29,7 +29,7 @@ export function PremiumSearch({
 
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 100);
+      setTimeout(() => inputRef.current?.focus(), 80);
     }
   }, [isOpen]);
 
@@ -37,70 +37,86 @@ export function PremiumSearch({
     <AnimatePresence>
       {isOpen && (
         <motion.div
-          className="fixed inset-0 z-50 bg-black/70 backdrop-blur-xl flex items-start justify-center pt-32"
+          className="fixed inset-0 z-50 flex items-start justify-center pt-24 px-4 bg-black/70 backdrop-blur-xl"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
         >
           <motion.div
-            className="w-full max-w-2xl px-4"
-            initial={{ scale: 0.95, y: -20, opacity: 0 }}
+            className="w-full max-w-2xl"
+            initial={{ scale: 0.96, y: -16, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
-            exit={{ scale: 0.95, y: -20, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 260, damping: 20 }}
+            exit={{ scale: 0.96, y: -16, opacity: 0 }}
+            transition={{ type: "spring", stiffness: 260, damping: 22 }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* INPUT */}
-            <div className="bg-neutral-900/80 border border-neutral-700 rounded-2xl p-4 shadow-2xl">
-              <input
-                ref={inputRef}
-                type="text"
-                placeholder="Buscar en Drevaia Digital..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full bg-transparent text-white text-[18px] md:text-xl outline-none placeholder:text-neutral-400"
-              />
-            </div>
+            {/* CONTENEDOR */}
+            <div className="bg-[#111827]/95 border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
 
-            {/* RESULTADOS */}
-            <div className="mt-4 max-h-[400px] overflow-y-auto space-y-2">
-              {searchQuery.length > 0 && results.length === 0 && (
-                <p className="text-neutral-400 text-sm px-2">
-                  No se encontraron resultados
-                </p>
-              )}
+              {/* INPUT */}
+              <div className="px-5 py-4 border-b border-white/10">
+                <input
+                  ref={inputRef}
+                  type="text"
+                  placeholder="Buscar en Drevaia Digital..."
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                  className="w-full bg-transparent text-white text-base md:text-lg outline-none placeholder:text-gray-500"
+                />
+              </div>
 
-              <AnimatePresence>
-                {results.map((book) => (
-                  <motion.div
-                    key={book.id}
-                    className="flex items-center gap-4 p-3 rounded-xl hover:bg-white/5 cursor-pointer transition"
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0 }}
-                    whileHover={{ scale: 1.02 }}
-                    onClick={() => onSelectBook(book)}
-                  >
-                    <img
-                      src={book.cover}
-                      alt={book.title}
-                      className="w-12 h-16 object-cover rounded-lg"
-                    />
+              {/* RESULTADOS */}
+              <div className="max-h-[60vh] overflow-y-auto px-2 py-2 space-y-1 scrollbar-thin scrollbar-thumb-white/10">
 
-                    <div>
-                      <h3 className="text-white text-sm font-medium">
-                        {book.title}
-                      </h3>
-                      {book.author && (
-                        <p className="text-neutral-400 text-xs">
-                          {book.author}
-                        </p>
-                      )}
-                    </div>
-                  </motion.div>
-                ))}
-              </AnimatePresence>
+                {/* SIN RESULTADOS */}
+                {searchQuery.length > 0 && results.length === 0 && (
+                  <p className="text-gray-400 text-sm px-3 py-2">
+                    No se encontraron resultados
+                  </p>
+                )}
+
+                <AnimatePresence>
+                  {results.map((book) => (
+                    <motion.div
+                      key={book.id}
+                      onClick={() => onSelectBook(book)}
+                      className="
+                        flex items-center gap-3
+                        px-3 py-2
+                        rounded-xl
+                        hover:bg-white/5
+                        active:scale-[0.98]
+                        transition
+                        cursor-pointer
+                      "
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0 }}
+                      whileHover={{ scale: 1.01 }}
+                    >
+                      <img
+                        src={book.cover}
+                        alt={book.title}
+                        className="w-11 h-15 object-cover rounded-md shadow-sm"
+                      />
+
+                      <div className="flex flex-col">
+                        <span className="text-sm text-white font-medium leading-tight">
+                          {book.title}
+                        </span>
+
+                        {book.author && (
+                          <span className="text-xs text-gray-400">
+                            {book.author}
+                          </span>
+                        )}
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+
+              </div>
             </div>
           </motion.div>
         </motion.div>
