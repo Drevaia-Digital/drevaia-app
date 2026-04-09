@@ -1,6 +1,6 @@
 import { translations } from '../i18n/translations';
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { motion } from 'framer-motion';
@@ -11,31 +11,51 @@ export function Navigation(_: any) {
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
-  // 🔥 SCROLL PRO: instantáneo + sensación premium
-const scrollToSection = (id: string) => {
-  if (id === 'top') {
-    window.scrollTo({ top: 0, behavior: 'auto' });
-    return;
-  }
+  // 🔥 SCROLL PRO (solo cuando estás en home)
+  const scrollToSection = (id: string) => {
+    if (id === 'top') {
+      window.scrollTo({ top: 0, behavior: 'auto' });
+      return;
+    }
 
-  const el = document.getElementById(id);
-  if (!el) return;
+    const el = document.getElementById(id);
+    if (!el) return;
 
-  // salto inmediato
-  window.scrollTo({
-    top: el.offsetTop,
-    behavior: 'auto',
-  });
+    window.scrollTo({
+      top: el.offsetTop,
+      behavior: 'auto',
+    });
 
-  // micro feedback visual (no rompe nada)
-  el.style.transform = 'scale(0.98)';
-  el.style.transition = 'transform 0.18s ease-out';
+    // micro feedback visual
+    el.style.transform = 'scale(0.98)';
+    el.style.transition = 'transform 0.18s ease-out';
 
-  setTimeout(() => {
-    el.style.transform = 'scale(1)';
-  }, 120);
-};
+    setTimeout(() => {
+      el.style.transform = 'scale(1)';
+    }, 120);
+  };
+
+  // 🔥 NAVEGACIÓN INTELIGENTE (CLAVE)
+  const goToHomeSmart = () => {
+    if (location.pathname === "/") {
+      scrollToSection('top');
+    } else {
+      navigate('/');
+    }
+  };
+
+  const goToSectionSmart = (section: string) => {
+    if (location.pathname === "/") {
+      scrollToSection(section);
+    } else {
+      navigate('/');
+      setTimeout(() => {
+        scrollToSection(section);
+      }, 50);
+    }
+  };
 
   // Detectar móvil
   useEffect(() => {
@@ -65,7 +85,7 @@ const scrollToSection = (id: string) => {
 
           {/* LOGO */}
           <button
-            onClick={() => scrollToSection('top')}
+            onClick={goToHomeSmart}
             className="flex items-center gap-2"
           >
             <Sparkles className="text-amber-400" />
@@ -76,7 +96,7 @@ const scrollToSection = (id: string) => {
           {!isMobile && (
             <div className="flex items-center gap-6">
 
-              <button onClick={() => scrollToSection('top')} className="text-white/80 hover:text-white">
+              <button onClick={goToHomeSmart} className="text-white/80 hover:text-white">
                 {t.nav.home}
               </button>
 
@@ -84,11 +104,11 @@ const scrollToSection = (id: string) => {
                 {t.nav.library}
               </Link>
 
-              <button onClick={() => scrollToSection('daily')} className="text-white/80 hover:text-white">
+              <button onClick={() => goToSectionSmart('daily')} className="text-white/80 hover:text-white">
                 {language === 'es' ? 'Lectura diaria' : 'Daily reading'}
               </button>
 
-              <button onClick={() => scrollToSection('testimonials')} className="text-white/80 hover:text-white">
+              <button onClick={() => goToSectionSmart('testimonials')} className="text-white/80 hover:text-white">
                 {language === 'es' ? 'Testimonios' : 'Testimonials'}
               </button>
 
@@ -116,20 +136,20 @@ const scrollToSection = (id: string) => {
           )}
 
           {/* MOBILE BUTTON */}
-{isMobile && (
-  <button
-    onClick={() => setOpen(prev => !prev)}
-    className="flex flex-col items-center justify-center text-neutral-400 hover:text-white transition-all duration-200"
-  >
-    <div className="flex items-center justify-center h-6">
-      {open ? <X size={24} /> : <Menu size={24} />}
-    </div>
+          {isMobile && (
+            <button
+              onClick={() => setOpen(prev => !prev)}
+              className="flex flex-col items-center justify-center text-neutral-400 hover:text-white transition-all duration-200"
+            >
+              <div className="flex items-center justify-center h-6">
+                {open ? <X size={24} /> : <Menu size={24} />}
+              </div>
 
-    <span className="text-[10px] mt-1 leading-none">
-      {open ? "Cerrar" : "Menú"}
-    </span>
-  </button>
-)}
+              <span className="text-[10px] mt-1 leading-none">
+                {open ? "Cerrar" : "Menú"}
+              </span>
+            </button>
+          )}
 
         </div>
       </nav>
@@ -144,8 +164,8 @@ const scrollToSection = (id: string) => {
 
           <button
             onClick={() => {
-              scrollToSection('top');
-              setOpen(false); // 🔥 CERRAR
+              goToHomeSmart();
+              setOpen(false);
             }}
             className="block text-white text-lg"
           >
@@ -162,7 +182,7 @@ const scrollToSection = (id: string) => {
 
           <button
             onClick={() => {
-              scrollToSection('daily');
+              goToSectionSmart('daily');
               setOpen(false);
             }}
             className="block text-white text-lg"
@@ -172,7 +192,7 @@ const scrollToSection = (id: string) => {
 
           <button
             onClick={() => {
-              scrollToSection('testimonials');
+              goToSectionSmart('testimonials');
               setOpen(false);
             }}
             className="block text-white text-lg"
@@ -180,7 +200,6 @@ const scrollToSection = (id: string) => {
             {language === 'es' ? 'Testimonios' : 'Testimonials'}
           </button>
 
-          {/* 🔥 LEGAL RESTAURADO */}
           <Link
             to="/legal"
             className="block text-white text-lg"
