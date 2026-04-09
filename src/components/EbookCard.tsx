@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { memo } from "react";
 
 type Props = {
+  id: string | number; // 🔥 IMPORTANTE
   title: string;
   cover: string;
   author?: string;
@@ -10,6 +11,7 @@ type Props = {
 };
 
 function EbookCardComponent({
+  id,
   title,
   cover,
   author,
@@ -18,11 +20,12 @@ function EbookCardComponent({
 }: Props) {
   return (
     <motion.article
+      layoutId={`ebook-${id}`} // 🔥 ahora sí correcto
       onClick={onClick}
       onMouseEnter={() => {
-  const img = new Image();
-  img.src = cover;
-}}
+        const img = new Image();
+        img.src = cover;
+      }}
       whileHover={{ y: -6 }}
       whileTap={{ scale: 0.98 }}
       transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}

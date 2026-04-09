@@ -250,6 +250,7 @@ useEffect(() => {
                 style={{ animationDelay: `${index * 80}ms` }}
               >
                 <EbookCard
+                  id={book.id}
                   title={book.title}
                   cover={book.coverImage}
                   price={book.price}
