@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
+import { memo } from "react";
 
 type Props = {
-  id: string | number;
   title: string;
   cover: string;
   author?: string;
@@ -9,8 +9,7 @@ type Props = {
   onClick?: () => void;
 };
 
-export function EbookCard({
-  id,
+function EbookCardComponent({
   title,
   cover,
   author,
@@ -18,25 +17,12 @@ export function EbookCard({
   onClick,
 }: Props) {
   return (
-    <motion.div
-      layout
-      layoutId={`ebook-${id}`}
-      whileHover={{ scale: 1.04 }}
-      whileTap={{ scale: 0.97 }}
-      transition={{
-        layout: {
-          type: "spring",
-          stiffness: 320,
-          damping: 30,
-        },
-        default: {
-          type: "spring",
-          stiffness: 260,
-          damping: 20,
-        },
-      }}
-      className="group cursor-pointer outline-none"
+    <motion.article
       onClick={onClick}
+      whileHover={{ y: -4 }}
+      whileTap={{ scale: 0.98 }}
+      transition={{ duration: 0.25, ease: "easeOut" }}
+      className="group w-full max-w-[220px] transform-gpu cursor-pointer rounded-2xl bg-[#1a1a2e] shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden"
       role="button"
       tabIndex={0}
       aria-label={`Abrir ebook ${title}`}
@@ -51,41 +37,38 @@ export function EbookCard({
         WebkitTapHighlightColor: "transparent",
       }}
     >
-      <div className="relative overflow-hidden rounded-2xl bg-[#1a1a2e] shadow-md hover:shadow-xl transition-shadow duration-300">
-
-        {/* IMAGEN */}
-        <div className="aspect-[3/4] overflow-hidden">
-          <motion.img
-            layoutId={`ebook-image-${id}`}
-            src={cover}
-            alt={title}
-            loading="lazy"
-            decoding="async"
-            draggable={false}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          />
-        </div>
-
-        {/* CONTENIDO */}
-        <div className="p-3 space-y-1">
-          <motion.h3
-            layoutId={`ebook-title-${id}`}
-            className="text-sm font-semibold text-white line-clamp-2"
-          >
-            {title}
-          </motion.h3>
-
-          {author && (
-            <p className="text-xs text-gray-400">{author}</p>
-          )}
-
-          {price && (
-            <p className="text-xs text-indigo-400 font-medium">
-              ${price}
-            </p>
-          )}
-        </div>
+      {/* IMAGEN */}
+      <div className="w-full aspect-[3/4] bg-gray-900">
+        <img
+          src={cover}
+          alt={title}
+          loading="lazy"
+          decoding="async"
+          draggable={false}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+        />
       </div>
-    </motion.div>
+
+      {/* CONTENIDO */}
+      <div className="p-3 flex flex-col gap-1">
+        <h3 className="text-sm font-semibold text-white leading-snug line-clamp-2">
+          {title}
+        </h3>
+
+        {author && (
+          <p className="text-xs text-gray-400 line-clamp-1">
+            {author}
+          </p>
+        )}
+
+        {price && (
+          <p className="text-xs text-indigo-400 font-medium mt-1">
+            ${price}
+          </p>
+        )}
+      </div>
+    </motion.article>
   );
 }
+
+export const EbookCard = memo(EbookCardComponent);
