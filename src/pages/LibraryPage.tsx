@@ -153,7 +153,7 @@ useEffect(() => {
   ).values()
 );
 
-const searchResults = filteredBooks.map(book => ({
+const searchResults = (filteredBooks || []).map(book => ({
   id: book.id,
   title: book.title,
   cover: book.coverImage,
