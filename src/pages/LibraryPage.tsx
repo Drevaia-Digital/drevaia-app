@@ -103,13 +103,15 @@ useEffect(() => {
   let result = [...books];
 
   if (deferredSearch) {
-    const q = deferredSearch.toLowerCase();
+  const q = (deferredSearch || "").toLowerCase().trim();
 
-    result = result.filter(book =>
-      book.title?.toLowerCase().includes(q) ||
-      book.author?.toLowerCase().includes(q)
-    );
-  }
+  result = result.filter(book => {
+    const title = (book.title || "").toLowerCase();
+    const author = (book.author || "").toLowerCase();
+
+    return title.includes(q) || author.includes(q);
+  });
+}
 
   if (selectedCategory) {
     const selected = selectedCategory.toLowerCase().trim();
