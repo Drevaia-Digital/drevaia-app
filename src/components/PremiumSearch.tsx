@@ -27,6 +27,7 @@ export function PremiumSearch({
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
@@ -40,21 +41,37 @@ export function PremiumSearch({
 
   // 🔥 LIMPIAR INPUT
   useEffect(() => {
-
-  // 🔥 CARGAR HISTORIAL
-useEffect(() => {
-  const saved = localStorage.getItem("drevaia-search-history");
-  if (saved) {
-    setRecentSearches(JSON.parse(saved));
-  }
-}, []);
-
     if (isOpen) {
       setSearchQuery("");
     }
   }, [isOpen]);
 
-  // 🔥 TECLADO PRO
+  // 🔥 CARGAR HISTORIAL
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("drevaia-search-history");
+      if (saved) {
+        setRecentSearches(JSON.parse(saved));
+      }
+    } catch {
+      localStorage.removeItem("drevaia-search-history");
+    }
+  }, []);
+
+  // 🔥 GUARDAR HISTORIAL
+  useEffect(() => {
+    if (!searchQuery.trim()) return;
+
+    const updated = [
+      searchQuery,
+      ...recentSearches.filter((s) => s !== searchQuery),
+    ].slice(0, 6);
+
+    setRecentSearches(updated);
+    localStorage.setItem("drevaia-search-history", JSON.stringify(updated));
+  }, [searchQuery]);
+
+  // 🔥 TECLADO
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (!isOpen) return;
@@ -94,12 +111,10 @@ useEffect(() => {
     const activeItem = container.children[activeIndex] as HTMLElement;
     if (!activeItem) return;
 
-    activeItem.scrollIntoView({
-      block: "nearest",
-    });
+    activeItem.scrollIntoView({ block: "nearest" });
   }, [activeIndex]);
 
-  // 🔥 HIGHLIGHT PRO
+  // 🔥 HIGHLIGHT
   const highlightText = (text: string, query: string) => {
     if (!query) return text;
 
@@ -131,7 +146,6 @@ useEffect(() => {
             initial={{ scale: 0.96, y: -16, opacity: 0 }}
             animate={{ scale: 1, y: 0, opacity: 1 }}
             exit={{ scale: 0.96, y: -16, opacity: 0 }}
-            transition={{ type: "spring", stiffness: 260, damping: 22 }}
             onClick={(e) => e.stopPropagation()}
           >
             <div className="bg-[#111827]/95 border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
@@ -147,102 +161,74 @@ useEffect(() => {
                     setSearchQuery(e.target.value);
                     setActiveIndex(0);
                   }}
-                  className="w-full bg-transparent text-white text-base md:text-lg outline-none placeholder:text-gray-500"
+                  className="w-full bg-transparent text-white outline-none placeholder:text-gray-500"
                 />
               </div>
 
               {/* RESULTADOS */}
               <div
                 ref={listRef}
-                className="max-h-[60vh] overflow-y-auto px-2 py-2 space-y-1 scrollbar-thin scrollbar-thumb-white/10"
+                className="max-h-[60vh] overflow-y-auto px-2 py-2 space-y-1"
               >
-              // 🔥 MOSTRAR HISTORIAL
-{searchQuery.length === 0 && recentSearches.length > 0 && (
-  <div className="px-3 py-2">
-    <p className="text-xs text-gray-500 mb-2">
-      Búsquedas recientes
-    </p>
+                {/* HISTORIAL */}
+                {searchQuery.length === 0 && recentSearches.length > 0 && (
+                  <div className="px-3 py-2">
+                    <p className="text-xs text-gray-500 mb-2">
+                      Búsquedas recientes
+                    </p>
 
-    {recentSearches.map((item, i) => (
-      <div
-        key={i}
-        onClick={() => setSearchQuery(item)}
-        className="text-sm text-white/80 hover:text-white cursor-pointer py-1"
-      >
-        {item}
-      </div>
-    ))}
-  </div>
-)}  
+                    {recentSearches.map((item, i) => (
+                      <div
+                        key={i}
+                        onClick={() => setSearchQuery(item)}
+                        className="text-sm text-white/80 hover:text-white cursor-pointer py-1"
+                      >
+                        {item}
+                      </div>
+                    ))}
+                  </div>
+                )}
 
-// 🔥 MOSTRAR HISTORIAL
-{searchQuery.length === 0 && recentSearches.length > 0 && (
-  <div className="px-3 py-2">
-    <p className="text-xs text-gray-500 mb-2">
-      Búsquedas recientes
-    </p>
-
-    {recentSearches.map((item, i) => (
-      <div
-        key={i}
-        onClick={() => setSearchQuery(item)}
-        className="text-sm text-white/80 hover:text-white cursor-pointer py-1"
-      >
-        {item}
-      </div>
-    ))}
-  </div>
-)}
-
-              {searchQuery.length > 0 && results.length === 0 && (
+                {/* SIN RESULTADOS */}
+                {searchQuery.length > 0 && results.length === 0 && (
                   <p className="text-gray-400 text-sm px-3 py-2">
                     No se encontraron resultados
                   </p>
                 )}
 
-                <AnimatePresence>
-                  {results.map((book, index) => (
-                    <motion.div
-                      key={book.id}
-                      onClick={() => onSelectBook(book)}
-                      onMouseEnter={() => setActiveIndex(index)}
-                      className={`
-                        flex items-center gap-3
-                        px-3 py-2
-                        rounded-xl
-                        cursor-pointer
-                        transition
-                        ${
-                          index === activeIndex
-                            ? "bg-white/10"
-                            : "hover:bg-white/5"
-                        }
-                      `}
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0 }}
-                    >
-                      <img
-                        src={book.cover}
-                        alt={book.title}
-                        className="w-11 h-15 object-cover rounded-md shadow-sm"
-                      />
+                {/* RESULTADOS */}
+                {results.map((book, index) => (
+                  <div
+                    key={book.id}
+                    onClick={() => onSelectBook(book)}
+                    onMouseEnter={() => setActiveIndex(index)}
+                    className={`flex items-center gap-3 px-3 py-2 rounded-xl cursor-pointer transition ${
+                      index === activeIndex
+                        ? "bg-white/10"
+                        : "hover:bg-white/5"
+                    }`}
+                  >
+                    <img
+                      src={book.cover}
+                      alt={book.title}
+                      className="w-11 h-16 object-cover rounded-md"
+                    />
 
-                      <div className="flex flex-col">
-                        <span className="text-sm text-white font-medium">
-                          {highlightText(book.title, searchQuery)}
+                    <div className="flex flex-col">
+                      <span className="text-sm text-white font-medium">
+                        {highlightText(book.title, searchQuery)}
+                      </span>
+
+                      {book.author && (
+                        <span className="text-xs text-gray-400">
+                          {highlightText(book.author, searchQuery)}
                         </span>
-
-                        {book.author && (
-                          <span className="text-xs text-gray-400">
-                            {highlightText(book.author, searchQuery)}
-                          </span>
-                        )}
-                      </div>
-                    </motion.div>
-                  ))}
-                </AnimatePresence>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
+
             </div>
           </motion.div>
         </motion.div>
