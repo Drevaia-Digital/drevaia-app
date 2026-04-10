@@ -6,6 +6,7 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
+import { useDeferredValue } from "react";
 import { SkeletonCard } from "@/components/SkeletonCard";
 
 export default function LibraryPage() {
@@ -14,27 +15,46 @@ export default function LibraryPage() {
   const [books, setBooks] = useState<any[]>([]);
   const [filteredBooks, setFilteredBooks] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [showTop, setShowTop] = useState(false);
 
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  // 🔥 NUEVO
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  // 🔥 PERFORMANCE PRO
-  
+  const deferredSearch = useDeferredValue(searchQuery);
+
+  // 🔥 LOAD
   useEffect(() => {
     loadBooks();
   }, []);
 
-//  useEffect(() => {
-//  if (!Array.isArray(books)) return;
+  // 🔥 FILTRO SEGURO
+  useEffect(() => {
+    let result = Array.isArray(books) ? [...books] : [];
 
-//  filterBooks();
-// }, [deferredSearch, selectedCategory, books.length]);
+    if (deferredSearch) {
+      const q = (deferredSearch || "").toLowerCase();
 
+      result = result.filter(book =>
+        (book.title || "").toLowerCase().includes(q) ||
+        (book.author || "").toLowerCase().includes(q)
+      );
+    }
+
+    if (selectedCategory) {
+      const selected = selectedCategory.toLowerCase().trim();
+
+      result = result.filter(book =>
+        (book.category || "").toLowerCase().trim() === selected
+      );
+    }
+
+    setFilteredBooks(result);
+  }, [deferredSearch, selectedCategory, books]);
+
+  // 🔥 SCROLL BUTTON
   useEffect(() => {
     const handleScroll = () => {
       setShowTop(window.scrollY > 300);
@@ -44,17 +64,18 @@ export default function LibraryPage() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-useEffect(() => {
-  const handleKey = (e: KeyboardEvent) => {
-    if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
-      e.preventDefault();
-      setIsSearchOpen(true);
-    }
-  };
+  // 🔥 CTRL + K
+  useEffect(() => {
+    const handleKey = (e: KeyboardEvent) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setIsSearchOpen(true);
+      }
+    };
 
-  window.addEventListener("keydown", handleKey);
-  return () => window.removeEventListener("keydown", handleKey);
-}, []);
+    window.addEventListener("keydown", handleKey);
+    return () => window.removeEventListener("keydown", handleKey);
+  }, []);
 
   const loadBooks = async () => {
     setLoading(true);
@@ -98,15 +119,15 @@ useEffect(() => {
     setLoading(false);
   };
 
- 
-
   const openPreview = (book: any) => {
-  requestAnimationFrame(() => {
-    setSelectedBook(book);
-    setIsModalOpen(true);
-  });
-};
-    
+    if (!book) return;
+
+    requestAnimationFrame(() => {
+      setSelectedBook(book);
+      setIsModalOpen(true);
+    });
+  };
+
   const closePreview = () => {
     setIsModalOpen(false);
     setTimeout(() => setSelectedBook(null), 200);
@@ -121,32 +142,32 @@ useEffect(() => {
   };
 
   const categories = Array.from(
-  new Map(
-    (books || []).map(b => [
-      (b.category || "").trim().toLowerCase(),
-      (b.category || "").trim()
-    ])
-  ).values()
-);
+    new Map(
+      (books || []).map(b => [
+        (b.category || "").trim().toLowerCase(),
+        (b.category || "").trim()
+      ])
+    ).values()
+  );
 
-const searchResults = (filteredBooks || []).map(book => ({
-  id: book.id,
-  title: book.title,
-  cover: book.coverImage,
-  author: book.author || ""
-}));
+  const searchResults = (filteredBooks || []).map(book => ({
+    id: book.id,
+    title: book.title,
+    cover: book.coverImage,
+    author: book.author || ""
+  }));
 
   if (loading) {
-  return (
-    <div className="min-h-screen bg-[#0f0f1a] px-4 sm:px-6 py-14">
-      <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-6">
-        {[...Array(10)].map((_, i) => (
-          <SkeletonCard key={i} />
-        ))}
+    return (
+      <div className="min-h-screen bg-[#0f0f1a] px-4 sm:px-6 py-14">
+        <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-6">
+          {[...Array(10)].map((_, i) => (
+            <SkeletonCard key={i} />
+          ))}
+        </div>
       </div>
-    </div>
-  );
-}
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white overflow-x-hidden">
@@ -176,7 +197,6 @@ const searchResults = (filteredBooks || []).map(book => ({
       <section className="py-10 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
 
-          {/* 🔥 INPUT FAKE */}
           <div
             onClick={() => setIsSearchOpen(true)}
             className="w-full md:w-80 cursor-text bg-neutral-900/60 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400 hover:border-neutral-500 transition"
@@ -184,7 +204,6 @@ const searchResults = (filteredBooks || []).map(book => ({
             Buscar en Drevaia Digital...
           </div>
 
-          {/* 🔥 PREMIUM SEARCH */}
           <PremiumSearch
             isOpen={isSearchOpen}
             onClose={() => setIsSearchOpen(false)}
@@ -192,24 +211,24 @@ const searchResults = (filteredBooks || []).map(book => ({
             setSearchQuery={setSearchQuery}
             results={searchResults}
             onSelectBook={(book) => {
-  const realBook = books.find(b => b.id === book.id);
-  if (!realBook) return;
+              const realBook = books.find(b => b.id === book.id);
+              if (!realBook) return;
 
-  setIsSearchOpen(false); // 🔥 primero cerramos
+              setIsSearchOpen(false);
 
-  requestAnimationFrame(() => {
-    openPreview(realBook); // 🔥 luego abrimos fluido
-  });
-}}
+              requestAnimationFrame(() => {
+                openPreview(realBook);
+              });
+            }}
           />
 
           <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
-            <Button>
+            <Button onClick={() => setSelectedCategory(null)}>
               Todos
             </Button>
 
             {categories.map((cat) => (
-              <Button key={cat}>
+              <Button key={cat} onClick={() => setSelectedCategory(cat)}>
                 {cat}
               </Button>
             ))}
@@ -232,10 +251,7 @@ const searchResults = (filteredBooks || []).map(book => ({
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-6">
 
             {filteredBooks.map((book, index) => (
-              <div
-                key={book.id}
-                style={{ animationDelay: `${index * 80}ms` }}
-              >
+              <div key={book.id} style={{ animationDelay: `${index * 80}ms` }}>
                 <EbookCard
                   id={book.id}
                   title={book.title}
@@ -251,7 +267,6 @@ const searchResults = (filteredBooks || []).map(book => ({
 
       </section>
 
-      {/* BOTÓN SCROLL */}
       {showTop && (
         <button
           onClick={scrollToTop}
@@ -261,7 +276,6 @@ const searchResults = (filteredBooks || []).map(book => ({
         </button>
       )}
 
-      {/* MODAL */}
       <BookPreviewModal
         isOpen={isModalOpen}
         onClose={closePreview}
