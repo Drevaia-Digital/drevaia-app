@@ -6,7 +6,6 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useDeferredValue } from "react";
 import { SkeletonCard } from "@/components/SkeletonCard";
 
 export default function LibraryPage() {
@@ -15,7 +14,6 @@ export default function LibraryPage() {
   const [books, setBooks] = useState<any[]>([]);
   const [filteredBooks, setFilteredBooks] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [showTop, setShowTop] = useState(false);
 
@@ -26,17 +24,16 @@ export default function LibraryPage() {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
   // 🔥 PERFORMANCE PRO
-  const deferredSearch = useDeferredValue(searchQuery);
-
+  
   useEffect(() => {
     loadBooks();
   }, []);
 
-  useEffect(() => {
-  if (!Array.isArray(books)) return;
+//  useEffect(() => {
+//  if (!Array.isArray(books)) return;
 
-  filterBooks();
-}, [deferredSearch, selectedCategory, books.length]);
+//  filterBooks();
+// }, [deferredSearch, selectedCategory, books.length]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -101,57 +98,7 @@ useEffect(() => {
     setLoading(false);
   };
 
-  const filterBooks = () => {
-  if (!books || books.length === 0) {
-    setFilteredBooks([]);
-    return;
-  }
-
-  let result = Array.isArray(books) ? [...books] : [];
-
-  // 🔍 BUSQUEDA SEGURA
-  if (deferredSearch) {
-    const q = (deferredSearch || "").toLowerCase().trim();
-
-    result = result.filter(book => {
-      const title = (book.title || "").toLowerCase();
-      const author = (book.author || "").toLowerCase();
-
-      return title.includes(q) || author.includes(q);
-    });
-  }
-
-  // 📂 FILTRO CATEGORÍA SEGURO
-  if (selectedCategory) {
-    const selected = (selectedCategory || "").toLowerCase().trim();
-
-    result = result.filter(book => {
-      const category = (book.category || "").toLowerCase().trim();
-      return category === selected;
-    });
-  }
-
-if (deferredSearch) {
-  const q = (deferredSearch || "").toLowerCase();
-
-  result = result.sort((a, b) => {
-    const aTitle = (a.title || "").toLowerCase();
-    const bTitle = (b.title || "").toLowerCase();
-
-    const aScore =
-      aTitle.startsWith(q) ? 2 :
-      aTitle.includes(q) ? 1 : 0;
-
-    const bScore =
-      bTitle.startsWith(q) ? 2 :
-      bTitle.includes(q) ? 1 : 0;
-
-    return bScore - aScore;
-  });
-}
-
-  setFilteredBooks(result);
-};
+ 
 
   const openPreview = (book: any) => {
   requestAnimationFrame(() => {
@@ -257,12 +204,12 @@ const searchResults = (filteredBooks || []).map(book => ({
           />
 
           <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
-            <Button onClick={() => setSelectedCategory(null)}>
+            <Button>
               Todos
             </Button>
 
             {categories.map((cat) => (
-              <Button key={cat} onClick={() => setSelectedCategory(cat)}>
+              <Button key={cat}>
                 {cat}
               </Button>
             ))}
