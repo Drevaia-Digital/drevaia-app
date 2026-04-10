@@ -27,25 +27,34 @@ export function PremiumSearch({
 }: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const listRef = useRef<HTMLDivElement>(null);
-
   const [activeIndex, setActiveIndex] = useState(0);
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
 
   // 🔥 AUTO FOCUS
   useEffect(() => {
     if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 80);
+      setTimeout(() => inputRef.current?.focus(), 60);
       setActiveIndex(0);
     }
   }, [isOpen]);
 
-// 🔥 LIMPIAR INPUT AL ABRIR
-useEffect(() => {
-  if (isOpen) {
-    setSearchQuery("");
-  }
-}, [isOpen]);
+  // 🔥 LIMPIAR INPUT
+  useEffect(() => {
 
-  // 🔥 TECLADO PRO (↑ ↓ ENTER ESC)
+  // 🔥 CARGAR HISTORIAL
+useEffect(() => {
+  const saved = localStorage.getItem("drevaia-search-history");
+  if (saved) {
+    setRecentSearches(JSON.parse(saved));
+  }
+}, []);
+
+    if (isOpen) {
+      setSearchQuery("");
+    }
+  }, [isOpen]);
+
+  // 🔥 TECLADO PRO
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if (!isOpen) return;
@@ -77,7 +86,7 @@ useEffect(() => {
     return () => window.removeEventListener("keydown", handleKey);
   }, [isOpen, results, activeIndex]);
 
-  // 🔥 SCROLL AUTOMÁTICO AL ITEM ACTIVO
+  // 🔥 SCROLL AUTOMÁTICO
   useEffect(() => {
     const container = listRef.current;
     if (!container) return;
@@ -89,6 +98,23 @@ useEffect(() => {
       block: "nearest",
     });
   }, [activeIndex]);
+
+  // 🔥 HIGHLIGHT PRO
+  const highlightText = (text: string, query: string) => {
+    if (!query) return text;
+
+    const parts = text.split(new RegExp(`(${query})`, "gi"));
+
+    return parts.map((part, index) =>
+      part.toLowerCase() === query.toLowerCase() ? (
+        <span key={index} className="text-amber-400 font-semibold">
+          {part}
+        </span>
+      ) : (
+        part
+      )
+    );
+  };
 
   return (
     <AnimatePresence>
@@ -108,7 +134,6 @@ useEffect(() => {
             transition={{ type: "spring", stiffness: 260, damping: 22 }}
             onClick={(e) => e.stopPropagation()}
           >
-            {/* CONTENEDOR */}
             <div className="bg-[#111827]/95 border border-white/10 rounded-2xl shadow-2xl overflow-hidden">
 
               {/* INPUT */}
@@ -118,7 +143,10 @@ useEffect(() => {
                   type="text"
                   placeholder="Buscar en Drevaia Digital..."
                   value={searchQuery}
-                  onChange={(e) => setSearchQuery(e.target.value)}
+                  onChange={(e) => {
+                    setSearchQuery(e.target.value);
+                    setActiveIndex(0);
+                  }}
                   className="w-full bg-transparent text-white text-base md:text-lg outline-none placeholder:text-gray-500"
                 />
               </div>
@@ -128,7 +156,25 @@ useEffect(() => {
                 ref={listRef}
                 className="max-h-[60vh] overflow-y-auto px-2 py-2 space-y-1 scrollbar-thin scrollbar-thumb-white/10"
               >
-                {searchQuery.length > 0 && results.length === 0 && (
+              // 🔥 MOSTRAR HISTORIAL
+{searchQuery.length === 0 && recentSearches.length > 0 && (
+  <div className="px-3 py-2">
+    <p className="text-xs text-gray-500 mb-2">
+      Búsquedas recientes
+    </p>
+
+    {recentSearches.map((item, i) => (
+      <div
+        key={i}
+        onClick={() => setSearchQuery(item)}
+        className="text-sm text-white/80 hover:text-white cursor-pointer py-1"
+      >
+        {item}
+      </div>
+    ))}
+  </div>
+)}  
+              {searchQuery.length > 0 && results.length === 0 && (
                   <p className="text-gray-400 text-sm px-3 py-2">
                     No se encontraron resultados
                   </p>
@@ -139,6 +185,7 @@ useEffect(() => {
                     <motion.div
                       key={book.id}
                       onClick={() => onSelectBook(book)}
+                      onMouseEnter={() => setActiveIndex(index)}
                       className={`
                         flex items-center gap-3
                         px-3 py-2
@@ -163,12 +210,12 @@ useEffect(() => {
 
                       <div className="flex flex-col">
                         <span className="text-sm text-white font-medium">
-                          {book.title}
+                          {highlightText(book.title, searchQuery)}
                         </span>
 
                         {book.author && (
                           <span className="text-xs text-gray-400">
-                            {book.author}
+                            {highlightText(book.author, searchQuery)}
                           </span>
                         )}
                       </div>
