@@ -174,6 +174,26 @@ useEffect(() => {
     ))}
   </div>
 )}  
+
+// 🔥 MOSTRAR HISTORIAL
+{searchQuery.length === 0 && recentSearches.length > 0 && (
+  <div className="px-3 py-2">
+    <p className="text-xs text-gray-500 mb-2">
+      Búsquedas recientes
+    </p>
+
+    {recentSearches.map((item, i) => (
+      <div
+        key={i}
+        onClick={() => setSearchQuery(item)}
+        className="text-sm text-white/80 hover:text-white cursor-pointer py-1"
+      >
+        {item}
+      </div>
+    ))}
+  </div>
+)}
+
               {searchQuery.length > 0 && results.length === 0 && (
                   <p className="text-gray-400 text-sm px-3 py-2">
                     No se encontraron resultados
