@@ -129,3 +129,13 @@ html {
 .animate-fadeInUpSoft {
   animation: fadeInUpSoft 1s ease forwards;
 }
+
+/* 🔥 Oculta scrollbar pero mantiene scroll */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

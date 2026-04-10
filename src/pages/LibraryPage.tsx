@@ -204,43 +204,55 @@ if (searchQuery) {
         </p>
       </section>
 
-      <section className="py-10 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
+     <section className="py-10 border-b border-white/10">
+  <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
 
-          <div
-            onClick={() => setIsSearchOpen(true)}
-            className="w-full md:w-80 cursor-text bg-neutral-900/60 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400"
+    {/* INPUT */}
+    <div
+      onClick={() => setIsSearchOpen(true)}
+      className="w-full md:w-80 cursor-text bg-neutral-900/60 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400"
+    >
+      Buscar en Drevaia Digital...
+    </div>
+
+    {/* SEARCH */}
+    <PremiumSearch
+      isOpen={isSearchOpen}
+      onClose={() => setIsSearchOpen(false)}
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
+      results={searchResults}
+      onSelectBook={(book) => {
+        const realBook = books.find(b => b.id === book.id);
+        if (!realBook) return;
+
+        setIsSearchOpen(false);
+        requestAnimationFrame(() => openPreview(realBook));
+      }}
+    />
+
+    {/* 🔥 CATEGORÍAS SCROLL */}
+    <div className="w-full overflow-x-auto scrollbar-none">
+      <div className="flex gap-2 min-w-max px-1">
+
+        <Button onClick={() => setSelectedCategory(null)}>
+          Todos
+        </Button>
+
+        {categories.map((cat) => (
+          <Button
+            key={cat}
+            onClick={() => setSelectedCategory(cat)}
           >
-            Buscar en Drevaia Digital...
-          </div>
+            {cat}
+          </Button>
+        ))}
 
-          <PremiumSearch
-            isOpen={isSearchOpen}
-            onClose={() => setIsSearchOpen(false)}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            results={searchResults}
-            onSelectBook={(book) => {
-              const realBook = books.find(b => b.id === book.id);
-              if (!realBook) return;
+      </div>
+    </div>
 
-              setIsSearchOpen(false);
-              requestAnimationFrame(() => openPreview(realBook));
-            }}
-          />
-
-          <div className="flex gap-2 overflow-x-auto pb-2">
-            <Button onClick={() => setSelectedCategory(null)}>Todos</Button>
-
-            {categories.map((cat) => (
-              <Button key={cat} onClick={() => setSelectedCategory(cat)}>
-                {cat}
-              </Button>
-            ))}
-          </div>
-
-        </div>
-      </section>
+  </div>
+</section>
 
       <section className="py-14 max-w-7xl mx-auto px-4 sm:px-6">
 
