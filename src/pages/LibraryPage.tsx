@@ -6,14 +6,12 @@ import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useDeferredValue } from "react";
 import { SkeletonCard } from "@/components/SkeletonCard";
 
 export default function LibraryPage() {
   const navigate = useNavigate();
 
   const [books, setBooks] = useState<any[]>([]);
-  const [filteredBooks, setFilteredBooks] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -23,36 +21,10 @@ export default function LibraryPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  const deferredSearch = useDeferredValue(searchQuery);
-
   // 🔥 LOAD
   useEffect(() => {
     loadBooks();
   }, []);
-
-  // 🔥 FILTRO SEGURO
-  useEffect(() => {
-    let result = Array.isArray(books) ? [...books] : [];
-
-    if (deferredSearch) {
-      const q = (deferredSearch || "").toLowerCase();
-
-      result = result.filter(book =>
-        (book.title || "").toLowerCase().includes(q) ||
-        (book.author || "").toLowerCase().includes(q)
-      );
-    }
-
-    if (selectedCategory) {
-      const selected = selectedCategory.toLowerCase().trim();
-
-      result = result.filter(book =>
-        (book.category || "").toLowerCase().trim() === selected
-      );
-    }
-
-    setFilteredBooks(result);
-  }, [deferredSearch, selectedCategory, books]);
 
   // 🔥 SCROLL BUTTON
   useEffect(() => {
@@ -87,7 +59,6 @@ export default function LibraryPage() {
         try {
           const parsed = JSON.parse(cached);
           setBooks(parsed);
-          setFilteredBooks(parsed);
         } catch {
           localStorage.removeItem('books_cache');
         }
@@ -108,7 +79,6 @@ export default function LibraryPage() {
         }));
 
         setBooks(mapped);
-        setFilteredBooks(mapped);
         localStorage.setItem('books_cache', JSON.stringify(mapped));
       }
 
@@ -141,6 +111,30 @@ export default function LibraryPage() {
     navigate('/');
   };
 
+  // 🔥 FILTRO COMPUTADO (SIN useEffect)
+  const computedBooks = (() => {
+    let result = Array.isArray(books) ? [...books] : [];
+
+    if (searchQuery) {
+      const q = searchQuery.toLowerCase();
+
+      result = result.filter(book =>
+        (book.title || "").toLowerCase().includes(q) ||
+        (book.author || "").toLowerCase().includes(q)
+      );
+    }
+
+    if (selectedCategory) {
+      const selected = selectedCategory.toLowerCase().trim();
+
+      result = result.filter(book =>
+        (book.category || "").toLowerCase().trim() === selected
+      );
+    }
+
+    return result;
+  })();
+
   const categories = Array.from(
     new Map(
       (books || []).map(b => [
@@ -150,7 +144,7 @@ export default function LibraryPage() {
     ).values()
   );
 
-  const searchResults = (filteredBooks || []).map(book => ({
+  const searchResults = computedBooks.map(book => ({
     id: book.id,
     title: book.title,
     cover: book.coverImage,
@@ -172,7 +166,6 @@ export default function LibraryPage() {
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white overflow-x-hidden">
 
-      {/* VOLVER */}
       <div className="max-w-7xl mx-auto px-6 pt-6">
         <button
           onClick={goToHome}
@@ -183,23 +176,21 @@ export default function LibraryPage() {
         </button>
       </div>
 
-      {/* HERO */}
       <section className="py-16 text-center">
         <h1 className="text-4xl font-bold mb-4">
           Biblioteca Drevaia
         </h1>
         <p className="text-gray-400">
-          {filteredBooks.length} ebooks disponibles
+          {computedBooks.length} ebooks disponibles
         </p>
       </section>
 
-      {/* BUSCADOR */}
       <section className="py-10 border-b border-white/10">
         <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
 
           <div
             onClick={() => setIsSearchOpen(true)}
-            className="w-full md:w-80 cursor-text bg-neutral-900/60 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400 hover:border-neutral-500 transition"
+            className="w-full md:w-80 cursor-text bg-neutral-900/60 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400"
           >
             Buscar en Drevaia Digital...
           </div>
@@ -215,17 +206,12 @@ export default function LibraryPage() {
               if (!realBook) return;
 
               setIsSearchOpen(false);
-
-              requestAnimationFrame(() => {
-                openPreview(realBook);
-              });
+              requestAnimationFrame(() => openPreview(realBook));
             }}
           />
 
-          <div className="flex gap-2 overflow-x-auto pb-2 md:pb-0 w-full md:w-auto">
-            <Button onClick={() => setSelectedCategory(null)}>
-              Todos
-            </Button>
+          <div className="flex gap-2 overflow-x-auto pb-2">
+            <Button onClick={() => setSelectedCategory(null)}>Todos</Button>
 
             {categories.map((cat) => (
               <Button key={cat} onClick={() => setSelectedCategory(cat)}>
@@ -237,40 +223,34 @@ export default function LibraryPage() {
         </div>
       </section>
 
-      {/* LIBROS */}
-      <section className="py-14 max-w-7xl mx-auto px-4 sm:px-6 relative z-20">
+      <section className="py-14 max-w-7xl mx-auto px-4 sm:px-6">
 
-        {filteredBooks.length === 0 && (
+        {computedBooks.length === 0 && (
           <div className="text-center py-16 text-gray-400">
             <BookOpen className="mx-auto mb-4 w-12 h-12 opacity-50" />
             No hay libros disponibles
           </div>
         )}
 
-        {filteredBooks.length > 0 && (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-6">
-
-            {filteredBooks.map((book, index) => (
-              <div key={book.id} style={{ animationDelay: `${index * 80}ms` }}>
-                <EbookCard
-                  id={book.id}
-                  title={book.title}
-                  cover={book.coverImage}
-                  price={book.price}
-                  onClick={() => openPreview(book)}
-                />
-              </div>
-            ))}
-
-          </div>
-        )}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
+          {computedBooks.map((book) => (
+            <EbookCard
+              key={book.id}
+              id={book.id}
+              title={book.title}
+              cover={book.coverImage}
+              price={book.price}
+              onClick={() => openPreview(book)}
+            />
+          ))}
+        </div>
 
       </section>
 
       {showTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 hover:scale-110 text-white p-3 rounded-full shadow-xl transition-all duration-300"
+          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3 rounded-full"
         >
           <ChevronUp className="w-5 h-5" />
         </button>
@@ -279,18 +259,7 @@ export default function LibraryPage() {
       <BookPreviewModal
         isOpen={isModalOpen}
         onClose={closePreview}
-        book={
-          selectedBook
-            ? {
-                id: selectedBook.id,
-                title: selectedBook.title,
-                description: selectedBook.description || "Descripción no disponible",
-                link: selectedBook.buy_url,
-                collection: selectedBook.category || "Colección",
-                cover: selectedBook.coverImage,
-              }
-            : null
-        }
+        book={selectedBook}
       />
 
     </div>
