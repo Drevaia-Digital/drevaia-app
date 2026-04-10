@@ -33,8 +33,10 @@ export default function LibraryPage() {
   }, []);
 
   useEffect(() => {
-    filterBooks();
-  }, [deferredSearch, selectedCategory, books]);
+  if (!books || books.length === 0) return;
+
+  filterBooks();
+}, [deferredSearch, selectedCategory, books]);
 
   useEffect(() => {
     const handleScroll = () => {
