@@ -33,10 +33,10 @@ export default function LibraryPage() {
   }, []);
 
   useEffect(() => {
-  if (!books || books.length === 0) return;
+  if (!Array.isArray(books)) return;
 
   filterBooks();
-}, [deferredSearch, selectedCategory, books]);
+}, [deferredSearch, selectedCategory, books.length]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -102,26 +102,53 @@ useEffect(() => {
   };
 
   const filterBooks = () => {
-  let result = [...books];
+  if (!books || books.length === 0) {
+    setFilteredBooks([]);
+    return;
+  }
 
+  let result = Array.isArray(books) ? [...books] : [];
+
+  // 🔍 BUSQUEDA SEGURA
   if (deferredSearch) {
-  const q = (deferredSearch || "").toLowerCase().trim();
+    const q = (deferredSearch || "").toLowerCase().trim();
 
-  result = result.filter(book => {
-    const title = (book.title || "").toLowerCase();
-    const author = (book.author || "").toLowerCase();
+    result = result.filter(book => {
+      const title = (book.title || "").toLowerCase();
+      const author = (book.author || "").toLowerCase();
 
-    return title.includes(q) || author.includes(q);
+      return title.includes(q) || author.includes(q);
+    });
+  }
+
+  // 📂 FILTRO CATEGORÍA SEGURO
+  if (selectedCategory) {
+    const selected = (selectedCategory || "").toLowerCase().trim();
+
+    result = result.filter(book => {
+      const category = (book.category || "").toLowerCase().trim();
+      return category === selected;
+    });
+  }
+
+if (deferredSearch) {
+  const q = (deferredSearch || "").toLowerCase();
+
+  result = result.sort((a, b) => {
+    const aTitle = (a.title || "").toLowerCase();
+    const bTitle = (b.title || "").toLowerCase();
+
+    const aScore =
+      aTitle.startsWith(q) ? 2 :
+      aTitle.includes(q) ? 1 : 0;
+
+    const bScore =
+      bTitle.startsWith(q) ? 2 :
+      bTitle.includes(q) ? 1 : 0;
+
+    return bScore - aScore;
   });
 }
-
-  if (selectedCategory) {
-    const selected = selectedCategory.toLowerCase().trim();
-
-    result = result.filter(book =>
-      book.category?.toLowerCase().trim() === selected
-    );
-  }
 
   setFilteredBooks(result);
 };
@@ -148,9 +175,9 @@ useEffect(() => {
 
   const categories = Array.from(
   new Map(
-    books.map(b => [
-      b.category?.trim().toLowerCase(),
-      b.category?.trim()
+    (books || []).map(b => [
+      (b.category || "").trim().toLowerCase(),
+      (b.category || "").trim()
     ])
   ).values()
 );
