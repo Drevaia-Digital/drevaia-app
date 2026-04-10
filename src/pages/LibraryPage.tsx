@@ -132,6 +132,25 @@ export default function LibraryPage() {
       );
     }
 
+if (searchQuery) {
+  const q = searchQuery.toLowerCase();
+
+  result = result.sort((a, b) => {
+    const aTitle = (a.title || "").toLowerCase();
+    const bTitle = (b.title || "").toLowerCase();
+
+    const aScore =
+      aTitle.startsWith(q) ? 3 :
+      aTitle.includes(q) ? 2 : 0;
+
+    const bScore =
+      bTitle.startsWith(q) ? 3 :
+      bTitle.includes(q) ? 2 : 0;
+
+    return bScore - aScore;
+  });
+}
+
     return result;
   })();
 
