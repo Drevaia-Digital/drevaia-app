@@ -240,10 +240,11 @@ if (searchQuery) {
   className={`
     snap-start
     transition-all
+    px-4 py-2 rounded-full text-sm font-medium
     ${
       selectedCategory === null
-        ? "bg-indigo-600 text-white shadow-lg scale-105"
-        : "bg-white/5 text-gray-300 hover:bg-white/10"
+        ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg scale-105"
+        : "bg-[#1a1a2e] text-gray-300 hover:bg-[#2a2a40]"
     }
   `}
 >
@@ -255,14 +256,15 @@ if (searchQuery) {
     key={cat}
     onClick={() => setSelectedCategory(cat)}
     className={`
-      snap-start
-      transition-all
-      ${
-        selectedCategory === cat
-          ? "bg-indigo-600 text-white shadow-lg scale-105"
-          : "bg-white/5 text-gray-300 hover:bg-white/10"
-      }
-    `}
+  snap-start
+  transition-all
+  px-4 py-2 rounded-full text-sm font-medium
+  ${
+    selectedCategory === cat
+      ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg scale-105"
+      : "bg-[#1a1a2e] text-gray-300 hover:bg-[#2a2a40]"
+  }
+`}
   >
     {cat}
   </Button>
