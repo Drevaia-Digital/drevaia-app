@@ -232,21 +232,41 @@ if (searchQuery) {
     />
 
     {/* 🔥 CATEGORÍAS SCROLL */}
-    <div className="w-full overflow-x-auto scrollbar-none">
+    <div className="w-full overflow-x-auto scrollbar-none snap-x snap-mandatory">
       <div className="flex gap-2 min-w-max px-1">
 
-        <Button onClick={() => setSelectedCategory(null)}>
-          Todos
-        </Button>
+        <Button
+  onClick={() => setSelectedCategory(null)}
+  className={`
+    snap-start
+    transition-all
+    ${
+      selectedCategory === null
+        ? "bg-indigo-600 text-white shadow-lg scale-105"
+        : "bg-white/5 text-gray-300 hover:bg-white/10"
+    }
+  `}
+>
+  Todos
+</Button>
 
         {categories.map((cat) => (
-          <Button
-            key={cat}
-            onClick={() => setSelectedCategory(cat)}
-          >
-            {cat}
-          </Button>
-        ))}
+  <Button
+    key={cat}
+    onClick={() => setSelectedCategory(cat)}
+    className={`
+      snap-start
+      transition-all
+      ${
+        selectedCategory === cat
+          ? "bg-indigo-600 text-white shadow-lg scale-105"
+          : "bg-white/5 text-gray-300 hover:bg-white/10"
+      }
+    `}
+  >
+    {cat}
+  </Button>
+))}
 
       </div>
     </div>
