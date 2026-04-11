@@ -101,11 +101,35 @@ export default function LibraryPage() {
 const getRecommendedBooks = (currentBook: any) => {
   if (!currentBook) return [];
 
+  const currentTitle = (currentBook.title || "").toLowerCase().split(" ");
+
   return books
-    .filter(b =>
-      b.id !== currentBook.id &&
-      (b.category || "").toLowerCase() === (currentBook.category || "").toLowerCase()
-    )
+    .map((b) => {
+      if (b.id === currentBook.id) return null;
+
+      let score = 0;
+
+      // 🎯 MISMA CATEGORÍA
+      if (
+        (b.category || "").toLowerCase() ===
+        (currentBook.category || "").toLowerCase()
+      ) {
+        score += 3;
+      }
+
+      // 🧠 SIMILITUD DE PALABRAS
+      const titleWords = (b.title || "").toLowerCase().split(" ");
+
+      const matches = titleWords.filter((word: string) =>
+        currentTitle.includes(word)
+      ).length;
+
+      score += matches;
+
+      return { ...b, score };
+    })
+    .filter(Boolean)
+    .sort((a: any, b: any) => b.score - a.score)
     .slice(0, 6);
 };
 
