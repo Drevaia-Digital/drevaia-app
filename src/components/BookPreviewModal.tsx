@@ -6,13 +6,14 @@ interface BookPreviewModalProps {
   isOpen: boolean;
   onClose: () => void;
   book: {
-    id: string | number; // 🔥 CLAVE
+    id: string | number;
     title: string;
     description: string;
     link: string;
     collection: string;
-    cover?: string; // opcional si luego lo usas
+    cover?: string;
   } | null;
+  recommendedBooks?: any[];
 }
 
 const features = [
@@ -26,6 +27,7 @@ export function BookPreviewModal({
   isOpen,
   onClose,
   book,
+  recommendedBooks,
 }: BookPreviewModalProps) {
   return (
     <AnimatePresence>
@@ -42,7 +44,7 @@ export function BookPreviewModal({
 
           {/* MODAL */}
           <motion.div
-            layoutId={`ebook-${book.id}`} // 🔥 CONEXIÓN CON CARD
+            layoutId={`ebook-${book.id}`}
             className="fixed inset-0 z-50 flex items-center justify-center p-4"
           >
             <motion.div
@@ -52,6 +54,7 @@ export function BookPreviewModal({
               exit={{ borderRadius: 24 }}
               onClick={(e) => e.stopPropagation()}
             >
+
               {/* HEADER */}
               <div className="relative h-48 bg-gradient-to-br from-purple-500 via-purple-600 to-amber-500">
 
@@ -70,13 +73,14 @@ export function BookPreviewModal({
                     </span>
                   </div>
                 </div>
+
               </div>
 
               {/* CONTENIDO */}
               <div className="p-6 md:p-8 overflow-y-auto max-h-[calc(90vh-12rem)]">
 
                 <motion.h2
-                  layoutId={`ebook-title-${book.id}`} // 🔥 CONEXIÓN CON CARD
+                  layoutId={`ebook-title-${book.id}`}
                   className="text-2xl md:text-3xl font-bold text-gray-900 mb-4"
                 >
                   {book.title}
@@ -112,8 +116,36 @@ export function BookPreviewModal({
                   </div>
                 </div>
 
+                {/* 🔥 RECOMENDACIONES (AQUÍ VA CORRECTO) */}
+                {recommendedBooks && recommendedBooks.length > 0 && (
+                  <div className="mt-10">
+                    <h3 className="text-lg font-semibold mb-4 text-gray-900">
+                      También te puede interesar
+                    </h3>
+
+                    <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                      {recommendedBooks.map((b) => (
+                        <div
+                          key={b.id}
+                          className="cursor-pointer"
+                          onClick={() => window.location.reload()}
+                        >
+                          <img
+                            src={b.coverImage}
+                            alt={b.title}
+                            className="rounded-lg object-cover w-full h-[160px]"
+                          />
+                          <p className="text-xs mt-2 text-gray-600 line-clamp-2">
+                            {b.title}
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+
                 {/* BOTONES */}
-                <div className="flex flex-col sm:flex-row gap-3">
+                <div className="flex flex-col sm:flex-row gap-3 mt-8">
                   <a
                     href={book.link}
                     target="_blank"
@@ -134,6 +166,7 @@ export function BookPreviewModal({
                     Seguir explorando
                   </Button>
                 </div>
+
               </div>
             </motion.div>
           </motion.div>

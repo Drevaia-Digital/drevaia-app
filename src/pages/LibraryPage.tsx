@@ -90,13 +90,24 @@ export default function LibraryPage() {
   };
 
   const openPreview = (book: any) => {
-    if (!book) return;
+  if (!book) return;
 
-    requestAnimationFrame(() => {
-      setSelectedBook(book);
-      setIsModalOpen(true);
-    });
-  };
+  requestAnimationFrame(() => {
+    setSelectedBook(book);
+    setIsModalOpen(true);
+  });
+};
+
+const getRecommendedBooks = (currentBook: any) => {
+  if (!currentBook) return [];
+
+  return books
+    .filter(b =>
+      b.id !== currentBook.id &&
+      (b.category || "").toLowerCase() === (currentBook.category || "").toLowerCase()
+    )
+    .slice(0, 6);
+};
 
   const closePreview = () => {
     setIsModalOpen(false);
@@ -313,6 +324,7 @@ if (searchQuery) {
         isOpen={isModalOpen}
         onClose={closePreview}
         book={selectedBook}
+        recommendedBooks={getRecommendedBooks(selectedBook)}
       />
 
     </div>
