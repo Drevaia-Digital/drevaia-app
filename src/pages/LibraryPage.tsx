@@ -252,30 +252,32 @@ if (searchQuery) {
     snap-start
     transition-all
     px-4 py-2 rounded-full text-sm font-medium
+    !border-0
     ${
       selectedCategory === null
-        ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg scale-105"
-        : "bg-[#1a1a2e] text-gray-300 hover:bg-[#2a2a40]"
+        ? "!bg-gradient-to-r !from-purple-600 !to-indigo-600 !text-white shadow-lg scale-105"
+        : "!bg-[#1a1a2e] !text-gray-300 hover:!bg-[#2a2a40]"
     }
   `}
 >
   Todos
 </Button>
 
-        {categories.map((cat) => (
+{categories.map((cat) => (
   <Button
     key={cat}
     onClick={() => setSelectedCategory(cat)}
     className={`
-  snap-start
-  transition-all
-  px-4 py-2 rounded-full text-sm font-medium
-  ${
-    selectedCategory === cat
-      ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg scale-105"
-      : "bg-[#1a1a2e] text-gray-300 hover:bg-[#2a2a40]"
-  }
-`}
+      snap-start
+      transition-all
+      px-4 py-2 rounded-full text-sm font-medium
+      !border-0
+      ${
+        selectedCategory === cat
+          ? "!bg-gradient-to-r !from-purple-600 !to-indigo-600 !text-white shadow-lg scale-105"
+          : "!bg-[#1a1a2e] !text-gray-300 hover:!bg-[#2a2a40]"
+      }
+    `}
   >
     {cat}
   </Button>
@@ -312,6 +314,7 @@ if (searchQuery) {
       </section>
 
       {showTop && (
+
         <button
           onClick={scrollToTop}
           className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3 rounded-full"
