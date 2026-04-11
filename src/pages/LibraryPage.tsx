@@ -2,7 +2,7 @@ import { PremiumSearch } from "@/components/PremiumSearch";
 import { EbookCard } from '@/components/EbookCard';
 import { BookPreviewModal } from '@/components/BookPreviewModal';
 import { supabase } from '@/lib/supabase';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
@@ -129,7 +129,7 @@ const getRecommendedBooks = (currentBook: any) => {
       return { ...b, score };
     })
     .filter(Boolean)
-    .sort((a: any, b: any) => b.score - a.score)
+    .sort((a: any, b: any) => (b.score || 0) - (a.score || 0))
     .slice(0, 6);
 };
 
@@ -147,47 +147,54 @@ const getRecommendedBooks = (currentBook: any) => {
   };
 
   // 🔥 FILTRO COMPUTADO (SIN useEffect)
-  const computedBooks = (() => {
-    let result = Array.isArray(books) ? [...books] : [];
+  const computedBooks = useMemo(() => {
+  let result = [...(books || [])];
 
-    if (searchQuery) {
-      const q = searchQuery.toLowerCase();
+  // 🔍 BUSQUEDA
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
 
-      result = result.filter(book =>
-        (book.title || "").toLowerCase().includes(q) ||
-        (book.author || "").toLowerCase().includes(q)
-      );
-    }
+    result = result.filter(book =>
+      (book.title || "").toLowerCase().includes(q) ||
+      (book.author || "").toLowerCase().includes(q)
+    );
+  }
 
-    if (selectedCategory) {
-      const selected = selectedCategory.toLowerCase().trim();
+  // 📂 CATEGORÍA
+  if (selectedCategory) {
+    const selected = selectedCategory.toLowerCase().trim();
 
-      result = result.filter(book =>
-        (book.category || "").toLowerCase().trim() === selected
-      );
-    }
+    result = result.filter(book =>
+      (book.category || "").toLowerCase().trim() === selected
+    );
+  }
 
-if (searchQuery) {
-  const q = searchQuery.toLowerCase();
+  // 🧠 RANKING
+  if (searchQuery) {
+    const q = searchQuery.toLowerCase();
 
-  result = result.sort((a, b) => {
-    const aTitle = (a.title || "").toLowerCase();
-    const bTitle = (b.title || "").toLowerCase();
+    result = [...result].sort((a, b) => {
+      const aTitle = (a.title || "").toLowerCase();
+      const bTitle = (b.title || "").toLowerCase();
 
-    const aScore =
-      aTitle.startsWith(q) ? 3 :
-      aTitle.includes(q) ? 2 : 0;
+      const aScore =
+        aTitle.startsWith(q) ? 3 :
+        aTitle.includes(q) ? 2 : 0;
 
-    const bScore =
-      bTitle.startsWith(q) ? 3 :
-      bTitle.includes(q) ? 2 : 0;
+      const bScore =
+        bTitle.startsWith(q) ? 3 :
+        bTitle.includes(q) ? 2 : 0;
 
-    return bScore - aScore;
-  });
-}
+      return bScore - aScore;
+    });
+  }
 
-    return result;
-  })();
+  return result;
+}, [books, searchQuery, selectedCategory]);
+
+const recommendedBooks = useMemo(() => {
+  return getRecommendedBooks(selectedBook);
+}, [selectedBook, books]);
 
   const categories = Array.from(
     new Map(
@@ -351,7 +358,7 @@ if (searchQuery) {
         isOpen={isModalOpen}
         onClose={closePreview}
         book={selectedBook}
-        recommendedBooks={getRecommendedBooks(selectedBook)}
+        recommendedBooks={recommendedBooks}
       />
 
     </div>
