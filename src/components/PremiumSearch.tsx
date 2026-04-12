@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
+import { highlightText } from "@/lib/highlight";
 
 interface Book {
   id: number | string;
@@ -114,24 +115,7 @@ export function PremiumSearch({
     activeItem.scrollIntoView({ block: "nearest" });
   }, [activeIndex]);
 
-  // 🔥 HIGHLIGHT
-  const highlightText = (text: string, query: string) => {
-    if (!query) return text;
-
-    const parts = text.split(new RegExp(`(${query})`, "gi"));
-
-    return parts.map((part, index) =>
-      part.toLowerCase() === query.toLowerCase() ? (
-        <span key={index} className="text-amber-400 font-semibold">
-          {part}
-        </span>
-      ) : (
-        part
-      )
-    );
-  };
-
-  return (
+    return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
