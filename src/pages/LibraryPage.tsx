@@ -8,12 +8,14 @@ import { BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { SkeletonCard } from "@/components/SkeletonCard";
 import { searchBooks } from "@/engines/searchEngine";
+import { useDebounce } from "@/hooks/useDebounce";
 
 export default function LibraryPage() {
   const navigate = useNavigate();
 
   const [books, setBooks] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const debouncedQuery = useDebounce(searchQuery, 250);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
   const [showTop, setShowTop] = useState(false);
@@ -148,23 +150,27 @@ export default function LibraryPage() {
   // 🔥 NUEVO MOTOR DE BÚSQUEDA (PRO)
   const computedBooks = useMemo(() => {
     return searchBooks(books || [], {
-      query: searchQuery,
+      query: debouncedQuery,
       category: selectedCategory || "all",
     });
-  }, [books, searchQuery, selectedCategory]);
+  }, [books, debouncedQuery, selectedCategory]);
 
   const recommendedBooks = useMemo(() => {
     return getRecommendedBooks(selectedBook);
   }, [selectedBook, books]);
 
-  const categories = Array.from(
+  const categories = useMemo(() => {
+  return Array.from(
     new Map(
-      (books || []).map(b => [
-        (b.category || "").trim().toLowerCase(),
-        (b.category || "").trim()
-      ])
+      (books || [])
+        .filter(b => b.category)
+        .map(b => [
+          b.category.trim().toLowerCase(),
+          b.category.trim()
+        ])
     ).values()
   );
+}, [books]);
 
   const searchResults = computedBooks.map(book => ({
   id: book.id,
