@@ -13,32 +13,31 @@ export default function LibraryPage() {
   const navigate = useNavigate();
 
   const [books, setBooks] = useState<any[]>([]);
-  const [showTop, setShowTop] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const debouncedQuery = useDebounce(searchQuery, 250);
+  const debouncedQuery = useDebounce(searchQuery, 200);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
+  const [showTop, setShowTop] = useState(false);
 
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  // 🔥 LOAD
+  // 🚀 LOAD
   useEffect(() => {
     loadBooks();
   }, []);
 
-  // 🔥 SCROLL
+  // 🚀 SCROLL DETECTION
   useEffect(() => {
     const handleScroll = () => {
-      setShowTop(window.scrollY > 300);
+      setShowTop(window.scrollY > 250);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // 🔥 CTRL + K
+  // 🚀 CTRL + K
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
@@ -46,7 +45,6 @@ export default function LibraryPage() {
         setIsSearchOpen(true);
       }
     };
-
     window.addEventListener("keydown", handleKey);
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
@@ -55,17 +53,6 @@ export default function LibraryPage() {
     setLoading(true);
 
     try {
-      const cached = localStorage.getItem('books_cache');
-
-      if (cached) {
-        try {
-          const parsed = JSON.parse(cached);
-          setBooks(parsed);
-        } catch {
-          localStorage.removeItem('books_cache');
-        }
-      }
-
       const { data } = await supabase.from('books').select('*');
 
       if (data) {
@@ -75,7 +62,6 @@ export default function LibraryPage() {
         }));
 
         setBooks(mapped);
-        localStorage.setItem('books_cache', JSON.stringify(mapped));
       }
 
     } catch (err) {
@@ -96,12 +82,10 @@ export default function LibraryPage() {
   };
 
   const scrollToTop = () => {
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth",
-    });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  // 🧠 ENGINE
   const computedBooks = useMemo(() => {
     return searchBooks(books || [], {
       query: debouncedQuery,
@@ -133,16 +117,16 @@ export default function LibraryPage() {
   }, [books]);
 
   const searchResults = computedBooks.map(book => ({
-    id: book.id,
-    title: book.title,
-    cover: book.coverImage || "https://via.placeholder.com/300x400",
-    author: book.author || ""
-  }));
+  id: book.id,
+  title: book.title,
+  cover: book.coverImage || "https://via.placeholder.com/300x400",
+  author: book.author || ""
+}));
 
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-white">
-        Cargando...
+        Cargando biblioteca...
       </div>
     );
   }
@@ -150,21 +134,25 @@ export default function LibraryPage() {
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white">
 
+      {/* HEADER */}
       <div className="max-w-7xl mx-auto px-6 pt-6">
-        <button onClick={() => navigate('/')} className="text-sm text-gray-400 hover:text-white flex items-center gap-2">
+        <button
+          onClick={() => navigate('/')}
+          className="text-gray-400 hover:text-white flex items-center gap-2 transition"
+        >
           <ArrowLeft className="w-4 h-4" />
           Volver
         </button>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-6">
+      <div className="max-w-7xl mx-auto px-6 py-8">
 
-        {/* BUSCADOR */}
+        {/* SEARCH */}
         <div
           onClick={() => setIsSearchOpen(true)}
-          className="mb-6 cursor-text bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400"
+          className="mb-8 cursor-text bg-neutral-900/70 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400 backdrop-blur"
         >
-          Buscar ebooks...
+          Buscar en Drevaia...
         </div>
 
         <PremiumSearch
@@ -179,8 +167,8 @@ export default function LibraryPage() {
           }}
         />
 
-        {/* CATEGORÍAS */}
-        <div className="flex gap-2 mb-6 overflow-x-auto">
+        {/* CATEGORIES */}
+        <div className="flex gap-2 mb-8 overflow-x-auto">
           <Button onClick={() => setSelectedCategory(null)}>Todos</Button>
           {categories.map(cat => (
             <Button key={cat} onClick={() => setSelectedCategory(cat)}>
@@ -191,9 +179,12 @@ export default function LibraryPage() {
 
         {/* TOP RESULTS */}
         {debouncedQuery && topResults.length > 0 && (
-          <div className="mb-8">
-            <p className="text-purple-400 mb-3 text-sm">Mejores resultados</p>
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="mb-10">
+            <p className="text-purple-400 mb-3 text-sm tracking-wider">
+              RESULTADOS DESTACADOS
+            </p>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
               {topResults.map(book => (
                 <EbookCard
                   key={book.id}
@@ -208,8 +199,8 @@ export default function LibraryPage() {
           </div>
         )}
 
-        {/* RESTO */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+        {/* GRID */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
           {(debouncedQuery ? otherResults : computedBooks).map(book => (
             <EbookCard
               key={book.id}
@@ -224,16 +215,24 @@ export default function LibraryPage() {
 
       </div>
 
-      {/* 🔥 BOTÓN FLOTANTE */}
+      {/* 🔥 SCROLL BUTTON PRO */}
       {showTop && (
         <button
           onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3 rounded-full shadow-lg hover:scale-110 transition-all"
+          className="
+            fixed bottom-6 right-6 z-50
+            bg-gradient-to-r from-purple-600 to-indigo-600
+            text-white p-3 rounded-full
+            shadow-xl backdrop-blur
+            hover:scale-110 hover:shadow-purple-500/40
+            transition-all duration-300
+          "
         >
           <ChevronUp className="w-5 h-5" />
         </button>
       )}
 
+      {/* MODAL */}
       <BookPreviewModal
         isOpen={isModalOpen}
         onClose={closePreview}
