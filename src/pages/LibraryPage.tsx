@@ -4,9 +4,8 @@ import { BookPreviewModal } from '@/components/BookPreviewModal';
 import { supabase } from '@/lib/supabase';
 import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { SkeletonCard } from "@/components/SkeletonCard";
 import { searchBooks } from "@/engines/searchEngine";
 import { useDebounce } from "@/hooks/useDebounce";
 
@@ -18,28 +17,15 @@ export default function LibraryPage() {
   const debouncedQuery = useDebounce(searchQuery, 250);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
-  const [showTop, setShowTop] = useState(false);
 
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  // 🔥 LOAD
   useEffect(() => {
     loadBooks();
   }, []);
 
-  // 🔥 SCROLL BUTTON
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowTop(window.scrollY > 300);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  // 🔥 CTRL + K
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
@@ -67,18 +53,12 @@ export default function LibraryPage() {
         }
       }
 
-      const { data, error } = await supabase.from('books').select('*');
+      const { data } = await supabase.from('books').select('*');
 
-      if (!error && data) {
+      if (data) {
         const mapped = data.map((book: any) => ({
           ...book,
           coverImage: book.image || "https://via.placeholder.com/300x400",
-          buy_url:
-            book.buy_url_es ||
-            book.buy_url_en ||
-            book.buy_url_fr ||
-            book.buy_url_pt ||
-            ""
         }));
 
         setBooks(mapped);
@@ -86,52 +66,15 @@ export default function LibraryPage() {
       }
 
     } catch (err) {
-      console.error("Error inesperado:", err);
+      console.error(err);
     }
 
     setLoading(false);
   };
 
   const openPreview = (book: any) => {
-    if (!book) return;
-
-    requestAnimationFrame(() => {
-      setSelectedBook(book);
-      setIsModalOpen(true);
-    });
-  };
-
-  const getRecommendedBooks = (currentBook: any) => {
-    if (!currentBook) return [];
-
-    const currentTitle = (currentBook.title || "").toLowerCase().split(" ");
-
-    return books
-      .map((b) => {
-        if (b.id === currentBook.id) return null;
-
-        let score = 0;
-
-        if (
-          (b.category || "").toLowerCase() ===
-          (currentBook.category || "").toLowerCase()
-        ) {
-          score += 3;
-        }
-
-        const titleWords = (b.title || "").toLowerCase().split(" ");
-
-        const matches = titleWords.filter((word: string) =>
-          currentTitle.includes(word)
-        ).length;
-
-        score += matches;
-
-        return { ...b, score };
-      })
-      .filter(Boolean)
-      .sort((a: any, b: any) => (b.score || 0) - (a.score || 0))
-      .slice(0, 6);
+    setSelectedBook(book);
+    setIsModalOpen(true);
   };
 
   const closePreview = () => {
@@ -139,15 +82,6 @@ export default function LibraryPage() {
     setTimeout(() => setSelectedBook(null), 200);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const goToHome = () => {
-    navigate('/');
-  };
-
-  // 🔥 NUEVO MOTOR DE BÚSQUEDA (PRO)
   const computedBooks = useMemo(() => {
     return searchBooks(books || [], {
       query: debouncedQuery,
@@ -155,161 +89,126 @@ export default function LibraryPage() {
     });
   }, [books, debouncedQuery, selectedCategory]);
 
-  const recommendedBooks = useMemo(() => {
-    return getRecommendedBooks(selectedBook);
-  }, [selectedBook, books]);
+  const topResults = useMemo(() => {
+    if (!debouncedQuery) return [];
+    return computedBooks.slice(0, 3);
+  }, [computedBooks, debouncedQuery]);
+
+  const otherResults = useMemo(() => {
+    if (!debouncedQuery) return computedBooks;
+    return computedBooks.slice(3);
+  }, [computedBooks, debouncedQuery]);
 
   const categories = useMemo(() => {
-  return Array.from(
-    new Map(
-      (books || [])
-        .filter(b => b.category)
-        .map(b => [
-          b.category.trim().toLowerCase(),
-          b.category.trim()
-        ])
-    ).values()
-  );
-}, [books]);
+    return Array.from(
+      new Map(
+        (books || [])
+          .filter(b => b.category)
+          .map(b => [
+            b.category.trim().toLowerCase(),
+            b.category.trim()
+          ])
+      ).values()
+    );
+  }, [books]);
 
   const searchResults = computedBooks.map(book => ({
-  id: book.id,
-  title: book.title,
-  cover: book.coverImage || "https://via.placeholder.com/300x400",
-  author: book.author || ""
-}));
+    id: book.id,
+    title: book.title,
+    cover: book.coverImage || "https://via.placeholder.com/300x400",
+    author: book.author || ""
+  }));
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0f0f1a] px-4 sm:px-6 py-14">
-        <div className="max-w-7xl mx-auto grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5 md:gap-6">
-          {[...Array(10)].map((_, i) => (
-            <SkeletonCard key={i} />
-          ))}
-        </div>
+      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-white">
+        Cargando...
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white overflow-x-hidden">
+    <div className="min-h-screen bg-[#0f0f1a] text-white">
 
       <div className="max-w-7xl mx-auto px-6 pt-6">
-        <button
-          onClick={goToHome}
-          className="text-sm text-gray-400 hover:text-white flex items-center gap-2 transition"
-        >
+        <button onClick={() => navigate('/')} className="text-sm text-gray-400 hover:text-white flex items-center gap-2">
           <ArrowLeft className="w-4 h-4" />
-          Volver al inicio
+          Volver
         </button>
       </div>
 
-      <section className="py-16 text-center">
-        <h1 className="text-4xl font-bold mb-4">
-          Biblioteca Drevaia
-        </h1>
-        <p className="text-gray-400">
-          {computedBooks.length} ebooks disponibles
-        </p>
-      </section>
+      <div className="max-w-7xl mx-auto px-6 py-6">
 
-      <section className="py-10 border-b border-white/10">
-        <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
-
-          <div
-            onClick={() => setIsSearchOpen(true)}
-            className="w-full md:w-80 cursor-text bg-neutral-900/60 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400"
-          >
-            Buscar en Drevaia Digital...
-          </div>
-
-          <PremiumSearch
-            isOpen={isSearchOpen}
-            onClose={() => setIsSearchOpen(false)}
-            searchQuery={searchQuery}
-            setSearchQuery={setSearchQuery}
-            results={searchResults}
-            onSelectBook={(book) => {
-              const realBook = books.find(b => b.id === book.id);
-              if (!realBook) return;
-
-              setIsSearchOpen(false);
-              requestAnimationFrame(() => openPreview(realBook));
-            }}
-          />
-
-          <div className="w-full overflow-x-auto scrollbar-none snap-x snap-mandatory">
-            <div className="flex gap-2 min-w-max px-1">
-
-              <Button
-                onClick={() => setSelectedCategory(null)}
-                className={`snap-start px-4 py-2 rounded-full text-sm font-medium !border-0 ${
-                  selectedCategory === null
-                    ? "!bg-gradient-to-r !from-purple-600 !to-indigo-600 !text-white shadow-lg scale-105"
-                    : "!bg-[#1a1a2e] !text-gray-300 hover:!bg-[#2a2a40]"
-                }`}
-              >
-                Todos
-              </Button>
-
-              {categories.map((cat) => (
-                <Button
-                  key={cat}
-                  onClick={() => setSelectedCategory(cat)}
-                  className={`snap-start px-4 py-2 rounded-full text-sm font-medium !border-0 ${
-                    selectedCategory === cat
-                      ? "!bg-gradient-to-r !from-purple-600 !to-indigo-600 !text-white shadow-lg scale-105"
-                      : "!bg-[#1a1a2e] !text-gray-300 hover:!bg-[#2a2a40]"
-                  }`}
-                >
-                  {cat}
-                </Button>
-              ))}
-
-            </div>
-          </div>
-
+        {/* BUSCADOR */}
+        <div
+          onClick={() => setIsSearchOpen(true)}
+          className="mb-6 cursor-text bg-neutral-900 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400"
+        >
+          Buscar ebooks...
         </div>
-      </section>
 
-      <section className="py-14 max-w-7xl mx-auto px-4 sm:px-6">
+        <PremiumSearch
+          isOpen={isSearchOpen}
+          onClose={() => setIsSearchOpen(false)}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          results={searchResults}
+          onSelectBook={(book) => {
+            const real = books.find(b => b.id === book.id);
+            if (real) openPreview(real);
+          }}
+        />
 
-        {computedBooks.length === 0 && (
-          <div className="text-center py-16 text-gray-400">
-            <BookOpen className="mx-auto mb-4 w-12 h-12 opacity-50" />
-            No hay libros disponibles
-          </div>
-        )}
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
-          {computedBooks.map((book) => (
-            <EbookCard
-  key={book.id}
-  id={book.id}
-  title={book.title}
-  cover={book.coverImage || "https://via.placeholder.com/300x400"}
-  price={book.price}
-  onClick={() => openPreview(book)}
-/>
+        {/* CATEGORÍAS */}
+        <div className="flex gap-2 mb-6 overflow-x-auto">
+          <Button onClick={() => setSelectedCategory(null)}>Todos</Button>
+          {categories.map(cat => (
+            <Button key={cat} onClick={() => setSelectedCategory(cat)}>
+              {cat}
+            </Button>
           ))}
         </div>
 
-      </section>
+        {/* TOP RESULTS */}
+        {debouncedQuery && topResults.length > 0 && (
+          <div className="mb-8">
+            <p className="text-purple-400 mb-3 text-sm">Mejores resultados</p>
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+              {topResults.map(book => (
+                <EbookCard
+                  key={book.id}
+                  id={book.id}
+                  title={book.title}
+                  cover={book.coverImage || "https://via.placeholder.com/300x400"}
+                  price={book.price}
+                  onClick={() => openPreview(book)}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
-      {showTop && (
-        <button
-          onClick={scrollToTop}
-          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3 rounded-full"
-        >
-          <ChevronUp className="w-5 h-5" />
-        </button>
-      )}
+        {/* RESTO */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          {(debouncedQuery ? otherResults : computedBooks).map(book => (
+            <EbookCard
+              key={book.id}
+              id={book.id}
+              title={book.title}
+              cover={book.coverImage || "https://via.placeholder.com/300x400"}
+              price={book.price}
+              onClick={() => openPreview(book)}
+            />
+          ))}
+        </div>
+
+      </div>
 
       <BookPreviewModal
         isOpen={isModalOpen}
         onClose={closePreview}
         book={selectedBook}
-        recommendedBooks={recommendedBooks}
+        recommendedBooks={[]}
       />
 
     </div>
