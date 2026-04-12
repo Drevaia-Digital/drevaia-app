@@ -4,7 +4,7 @@ import { BookPreviewModal } from '@/components/BookPreviewModal';
 import { supabase } from '@/lib/supabase';
 import { useState, useEffect, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ChevronUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { searchBooks } from "@/engines/searchEngine";
 import { useDebounce } from "@/hooks/useDebounce";
@@ -13,6 +13,7 @@ export default function LibraryPage() {
   const navigate = useNavigate();
 
   const [books, setBooks] = useState<any[]>([]);
+  const [showTop, setShowTop] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedQuery = useDebounce(searchQuery, 250);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -22,10 +23,22 @@ export default function LibraryPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  // 🔥 LOAD
   useEffect(() => {
     loadBooks();
   }, []);
 
+  // 🔥 SCROLL
+  useEffect(() => {
+    const handleScroll = () => {
+      setShowTop(window.scrollY > 300);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // 🔥 CTRL + K
   useEffect(() => {
     const handleKey = (e: KeyboardEvent) => {
       if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "k") {
@@ -80,6 +93,13 @@ export default function LibraryPage() {
   const closePreview = () => {
     setIsModalOpen(false);
     setTimeout(() => setSelectedBook(null), 200);
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
   };
 
   const computedBooks = useMemo(() => {
@@ -203,6 +223,16 @@ export default function LibraryPage() {
         </div>
 
       </div>
+
+      {/* 🔥 BOTÓN FLOTANTE */}
+      {showTop && (
+        <button
+          onClick={scrollToTop}
+          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3 rounded-full shadow-lg hover:scale-110 transition-all"
+        >
+          <ChevronUp className="w-5 h-5" />
+        </button>
+      )}
 
       <BookPreviewModal
         isOpen={isModalOpen}
