@@ -57,9 +57,15 @@ export default function LibraryPage() {
 
       if (data) {
         const mapped = data.map((book: any) => ({
-          ...book,
-          coverImage: book.image || "https://via.placeholder.com/300x400",
-        }));
+  ...book,
+  coverImage: book.image || "https://via.placeholder.com/300x400",
+  link:
+    book.buy_url_es ||
+    book.buy_url_en ||
+    book.buy_url_fr ||
+    book.buy_url_pt ||
+    "",
+}));
 
         setBooks(mapped);
       }
