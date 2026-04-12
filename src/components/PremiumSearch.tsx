@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 
 interface Book {
-  id: number;
+  id: number | string;
   title: string;
   cover: string;
   author?: string;

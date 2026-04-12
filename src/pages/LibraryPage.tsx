@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { BookOpen, ChevronUp, ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { SkeletonCard } from "@/components/SkeletonCard";
+import { searchBooks } from "@/engines/searchEngine";
 
 export default function LibraryPage() {
   const navigate = useNavigate();
@@ -90,48 +91,46 @@ export default function LibraryPage() {
   };
 
   const openPreview = (book: any) => {
-  if (!book) return;
+    if (!book) return;
 
-  requestAnimationFrame(() => {
-    setSelectedBook(book);
-    setIsModalOpen(true);
-  });
-};
+    requestAnimationFrame(() => {
+      setSelectedBook(book);
+      setIsModalOpen(true);
+    });
+  };
 
-const getRecommendedBooks = (currentBook: any) => {
-  if (!currentBook) return [];
+  const getRecommendedBooks = (currentBook: any) => {
+    if (!currentBook) return [];
 
-  const currentTitle = (currentBook.title || "").toLowerCase().split(" ");
+    const currentTitle = (currentBook.title || "").toLowerCase().split(" ");
 
-  return books
-    .map((b) => {
-      if (b.id === currentBook.id) return null;
+    return books
+      .map((b) => {
+        if (b.id === currentBook.id) return null;
 
-      let score = 0;
+        let score = 0;
 
-      // 🎯 MISMA CATEGORÍA
-      if (
-        (b.category || "").toLowerCase() ===
-        (currentBook.category || "").toLowerCase()
-      ) {
-        score += 3;
-      }
+        if (
+          (b.category || "").toLowerCase() ===
+          (currentBook.category || "").toLowerCase()
+        ) {
+          score += 3;
+        }
 
-      // 🧠 SIMILITUD DE PALABRAS
-      const titleWords = (b.title || "").toLowerCase().split(" ");
+        const titleWords = (b.title || "").toLowerCase().split(" ");
 
-      const matches = titleWords.filter((word: string) =>
-        currentTitle.includes(word)
-      ).length;
+        const matches = titleWords.filter((word: string) =>
+          currentTitle.includes(word)
+        ).length;
 
-      score += matches;
+        score += matches;
 
-      return { ...b, score };
-    })
-    .filter(Boolean)
-    .sort((a: any, b: any) => (b.score || 0) - (a.score || 0))
-    .slice(0, 6);
-};
+        return { ...b, score };
+      })
+      .filter(Boolean)
+      .sort((a: any, b: any) => (b.score || 0) - (a.score || 0))
+      .slice(0, 6);
+  };
 
   const closePreview = () => {
     setIsModalOpen(false);
@@ -146,55 +145,17 @@ const getRecommendedBooks = (currentBook: any) => {
     navigate('/');
   };
 
-  // 🔥 FILTRO COMPUTADO (SIN useEffect)
+  // 🔥 NUEVO MOTOR DE BÚSQUEDA (PRO)
   const computedBooks = useMemo(() => {
-  let result = [...(books || [])];
-
-  // 🔍 BUSQUEDA
-  if (searchQuery) {
-    const q = searchQuery.toLowerCase();
-
-    result = result.filter(book =>
-      (book.title || "").toLowerCase().includes(q) ||
-      (book.author || "").toLowerCase().includes(q)
-    );
-  }
-
-  // 📂 CATEGORÍA
-  if (selectedCategory) {
-    const selected = selectedCategory.toLowerCase().trim();
-
-    result = result.filter(book =>
-      (book.category || "").toLowerCase().trim() === selected
-    );
-  }
-
-  // 🧠 RANKING
-  if (searchQuery) {
-    const q = searchQuery.toLowerCase();
-
-    result = [...result].sort((a, b) => {
-      const aTitle = (a.title || "").toLowerCase();
-      const bTitle = (b.title || "").toLowerCase();
-
-      const aScore =
-        aTitle.startsWith(q) ? 3 :
-        aTitle.includes(q) ? 2 : 0;
-
-      const bScore =
-        bTitle.startsWith(q) ? 3 :
-        bTitle.includes(q) ? 2 : 0;
-
-      return bScore - aScore;
+    return searchBooks(books || [], {
+      query: searchQuery,
+      category: selectedCategory || "all",
     });
-  }
+  }, [books, searchQuery, selectedCategory]);
 
-  return result;
-}, [books, searchQuery, selectedCategory]);
-
-const recommendedBooks = useMemo(() => {
-  return getRecommendedBooks(selectedBook);
-}, [selectedBook, books]);
+  const recommendedBooks = useMemo(() => {
+    return getRecommendedBooks(selectedBook);
+  }, [selectedBook, books]);
 
   const categories = Array.from(
     new Map(
@@ -206,11 +167,11 @@ const recommendedBooks = useMemo(() => {
   );
 
   const searchResults = computedBooks.map(book => ({
-    id: book.id,
-    title: book.title,
-    cover: book.coverImage,
-    author: book.author || ""
-  }));
+  id: book.id,
+  title: book.title,
+  cover: book.coverImage || "https://via.placeholder.com/300x400",
+  author: book.author || ""
+}));
 
   if (loading) {
     return (
@@ -246,79 +207,64 @@ const recommendedBooks = useMemo(() => {
         </p>
       </section>
 
-     <section className="py-10 border-b border-white/10">
-  <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
+      <section className="py-10 border-b border-white/10">
+        <div className="max-w-7xl mx-auto px-6 flex flex-col gap-4 items-center">
 
-    {/* INPUT */}
-    <div
-      onClick={() => setIsSearchOpen(true)}
-      className="w-full md:w-80 cursor-text bg-neutral-900/60 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400"
-    >
-      Buscar en Drevaia Digital...
-    </div>
+          <div
+            onClick={() => setIsSearchOpen(true)}
+            className="w-full md:w-80 cursor-text bg-neutral-900/60 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400"
+          >
+            Buscar en Drevaia Digital...
+          </div>
 
-    {/* SEARCH */}
-    <PremiumSearch
-      isOpen={isSearchOpen}
-      onClose={() => setIsSearchOpen(false)}
-      searchQuery={searchQuery}
-      setSearchQuery={setSearchQuery}
-      results={searchResults}
-      onSelectBook={(book) => {
-        const realBook = books.find(b => b.id === book.id);
-        if (!realBook) return;
+          <PremiumSearch
+            isOpen={isSearchOpen}
+            onClose={() => setIsSearchOpen(false)}
+            searchQuery={searchQuery}
+            setSearchQuery={setSearchQuery}
+            results={searchResults}
+            onSelectBook={(book) => {
+              const realBook = books.find(b => b.id === book.id);
+              if (!realBook) return;
 
-        setIsSearchOpen(false);
-        requestAnimationFrame(() => openPreview(realBook));
-      }}
-    />
+              setIsSearchOpen(false);
+              requestAnimationFrame(() => openPreview(realBook));
+            }}
+          />
 
-    {/* 🔥 CATEGORÍAS SCROLL */}
-    <div className="w-full overflow-x-auto scrollbar-none snap-x snap-mandatory">
-      <div className="flex gap-2 min-w-max px-1">
+          <div className="w-full overflow-x-auto scrollbar-none snap-x snap-mandatory">
+            <div className="flex gap-2 min-w-max px-1">
 
-        <Button
-  onClick={() => setSelectedCategory(null)}
-  className={`
-    snap-start
-    transition-all
-    px-4 py-2 rounded-full text-sm font-medium
-    !border-0
-    ${
-      selectedCategory === null
-        ? "!bg-gradient-to-r !from-purple-600 !to-indigo-600 !text-white shadow-lg scale-105"
-        : "!bg-[#1a1a2e] !text-gray-300 hover:!bg-[#2a2a40]"
-    }
-  `}
->
-  Todos
-</Button>
+              <Button
+                onClick={() => setSelectedCategory(null)}
+                className={`snap-start px-4 py-2 rounded-full text-sm font-medium !border-0 ${
+                  selectedCategory === null
+                    ? "!bg-gradient-to-r !from-purple-600 !to-indigo-600 !text-white shadow-lg scale-105"
+                    : "!bg-[#1a1a2e] !text-gray-300 hover:!bg-[#2a2a40]"
+                }`}
+              >
+                Todos
+              </Button>
 
-{categories.map((cat) => (
-  <Button
-    key={cat}
-    onClick={() => setSelectedCategory(cat)}
-    className={`
-      snap-start
-      transition-all
-      px-4 py-2 rounded-full text-sm font-medium
-      !border-0
-      ${
-        selectedCategory === cat
-          ? "!bg-gradient-to-r !from-purple-600 !to-indigo-600 !text-white shadow-lg scale-105"
-          : "!bg-[#1a1a2e] !text-gray-300 hover:!bg-[#2a2a40]"
-      }
-    `}
-  >
-    {cat}
-  </Button>
-))}
+              {categories.map((cat) => (
+                <Button
+                  key={cat}
+                  onClick={() => setSelectedCategory(cat)}
+                  className={`snap-start px-4 py-2 rounded-full text-sm font-medium !border-0 ${
+                    selectedCategory === cat
+                      ? "!bg-gradient-to-r !from-purple-600 !to-indigo-600 !text-white shadow-lg scale-105"
+                      : "!bg-[#1a1a2e] !text-gray-300 hover:!bg-[#2a2a40]"
+                  }`}
+                >
+                  {cat}
+                </Button>
+              ))}
 
-      </div>
-    </div>
+            </div>
+          </div>
 
-  </div>
-</section>
+        </div>
+      </section>
 
       <section className="py-14 max-w-7xl mx-auto px-4 sm:px-6">
 
@@ -332,20 +278,19 @@ const recommendedBooks = useMemo(() => {
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-5">
           {computedBooks.map((book) => (
             <EbookCard
-              key={book.id}
-              id={book.id}
-              title={book.title}
-              cover={book.coverImage}
-              price={book.price}
-              onClick={() => openPreview(book)}
-            />
+  key={book.id}
+  id={book.id}
+  title={book.title}
+  cover={book.coverImage || "https://via.placeholder.com/300x400"}
+  price={book.price}
+  onClick={() => openPreview(book)}
+/>
           ))}
         </div>
 
       </section>
 
       {showTop && (
-
         <button
           onClick={scrollToTop}
           className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3 rounded-full"
