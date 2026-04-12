@@ -30,7 +30,7 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
       <>
         {/* OVERLAY */}
         <motion.div
-          className="fixed inset-0 z-40 bg-black/70 backdrop-blur-xl"
+  className="fixed inset-0 z-40 bg-black/70 backdrop-blur-xl pointer-events-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -56,7 +56,7 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
                   e.stopPropagation();
                   onClose();
                 }}
-                className="absolute top-4 right-4 w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition"
+                className="absolute top-4 right-4 z-50 w-9 h-9 bg-white/20 backdrop-blur-sm rounded-full flex items-center justify-center hover:bg-white/30 transition"
               >
                 <X className="w-4 h-4 text-white" />
               </button>
@@ -130,9 +130,14 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
               <Button
                 variant="outline"
                 onClick={(e) => {
-                  e.stopPropagation();
-                  onClose();
-                }}
+  e.preventDefault();
+  e.stopPropagation();
+
+  // Forzar cierre limpio
+  requestAnimationFrame(() => {
+    onClose();
+  });
+}}
                 className="w-full mt-3 rounded-xl py-5"
               >
                 Seguir explorando
