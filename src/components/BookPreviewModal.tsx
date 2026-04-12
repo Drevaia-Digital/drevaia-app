@@ -40,7 +40,7 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
         {/* MODAL */}
         <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <motion.div
-            className="w-full max-w-2xl max-h-[95vh] md:max-h-[85vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden"
+            className="w-full max-w-2xl max-h-[95vh] md:max-h-[90vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden"
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
@@ -68,7 +68,7 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
             </div>
 
             {/* CONTENIDO */}
-            <div className="flex-1 overflow-y-auto md:overflow-visible p-6 md:p-8">
+            <div className="flex-1 overflow-y-auto p-6 md:p-8 md:pb-24">
 
               <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                 {book.title}
@@ -105,7 +105,7 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
             </div>
 
             {/* CTA FIJO */}
-            <div className="p-4 border-t bg-white">
+            <div className="p-4 md:pb-6 border-t bg-white">
 
               <a
                 href={book.link}
