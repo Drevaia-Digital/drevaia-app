@@ -237,7 +237,6 @@ export default function LibraryPage() {
         isOpen={isModalOpen}
         onClose={closePreview}
         book={selectedBook}
-        recommendedBooks={[]}
       />
 
     </div>
