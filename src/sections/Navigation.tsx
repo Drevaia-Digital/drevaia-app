@@ -176,7 +176,11 @@ export function Navigation(_: any) {
 
   {/* ES */}
   <button
-    onClick={() => setLanguage("es")}
+    onClick={() => {
+      setLanguage("es");
+      setOpen(false);
+      goToHomeSmart();
+    }}
     className={`text-xs px-3 py-1 rounded-lg transition ${
       language === "es"
         ? "bg-purple-600 text-white"
@@ -188,7 +192,11 @@ export function Navigation(_: any) {
 
   {/* EN */}
   <button
-    onClick={() => setLanguage("en")}
+    onClick={() => {
+      setLanguage("en");
+      setOpen(false);
+      goToHomeSmart();
+    }}
     className={`text-xs px-3 py-1 rounded-lg transition ${
       language === "en"
         ? "bg-purple-600 text-white"
@@ -200,7 +208,11 @@ export function Navigation(_: any) {
 
   {/* FR */}
   <button
-    onClick={() => setLanguage("fr")}
+    onClick={() => {
+      setLanguage("fr");
+      setOpen(false);
+      goToHomeSmart();
+    }}
     className={`text-xs px-3 py-1 rounded-lg transition ${
       language === "fr"
         ? "bg-purple-600 text-white"
@@ -212,7 +224,11 @@ export function Navigation(_: any) {
 
   {/* PT */}
   <button
-    onClick={() => setLanguage("pt")}
+    onClick={() => {
+      setLanguage("pt");
+      setOpen(false);
+      goToHomeSmart();
+    }}
     className={`text-xs px-3 py-1 rounded-lg transition ${
       language === "pt"
         ? "bg-purple-600 text-white"
@@ -222,7 +238,7 @@ export function Navigation(_: any) {
     PT
   </button>
 
-</div>    
+</div>
 
           <Link
             to="/library"
