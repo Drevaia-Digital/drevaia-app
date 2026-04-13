@@ -172,6 +172,58 @@ export function Navigation(_: any) {
             {t.nav.home}
           </button>
 
+          <div className="flex items-center gap-2 mt-4">
+
+  {/* ES */}
+  <button
+    onClick={() => setLanguage("es")}
+    className={`text-xs px-3 py-1 rounded-lg transition ${
+      language === "es"
+        ? "bg-purple-600 text-white"
+        : "bg-white/10 text-white hover:bg-white/20"
+    }`}
+  >
+    ES
+  </button>
+
+  {/* EN */}
+  <button
+    onClick={() => setLanguage("en")}
+    className={`text-xs px-3 py-1 rounded-lg transition ${
+      language === "en"
+        ? "bg-purple-600 text-white"
+        : "bg-white/10 text-white hover:bg-white/20"
+    }`}
+  >
+    EN
+  </button>
+
+  {/* FR */}
+  <button
+    onClick={() => setLanguage("fr")}
+    className={`text-xs px-3 py-1 rounded-lg transition ${
+      language === "fr"
+        ? "bg-purple-600 text-white"
+        : "bg-white/10 text-white hover:bg-white/20"
+    }`}
+  >
+    FR
+  </button>
+
+  {/* PT */}
+  <button
+    onClick={() => setLanguage("pt")}
+    className={`text-xs px-3 py-1 rounded-lg transition ${
+      language === "pt"
+        ? "bg-purple-600 text-white"
+        : "bg-white/10 text-white hover:bg-white/20"
+    }`}
+  >
+    PT
+  </button>
+
+</div>    
+
           <Link
             to="/library"
             className="block text-white text-lg"
