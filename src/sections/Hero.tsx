@@ -183,9 +183,15 @@ export function Hero({ language }: Props) {
           DREVAIA DIGITAL
         </h1>
 
-        <p className="text-2xl md:text-4xl text-amber-300 font-semibold mb-6">
-          {dynamicTitle}
-        </p>
+        <div className="reveal-container reveal-active mb-6">
+
+  <p className="reveal-text text-2xl md:text-4xl text-amber-300 font-semibold">
+    {dynamicTitle}
+  </p>
+
+  <span className="reveal-line"></span>
+
+</div>
 
         <p ref={descRef} className="text-white/80 mb-10 text-lg">
           {t.hero.description}

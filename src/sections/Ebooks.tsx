@@ -116,7 +116,7 @@ export function Ebooks({ language }: EbooksProps) {
     <section id="ebooks" className="relative py-24 bg-gray-900 text-white">
       <div className="max-w-7xl mx-auto px-6">
 
-        {/* HEADER EMOCIONAL */}
+        {/* HEADER */}
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">{t.title}</h2>
           <p className="text-gray-400 max-w-2xl mx-auto">
@@ -128,7 +128,7 @@ export function Ebooks({ language }: EbooksProps) {
         <div className="space-y-20">
           {filtered.map((col) => (
             <div key={col.id}>
-              
+
               <div className="flex items-center gap-4 mb-6">
                 <span className="text-3xl">{col.flag}</span>
                 <div>
@@ -144,10 +144,7 @@ export function Ebooks({ language }: EbooksProps) {
                     href={book.link}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 
-                    shadow-lg transition-all duration-300 ease-out 
-                    hover:-translate-y-2 hover:scale-[1.02] 
-                    hover:shadow-2xl hover:shadow-orange-500/20"
+                    className="group btn-fill p-6 bg-white/5 backdrop-blur-md rounded-2xl border border-white/10 shadow-lg transition-all duration-300 ease-out hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl hover:shadow-orange-500/20"
                   >
                     <h4 className="font-bold text-lg mb-2 group-hover:text-amber-400 transition">
                       {book.title}
@@ -163,6 +160,7 @@ export function Ebooks({ language }: EbooksProps) {
                   </a>
                 ))}
               </div>
+
             </div>
           ))}
         </div>
