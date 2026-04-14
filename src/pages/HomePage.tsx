@@ -7,6 +7,7 @@ import { Stats } from '@/sections/Stats';
 import { Testimonials } from '@/sections/Testimonials';
 import { Footer } from '@/sections/Footer';
 import { useLanguage } from '@/context/LanguageContext';
+import { RealityCheck } from '@/sections/RealityCheck';
 
 export function HomePage() {
   const { language } = useLanguage();
@@ -19,6 +20,7 @@ export function HomePage() {
 
       {/* HERO */}
       <Hero language={language} />
+      <RealityCheck />
 
       {/* CAMINOS EMOCIONALES */}
       <EmotionalPaths />

@@ -4,18 +4,22 @@ import { ArrowRight, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import gsap from 'gsap';
 import { Link } from 'react-router-dom';
+import { userProfile } from '@/utils/userProfile';
 
 type Props = {
   language: 'es' | 'en' | 'fr' | 'pt';
 };
 
+type Emotion = 'ansiedad' | 'proposito' | 'patrones';
+
 export function Hero({ language }: Props) {
 
   const t = translations[language];
 
-  // 🌍 EMOCIÓN
-  const emotion = localStorage.getItem("emotion");
+  // 🌍 EMOCIÓN SEGURA
+  const emotion = userProfile.getEmotion() as Emotion | null;
 
+  // 🔥 CONTENIDO EMOCIONAL
   const emotionalContent = {
     ansiedad: {
       es: "No estás roto. Estás agotado de sostener demasiado.",
@@ -37,18 +41,14 @@ export function Hero({ language }: Props) {
     },
   };
 
-  const dynamicTitle =
-    emotion && emotionalContent[emotion as keyof typeof emotionalContent]
-      ? emotionalContent[emotion as keyof typeof emotionalContent][language]
-      : t.hero.title;
-
-  // 🔥 CTA + LINKS
+  // 🔥 CTA
   const emotionalCTA = {
     ansiedad: { es: "Encontrar calma", en: "Find calm", fr: "Trouver la paix", pt: "Encontrar calma" },
     proposito: { es: "Descubrir mi camino", en: "Find my path", fr: "Trouver mon chemin", pt: "Descobrir meu caminho" },
     patrones: { es: "Romper este ciclo", en: "Break the cycle", fr: "Briser ce cycle", pt: "Quebrar esse ciclo" },
   };
 
+  // 🔥 LINKS
   const emotionalLinks = {
     ansiedad: {
       es: "https://payhip.com/b/Wz0IG",
@@ -70,14 +70,20 @@ export function Hero({ language }: Props) {
     },
   };
 
+  // 🔥 DINÁMICOS
+  const dynamicTitle =
+    emotion && emotionalContent[emotion]
+      ? emotionalContent[emotion][language]
+      : t.hero.title;
+
   const dynamicCTA =
-    emotion && emotionalCTA[emotion as keyof typeof emotionalCTA]
-      ? emotionalCTA[emotion as keyof typeof emotionalCTA][language]
+    emotion && emotionalCTA[emotion]
+      ? emotionalCTA[emotion][language]
       : t.hero.cta;
 
   const dynamicLink =
-    emotion && emotionalLinks[emotion as keyof typeof emotionalLinks]
-      ? emotionalLinks[emotion as keyof typeof emotionalLinks][language]
+    emotion && emotionalLinks[emotion]
+      ? emotionalLinks[emotion][language]
       : null;
 
   // 🎬 ANIMACIONES
@@ -98,7 +104,7 @@ export function Hero({ language }: Props) {
     return () => ctx.revert();
   }, []);
 
-  // ✨ PARTÍCULAS RESTAURADAS (OPTIMIZADAS)
+  // ✨ PARTÍCULAS
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -160,7 +166,6 @@ export function Hero({ language }: Props) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      {/* 🌳 FONDO RESTAURADO */}
       <div className="absolute inset-0 bg-gradient-to-b from-purple-950 via-gray-900 to-black" />
 
       <div
@@ -170,10 +175,8 @@ export function Hero({ language }: Props) {
 
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.15),transparent_60%)]" />
 
-      {/* ✨ PARTÍCULAS */}
       <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
 
-      {/* CONTENIDO */}
       <div ref={contentRef} className="relative z-10 text-center max-w-4xl px-4">
 
         <h1 ref={titleRef} className="text-5xl md:text-7xl font-bold text-white mb-4">

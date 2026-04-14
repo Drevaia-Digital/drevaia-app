@@ -1,4 +1,14 @@
+type Emotion = 'ansiedad' | 'proposito' | 'patrones';
+
+type EmotionalItem = {
+  label: string;
+  desc: string;
+  link: string;
+  emotion: Emotion;
+};
+
 import { useLanguage } from '@/context/LanguageContext';
+import { userProfile } from '@/utils/userProfile';
 
 export function EmotionalPaths() {
   const { language } = useLanguage();
@@ -28,7 +38,7 @@ export function EmotionalPaths() {
           link: 'https://payhip.com/b/Nx0cF',
           emotion: 'patrones',
         },
-      ],
+      ] as EmotionalItem[],
     },
 
     en: {
@@ -55,7 +65,7 @@ export function EmotionalPaths() {
           link: 'https://payhip.com/b/0rjX8',
           emotion: 'patrones',
         },
-      ],
+      ] as EmotionalItem[],
     },
 
     fr: {
@@ -82,7 +92,7 @@ export function EmotionalPaths() {
           link: 'https://payhip.com/b/hBRzA',
           emotion: 'patrones',
         },
-      ],
+      ] as EmotionalItem[],
     },
 
     pt: {
@@ -109,7 +119,7 @@ export function EmotionalPaths() {
           link: 'https://payhip.com/b/kE8hV',
           emotion: 'patrones',
         },
-      ],
+      ] as EmotionalItem[],
     },
   };
 
@@ -118,7 +128,6 @@ export function EmotionalPaths() {
   return (
     <section className="relative py-24 px-4 text-center text-white border-t border-white/5 overflow-hidden">
 
-      {/* Fondo */}
       <div className="absolute inset-0">
         <img
           src="/images/corazones-bg.jpg"
@@ -147,9 +156,8 @@ export function EmotionalPaths() {
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
-                if (item.emotion) {
-                  localStorage.setItem("emotion", item.emotion);
-                }
+                userProfile.setEmotion(item.emotion);
+                userProfile.setLastAction("click_emotional_path");
               }}
               className="p-6 rounded-2xl bg-black/60 backdrop-blur-xl hover:scale-105 transition-all duration-300 shadow-2xl text-left block group"
             >
