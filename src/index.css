@@ -139,3 +139,31 @@ html {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+
+/* 🔥 BOTÓN EFECTO EXPANSIÓN DESDE CENTRO (PREMIUM) */
+.btn-fill {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.btn-fill::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, #7c3aed, #f59e0b);
+  transform: scale(0);
+  transform-origin: center;
+  transition: transform 0.4s ease;
+  border-radius: inherit;
+  z-index: 0;
+}
+
+.btn-fill:hover::before {
+  transform: scale(1);
+}
+
+.btn-fill > * {
+  position: relative;
+  z-index: 1;
+}
