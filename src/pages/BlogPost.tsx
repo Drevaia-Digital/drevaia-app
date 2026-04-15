@@ -14,11 +14,18 @@ export default function BlogPost() {
   );
 
   if (!post) {
-    return <div className="text-white p-10">Artículo no encontrado</div>;
+    return (
+      <div className="text-white p-10 text-center">
+        Artículo no encontrado
+      </div>
+    );
   }
 
   const title = post.title[language];
   const content = post.content[language];
+
+  // 🔥 Descripción SEO segura (sin errores)
+  const description = `${title} | Drevaia`;
 
   // 🌐 URLs por idioma
   const urls = {
@@ -33,33 +40,37 @@ export default function BlogPost() {
   return (
     <>
       <Helmet>
-        {/* 🧠 SEO básico */}
+        {/* 🧠 SEO */}
         <title>{title} | Drevaia</title>
-        <meta name="description" content={content.slice(0, 150)} />
+        <meta name="description" content={description} />
 
-        {/* 🌍 CANONICAL */}
+        {/* 🌍 Canonical */}
         <link rel="canonical" href={canonical} />
 
-        {/* 🌐 HREFLANG (CLAVE SEO INTERNACIONAL) */}
+        {/* 🌐 Hreflang */}
         <link rel="alternate" hrefLang="es" href={urls.es} />
         <link rel="alternate" hrefLang="en" href={urls.en} />
         <link rel="alternate" hrefLang="fr" href={urls.fr} />
         <link rel="alternate" hrefLang="pt" href={urls.pt} />
         <link rel="alternate" hrefLang="x-default" href={urls.es} />
 
-        {/* 📱 OPEN GRAPH */}
+        {/* 📱 Open Graph */}
         <meta property="og:title" content={title} />
-        <meta property="og:description" content={content.slice(0, 150)} />
+        <meta property="og:description" content={description} />
         <meta property="og:url" content={canonical} />
         <meta property="og:type" content="article" />
       </Helmet>
 
       <div className="min-h-screen bg-[#0f0f1a] text-white px-6 py-10 max-w-3xl mx-auto">
-        <h1 className="text-4xl font-bold mb-6">{title}</h1>
+        
+        <h1 className="text-4xl font-bold mb-6">
+          {title}
+        </h1>
 
-        <p className="text-gray-300 whitespace-pre-line">
+        <div className="text-gray-300 leading-relaxed">
           {content}
-        </p>
+        </div>
+
       </div>
     </>
   );
