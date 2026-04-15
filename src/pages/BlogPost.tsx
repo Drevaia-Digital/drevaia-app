@@ -1,71 +1,29 @@
 import { useParams } from "react-router-dom";
-import { getArticleBySlug, getRelatedArticles } from "@/lib/articles";
-import { getLangFromURL } from "@/lib/getLang";
+import { posts } from "@/data/posts";
 
 export default function BlogPost() {
-  const { slug } = useParams();
-  const lang = getLangFromURL();
+  const { lang, slug } = useParams();
 
-  const post = getArticleBySlug(slug || "", lang);
+  const language = lang || "es";
 
-// 🔥 SEO dinámico
-if (post) {
-  document.title = post.seo?.title || post.title;
-
-  const metaDescription = document.querySelector("meta[name='description']");
-  
-  if (metaDescription) {
-    metaDescription.setAttribute(
-      "content",
-      post.seo?.description || post.excerpt
-    );
-  }
-}
+  const post = posts.find(p =>
+    Object.values(p.slug).includes(slug || "")
+  );
 
   if (!post) {
-    return (
-      <div className="text-center py-20 text-white">
-        Artículo no encontrado
-      </div>
-    );
+    return <div className="text-white p-10">Artículo no encontrado</div>;
   }
 
-  const related = getRelatedArticles(post, lang);
+  const title = post.title[language as keyof typeof post.title];
+  const content = post.content[language as keyof typeof post.content];
 
   return (
-    <div className="max-w-3xl mx-auto px-6 py-16 text-white">
+    <div className="min-h-screen bg-[#0f0f1a] text-white px-6 py-10 max-w-3xl mx-auto">
+      <h1 className="text-4xl font-bold mb-6">{title}</h1>
 
-      <h1 className="text-4xl font-bold mb-6">
-        {post.title}
-      </h1>
-
-      <p className="text-gray-400 mb-10">
-        {post.excerpt}
+      <p className="text-gray-300 whitespace-pre-line">
+        {content}
       </p>
-
-      <div
-        className="space-y-6 text-lg leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
-
-      <div className="mt-16">
-        <h2 className="text-2xl font-semibold mb-6">
-          También puede resonar contigo
-        </h2>
-
-        <div className="grid gap-4">
-          {related.map((rel) => (
-            <a
-              key={rel.slug}
-              href={`/${lang}/blog/${rel.slug}`}
-              className="p-4 border border-white/10 rounded-xl hover:bg-white/5 transition"
-            >
-              {rel.title}
-            </a>
-          ))}
-        </div>
-      </div>
-
     </div>
   );
 }

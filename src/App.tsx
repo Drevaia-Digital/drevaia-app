@@ -38,7 +38,7 @@ export default function App() {
             />
 
             {/* 🔥 BLOG DINÁMICO */}
-            <Route path="/blog/:slug" element={<BlogPost />} />
+            <Route path="/:lang/blog/:slug" element={<BlogPost />} />
 
             {/* 📝 BLOG ROOT */}
             <Route
