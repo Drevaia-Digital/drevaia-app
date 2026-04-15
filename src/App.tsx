@@ -36,6 +36,9 @@ export default function App() {
             {/* 🔥 BLOG DINÁMICO */}
             <Route path="/blog/:slug" element={<BlogPost />} />
 
+            {/* 🔥 BLOG DIRECTO (CRÍTICO PARA REDIRECTS) */}
+            <Route path="/:slug" element={<BlogPost />} />
+
             {/* 📝 BLOG ROOT */}
             <Route
               path="/blog"
@@ -71,7 +74,7 @@ export default function App() {
             <Route path="/auth/register" element={<AuthPage mode="register" />} />
             <Route path="/auth/forgot-password" element={<AuthPage mode="forgot-password" />} />
 
-            {/* 🚫 404 */}
+            {/* 🚫 404 (SIEMPRE AL FINAL) */}
             <Route path="*" element={<NotFoundPage />} />
 
           </Routes>
