@@ -37,7 +37,7 @@ export default function App() {
             <Route path="/blog/:slug" element={<BlogPost />} />
 
             {/* 🔥 BLOG DIRECTO (CRÍTICO PARA REDIRECTS) */}
-            <Route path="/:slug" element={<BlogPost />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
 
             {/* 📝 BLOG ROOT */}
             <Route
