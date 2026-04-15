@@ -1,19 +1,7 @@
 # =========================================
-# 🔥 REDIRECCIÓN GLOBAL .HTML (CRÍTICO)
-/*.html   /:splat   301
+# 🔥 REDIRECCIÓN GLOBAL .HTML
+/*.html   /blog/:splat   301!
 
 # =========================================
-# 📚 REDIRECCIONES SEO ESPECÍFICAS
-/por-que-me-siento-vacio.html   /blog/por-que-me-siento-vacio   301
-/por-que-me-siento-perdido.html   /blog/por-que-me-siento-perdido   301
-/por-que-me-siento-solo.html   /blog/por-que-me-siento-solo   301
-/no-tengo-proposito-en-la-vida.html   /blog/no-tengo-proposito-en-la-vida   301
-
-# =========================================
-# ⚡ ASSETS (OPCIONAL)
-/assets/*   /assets/:splat   200
-/images/*   /images/:splat   200
-
-# =========================================
-# ⚛️ SPA (SIEMPRE AL FINAL)
+# ⚡ SPA
 /*   /index.html   200
