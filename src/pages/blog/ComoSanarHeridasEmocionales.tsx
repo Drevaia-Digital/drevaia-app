@@ -85,20 +85,21 @@ export default function ComoSanarHeridasEmocionales() {
         Un proceso, no un destino
       </h2>
 
-      <p className="mb-4 text-gray-300">
-        La sanación emocional no es lineal. Habrá días donde sientas avance y otros donde parezca que retrocedes. 
-        Pero cada paso cuenta.
-      </p>
-
       <p className="mb-6 text-gray-300">
-        Lo importante es seguir eligiéndote, escuchándote y dándote el espacio que antes no tuviste.
+        La sanación emocional no es lineal. Habrá días donde sientas avance y otros donde parezca que retrocedes. 
+        Pero cada paso cuenta. Lo importante es seguir eligiéndote, escuchándote y dándote el espacio que antes no tuviste.
       </p>
 
+      {/* 🔗 INTERLINKING SEO */}
       <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
-        <p>
-          Si este tema resuena contigo, también podrías explorar:
-        </p>
-        <ul className="mt-2 space-y-1">
+        <p className="mb-2">También podría resonar contigo:</p>
+
+        <ul className="space-y-1">
+          <li>
+            <a href="/vivir-en-automatico" className="hover:text-white transition">
+              Vivir en automático
+            </a>
+          </li>
           <li>¿Por qué me siento vacío?</li>
           <li>¿Por qué me siento perdido?</li>
           <li>¿Por qué me siento solo?</li>
