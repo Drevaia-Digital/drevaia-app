@@ -1,3 +1,5 @@
+import VivirEnAutomatico from '@/pages/VivirEnAutomatico';
+import ComoSanarHeridasEmocionales from '@/pages/blog/ComoSanarHeridasEmocionales';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
@@ -23,6 +25,8 @@ export default function App() {
             {/* 🏠 HOME */}
             <Route path="/" element={<HomePage />} />
 
+<Route path="/vivir-en-automatico" element={<VivirEnAutomatico />} />
+<Route path="/como-sanar-heridas-emocionales" element={<ComoSanarHeridasEmocionales />} />
             {/* 📚 LIBRARY */}
             <Route
               path="/library"
@@ -34,9 +38,6 @@ export default function App() {
             />
 
             {/* 🔥 BLOG DINÁMICO */}
-            <Route path="/blog/:slug" element={<BlogPost />} />
-
-            {/* 🔥 BLOG DIRECTO (CRÍTICO PARA REDIRECTS) */}
             <Route path="/blog/:slug" element={<BlogPost />} />
 
             {/* 📝 BLOG ROOT */}
