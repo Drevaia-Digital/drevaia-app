@@ -24,8 +24,8 @@ export default function BlogPost() {
   const title = post.title[language];
   const content = post.content[language];
 
-  // 🔥 Descripción SEO segura (sin errores)
-  const description = `${title} | Drevaia`;
+  // ✅ SEO REAL (usa description del post)
+  const description = post.description?.[language] || `${title} | Drevaia`;
 
   // 🌐 URLs por idioma
   const urls = {
@@ -40,21 +40,17 @@ export default function BlogPost() {
   return (
     <>
       <Helmet>
-        {/* 🧠 SEO */}
         <title>{title} | Drevaia</title>
         <meta name="description" content={description} />
 
-        {/* 🌍 Canonical */}
         <link rel="canonical" href={canonical} />
 
-        {/* 🌐 Hreflang */}
         <link rel="alternate" hrefLang="es" href={urls.es} />
         <link rel="alternate" hrefLang="en" href={urls.en} />
         <link rel="alternate" hrefLang="fr" href={urls.fr} />
         <link rel="alternate" hrefLang="pt" href={urls.pt} />
         <link rel="alternate" hrefLang="x-default" href={urls.es} />
 
-        {/* 📱 Open Graph */}
         <meta property="og:title" content={title} />
         <meta property="og:description" content={description} />
         <meta property="og:url" content={canonical} />
@@ -62,7 +58,6 @@ export default function BlogPost() {
       </Helmet>
 
       <div className="min-h-screen bg-[#0f0f1a] text-white px-6 py-10 max-w-3xl mx-auto">
-        
         <h1 className="text-4xl font-bold mb-6">
           {title}
         </h1>
@@ -70,7 +65,6 @@ export default function BlogPost() {
         <div className="text-gray-300 leading-relaxed">
           {content}
         </div>
-
       </div>
     </>
   );

@@ -1,24 +1,12 @@
 import type { ReactNode } from "react";
 
+type Lang = "es" | "en" | "fr" | "pt";
+
 type Post = {
-  slug: {
-    es: string;
-    en: string;
-    fr: string;
-    pt: string;
-  };
-  title: {
-    es: string;
-    en: string;
-    fr: string;
-    pt: string;
-  };
-  content: {
-    es: ReactNode;
-    en: ReactNode;
-    fr: ReactNode;
-    pt: ReactNode;
-  };
+  slug: Record<Lang, string>;
+  title: Record<Lang, string>;
+  description: Record<Lang, string>;
+  content: Record<Lang, ReactNode>;
 };
 
 export const posts: Post[] = [
@@ -34,6 +22,12 @@ export const posts: Post[] = [
       en: "How to heal emotional wounds",
       fr: "Comment guérir les blessures émotionnelles",
       pt: "Como curar feridas emocionais",
+    },
+    description: {
+      es: "Descubre cómo sanar heridas emocionales, comprender tu pasado y recuperar tu bienestar paso a paso.",
+      en: "Learn how to heal emotional wounds and regain emotional balance step by step.",
+      fr: "Découvrez comment guérir les blessures émotionnelles et retrouver l’équilibre intérieur.",
+      pt: "Aprenda a curar feridas emocionais e recuperar seu equilíbrio interior.",
     },
     content: {
       es: (
@@ -118,6 +112,12 @@ export const posts: Post[] = [
       en: "Living on autopilot",
       fr: "Vivre en mode automatique",
       pt: "Viver no automático",
+    },
+    description: {
+      es: "Descubre qué significa vivir en automático, por qué ocurre y cómo reconectar contigo mismo.",
+      en: "Discover what it means to live on autopilot and how to reconnect with yourself.",
+      fr: "Découvrez ce que signifie vivre en mode automatique et comment vous reconnecter.",
+      pt: "Descubra o que significa viver no automático e como se reconectar consigo mesmo.",
     },
     content: {
       es: (
