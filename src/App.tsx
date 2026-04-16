@@ -1,11 +1,10 @@
-import VivirEnAutomatico from '@/pages/VivirEnAutomatico';
-import ComoSanarHeridasEmocionales from '@/pages/blog/ComoSanarHeridasEmocionales';
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { AuthProvider } from '@/hooks/useAuth';
 
 // 📄 Pages
+import OnboardingPage from "@/pages/OnboardingPage";
 import { HomePage } from '@/pages/HomePage';
 import { AuthPage } from '@/pages/AuthPage';
 import { LegalPage } from '@/pages/LegalPage';
@@ -25,8 +24,6 @@ export default function App() {
             {/* 🏠 HOME */}
             <Route path="/" element={<HomePage />} />
 
-<Route path="/vivir-en-automatico" element={<VivirEnAutomatico />} />
-<Route path="/como-sanar-heridas-emocionales" element={<ComoSanarHeridasEmocionales />} />
             {/* 📚 LIBRARY */}
             <Route
               path="/library"
@@ -37,8 +34,11 @@ export default function App() {
               }
             />
 
-            {/* 🔥 BLOG DINÁMICO */}
+            {/* 🔥 BLOG MULTI IDIOMA (CLAVE) */}
             <Route path="/:lang/blog/:slug" element={<BlogPost />} />
+
+            {/* 🧠 ONBOARDING MULTI IDIOMA */}
+            <Route path="/:lang/onboarding" element={<OnboardingPage />} />
 
             {/* 📝 BLOG ROOT */}
             <Route
@@ -75,7 +75,7 @@ export default function App() {
             <Route path="/auth/register" element={<AuthPage mode="register" />} />
             <Route path="/auth/forgot-password" element={<AuthPage mode="forgot-password" />} />
 
-            {/* 🚫 404 (SIEMPRE AL FINAL) */}
+            {/* 🚫 404 */}
             <Route path="*" element={<NotFoundPage />} />
 
           </Routes>
