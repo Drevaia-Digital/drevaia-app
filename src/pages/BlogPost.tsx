@@ -24,7 +24,7 @@ export default function BlogPost() {
   const title = post.title[language];
   const content = post.content[language];
 
-  // ✅ SEO REAL (usa description del post)
+  // 🔥 SEO REAL
   const description = post.description?.[language] || `${title} | Drevaia`;
 
   // 🌐 URLs por idioma
@@ -36,6 +36,11 @@ export default function BlogPost() {
   };
 
   const canonical = urls[language];
+
+  // 🔗 RELATED POSTS (interlinking)
+  const relatedPosts = posts
+    .filter(p => p !== post)
+    .slice(0, 3);
 
   return (
     <>
@@ -58,13 +63,36 @@ export default function BlogPost() {
       </Helmet>
 
       <div className="min-h-screen bg-[#0f0f1a] text-white px-6 py-10 max-w-3xl mx-auto">
+        
+        {/* 🧠 TÍTULO */}
         <h1 className="text-4xl font-bold mb-6">
           {title}
         </h1>
 
+        {/* 📄 CONTENIDO */}
         <div className="text-gray-300 leading-relaxed">
           {content}
         </div>
+
+        {/* 🔗 INTERLINKING SEO */}
+        <div className="mt-12 border-t border-white/10 pt-6">
+          <h3 className="text-lg font-semibold mb-4 text-white">
+            También puede resonar contigo
+          </h3>
+
+          <div className="space-y-2">
+            {relatedPosts.map((p, i) => (
+              <a
+                key={i}
+                href={`/${language}/blog/${p.slug[language]}`}
+                className="block text-gray-400 hover:text-white transition"
+              >
+                → {p.title[language]}
+              </a>
+            ))}
+          </div>
+        </div>
+
       </div>
     </>
   );
