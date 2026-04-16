@@ -33,11 +33,13 @@ export const posts: Post[] = [
       es: (
         <>
           <p className="mb-4">
-            Las heridas emocionales no siempre son visibles, pero pueden influir profundamente en la forma en que pensamos, sentimos y nos relacionamos.
+            Las heridas emocionales no siempre son visibles, pero pueden influir profundamente en la forma en que pensamos, sentimos y nos relacionamos con los demás.
+            A veces se manifiestan como ansiedad, vacío, miedo al abandono o dificultad para confiar.
           </p>
 
           <p className="mb-4">
             Muchas de estas heridas nacen en momentos donde tuvimos que aprender a sobrevivir emocionalmente sin el apoyo que necesitábamos.
+            No es debilidad: es adaptación. Es la forma en que aprendimos a seguir adelante cuando no había otra opción.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">
@@ -45,7 +47,13 @@ export const posts: Post[] = [
           </h2>
 
           <p className="mb-4">
-            Se originan en experiencias como el rechazo, el abandono o la falta de validación emocional.
+            Se originan en experiencias como el rechazo, el abandono, la crítica constante o la falta de validación emocional.
+            Con el tiempo, estas vivencias dejan huellas que se convierten en patrones automáticos que afectan nuestras decisiones y relaciones.
+          </p>
+
+          <p className="mb-4">
+            Por ejemplo, alguien que no fue escuchado puede crecer sintiendo que su voz no importa.
+            Alguien que fue herido puede desarrollar miedo a abrirse nuevamente.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">
@@ -53,7 +61,12 @@ export const posts: Post[] = [
           </h2>
 
           <p className="mb-4">
-            Sanar no es cambiar lo que sientes, sino entenderlo.
+            Sanar no comienza intentando cambiar lo que sientes, sino entendiendo por qué lo sientes.
+            Cuando observas tus emociones con curiosidad en lugar de juicio, algo empieza a transformarse.
+          </p>
+
+          <p className="mb-4">
+            Comprender tus heridas te permite identificar patrones, reconocer necesidades emocionales y dejar de reaccionar en automático.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">
@@ -61,7 +74,17 @@ export const posts: Post[] = [
           </h2>
 
           <p className="mb-4">
-            Escuchar tus emociones es el inicio de una transformación real.
+            Muchas veces la sanación comienza cuando dejamos de ignorar lo que sentimos.
+            Escuchar tu mundo interno, tus límites y tus necesidades es un acto de respeto hacia ti mismo.
+          </p>
+
+          <p className="mb-4">
+            No se trata de eliminar el pasado, sino de integrarlo sin que controle tu presente.
+            Es recuperar tu capacidad de elegir cómo vivir, en lugar de reaccionar desde el dolor.
+          </p>
+
+          <p className="mb-4">
+            Sanar es un proceso, no un destino. Y cada paso que das hacia ti, cuenta.
           </p>
         </>
       ),
@@ -69,19 +92,19 @@ export const posts: Post[] = [
       en: (
         <>
           <p className="mb-4">
-            Emotional wounds are not always visible, but they deeply affect how we think and relate.
+            Emotional wounds are not always visible, but they deeply affect how we think, feel, and relate to others.
           </p>
 
           <p className="mb-4">
-            Many come from moments where we had to emotionally survive without support.
+            Many of them come from moments where we had to emotionally survive without the support we needed.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">
-            Why do they form?
+            Why do emotional wounds form?
           </h2>
 
           <p className="mb-4">
-            They originate from rejection, abandonment, or lack of emotional validation.
+            They often originate from rejection, abandonment, or lack of emotional validation.
           </p>
         </>
       ),
