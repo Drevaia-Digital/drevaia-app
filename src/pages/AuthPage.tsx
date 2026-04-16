@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Mail, Lock, ArrowLeft, Eye, EyeOff } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,18 +11,13 @@ import { useAuth } from '@/hooks/useAuth';
 
 export function AuthPage({ t, language, changeLanguage, mode }: any) {
   const navigate = useNavigate();
-  const location = useLocation();
   const { signIn, isLoading } = useAuth();
 
-  // 🔥 STATES
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<{ email?: string; password?: string }>({});
-
-  const from = (location.state as any)?.from?.pathname || '/';
-
-  // ✅ VALIDACIÓN FINAL (al enviar)
+  
   const validate = () => {
     const newErrors: any = {};
 
@@ -48,7 +43,7 @@ export function AuthPage({ t, language, changeLanguage, mode }: any) {
 
     if (mode === 'login') {
       await signIn(email, password);
-      navigate(from, { replace: true });
+      navigate(`/${language}/onboarding`, { replace: true });
     }
   };
 
@@ -69,7 +64,6 @@ export function AuthPage({ t, language, changeLanguage, mode }: any) {
       <main className="pt-24 pb-16 relative z-10">
         <div className="max-w-md mx-auto px-4">
 
-          {/* BACK */}
           <Link
             to="/"
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-all duration-300 hover:-translate-x-1 mb-8"
@@ -78,7 +72,6 @@ export function AuthPage({ t, language, changeLanguage, mode }: any) {
             Volver
           </Link>
 
-          {/* CARD */}
           <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
 
             {/* HEADER */}
@@ -91,12 +84,11 @@ export function AuthPage({ t, language, changeLanguage, mode }: any) {
               </p>
             </div>
 
-            {/* FORM */}
             <form onSubmit={handleSubmit} className="space-y-5">
 
               {/* EMAIL */}
-              <div className="relative">
-                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+              <div className="relative group">
+                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-purple-400 transition" />
 
                 <Input
                   type="email"
@@ -116,24 +108,26 @@ export function AuthPage({ t, language, changeLanguage, mode }: any) {
                           : undefined,
                     }));
                   }}
-                  className={`pl-10 w-full bg-white/10 text-white placeholder:text-white/50 border rounded-lg px-4 py-3
+                  className={`pl-10 w-full bg-white/10 text-white placeholder:text-white/50 border rounded-lg px-4 py-2.5 transition-all duration-300
                   ${errors.email ? "border-red-500" : "border-white/10"}
-                  focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20`}
+                  focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20
+                  focus:shadow-[0_0_25px_rgba(168,85,247,0.25)]`}
                 />
 
-                <p className="text-xs text-gray-500 mt-1 ml-1">
-  Solo lo usaremos para tu acceso
-</p>
+                <p className="text-xs text-gray-400 mt-2 ml-1">
+                  Solo lo usaremos para tu acceso
+                </p>
+
                 {email && errors.email && (
-                  <p className="text-xs text-red-400 mt-1 ml-1">
+                  <p className="text-xs text-red-400 mt-1 ml-1 animate-pulse">
                     {errors.email}
                   </p>
                 )}
               </div>
 
               {/* PASSWORD */}
-              <div className="relative">
-                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40" />
+              <div className="relative group">
+                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-white/40 group-focus-within:text-purple-400 transition" />
 
                 <Input
                   type={showPassword ? "text" : "password"}
@@ -153,22 +147,23 @@ export function AuthPage({ t, language, changeLanguage, mode }: any) {
                           : undefined,
                     }));
                   }}
-                  className={`pl-10 pr-10 w-full bg-white/10 text-white placeholder:text-white/50 border rounded-lg px-4 py-3
+                  className={`pl-10 pr-10 w-full bg-white/10 text-white placeholder:text-white/50 border rounded-lg px-4 py-2.5 transition-all duration-300
                   ${errors.password ? "border-red-500" : "border-white/10"}
-                  focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20`}
+                  focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20
+                  focus:shadow-[0_0_25px_rgba(168,85,247,0.25)]`}
                 />
 
                 {/* 👁 OJO */}
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition active:scale-90"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
 
                 {password && errors.password && (
-                  <p className="text-xs text-red-400 mt-1 ml-1">
+                  <p className="text-xs text-red-400 mt-1 ml-1 animate-pulse">
                     {errors.password}
                   </p>
                 )}
@@ -178,7 +173,12 @@ export function AuthPage({ t, language, changeLanguage, mode }: any) {
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-purple-600 to-amber-500 hover:from-purple-700 hover:to-amber-600 transition-all duration-300 hover:scale-105 disabled:opacity-50"
+                className="w-full bg-gradient-to-r from-purple-600 to-amber-500
+                hover:from-purple-700 hover:to-amber-600
+                transition-all duration-300
+                hover:scale-105 active:scale-95
+                hover:shadow-[0_0_30px_rgba(168,85,247,0.4)]
+                disabled:opacity-50"
               >
                 {isLoading
                   ? 'Cargando...'
@@ -187,7 +187,6 @@ export function AuthPage({ t, language, changeLanguage, mode }: any) {
                   : 'Crear mi cuenta'}
               </Button>
 
-              {/* COPY */}
               <p className="text-sm text-gray-400 text-center">
                 Aquí puedes ser tú, sin filtros.
               </p>

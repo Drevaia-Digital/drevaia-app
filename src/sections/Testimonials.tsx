@@ -13,6 +13,8 @@ interface Testimonial {
 }
 
 // ===== TESTIMONIOS =====
+type Lang = "es" | "en" | "fr" | "pt";
+
 const testimonialsES: Testimonial[] = [
   { id: 1, name: 'María González', role: 'Emprendedora Digital', content: 'Los eBooks de Drevaia Digital transformaron completamente mi forma de ver el marketing.', rating: 5, avatar: 'M' },
   { id: 2, name: 'Lucas Silva', role: 'Coach de Vida', content: 'Cada libro tiene una profundidad que realmente toca el alma.', rating: 5, avatar: 'L' },
@@ -21,12 +23,34 @@ const testimonialsES: Testimonial[] = [
   { id: 5, name: 'Carlos Mendoza', role: 'Psicólogo', content: 'Una obra profunda que realmente transforma.', rating: 5, avatar: 'C' },
 ];
 
-const testimonialsEN = testimonialsES;
-const testimonialsFR = testimonialsES;
-const testimonialsPT = testimonialsES;
+const testimonialsEN: Testimonial[] = [
+  { id: 1, name: 'Maria Gonzalez', role: 'Digital Entrepreneur', content: 'Drevaia Digital eBooks completely changed how I see marketing.', rating: 5, avatar: 'M' },
+  { id: 2, name: 'Lucas Silva', role: 'Life Coach', content: 'Each book has a depth that truly touches the soul.', rating: 5, avatar: 'L' },
+  { id: 3, name: 'Sophie Martin', role: 'SEO Consultant', content: 'The combination of SEO + AI is brilliant. It helped me a lot.', rating: 5, avatar: 'S' },
+  { id: 4, name: 'Emma Thompson', role: 'Content Creator', content: 'It opened my eyes to the power of emotional connection.', rating: 5, avatar: 'E' },
+  { id: 5, name: 'Carlos Mendoza', role: 'Psychologist', content: 'A deep work that truly transforms.', rating: 5, avatar: 'C' },
+];
 
-const getTestimonialsByLanguage = (language: string): Testimonial[] => {
-  switch (language) {
+const testimonialsFR: Testimonial[] = [
+  { id: 1, name: 'Maria Gonzalez', role: 'Entrepreneuse Digitale', content: 'Les eBooks Drevaia Digital ont transformé ma vision du marketing.', rating: 5, avatar: 'M' },
+  { id: 2, name: 'Lucas Silva', role: 'Coach de Vie', content: 'Chaque livre a une profondeur qui touche vraiment l’âme.', rating: 5, avatar: 'L' },
+  { id: 3, name: 'Sophie Martin', role: 'Consultante SEO', content: 'La combinaison SEO + IA est brillante. Cela m’a beaucoup aidé.', rating: 5, avatar: 'S' },
+  { id: 4, name: 'Emma Thompson', role: 'Créatrice de Contenu', content: 'Cela m’a ouvert les yeux sur la connexion émotionnelle.', rating: 5, avatar: 'E' },
+  { id: 5, name: 'Carlos Mendoza', role: 'Psychologue', content: 'Une œuvre profonde qui transforme réellement.', rating: 5, avatar: 'C' },
+];
+
+const testimonialsPT: Testimonial[] = [
+  { id: 1, name: 'Maria Gonzalez', role: 'Empreendedora Digital', content: 'Os eBooks da Drevaia Digital mudaram completamente minha visão de marketing.', rating: 5, avatar: 'M' },
+  { id: 2, name: 'Lucas Silva', role: 'Coach de Vida', content: 'Cada livro tem uma profundidade que realmente toca a alma.', rating: 5, avatar: 'L' },
+  { id: 3, name: 'Sophie Martin', role: 'Consultora SEO', content: 'A combinação de SEO + IA é brilhante. Me ajudou muito.', rating: 5, avatar: 'S' },
+  { id: 4, name: 'Emma Thompson', role: 'Criadora de Conteúdo', content: 'Abriu meus olhos para o poder da conexão emocional.', rating: 5, avatar: 'E' },
+  { id: 5, name: 'Carlos Mendoza', role: 'Psicólogo', content: 'Uma obra profunda que realmente transforma.', rating: 5, avatar: 'C' },
+];
+
+const getTestimonialsByLanguage = (language: Lang): Testimonial[] => {
+  const lang = (language || "es") as Lang;
+
+  switch (lang) {
     case 'en': return testimonialsEN;
     case 'fr': return testimonialsFR;
     case 'pt': return testimonialsPT;
@@ -60,7 +84,8 @@ const uiText = {
 
 export function Testimonials() {
   const { language } = useLanguage();
-  const t = uiText[language as 'es' | 'en' | 'fr' | 'pt'] || uiText.es;
+  const lang = (language || "es") as Lang;
+const t = uiText[lang];
 
   const testimonials = getTestimonialsByLanguage(language);
   const [index, setIndex] = useState(0);

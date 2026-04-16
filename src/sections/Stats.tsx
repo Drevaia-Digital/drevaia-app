@@ -205,16 +205,40 @@ function StatItem({
 }
 
 // 🔥 DATA
-const stats = [
-  { value: "10000+", label: "Lectores impactados" },
-  { value: "24", label: "Ebooks creados" },
-  { value: "4", label: "Idiomas disponibles" },
-  { value: "98%", label: "Satisfacción" },
-];
+type Lang = "es" | "en" | "fr" | "pt";
+
+const statsTranslations = {
+  es: [
+    { value: "10000+", label: "Lectores impactados" },
+    { value: "24", label: "Ebooks creados" },
+    { value: "4", label: "Idiomas disponibles" },
+    { value: "98%", label: "Satisfacción" },
+  ],
+  en: [
+    { value: "10000+", label: "Readers reached" },
+    { value: "24", label: "Ebooks created" },
+    { value: "4", label: "Languages available" },
+    { value: "98%", label: "Satisfaction" },
+  ],
+  fr: [
+    { value: "10000+", label: "Lecteurs touchés" },
+    { value: "24", label: "Ebooks créés" },
+    { value: "4", label: "Langues disponibles" },
+    { value: "98%", label: "Satisfaction" },
+  ],
+  pt: [
+    { value: "10000+", label: "Leitores impactados" },
+    { value: "24", label: "Ebooks criados" },
+    { value: "4", label: "Idiomas disponíveis" },
+    { value: "98%", label: "Satisfação" },
+  ],
+};
 
 // 🎬 COMPONENTE FINAL
-export function Stats() {
+export function Stats({ language = "es" }: { language?: Lang }) {
   const ref = useRef(null);
+  const lang = (language || "es") as Lang;
+  const stats = statsTranslations[lang] || statsTranslations.es;
 
   const { scrollYProgress } = useScroll({
     target: ref,
