@@ -74,6 +74,29 @@ export default function BlogPost() {
           {content}
         </div>
 
+        {/* 💰 BLOQUE DE CONVERSIÓN */}
+<div className="mt-12 p-6 rounded-2xl bg-white/5 border border-white/10 text-center">
+
+  <h3 className="text-xl font-semibold mb-3">
+    ¿Quieres ir más profundo?
+  </h3>
+
+  <p className="text-gray-400 mb-6">
+    Este es solo el inicio. Dentro encontrarás una guía completa para entender,
+    sanar y transformar lo que estás viviendo.
+  </p>
+
+  <a
+    href="https://payhip.com/b/Wz0IG"
+    target="_blank"
+  >
+    <button className="px-6 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-amber-400 hover:scale-105 transition font-semibold">
+      Acceder ahora
+    </button>
+  </a>
+
+</div>
+
         {/* 🔗 INTERLINKING SEO */}
         <div className="mt-12 border-t border-white/10 pt-6">
           <h3 className="text-lg font-semibold mb-4 text-white">

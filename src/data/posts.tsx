@@ -25,8 +25,8 @@ export const posts: Post[] = [
       pt: "Como curar feridas emocionais",
     },
     description: {
-      es: "Descubre cómo sanar heridas emocionales y recuperar tu bienestar.",
-      en: "Learn how to heal emotional wounds.",
+      es: "Guía profunda para sanar heridas emocionales y recuperar tu bienestar interior.",
+      en: "Deep guide to heal emotional wounds.",
       fr: "Guérir les blessures émotionnelles.",
       pt: "Curar feridas emocionais.",
     },
@@ -34,11 +34,11 @@ export const posts: Post[] = [
       es: (
         <>
           <p className="mb-4">
-            Las heridas emocionales no siempre son visibles, pero afectan profundamente cómo vives tu realidad.
+            Sanar heridas emocionales no es olvidar lo que pasó, es dejar de vivir desde ese dolor.
           </p>
 
           <p className="mb-4">
-            Muchas nacen en momentos donde tuviste que adaptarte emocionalmente para sobrevivir.
+            Muchas heridas se formaron cuando tuviste que adaptarte para sobrevivir emocionalmente.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">
@@ -46,14 +46,22 @@ export const posts: Post[] = [
           </h2>
 
           <p className="mb-4">
-            Sanar no es cambiar lo que sientes, sino entenderlo.
+            Cuando entiendes tu historia, dejas de reaccionar en automático.
+          </p>
+
+          <h2 className="text-2xl font-semibold mt-8 mb-4">
+            Sanar es reconectar
+          </h2>
+
+          <p className="mb-4">
+            Es volver a escucharte sin juicio.
           </p>
 
           <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
-            <p className="mb-2">También podría resonar contigo:</p>
             <ul className="space-y-1">
-              <li><a href="/es/blog/por-que-me-siento-vacio">¿Por qué me siento vacío?</a></li>
-              <li><a href="/es/blog/por-que-me-siento-perdido">¿Por qué me siento perdido?</a></li>
+              <li><a href="/es/blog/por-que-me-siento-vacio">Vacío emocional</a></li>
+              <li><a href="/es/blog/por-que-me-siento-perdido">Sentirse perdido</a></li>
+              <li><a href="/es/blog/como-reconectar-contigo-mismo">Reconectar contigo</a></li>
             </ul>
           </div>
         </>
@@ -78,7 +86,7 @@ export const posts: Post[] = [
       pt: "Viver no automático",
     },
     description: {
-      es: "Descubre cómo dejar de vivir en automático.",
+      es: "Descubre cómo salir del piloto automático y volver a sentir tu vida.",
       en: "Stop living on autopilot.",
       fr: "Sortir du mode automatique.",
       pt: "Sair do automático.",
@@ -87,16 +95,21 @@ export const posts: Post[] = [
       es: (
         <>
           <p className="mb-4">
-            Vivir en automático es avanzar sin sentirte realmente presente.
+            Vivir en automático es existir sin presencia.
           </p>
 
           <p className="mb-4">
-            Es funcionar, pero no vivir.
+            Cumples, avanzas… pero no sientes.
+          </p>
+
+          <p className="mb-4">
+            El primer paso es darte cuenta.
           </p>
 
           <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
             <ul className="space-y-1">
               <li><a href="/es/blog/por-que-me-siento-vacio">Vacío emocional</a></li>
+              <li><a href="/es/blog/como-reconectar-contigo-mismo">Reconectar contigo</a></li>
             </ul>
           </div>
         </>
@@ -121,25 +134,30 @@ export const posts: Post[] = [
       pt: "Por que me sinto vazio?",
     },
     description: {
-      es: "Entiende el vacío emocional.",
+      es: "Descubre por qué sientes vacío emocional y cómo empezar a reconectar contigo.",
       en: "Understand emotional emptiness.",
-      fr: "Comprendre le vide intérieur.",
-      pt: "Entender o vazio emocional.",
+      fr: "Comprendre le vide.",
+      pt: "Entender o vazio.",
     },
     content: {
       es: (
         <>
           <p className="mb-4">
-            El vacío no es falta de algo externo, es desconexión interna.
+            El vacío no es falta de algo, es desconexión de ti.
           </p>
 
           <p className="mb-4">
-            Es una señal de que necesitas volver a ti.
+            No se llena con cosas externas.
+          </p>
+
+          <p className="mb-4">
+            Se comprende desde dentro.
           </p>
 
           <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
             <ul className="space-y-1">
               <li><a href="/es/blog/por-que-me-siento-perdido">Sentirse perdido</a></li>
+              <li><a href="/es/blog/como-reconectar-contigo-mismo">Reconectar</a></li>
             </ul>
           </div>
         </>
@@ -164,8 +182,8 @@ export const posts: Post[] = [
       pt: "Por que me sinto perdido?",
     },
     description: {
-      es: "Descubre por qué te sientes perdido y cómo encontrar dirección.",
-      en: "Why you feel lost and how to find direction.",
+      es: "Comprende por qué te sientes perdido y cómo encontrar dirección.",
+      en: "Why you feel lost.",
       fr: "Pourquoi vous êtes perdu.",
       pt: "Por que você se sente perdido.",
     },
@@ -173,25 +191,66 @@ export const posts: Post[] = [
       es: (
         <>
           <p className="mb-4">
-            Sentirse perdido no es un error, es una señal de cambio.
+            Sentirte perdido es una señal de que algo dentro de ti está cambiando.
           </p>
 
           <p className="mb-4">
-            Es el momento en el que tu vida ya no encaja con quien eres.
-          </p>
-
-          <h2 className="text-2xl font-semibold mt-8 mb-4">
-            No estás perdido, estás despertando
-          </h2>
-
-          <p className="mb-4">
-            Esta sensación aparece cuando empiezas a cuestionar todo.
+            Ya no encajas en tu vida anterior.
           </p>
 
           <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
             <ul className="space-y-1">
-              <li><a href="/es/blog/por-que-me-siento-vacio">Vacío emocional</a></li>
-              <li><a href="/es/blog/como-sanar-heridas-emocionales">Sanar heridas</a></li>
+              <li><a href="/es/blog/por-que-me-siento-vacio">Vacío</a></li>
+              <li><a href="/es/blog/como-reconectar-contigo-mismo">Reconectar</a></li>
+            </ul>
+          </div>
+        </>
+      ),
+      en: (<p>Coming soon...</p>),
+      fr: (<p>Contenu en construction...</p>),
+      pt: (<p>Conteúdo em construção...</p>),
+    },
+  },
+
+  {
+    slug: {
+      es: "como-reconectar-contigo-mismo",
+      en: "how-to-reconnect-with-yourself",
+      fr: "se-reconnecter-a-soi",
+      pt: "reconectar-consigo",
+    },
+    title: {
+      es: "Cómo reconectar contigo mismo",
+      en: "How to reconnect with yourself",
+      fr: "Se reconnecter à soi",
+      pt: "Reconectar consigo",
+    },
+    description: {
+      es: "Guía para volver a conectar contigo y recuperar claridad emocional.",
+      en: "Reconnect with yourself.",
+      fr: "Reconnectez-vous.",
+      pt: "Reconecte-se.",
+    },
+    content: {
+      es: (
+        <>
+          <p className="mb-4">
+            Reconectar contigo no es cambiar quién eres, es volver a escucharte.
+          </p>
+
+          <p className="mb-4">
+            Es salir del ruido externo y volver a tu voz interna.
+          </p>
+
+          <p className="mb-4">
+            Empieza con pequeñas pausas conscientes.
+          </p>
+
+          <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
+            <ul className="space-y-1">
+              <li><a href="/es/blog/por-que-me-siento-vacio">Vacío</a></li>
+              <li><a href="/es/blog/por-que-me-siento-perdido">Perdido</a></li>
+              <li><a href="/es/blog/vivir-en-automatico">Automático</a></li>
             </ul>
           </div>
         </>

@@ -15,12 +15,14 @@ export function RealityCheck() {
         proposito: "Esto es por qué te sientes perdido",
         patrones: "Esto es lo que te mantiene en el mismo ciclo",
       },
+      buy: "Acceder ahora",
       items: [
         {
           emotion: 'ansiedad',
           title: "No es falta de disciplina",
           desc: "Es agotamiento emocional acumulado",
           cta: "Ver solución",
+          blog: "/blog/por-que-me-siento-vacio",
           link: "https://payhip.com/b/Wz0IG",
         },
         {
@@ -28,6 +30,7 @@ export function RealityCheck() {
           title: "No estás perdido",
           desc: "Estás desconectado de lo que importa",
           cta: "Recuperar dirección",
+          blog: "/blog/por-que-me-siento-perdido",
           link: "https://payhip.com/b/kNSQa",
         },
         {
@@ -35,6 +38,7 @@ export function RealityCheck() {
           title: "No es mala suerte",
           desc: "Estás repitiendo patrones invisibles",
           cta: "Romper el ciclo",
+          blog: "/blog/como-sanar-heridas-emocionales",
           link: "https://payhip.com/b/Nx0cF",
         },
       ],
@@ -47,12 +51,14 @@ export function RealityCheck() {
         proposito: "This is why you feel lost",
         patrones: "This is what keeps you stuck",
       },
+      buy: "Access now",
       items: [
         {
           emotion: 'ansiedad',
           title: "It’s not lack of discipline",
           desc: "It’s accumulated emotional exhaustion",
           cta: "See solution",
+          blog: "/blog/why-do-i-feel-empty",
           link: "https://payhip.com/b/BYviE",
         },
         {
@@ -60,6 +66,7 @@ export function RealityCheck() {
           title: "You’re not lost",
           desc: "You’re disconnected from what matters",
           cta: "Find direction",
+          blog: "/blog/why-do-i-feel-lost",
           link: "https://payhip.com/b/CdrP5",
         },
         {
@@ -67,6 +74,7 @@ export function RealityCheck() {
           title: "It’s not bad luck",
           desc: "You’re repeating invisible patterns",
           cta: "Break the cycle",
+          blog: "/blog/heal-emotional-wounds",
           link: "https://payhip.com/b/0rjX8",
         },
       ],
@@ -79,12 +87,14 @@ export function RealityCheck() {
         proposito: "Voici pourquoi tu te sens perdu",
         patrones: "Voici ce qui te bloque",
       },
+      buy: "Accéder maintenant",
       items: [
         {
           emotion: 'ansiedad',
           title: "Ce n’est pas un manque de discipline",
           desc: "C’est un épuisement émotionnel accumulé",
           cta: "Voir la solution",
+          blog: "/blog/pourquoi-je-me-sens-vide",
           link: "https://payhip.com/b/6xTwV",
         },
         {
@@ -92,6 +102,7 @@ export function RealityCheck() {
           title: "Tu n’es pas perdu",
           desc: "Tu es déconnecté de l’essentiel",
           cta: "Trouver une direction",
+          blog: "/blog/pourquoi-je-me-sens-perdu",
           link: "https://payhip.com/b/MDdsb",
         },
         {
@@ -99,6 +110,7 @@ export function RealityCheck() {
           title: "Ce n’est pas de la malchance",
           desc: "Tu répètes des schémas invisibles",
           cta: "Briser le cycle",
+          blog: "/blog/guerir-blessures-emotionnelles",
           link: "https://payhip.com/b/hBRzA",
         },
       ],
@@ -111,12 +123,14 @@ export function RealityCheck() {
         proposito: "É por isso que você se sente perdido",
         patrones: "Isso é o que te prende no mesmo ciclo",
       },
+      buy: "Acessar agora",
       items: [
         {
           emotion: 'ansiedad',
           title: "Não é falta de disciplina",
           desc: "É exaustão emocional acumulada",
           cta: "Ver solução",
+          blog: "/blog/por-que-me-sinto-vazio",
           link: "https://payhip.com/b/OWV4T",
         },
         {
@@ -124,6 +138,7 @@ export function RealityCheck() {
           title: "Você não está perdido",
           desc: "Está desconectado do que importa",
           cta: "Encontrar direção",
+          blog: "/blog/por-que-me-sinto-perdido",
           link: "https://payhip.com/b/KGMWi",
         },
         {
@@ -131,6 +146,7 @@ export function RealityCheck() {
           title: "Não é azar",
           desc: "Você está repetindo padrões invisíveis",
           cta: "Quebrar o ciclo",
+          blog: "/blog/curar-feridas-emocionais",
           link: "https://payhip.com/b/kE8hV",
         },
       ],
@@ -139,12 +155,10 @@ export function RealityCheck() {
 
   const t = content[language] || content.es;
 
-  // 🔥 FILTRADO INTELIGENTE (SIN INDEX)
   const filteredItems = emotion
     ? t.items.filter(item => item.emotion === emotion)
     : t.items;
 
-  // 🔥 TÍTULO DINÁMICO
   const dynamicTitle =
     emotion && t.emotionalTitles[emotion]
       ? t.emotionalTitles[emotion]
@@ -174,11 +188,24 @@ export function RealityCheck() {
               {item.desc}
             </p>
 
-            <a href={item.link} target="_blank">
-              <button className="text-sm px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-amber-400 hover:scale-105 transition">
-                {item.cta}
-              </button>
-            </a>
+            <div className="flex flex-col gap-3">
+
+              {/* 🔥 BLOG */}
+              <a href={`/${language}${item.blog}`}>
+                <button className="w-full text-sm px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">
+                  {item.cta}
+                </button>
+              </a>
+
+              {/* 💰 COMPRA */}
+              <a href={item.link} target="_blank">
+                <button className="w-full text-sm px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-amber-400 hover:scale-105 transition">
+                  {t.buy}
+                </button>
+              </a>
+
+            </div>
+
           </div>
         ))}
 
