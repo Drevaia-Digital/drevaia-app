@@ -10,6 +10,7 @@ type Post = {
 };
 
 export const posts: Post[] = [
+
   {
     slug: {
       es: "como-sanar-heridas-emocionales",
@@ -24,102 +25,42 @@ export const posts: Post[] = [
       pt: "Como curar feridas emocionais",
     },
     description: {
-      es: "Descubre cómo sanar heridas emocionales, comprender tu pasado y recuperar tu bienestar paso a paso.",
-      en: "Learn how to heal emotional wounds and regain emotional balance step by step.",
-      fr: "Découvrez comment guérir les blessures émotionnelles et retrouver l’équilibre intérieur.",
-      pt: "Aprenda a curar feridas emocionais e recuperar seu equilíbrio interior.",
+      es: "Descubre cómo sanar heridas emocionales y recuperar tu bienestar.",
+      en: "Learn how to heal emotional wounds.",
+      fr: "Guérir les blessures émotionnelles.",
+      pt: "Curar feridas emocionais.",
     },
     content: {
       es: (
         <>
           <p className="mb-4">
-            Las heridas emocionales no siempre son visibles, pero pueden influir profundamente en la forma en que pensamos, sentimos y nos relacionamos con los demás.
-            A veces se manifiestan como ansiedad, vacío, miedo al abandono o dificultad para confiar.
+            Las heridas emocionales no siempre son visibles, pero afectan profundamente cómo vives tu realidad.
           </p>
 
           <p className="mb-4">
-            Muchas de estas heridas nacen en momentos donde tuvimos que aprender a sobrevivir emocionalmente sin el apoyo que necesitábamos.
-            No es debilidad: es adaptación. Es la forma en que aprendimos a seguir adelante cuando no había otra opción.
+            Muchas nacen en momentos donde tuviste que adaptarte emocionalmente para sobrevivir.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">
-            ¿Por qué se forman las heridas emocionales?
+            Comprender es el inicio
           </h2>
 
           <p className="mb-4">
-            Se originan en experiencias como el rechazo, el abandono, la crítica constante o la falta de validación emocional.
-            Con el tiempo, estas vivencias dejan huellas que se convierten en patrones automáticos que afectan nuestras decisiones y relaciones.
+            Sanar no es cambiar lo que sientes, sino entenderlo.
           </p>
 
-          <p className="mb-4">
-            Por ejemplo, alguien que no fue escuchado puede crecer sintiendo que su voz no importa.
-            Alguien que fue herido puede desarrollar miedo a abrirse nuevamente.
-          </p>
-
-          <h2 className="text-2xl font-semibold mt-8 mb-4">
-            El primer paso: comprender
-          </h2>
-
-          <p className="mb-4">
-            Sanar no comienza intentando cambiar lo que sientes, sino entendiendo por qué lo sientes.
-            Cuando observas tus emociones con curiosidad en lugar de juicio, algo empieza a transformarse.
-          </p>
-
-          <p className="mb-4">
-            Comprender tus heridas te permite identificar patrones, reconocer necesidades emocionales y dejar de reaccionar en automático.
-          </p>
-
-          <h2 className="text-2xl font-semibold mt-8 mb-4">
-            Sanar también es volver a escucharte
-          </h2>
-
-          <p className="mb-4">
-            Muchas veces la sanación comienza cuando dejamos de ignorar lo que sentimos.
-            Escuchar tu mundo interno, tus límites y tus necesidades es un acto de respeto hacia ti mismo.
-          </p>
-
-          <p className="mb-4">
-            No se trata de eliminar el pasado, sino de integrarlo sin que controle tu presente.
-            Es recuperar tu capacidad de elegir cómo vivir, en lugar de reaccionar desde el dolor.
-          </p>
-
-          <p className="mb-4">
-            Sanar es un proceso, no un destino. Y cada paso que das hacia ti, cuenta.
-          </p>
+          <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
+            <p className="mb-2">También podría resonar contigo:</p>
+            <ul className="space-y-1">
+              <li><a href="/es/blog/por-que-me-siento-vacio">¿Por qué me siento vacío?</a></li>
+              <li><a href="/es/blog/por-que-me-siento-perdido">¿Por qué me siento perdido?</a></li>
+            </ul>
+          </div>
         </>
       ),
-
-      en: (
-        <>
-          <p className="mb-4">
-            Emotional wounds are not always visible, but they deeply affect how we think, feel, and relate to others.
-          </p>
-
-          <p className="mb-4">
-            Many of them come from moments where we had to emotionally survive without the support we needed.
-          </p>
-
-          <h2 className="text-2xl font-semibold mt-8 mb-4">
-            Why do emotional wounds form?
-          </h2>
-
-          <p className="mb-4">
-            They often originate from rejection, abandonment, or lack of emotional validation.
-          </p>
-        </>
-      ),
-
-      fr: (
-        <>
-          <p>Contenu en construction...</p>
-        </>
-      ),
-
-      pt: (
-        <>
-          <p>Conteúdo em construção...</p>
-        </>
-      ),
+      en: (<p>Coming soon...</p>),
+      fr: (<p>Contenu en construction...</p>),
+      pt: (<p>Conteúdo em construção...</p>),
     },
   },
 
@@ -137,51 +78,128 @@ export const posts: Post[] = [
       pt: "Viver no automático",
     },
     description: {
-      es: "Descubre qué significa vivir en automático, por qué ocurre y cómo reconectar contigo mismo.",
-      en: "Discover what it means to live on autopilot and how to reconnect with yourself.",
-      fr: "Découvrez ce que signifie vivre en mode automatique et comment vous reconnecter.",
-      pt: "Descubra o que significa viver no automático e como se reconectar consigo mesmo.",
+      es: "Descubre cómo dejar de vivir en automático.",
+      en: "Stop living on autopilot.",
+      fr: "Sortir du mode automatique.",
+      pt: "Sair do automático.",
     },
     content: {
       es: (
         <>
           <p className="mb-4">
-            Hay momentos en los que la vida sigue avanzando, pero tú no sientes que estás realmente en ella.
+            Vivir en automático es avanzar sin sentirte realmente presente.
           </p>
 
           <p className="mb-4">
-            Desde fuera puedes parecer funcional, pero por dentro hay desconexión.
+            Es funcionar, pero no vivir.
+          </p>
+
+          <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
+            <ul className="space-y-1">
+              <li><a href="/es/blog/por-que-me-siento-vacio">Vacío emocional</a></li>
+            </ul>
+          </div>
+        </>
+      ),
+      en: (<p>Coming soon...</p>),
+      fr: (<p>Contenu en construction...</p>),
+      pt: (<p>Conteúdo em construção...</p>),
+    },
+  },
+
+  {
+    slug: {
+      es: "por-que-me-siento-vacio",
+      en: "why-do-i-feel-empty",
+      fr: "pourquoi-je-me-sens-vide",
+      pt: "por-que-me-sinto-vazio",
+    },
+    title: {
+      es: "¿Por qué me siento vacío?",
+      en: "Why do I feel empty?",
+      fr: "Pourquoi je me sens vide ?",
+      pt: "Por que me sinto vazio?",
+    },
+    description: {
+      es: "Entiende el vacío emocional.",
+      en: "Understand emotional emptiness.",
+      fr: "Comprendre le vide intérieur.",
+      pt: "Entender o vazio emocional.",
+    },
+    content: {
+      es: (
+        <>
+          <p className="mb-4">
+            El vacío no es falta de algo externo, es desconexión interna.
+          </p>
+
+          <p className="mb-4">
+            Es una señal de que necesitas volver a ti.
+          </p>
+
+          <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
+            <ul className="space-y-1">
+              <li><a href="/es/blog/por-que-me-siento-perdido">Sentirse perdido</a></li>
+            </ul>
+          </div>
+        </>
+      ),
+      en: (<p>Coming soon...</p>),
+      fr: (<p>Contenu en construction...</p>),
+      pt: (<p>Conteúdo em construção...</p>),
+    },
+  },
+
+  {
+    slug: {
+      es: "por-que-me-siento-perdido",
+      en: "why-do-i-feel-lost",
+      fr: "pourquoi-je-me-sens-perdu",
+      pt: "por-que-me-sinto-perdido",
+    },
+    title: {
+      es: "¿Por qué me siento perdido?",
+      en: "Why do I feel lost?",
+      fr: "Pourquoi je me sens perdu ?",
+      pt: "Por que me sinto perdido?",
+    },
+    description: {
+      es: "Descubre por qué te sientes perdido y cómo encontrar dirección.",
+      en: "Why you feel lost and how to find direction.",
+      fr: "Pourquoi vous êtes perdu.",
+      pt: "Por que você se sente perdido.",
+    },
+    content: {
+      es: (
+        <>
+          <p className="mb-4">
+            Sentirse perdido no es un error, es una señal de cambio.
+          </p>
+
+          <p className="mb-4">
+            Es el momento en el que tu vida ya no encaja con quien eres.
           </p>
 
           <h2 className="text-2xl font-semibold mt-8 mb-4">
-            ¿Cómo salir del modo automático?
+            No estás perdido, estás despertando
           </h2>
 
           <p className="mb-4">
-            El primer paso es empezar a notar lo que sientes.
+            Esta sensación aparece cuando empiezas a cuestionar todo.
           </p>
-        </>
-      ),
 
-      en: (
-        <>
-          <p className="mb-4">
-            There are moments when life keeps moving, but you don’t feel present.
-          </p>
+          <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
+            <ul className="space-y-1">
+              <li><a href="/es/blog/por-que-me-siento-vacio">Vacío emocional</a></li>
+              <li><a href="/es/blog/como-sanar-heridas-emocionales">Sanar heridas</a></li>
+            </ul>
+          </div>
         </>
       ),
-
-      fr: (
-        <>
-          <p>Contenu en construction...</p>
-        </>
-      ),
-
-      pt: (
-        <>
-          <p>Conteúdo em construção...</p>
-        </>
-      ),
+      en: (<p>Coming soon...</p>),
+      fr: (<p>Contenu en construction...</p>),
+      pt: (<p>Conteúdo em construção...</p>),
     },
-  },
+  }
+
 ];
