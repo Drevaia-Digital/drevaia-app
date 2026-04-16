@@ -100,7 +100,7 @@ export function AuthPage({ t, language, changeLanguage, mode }: any) {
 
                 <Input
                   type="email"
-                  placeholder="Tu correo (solo lo usaremos para tu acceso)"
+                  placeholder="Correo electrónico"
                   value={email}
                   onChange={(e) => {
                     const value = e.target.value;
@@ -121,6 +121,9 @@ export function AuthPage({ t, language, changeLanguage, mode }: any) {
                   focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20`}
                 />
 
+                <p className="text-xs text-gray-500 mt-1 ml-1">
+  Solo lo usaremos para tu acceso
+</p>
                 {email && errors.email && (
                   <p className="text-xs text-red-400 mt-1 ml-1">
                     {errors.email}
