@@ -8,9 +8,13 @@ import { ArrowLeft, ChevronUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { searchBooks } from "@/engines/searchEngine";
 import { useDebounce } from "@/hooks/useDebounce";
+import { useLanguage } from "@/context/LanguageContext";
+
+type Lang = "es" | "en" | "fr" | "pt";
 
 export default function LibraryPage() {
   const navigate = useNavigate();
+  const { language } = useLanguage();
 
   const [books, setBooks] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
@@ -23,12 +27,44 @@ export default function LibraryPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
+  // 🌍 TEXTOS MULTIIDIOMA
+  const t = {
+    es: {
+      back: "Volver",
+      search: "Buscar en Drevaia...",
+      all: "Todos",
+      featured: "RESULTADOS DESTACADOS",
+      loading: "Cargando biblioteca..."
+    },
+    en: {
+      back: "Back",
+      search: "Search in Drevaia...",
+      all: "All",
+      featured: "FEATURED RESULTS",
+      loading: "Loading library..."
+    },
+    fr: {
+      back: "Retour",
+      search: "Rechercher dans Drevaia...",
+      all: "Tous",
+      featured: "RÉSULTATS EN VEDETTE",
+      loading: "Chargement de la bibliothèque..."
+    },
+    pt: {
+      back: "Voltar",
+      search: "Buscar no Drevaia...",
+      all: "Todos",
+      featured: "RESULTADOS EM DESTAQUE",
+      loading: "Carregando biblioteca..."
+    }
+  }[language as Lang];
+
   // 🚀 LOAD
   useEffect(() => {
     loadBooks();
   }, []);
 
-  // 🚀 SCROLL DETECTION
+  // 🚀 SCROLL
   useEffect(() => {
     const handleScroll = () => {
       setShowTop(window.scrollY > 250);
@@ -57,15 +93,15 @@ export default function LibraryPage() {
 
       if (data) {
         const mapped = data.map((book: any) => ({
-  ...book,
-  coverImage: book.image || "https://via.placeholder.com/300x400",
-  link:
-    book.buy_url_es ||
-    book.buy_url_en ||
-    book.buy_url_fr ||
-    book.buy_url_pt ||
-    "",
-}));
+          ...book,
+          coverImage: book.image || "https://via.placeholder.com/300x400",
+          link:
+            book.buy_url_es ||
+            book.buy_url_en ||
+            book.buy_url_fr ||
+            book.buy_url_pt ||
+            "",
+        }));
 
         setBooks(mapped);
       }
@@ -91,7 +127,7 @@ export default function LibraryPage() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // 🧠 ENGINE
+  // 🧠 SEARCH
   const computedBooks = useMemo(() => {
     return searchBooks(books || [], {
       query: debouncedQuery,
@@ -109,7 +145,8 @@ export default function LibraryPage() {
     return computedBooks.slice(3);
   }, [computedBooks, debouncedQuery]);
 
-  const categories = useMemo(() => {
+  // 🔥 CATEGORÍAS DINÁMICAS (TRADUCCIÓN)
+  const rawCategories = useMemo(() => {
     return Array.from(
       new Map(
         (books || [])
@@ -122,17 +159,49 @@ export default function LibraryPage() {
     );
   }, [books]);
 
+  const categoryMap: Record<string, Record<Lang, string>> = {
+    "bienestar": {
+      es: "Bienestar",
+      en: "Wellbeing",
+      fr: "Bien-être",
+      pt: "Bem-estar"
+    },
+    "desarrollo personal": {
+      es: "Desarrollo Personal",
+      en: "Personal Growth",
+      fr: "Développement personnel",
+      pt: "Desenvolvimento pessoal"
+    },
+    "sanación": {
+      es: "Sanación",
+      en: "Healing",
+      fr: "Guérison",
+      pt: "Cura"
+    },
+    "bienestar emocional": {
+      es: "Bienestar emocional",
+      en: "Emotional Wellness",
+      fr: "Bien-être émotionnel",
+      pt: "Bem-estar emocional"
+    }
+  };
+
+  const translateCategory = (cat: string) => {
+    const key = cat.toLowerCase();
+    return categoryMap[key]?.[language as Lang] || cat;
+  };
+
   const searchResults = computedBooks.map(book => ({
-  id: book.id,
-  title: book.title,
-  cover: book.coverImage || "https://via.placeholder.com/300x400",
-  author: book.author || ""
-}));
+    id: book.id,
+    title: book.title,
+    cover: book.coverImage || "https://via.placeholder.com/300x400",
+    author: book.author || ""
+  }));
 
   if (loading) {
     return (
       <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-white">
-        Cargando biblioteca...
+        {t.loading}
       </div>
     );
   }
@@ -147,7 +216,7 @@ export default function LibraryPage() {
           className="text-gray-400 hover:text-white flex items-center gap-2 transition"
         >
           <ArrowLeft className="w-4 h-4" />
-          Volver
+          {t.back}
         </button>
       </div>
 
@@ -158,7 +227,7 @@ export default function LibraryPage() {
           onClick={() => setIsSearchOpen(true)}
           className="mb-8 cursor-text bg-neutral-900/70 border border-neutral-700 rounded-xl px-4 py-3 text-neutral-400 backdrop-blur"
         >
-          Buscar en Drevaia...
+          {t.search}
         </div>
 
         <PremiumSearch
@@ -175,10 +244,13 @@ export default function LibraryPage() {
 
         {/* CATEGORIES */}
         <div className="flex gap-2 mb-8 overflow-x-auto">
-          <Button onClick={() => setSelectedCategory(null)}>Todos</Button>
-          {categories.map(cat => (
+          <Button onClick={() => setSelectedCategory(null)}>
+            {t.all}
+          </Button>
+
+          {rawCategories.map(cat => (
             <Button key={cat} onClick={() => setSelectedCategory(cat)}>
-              {cat}
+              {translateCategory(cat)}
             </Button>
           ))}
         </div>
@@ -187,7 +259,7 @@ export default function LibraryPage() {
         {debouncedQuery && topResults.length > 0 && (
           <div className="mb-10">
             <p className="text-purple-400 mb-3 text-sm tracking-wider">
-              RESULTADOS DESTACADOS
+              {t.featured}
             </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
@@ -221,18 +293,11 @@ export default function LibraryPage() {
 
       </div>
 
-      {/* 🔥 SCROLL BUTTON PRO */}
+      {/* 🔥 SCROLL */}
       {showTop && (
         <button
           onClick={scrollToTop}
-          className="
-            fixed bottom-6 right-6 z-50
-            bg-gradient-to-r from-purple-600 to-indigo-600
-            text-white p-3 rounded-full
-            shadow-xl backdrop-blur
-            hover:scale-110 hover:shadow-purple-500/40
-            transition-all duration-300
-          "
+          className="fixed bottom-6 right-6 z-50 bg-gradient-to-r from-purple-600 to-indigo-600 text-white p-3 rounded-full shadow-xl hover:scale-110 transition"
         >
           <ChevronUp className="w-5 h-5" />
         </button>
