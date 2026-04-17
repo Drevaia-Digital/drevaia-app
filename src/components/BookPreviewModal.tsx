@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
 import { posts } from "@/data/posts";
+import { supabase } from "@/lib/supabase";
 
 type Lang = "es" | "en" | "fr" | "pt";
 
@@ -21,6 +22,14 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
 
   // 🔥 ESCARCEDAD DINÁMICA
   useEffect(() => {
+    if (book?.id) {
+  supabase.from("ebook_events").insert([
+    {
+      book_id: book.id,
+      event_type: "view"
+    }
+  ]);
+}
     const base = Math.floor(Math.random() * 6) + 3;
     setViewers(base);
 
@@ -33,7 +42,7 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
     }, 3000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [book?.id]);
 
   if (!isOpen || !book) return null;
 
@@ -208,7 +217,22 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
             {/* CTA */}
             <div className="p-4 border-t bg-white">
 
-              <a href={finalLink} target="_blank">
+              <a
+  href={finalLink}
+  target="_blank"
+  onClick={() => {
+  if (book?.id) {
+    supabase
+      .from("ebook_events")
+      .insert([
+        {
+          book_id: book.id,
+          event_type: "click",
+        },
+      ]);
+  }
+}}
+>
                 <Button className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-6 rounded-xl">
                   <ExternalLink className="w-5 h-5 mr-2" />
                   {t.cta}
