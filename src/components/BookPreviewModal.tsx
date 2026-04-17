@@ -23,6 +23,12 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
   // 🔥 ESCARCEDAD DINÁMICA
   useEffect(() => {
     if (book?.id) {
+  const history = JSON.parse(localStorage.getItem("drevaia_history") || "[]");
+
+if (!history.includes(book.id)) {
+  history.push(book.id);
+  localStorage.setItem("drevaia_history", JSON.stringify(history));
+}
   supabase.from("ebook_events").insert([
     {
       book_id: book.id,
