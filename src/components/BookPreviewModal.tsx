@@ -222,6 +222,12 @@ if (!history.includes(book.id)) {
 
             {/* CTA */}
             <div className="p-4 border-t bg-white">
+            <p className="text-sm text-center text-gray-600 mb-4">
+  {language === "es" && "No es solo información. Es el inicio de algo diferente en ti."}
+  {language === "en" && "This is not just information. It's the beginning of something different in you."}
+  {language === "fr" && "Ce n'est pas seulement de l'information. C'est le début de quelque chose en toi."}
+  {language === "pt" && "Isso não é apenas informação. É o início de algo diferente em você."}
+</p>
 
               <a
   href={finalLink}
@@ -243,6 +249,14 @@ if (!history.includes(book.id)) {
                   <ExternalLink className="w-5 h-5 mr-2" />
                   {t.cta}
                 </Button>
+              
+              <p className="text-xs text-center mt-2 text-gray-400">
+  {language === "es" && "Acceso inmediato · Sin suscripciones · Pago único"}
+  {language === "en" && "Instant access · No subscriptions · One-time payment"}
+  {language === "fr" && "Accès immédiat · Sans abonnement · Paiement unique"}
+  {language === "pt" && "Acesso imediato · Sem assinatura · Pagamento único"}
+</p>
+
               </a>
 
               <p className="text-xs text-center mt-2">{t.instant}</p>
@@ -250,6 +264,12 @@ if (!history.includes(book.id)) {
               <p className="text-xs text-center text-purple-500 mt-1 animate-pulse">
                 {t.social}
               </p>
+<p className="text-[11px] text-center text-gray-400">
+  {language === "es" && "Disponible ahora mismo"}
+  {language === "en" && "Available right now"}
+  {language === "fr" && "Disponible maintenant"}
+  {language === "pt" && "Disponível agora"}
+</p>
 
               <p className="text-[11px] text-center text-gray-500 mt-1">
                 {t.rank}
