@@ -24,6 +24,7 @@ export async function onRequestPost(context: any) {
 });
 
     const data = await response.json();
+    console.log("ERROR BACKEND:", data);
 
     // 🔴 VALIDACIÓN REAL
     if (!response.ok) {
