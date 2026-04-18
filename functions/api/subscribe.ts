@@ -3,7 +3,7 @@ export async function onRequestPost(context: any) {
 
   try {
     const body = await request.json();
-    const { email } = body;
+    const { email, lang } = body;
 
     if (!email) {
       return new Response(JSON.stringify({ error: "Email requerido" }), {
@@ -18,7 +18,10 @@ export async function onRequestPost(context: any) {
         "api-key": env.BREVO_API_KEY,
       },
       body: JSON.stringify({
-        email,
+        email: email,
+        attributes: {
+          LANGUAGE: lang || "en",
+        },
         listIds: [11],
         updateEnabled: true,
       }),
@@ -26,7 +29,14 @@ export async function onRequestPost(context: any) {
 
     const data = await response.json();
 
-    return new Response(JSON.stringify(data), {
+    // 🔴 VALIDACIÓN REAL
+    if (!response.ok) {
+      return new Response(JSON.stringify(data), {
+        status: response.status,
+      });
+    }
+
+    return new Response(JSON.stringify({ success: true }), {
       status: 200,
       headers: { "Content-Type": "application/json" },
     });
