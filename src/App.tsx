@@ -10,6 +10,7 @@ import { AuthPage } from '@/pages/AuthPage';
 import { LegalPage } from '@/pages/LegalPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import BlogPost from "@/pages/BlogPost";
+import LeadMagnetPage from "@/pages/LeadMagnetPage"; // 👈 NUEVO
 
 // ⚡ Lazy
 const LibraryPage = lazy(() => import('@/pages/LibraryPage'));
@@ -34,10 +35,10 @@ export default function App() {
               }
             />
 
-            {/* 🔥 BLOG MULTI IDIOMA (CLAVE) */}
+            {/* 🔥 BLOG MULTI IDIOMA */}
             <Route path="/:lang/blog/:slug" element={<BlogPost />} />
 
-            {/* 🧠 ONBOARDING MULTI IDIOMA */}
+            {/* 🧠 ONBOARDING */}
             <Route path="/:lang/onboarding" element={<OnboardingPage />} />
 
             {/* 📝 BLOG ROOT */}
@@ -74,6 +75,9 @@ export default function App() {
             <Route path="/auth/login" element={<AuthPage mode="login" />} />
             <Route path="/auth/register" element={<AuthPage mode="register" />} />
             <Route path="/auth/forgot-password" element={<AuthPage mode="forgot-password" />} />
+
+            {/* 🎯 LEAD MAGNET */}
+            <Route path="/empieza" element={<LeadMagnetPage />} />
 
             {/* 🚫 404 */}
             <Route path="*" element={<NotFoundPage />} />
