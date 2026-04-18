@@ -3,7 +3,7 @@ export async function onRequestPost(context: any) {
 
   try {
     const body = await request.json();
-    const { email, lang } = body;
+    const { email } = body;
 
     if (!email) {
       return new Response(JSON.stringify({ error: "Email requerido" }), {
@@ -12,22 +12,21 @@ export async function onRequestPost(context: any) {
     }
 
     const response = await fetch("https://api.brevo.com/v3/contacts", {
-  method: "POST",
-  headers: {
-    "Content-Type": "application/json",
-    "api-key": env.BREVO_API_KEY,
-  },
-  body: JSON.stringify({
-    email: email,
-    updateEnabled: true,
-  }),
-});
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "api-key": env.BREVO_API_KEY,
+      },
+      body: JSON.stringify({
+        email: email,
+        updateEnabled: true,
+      }),
+    });
 
     const data = await response.json();
-    console.log("ERROR BACKEND:", data);
 
-    // 🔴 VALIDACIÓN REAL
     if (!response.ok) {
+      console.error("ERROR BREVO:", data);
       return new Response(JSON.stringify(data), {
         status: response.status,
       });
@@ -39,6 +38,7 @@ export async function onRequestPost(context: any) {
     });
 
   } catch (error: any) {
+    console.error("ERROR SERVER:", error);
     return new Response(
       JSON.stringify({ error: error.message }),
       { status: 500 }
