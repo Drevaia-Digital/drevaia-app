@@ -19,9 +19,7 @@ export async function onRequestPost(context: any) {
       },
       body: JSON.stringify({
         email: email,
-        attributes: {
-          LANGUAGE: lang || "en",
-        },
+        attributes: {},
         listIds: [11],
         updateEnabled: true,
       }),
