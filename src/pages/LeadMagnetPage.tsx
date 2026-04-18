@@ -3,8 +3,7 @@ import { useState } from "react";
 export default function LeadMagnetPage() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
-  const [loading, setLoading] = useState(false);
-
+  
   const handleSubmit = (e: React.FormEvent) => {
   e.preventDefault();
 
@@ -44,10 +43,9 @@ export default function LeadMagnetPage() {
 
             <button
               type="submit"
-              disabled={loading}
               className="p-4 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition disabled:opacity-50"
             >
-              {loading ? "Enviando..." : "Quiero empezar"}
+              Quiero empezar
             </button>
           </form>
         ) : (
