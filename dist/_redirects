@@ -1,8 +1,0 @@
-/como-sanar-heridas-emocionales.html   /vivir-en-automatico   301!
-# =========================================
-# idioma por defecto (ES)
-/*.html   /es/blog/:splat   301!
-
-# =========================================
-# ⚛️ SPA
-/*   /index.html   200
