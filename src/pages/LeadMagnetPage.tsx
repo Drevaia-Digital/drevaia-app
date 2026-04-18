@@ -1,11 +1,12 @@
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 export default function LeadMagnetPage() {
   const [email, setEmail] = useState("");
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // 🌍 Detectar idioma del navegador
+  // 🌍 Idioma
   const language =
     navigator.language.startsWith("es")
       ? "es"
@@ -15,7 +16,6 @@ export default function LeadMagnetPage() {
       ? "fr"
       : "en";
 
-  // 🧠 Textos multi-idioma
   const texts = {
     es: {
       title1: "No estás perdido.",
@@ -29,6 +29,9 @@ export default function LeadMagnetPage() {
       error: "No se pudo enviar. Intenta de nuevo.",
       footer:
         "No puedes sanar lo que no escuchas. Tu cuerpo es el diario en el que tu alma escribe.",
+      seoTitle: "Empieza contigo | Drevaia",
+      seoDesc:
+        "No estás perdido. Aprende a escucharte y reconectar contigo desde hoy.",
     },
     en: {
       title1: "You are not lost.",
@@ -42,6 +45,9 @@ export default function LeadMagnetPage() {
       error: "Something went wrong. Try again.",
       footer:
         "You cannot heal what you do not listen to. Your body is the diary where your soul writes.",
+      seoTitle: "Start with yourself | Drevaia",
+      seoDesc:
+        "You are not lost. Learn to reconnect with yourself starting today.",
     },
     pt: {
       title1: "Você não está perdido.",
@@ -52,9 +58,12 @@ export default function LeadMagnetPage() {
       button: "Quero começar",
       loading: "Enviando...",
       success: "Verifique seu email ✨",
-      error: "Algo deu errado. Tente novamente.",
+      error: "Algo deu errado.",
       footer:
         "Você não pode curar o que não escuta. Seu corpo é o diário onde sua alma escreve.",
+      seoTitle: "Comece com você | Drevaia",
+      seoDesc:
+        "Você não está perdido. Reconecte-se consigo mesmo.",
     },
     fr: {
       title1: "Tu n'es pas perdu.",
@@ -67,16 +76,18 @@ export default function LeadMagnetPage() {
       success: "Vérifie ton email ✨",
       error: "Une erreur est survenue.",
       footer:
-        "Tu ne peux pas guérir ce que tu n’écoutes pas. Ton corps est le journal où ton âme écrit.",
+        "Tu ne peux pas guérir ce que tu n’écoutes pas.",
+      seoTitle: "Commence avec toi | Drevaia",
+      seoDesc:
+        "Reconnecte-toi à toi-même dès aujourd’hui.",
     },
   };
 
   const t = texts[language as keyof typeof texts];
 
-  // 🔌 Envío al backend (Cloudflare → Brevo)
+  // 🔌 Envío
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!email) return;
 
     setLoading(true);
@@ -87,20 +98,17 @@ export default function LeadMagnetPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email }),
+        body: JSON.stringify({ email, lang: language }),
       });
 
       const data = await res.json();
-      console.log("Respuesta Brevo:", data);
+      console.log("Brevo:", data);
 
-      if (!res.ok) {
-        throw new Error(data?.error || "Error");
-      }
+      if (!res.ok) throw new Error();
 
       setSent(true);
       setEmail("");
-    } catch (error) {
-      console.error(error);
+    } catch {
       alert(t.error);
     } finally {
       setLoading(false);
@@ -108,58 +116,59 @@ export default function LeadMagnetPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black via-gray-900 to-black text-white px-6">
-      <div className="max-w-xl w-full text-center">
+    <>
+      {/* 🔥 SEO REAL */}
+      <Helmet>
+        <title>{t.seoTitle}</title>
+        <meta name="description" content={t.seoDesc} />
+        <link rel="canonical" href="https://drevaia.com/empieza" />
+      </Helmet>
 
-        {/* 🔥 TITULO */}
-        <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
-          {t.title1} <br />
-          <span className="text-gray-300">
-            {t.title2}
-          </span>
-        </h1>
+      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black via-gray-900 to-black text-white px-6">
+        <div className="max-w-xl w-full text-center">
 
-        {/* ✨ SUBTEXTO */}
-        <p className="text-gray-400 mb-8 text-base md:text-lg">
-          {t.subtitle}
-        </p>
+          <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
+            {t.title1} <br />
+            <span className="text-gray-300">{t.title2}</span>
+          </h1>
 
-        {/* 📩 FORM */}
-        {!sent ? (
-          <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+          <p className="text-gray-400 mb-8 text-base md:text-lg">
+            {t.subtitle}
+          </p>
 
-            <input
-              type="email"
-              required
-              placeholder={t.placeholder}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="p-4 rounded-xl bg-white/10 border border-white/20 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-white"
-            />
+          {!sent ? (
+            <form onSubmit={handleSubmit} className="flex flex-col gap-4">
 
-            <button
-              type="submit"
-              disabled={loading}
-              className="p-4 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition disabled:opacity-50"
-            >
-              {loading ? t.loading : t.button}
-            </button>
+              <input
+                type="email"
+                required
+                placeholder={t.placeholder}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="p-4 rounded-xl bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white"
+              />
 
-          </form>
-        ) : (
-          <div className="mt-6">
-            <p className="text-green-400 text-lg">
+              <button
+                type="submit"
+                disabled={loading}
+                className="p-4 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition disabled:opacity-50"
+              >
+                {loading ? t.loading : t.button}
+              </button>
+
+            </form>
+          ) : (
+            <p className="text-green-400 text-lg mt-6">
               {t.success}
             </p>
-          </div>
-        )}
+          )}
 
-        {/* 🧠 FRASE FINAL */}
-        <p className="text-xs text-gray-500 mt-10">
-          {t.footer}
-        </p>
+          <p className="text-xs text-gray-500 mt-10">
+            {t.footer}
+          </p>
 
+        </div>
       </div>
-    </div>
+    </>
   );
 }
