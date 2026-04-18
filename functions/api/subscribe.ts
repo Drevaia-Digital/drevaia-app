@@ -12,18 +12,16 @@ export async function onRequestPost(context: any) {
     }
 
     const response = await fetch("https://api.brevo.com/v3/contacts", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "api-key": env.BREVO_API_KEY,
-      },
-      body: JSON.stringify({
-        email: email,
-        attributes: {},
-        listIds: [11],
-        updateEnabled: true,
-      }),
-    });
+  method: "POST",
+  headers: {
+    "Content-Type": "application/json",
+    "api-key": env.BREVO_API_KEY,
+  },
+  body: JSON.stringify({
+    email: email,
+    updateEnabled: true,
+  }),
+});
 
     const data = await response.json();
 
