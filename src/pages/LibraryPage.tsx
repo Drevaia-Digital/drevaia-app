@@ -5,11 +5,10 @@ import { supabase } from '@/lib/supabase';
 import { useState, useEffect, useMemo } from 'react';
 import { ArrowLeft, ChevronUp } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { searchBooks } from "@/engines/searchEngine";
+import { searchBooks, getSmartRecommendations } from "@/engines/searchEngine";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useLanguage } from "@/context/LanguageContext";
 import { SkeletonCard } from "@/components/SkeletonCard";
-import { getSmartRecommendations } from "@/engines/searchEngine";
 
 type Lang = "es" | "en" | "fr" | "pt";
 
@@ -26,26 +25,56 @@ export default function LibraryPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  // 🔥 CACHE INSTANTÁNEO
-  useEffect(() => {
-  const cachedRaw = localStorage.getItem("drevaia_books");
-
-  if (cachedRaw) {
-    try {
-      const cached = JSON.parse(cachedRaw);
-      setBooks(cached.data || []);
-    } catch (e) {
-      console.error("Cache error", e);
-    }
-  }
-}, []);
-
+  // 🌍 COPY MULTIIDIOMA CENTRALIZADO
   const t = {
-    es: { back: "Volver", search: "Buscar en Drevaia...", loading: "Cargando..." },
-    en: { back: "Back", search: "Search in Drevaia...", loading: "Loading..." },
-    fr: { back: "Retour", search: "Rechercher...", loading: "Chargement..." },
-    pt: { back: "Voltar", search: "Buscar...", loading: "Carregando..." }
+    es: {
+      back: "Volver",
+      search: "Buscar en Drevaia...",
+      trending: "🔥 Tendencia",
+      top: "🔥 Más popular",
+      view: "Ver ahora",
+      recommended: "✨ Recomendado para ti",
+      based: "Basado en tu actividad"
+    },
+    en: {
+      back: "Back",
+      search: "Search in Drevaia...",
+      trending: "🔥 Trending",
+      top: "🔥 Most popular",
+      view: "View now",
+      recommended: "✨ Recommended for you",
+      based: "Based on your activity"
+    },
+    fr: {
+      back: "Retour",
+      search: "Rechercher...",
+      trending: "🔥 Tendance",
+      top: "🔥 Populaire",
+      view: "Voir",
+      recommended: "✨ Recommandé pour toi",
+      based: "Basé sur ton activité"
+    },
+    pt: {
+      back: "Voltar",
+      search: "Buscar...",
+      trending: "🔥 Tendência",
+      top: "🔥 Mais popular",
+      view: "Ver",
+      recommended: "✨ Recomendado para você",
+      based: "Baseado na sua atividade"
+    }
   }[language as Lang];
+
+  // ⚡ CACHE INSTANTÁNEO
+  useEffect(() => {
+    const cachedRaw = localStorage.getItem("drevaia_books");
+    if (cachedRaw) {
+      try {
+        const cached = JSON.parse(cachedRaw);
+        setBooks(cached.data || []);
+      } catch {}
+    }
+  }, []);
 
   useEffect(() => {
     loadBooks();
@@ -61,17 +90,18 @@ export default function LibraryPage() {
     try {
       const cachedRaw = localStorage.getItem("drevaia_books");
 
-if (cachedRaw) {
-  try {
-    const cached = JSON.parse(cachedRaw);
-    const isFresh = Date.now() - cached.timestamp < 1000 * 60 * 10;
+      if (cachedRaw) {
+        try {
+          const cached = JSON.parse(cachedRaw);
+          const isFresh = Date.now() - cached.timestamp < 1000 * 60 * 10;
 
-    if (isFresh && cached.data) {
-      setBooks(cached.data);
-      return; // 🚀 NO hace fetch si está fresco
-    }
-  } catch {}
-}
+          if (isFresh && cached.data) {
+            setBooks(cached.data);
+            return;
+          }
+        } catch {}
+      }
+
       const { data: booksData } = await supabase.from('books').select('*');
       const { data: events } = await supabase.from("ebook_events").select("*");
 
@@ -92,11 +122,11 @@ if (cachedRaw) {
 
       setBooks(mapped);
 
-localStorage.setItem("drevaia_books", JSON.stringify({
-  data: mapped,
-  timestamp: Date.now()
-}));
-      
+      localStorage.setItem("drevaia_books", JSON.stringify({
+        data: mapped,
+        timestamp: Date.now()
+      }));
+
     } catch (err) {
       console.error(err);
     }
@@ -122,22 +152,25 @@ localStorage.setItem("drevaia_books", JSON.stringify({
   const topBook = computedBooks[0];
   const trendingBooks = computedBooks.slice(0, 3);
 
-  const userHistory = JSON.parse(localStorage.getItem("drevaia_history") || "[]");
+  const historyRaw = localStorage.getItem("drevaia_history");
+  const userHistory = historyRaw ? JSON.parse(historyRaw) : {};
 
   let recommendedBooks = getSmartRecommendations(computedBooks, userHistory);
 
-// 🔥 fallback inteligente (muy importante)
-if (recommendedBooks.length < 3) {
-  const extra = computedBooks.filter(
-    b => !recommendedBooks.find(r => r.id === b.id)
-  );
+  // 🔥 fallback inteligente
+  if (recommendedBooks.length < 4) {
+    const extra = computedBooks.filter(
+      b => !recommendedBooks.find(r => r.id === b.id)
+    );
+    recommendedBooks = [...recommendedBooks, ...extra].slice(0, 4);
+  }
 
-  recommendedBooks = [...recommendedBooks, ...extra].slice(0, 3);
-}
+  const getTitle = (book: any) =>
+    book[`title_${language}`] || book.title;
 
   const searchResults = computedBooks.map(book => ({
     id: book.id,
-    title: book.title,
+    title: getTitle(book),
     cover: book.coverImage || "",
     author: book.author || ""
   }));
@@ -158,10 +191,10 @@ if (recommendedBooks.length < 3) {
         {/* TOP */}
         {!debouncedQuery && topBook && (
           <div className="mb-10 p-6 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600">
-            <p className="text-sm mb-2">🔥 Más popular</p>
-            <h2 className="text-xl font-bold mb-3">{topBook.title}</h2>
+            <p className="text-sm mb-2">{t.top}</p>
+            <h2 className="text-xl font-bold mb-3">{getTitle(topBook)}</h2>
             <button onClick={() => openPreview(topBook)} className="bg-white text-black px-4 py-2 rounded-lg">
-              Ver ahora
+              {t.view}
             </button>
           </div>
         )}
@@ -169,47 +202,40 @@ if (recommendedBooks.length < 3) {
         {/* TRENDING */}
         {!debouncedQuery && (
           <div className="mb-10">
-            <h3 className="mb-4">🔥 Tendencia</h3>
+            <h3 className="mb-4">{t.trending}</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {trendingBooks.map((book: any, i: number) => (
-                <div key={book.id} onClick={() => openPreview(book)} className="cursor-pointer p-4 bg-white/5 rounded-xl">
-                  #{i + 1} {book.title}
+                <div key={book.id} onClick={() => openPreview(book)} className="cursor-pointer p-4 bg-white/5 rounded-xl hover:bg-white/10 transition">
+                  #{i + 1} {getTitle(book)}
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {/* RECOMENDADO */}
+        {/* RECOMENDADO PRO */}
         {recommendedBooks.length > 0 && (
           <div className="mb-10">
-            <h3 className="mb-4">✨ Recomendado para ti</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+            <h3 className="mb-2">{t.recommended}</h3>
+            <p className="text-xs text-gray-400 mb-4">{t.based}</p>
+
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
               {recommendedBooks.map((book: any) => (
-  <div
-    key={book.id}
-    onClick={() => openPreview(book)}
-    className="cursor-pointer p-4 bg-white/5 hover:bg-white/10 transition rounded-xl"
-  >
-    <p className="text-xs text-gray-400 mt-1">
-  {language === "es" && "Recomendado según tu actividad"}
-  {language === "en" && "Based on your activity"}
-  {language === "fr" && "Basé sur ton activité"}
-  {language === "pt" && "Baseado na sua atividade"}
-</p>
-
-    <p className="font-medium">
-      {book.title}
-    </p>
-  </div>
-))}
-
+                <EbookCard
+                  key={book.id}
+                  id={book.id}
+                  title={getTitle(book)}
+                  cover={book.coverImage || ""}
+                  price={book.price}
+                  onClick={() => openPreview(book)}
+                />
+              ))}
             </div>
           </div>
         )}
 
         {/* SEARCH */}
-        <div onClick={() => setIsSearchOpen(true)} className="mb-8 bg-neutral-900 p-3 rounded-xl">
+        <div onClick={() => setIsSearchOpen(true)} className="mb-8 bg-neutral-900 p-3 rounded-xl cursor-pointer">
           {t.search}
         </div>
 
@@ -225,7 +251,7 @@ if (recommendedBooks.length < 3) {
           }}
         />
 
-        {/* GRID */}
+        {/* GRID PRINCIPAL */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
           {computedBooks.length === 0
             ? Array.from({ length: 12 }).map((_, i) => (
@@ -235,7 +261,7 @@ if (recommendedBooks.length < 3) {
                 <EbookCard
                   key={book.id}
                   id={book.id}
-                  title={book.title}
+                  title={getTitle(book)}
                   cover={book.coverImage || ""}
                   price={book.price}
                   onClick={() => openPreview(book)}
@@ -247,12 +273,19 @@ if (recommendedBooks.length < 3) {
       </div>
 
       {showTop && (
-        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="fixed bottom-6 right-6 bg-purple-600 p-3 rounded-full">
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="fixed bottom-6 right-6 bg-purple-600 p-3 rounded-full"
+        >
           <ChevronUp />
         </button>
       )}
 
-      <BookPreviewModal isOpen={isModalOpen} onClose={closePreview} book={selectedBook} />
+      <BookPreviewModal
+        isOpen={isModalOpen}
+        onClose={closePreview}
+        book={selectedBook}
+      />
 
     </div>
   );
