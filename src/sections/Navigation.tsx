@@ -39,12 +39,12 @@ export function Navigation(_: any) {
 
   // 🔥 NAVEGACIÓN INTELIGENTE (CLAVE)
   const goToHomeSmart = () => {
-    if (location.pathname === "/") {
-      scrollToSection('top');
-    } else {
-      navigate('/');
-    }
-  };
+  if (location.pathname === "/landing") {
+    scrollToSection('top');
+  } else {
+    navigate('/landing');
+  }
+};
 
   const goToSectionSmart = (section: string) => {
     if (location.pathname === "/") {
