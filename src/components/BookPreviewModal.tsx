@@ -65,28 +65,28 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
 
   const copy = {
     es: {
-      cta: "Acceder ahora",
+      cta: "Acceder ahora →",
       explore: "Seguir explorando",
       text: "Este ebook no es solo información. Es una nueva forma de ver tu vida.",
       features: ["Acceso inmediato", "Contenido transformador"],
       social: `${viewers} personas están viendo este ebook ahora`
     },
     en: {
-      cta: "Access now",
+      cta: "Access now →",
       explore: "Keep exploring",
       text: "This ebook is not just information. It's a new way to see your life.",
       features: ["Instant access", "Transformational content"],
       social: `${viewers} people are viewing this ebook`
     },
     fr: {
-      cta: "Accéder maintenant",
+      cta: "Accéder maintenant →",
       explore: "Continuer",
       text: "Une nouvelle façon de voir ta vie.",
       features: ["Accès immédiat", "Contenu transformateur"],
       social: `${viewers} personnes consultent cet ebook`
     },
     pt: {
-      cta: "Acessar agora",
+      cta: "Acessar agora →",
       explore: "Continuar",
       text: "Uma nova forma de ver sua vida.",
       features: ["Acesso imediato", "Conteúdo transformador"],
@@ -139,7 +139,12 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
               <p className="text-gray-600 mb-4">{description}</p>
 
               <p className="text-sm text-purple-600 mb-4">{t.text}</p>
-
+              <p className="text-xs text-gray-400 mb-4">
+  {language === "es" && "Acceso inmediato. Sin suscripciones. Pago único."}
+  {language === "en" && "Instant access. No subscriptions. One-time payment."}
+  {language === "fr" && "Accès immédiat. Paiement unique."}
+  {language === "pt" && "Acesso imediato. Pagamento único."}
+</p>
               <div className="grid grid-cols-2 gap-2 mb-4">
                 {t.features.map((f, i) => (
                   <div key={i} className="flex items-center gap-2">
@@ -149,7 +154,14 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
                 ))}
               </div>
 
-              <p className="text-xs text-gray-500 mb-4">{t.social}</p>
+              <p className="text-xs text-gray-500 mb-2">{t.social}</p>
+
+<p className="text-[11px] text-orange-400 mb-4">
+  {language === "es" && "Disponible ahora · Acceso inmediato"}
+  {language === "en" && "Available now · Instant access"}
+  {language === "fr" && "Disponible maintenant"}
+  {language === "pt" && "Disponível agora"}
+</p>
             </div>
 
             {/* CTA */}
