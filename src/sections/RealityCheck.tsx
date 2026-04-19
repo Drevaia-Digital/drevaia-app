@@ -167,10 +167,12 @@ export function RealityCheck() {
   return (
     <section className="py-20 px-4 bg-black text-white text-center">
 
+      {/* TÍTULO */}
       <h2 className="text-2xl md:text-3xl font-bold mb-12">
         {dynamicTitle}
       </h2>
 
+      {/* GRID */}
       <div className={`grid gap-6 max-w-6xl mx-auto ${
         filteredItems.length === 1 ? 'md:grid-cols-1 max-w-xl' : 'md:grid-cols-3'
       }`}>
@@ -190,19 +192,20 @@ export function RealityCheck() {
 
             <div className="flex flex-col gap-3">
 
-              {/* 🔥 BLOG */}
+              {/* BLOG */}
               <a href={`/${language}${item.blog}`}>
                 <button className="w-full text-sm px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">
                   {item.cta}
                 </button>
               </a>
 
-              {/* 💰 COMPRA */}
-              <a href={item.link} target="_blank">
-                <button className="w-full text-sm px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-amber-400 hover:scale-105 transition">
-                  {t.buy}
-                </button>
-              </a>
+              {/* COMPRA — FIX PRO (SIN POPUP) */}
+              <button
+                onClick={() => window.open(item.link, "_blank", "noopener,noreferrer")}
+                className="w-full text-sm px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-amber-400 hover:scale-105 transition"
+              >
+                {t.buy}
+              </button>
 
             </div>
 
