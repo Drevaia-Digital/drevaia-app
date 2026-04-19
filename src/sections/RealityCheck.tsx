@@ -16,6 +16,12 @@ export function RealityCheck() {
         patrones: "Esto es lo que te mantiene en el mismo ciclo",
       },
       buy: "Acceder ahora",
+      preCTA: {
+        line1: "No es que no puedas… es que llevas demasiado tiempo sosteniendo todo solo.",
+        line2: "Este ebook no es teoría. Es una forma de entender lo que te pasa… y empezar a cambiarlo.",
+        trust: "Acceso inmediato · Lectura privada · Pago único",
+        close: "Cuando lo entiendes, todo empieza a cambiar.",
+      },
       items: [
         {
           emotion: 'ansiedad',
@@ -52,6 +58,12 @@ export function RealityCheck() {
         patrones: "This is what keeps you stuck",
       },
       buy: "Access now",
+      preCTA: {
+        line1: "It’s not that you can’t… you’ve just been carrying too much for too long.",
+        line2: "This isn’t theory. It’s a way to understand what’s happening to you… and start changing it.",
+        trust: "Instant access · Private reading · One-time payment",
+        close: "Once you understand it, everything starts to shift.",
+      },
       items: [
         {
           emotion: 'ansiedad',
@@ -88,6 +100,12 @@ export function RealityCheck() {
         patrones: "Voici ce qui te bloque",
       },
       buy: "Accéder maintenant",
+      preCTA: {
+        line1: "Ce n’est pas que tu ne peux pas… tu portes simplement trop depuis trop longtemps.",
+        line2: "Ce livre n’est pas de la théorie. C’est une façon de comprendre ce que tu vis… et de commencer à changer.",
+        trust: "Accès immédiat · Lecture privée · Paiement unique",
+        close: "Quand tu comprends, tout commence à changer.",
+      },
       items: [
         {
           emotion: 'ansiedad',
@@ -124,6 +142,12 @@ export function RealityCheck() {
         patrones: "Isso é o que te prende no mesmo ciclo",
       },
       buy: "Acessar agora",
+      preCTA: {
+        line1: "Não é que você não consiga… você só tem carregado tudo sozinho por tempo demais.",
+        line2: "Este ebook não é teoria. É uma forma de entender o que você está vivendo… e começar a mudar.",
+        trust: "Acesso imediato · Leitura privada · Pagamento único",
+        close: "Quando você entende, tudo começa a mudar.",
+      },
       items: [
         {
           emotion: 'ansiedad',
@@ -167,12 +191,10 @@ export function RealityCheck() {
   return (
     <section className="py-20 px-4 bg-black text-white text-center">
 
-      {/* TÍTULO */}
       <h2 className="text-2xl md:text-3xl font-bold mb-12">
         {dynamicTitle}
       </h2>
 
-      {/* GRID */}
       <div className={`grid gap-6 max-w-6xl mx-auto ${
         filteredItems.length === 1 ? 'md:grid-cols-1 max-w-xl' : 'md:grid-cols-3'
       }`}>
@@ -190,19 +212,25 @@ export function RealityCheck() {
               {item.desc}
             </p>
 
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-4">
 
-              {/* BLOG */}
               <a href={`/${language}${item.blog}`}>
                 <button className="w-full text-sm px-4 py-2 rounded-lg bg-white/10 hover:bg-white/20 transition">
                   {item.cta}
                 </button>
               </a>
 
-              {/* COMPRA — FIX PRO (SIN POPUP) */}
+              {/* 🔥 BLOQUE EMOCIONAL PRO */}
+              <div className="text-left text-sm space-y-3 bg-white/5 border border-white/10 rounded-xl p-4 backdrop-blur-md">
+                <p className="text-white/90">{t.preCTA.line1}</p>
+                <p className="text-white/70">{t.preCTA.line2}</p>
+                <div className="text-xs text-white/60">{t.preCTA.trust}</div>
+                <p className="text-xs text-purple-300 italic">{t.preCTA.close}</p>
+              </div>
+
               <button
                 onClick={() => window.open(item.link, "_blank", "noopener,noreferrer")}
-                className="w-full text-sm px-4 py-2 rounded-lg bg-gradient-to-r from-purple-600 to-amber-400 hover:scale-105 transition"
+                className="w-full text-sm px-4 py-3 rounded-lg bg-gradient-to-r from-purple-600 to-amber-400 hover:scale-105 transition font-medium"
               >
                 {t.buy}
               </button>
