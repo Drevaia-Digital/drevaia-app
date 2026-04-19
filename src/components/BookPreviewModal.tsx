@@ -3,7 +3,6 @@ import { ExternalLink, X, BookOpen, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
-import { posts } from "@/data/posts";
 import { supabase } from "@/lib/supabase";
 
 type Lang = "es" | "en" | "fr" | "pt";
@@ -20,22 +19,20 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
   const [viewers, setViewers] = useState(0);
   const [rank] = useState(() => Math.floor(Math.random() * 5) + 1);
 
-  // 🔥 ESCARCEDAD DINÁMICA
   useEffect(() => {
     if (book?.id) {
-  const history = JSON.parse(localStorage.getItem("drevaia_history") || "[]");
+      const history = JSON.parse(localStorage.getItem("drevaia_history") || "[]");
 
-if (!history.includes(book.id)) {
-  history.push(book.id);
-  localStorage.setItem("drevaia_history", JSON.stringify(history));
-}
-  supabase.from("ebook_events").insert([
-    {
-      book_id: book.id,
-      event_type: "view"
+      if (!history.includes(book.id)) {
+        history.push(book.id);
+        localStorage.setItem("drevaia_history", JSON.stringify(history));
+      }
+
+      supabase.from("ebook_events").insert([
+        { book_id: book.id, event_type: "view" }
+      ]);
     }
-  ]);
-}
+
     const base = Math.floor(Math.random() * 6) + 3;
     setViewers(base);
 
@@ -52,35 +49,16 @@ if (!history.includes(book.id)) {
 
   if (!isOpen || !book) return null;
 
-  // 🔗 LINK
   const finalLink =
     book[`buy_url_${language}`] ||
     book.buy_url_es ||
     book.buy_url_en ||
     "#";
 
-  // 🌍 CONTENIDO
   const title = book[`title_${language}`] || book.title;
   const description = book[`description_${language}`] || book.description;
 
-  // 🔥 BEST SELLER
-  const bestSellerSlugs = ["sanar", "vacio", "perdido"];
-  const isBestSeller = bestSellerSlugs.some(s =>
-    (book.slug || "").toLowerCase().includes(s)
-  );
-
-  // 🧠 INTELIGENCIA SIMPLE
-  const isEmotional =
-    (book.category || "").toLowerCase().includes("emocional") ||
-    (book.title || "").toLowerCase().includes("emoc");
-
-  // 🧠 RECOMENDACIÓN TIPO PLATAFORMA
-  const relatedSmart = posts
-    .filter(p => p.slug?.es !== book.slug)
-    .slice(0, 2);
-
-  // 🌍 COPY
-  const copy = {
+      const copy = {
     es: {
       cta: "Acceder ahora",
       explore: "Seguir explorando",
@@ -136,6 +114,7 @@ if (!history.includes(book.id)) {
   return (
     <AnimatePresence>
       <>
+        {/* OVERLAY */}
         <motion.div
           className="fixed inset-0 z-40 bg-black/70 backdrop-blur-xl"
           initial={{ opacity: 0 }}
@@ -144,9 +123,13 @@ if (!history.includes(book.id)) {
           onClick={onClose}
         />
 
-        <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        {/* MODAL CONTAINER */}
+        <motion.div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none"
+        >
+          {/* MODAL */}
           <motion.div
-            className="w-full max-w-2xl max-h-[95vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden"
+            className="w-full max-w-2xl max-h-[95vh] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden pointer-events-auto"
             initial={{ scale: 0.95, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             exit={{ scale: 0.95, opacity: 0 }}
@@ -157,33 +140,19 @@ if (!history.includes(book.id)) {
             <div className="relative h-48 bg-gradient-to-br from-purple-600 via-indigo-600 to-amber-500">
               <button
                 onClick={onClose}
-                className="absolute top-4 right-4 w-9 h-9 bg-white/20 rounded-full flex items-center justify-center"
+                className="absolute top-4 right-4 w-10 h-10 bg-white/30 hover:bg-white/50 transition rounded-full flex items-center justify-center"
               >
-                <X className="w-4 h-4 text-white" />
+                <X className="w-5 h-5 text-white" />
               </button>
 
               <div className="absolute inset-0 flex flex-col items-center justify-center text-white text-center">
                 <BookOpen className="w-12 h-12 mb-2 opacity-90" />
                 <span className="text-sm opacity-80">{book.collection}</span>
-
-                <div className="flex gap-2 mt-2 flex-wrap justify-center">
-                  {isBestSeller && (
-                    <span className="px-3 py-1 bg-black/30 rounded-full text-xs">
-                      {t.badge}
-                    </span>
-                  )}
-                  {isEmotional && (
-                    <span className="px-3 py-1 bg-white/20 rounded-full text-xs">
-                      {t.smart}
-                    </span>
-                  )}
-                </div>
               </div>
             </div>
 
             {/* CONTENIDO */}
-            <div className="flex-1 overflow-y-auto p-6 md:p-8 md:pb-24">
-
+            <div className="flex-1 overflow-y-auto p-6 md:p-8">
               <h2 className="text-2xl font-bold mb-4">{title}</h2>
               <p className="text-gray-600 mb-6">{description}</p>
 
@@ -199,81 +168,16 @@ if (!history.includes(book.id)) {
                   </div>
                 ))}
               </div>
-
-              {/* 🔥 RECOMENDACIONES */}
-              <div className="mb-6">
-                <h4 className="text-sm font-semibold text-gray-500 mb-3">
-                  {t.related}
-                </h4>
-
-                <div className="grid grid-cols-2 gap-3">
-                  {relatedSmart.map((p, i) => (
-                    <div
-                      key={i}
-                      className="p-3 bg-white border rounded-xl text-xs hover:shadow-md transition"
-                    >
-                      {p.title[language]}
-                    </div>
-                  ))}
-                </div>
-              </div>
-
             </div>
 
             {/* CTA */}
             <div className="p-4 border-t bg-white">
-            <p className="text-sm text-center text-gray-600 mb-4">
-  {language === "es" && "No es solo información. Es el inicio de algo diferente en ti."}
-  {language === "en" && "This is not just information. It's the beginning of something different in you."}
-  {language === "fr" && "Ce n'est pas seulement de l'information. C'est le début de quelque chose en toi."}
-  {language === "pt" && "Isso não é apenas informação. É o início de algo diferente em você."}
-</p>
-
-              <a
-  href={finalLink}
-  target="_blank"
-  onClick={() => {
-  if (book?.id) {
-    supabase
-      .from("ebook_events")
-      .insert([
-        {
-          book_id: book.id,
-          event_type: "click",
-        },
-      ]);
-  }
-}}
->
+              <a href={finalLink} target="_blank">
                 <Button className="w-full bg-gradient-to-r from-purple-600 to-indigo-600 text-white py-6 rounded-xl">
                   <ExternalLink className="w-5 h-5 mr-2" />
                   {t.cta}
                 </Button>
-              
-              <p className="text-xs text-center mt-2 text-gray-400">
-  {language === "es" && "Acceso inmediato · Sin suscripciones · Pago único"}
-  {language === "en" && "Instant access · No subscriptions · One-time payment"}
-  {language === "fr" && "Accès immédiat · Sans abonnement · Paiement unique"}
-  {language === "pt" && "Acesso imediato · Sem assinatura · Pagamento único"}
-</p>
-
               </a>
-
-              <p className="text-xs text-center mt-2">{t.instant}</p>
-
-              <p className="text-xs text-center text-purple-500 mt-1 animate-pulse">
-                {t.social}
-              </p>
-<p className="text-[11px] text-center text-gray-400">
-  {language === "es" && "Disponible ahora mismo"}
-  {language === "en" && "Available right now"}
-  {language === "fr" && "Disponible maintenant"}
-  {language === "pt" && "Disponível agora"}
-</p>
-
-              <p className="text-[11px] text-center text-gray-500 mt-1">
-                {t.rank}
-              </p>
 
               <Button
                 variant="outline"
@@ -282,7 +186,6 @@ if (!history.includes(book.id)) {
               >
                 {t.explore}
               </Button>
-
             </div>
 
           </motion.div>
