@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom';
 import { searchBooks } from "@/engines/searchEngine";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useLanguage } from "@/context/LanguageContext";
+import { SkeletonCard } from "@/components/SkeletonCard";
+import { getSmartRecommendations } from "@/engines/searchEngine";
 
 type Lang = "es" | "en" | "fr" | "pt";
 
@@ -15,19 +17,7 @@ export default function LibraryPage() {
   const navigate = useNavigate();
   const { language } = useLanguage();
 
-  const [books, setBooks] = useState<any[]>([]);useEffect(() => {
-  const cached = localStorage.getItem("drevaia_books");
-
-  if (cached) {
-    try {
-      const parsed = JSON.parse(cached);
-      setBooks(parsed);
-    } catch (e) {
-      console.error("Error parsing cache", e);
-    }
-  }
-}, []);
-
+  const [books, setBooks] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedQuery = useDebounce(searchQuery, 200);
   const [showTop, setShowTop] = useState(false);
@@ -36,27 +26,25 @@ export default function LibraryPage() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
 
-  const t = {
-    es: {
-      back: "Volver",
-      search: "Buscar en Drevaia...",
-      loading: "Cargando biblioteca..."
-    },
-    en: {
-      back: "Back",
-      search: "Search in Drevaia...",
-      loading: "Loading library..."
-    },
-    fr: {
-      back: "Retour",
-      search: "Rechercher dans Drevaia...",
-      loading: "Chargement..."
-    },
-    pt: {
-      back: "Voltar",
-      search: "Buscar no Drevaia...",
-      loading: "Carregando..."
+  // 🔥 CACHE INSTANTÁNEO
+  useEffect(() => {
+  const cachedRaw = localStorage.getItem("drevaia_books");
+
+  if (cachedRaw) {
+    try {
+      const cached = JSON.parse(cachedRaw);
+      setBooks(cached.data || []);
+    } catch (e) {
+      console.error("Cache error", e);
     }
+  }
+}, []);
+
+  const t = {
+    es: { back: "Volver", search: "Buscar en Drevaia...", loading: "Cargando..." },
+    en: { back: "Back", search: "Search in Drevaia...", loading: "Loading..." },
+    fr: { back: "Retour", search: "Rechercher...", loading: "Chargement..." },
+    pt: { back: "Voltar", search: "Buscar...", loading: "Carregando..." }
   }[language as Lang];
 
   useEffect(() => {
@@ -64,16 +52,26 @@ export default function LibraryPage() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setShowTop(window.scrollY > 250);
-    };
+    const handleScroll = () => setShowTop(window.scrollY > 250);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   const loadBooks = async () => {
-    
     try {
+      const cachedRaw = localStorage.getItem("drevaia_books");
+
+if (cachedRaw) {
+  try {
+    const cached = JSON.parse(cachedRaw);
+    const isFresh = Date.now() - cached.timestamp < 1000 * 60 * 10;
+
+    if (isFresh && cached.data) {
+      setBooks(cached.data);
+      return; // 🚀 NO hace fetch si está fresco
+    }
+  } catch {}
+}
       const { data: booksData } = await supabase.from('books').select('*');
       const { data: events } = await supabase.from("ebook_events").select("*");
 
@@ -87,17 +85,21 @@ export default function LibraryPage() {
       const mapped = (booksData || [])
         .map((book: any) => ({
           ...book,
-          coverImage: book.image || "https://via.placeholder.com/300x400",
+          coverImage: book.image || "",
           score: scoreMap[book.id] || 0,
         }))
         .sort((a, b) => b.score - a.score);
 
       setBooks(mapped);
-localStorage.setItem("drevaia_books", JSON.stringify(mapped));
+
+localStorage.setItem("drevaia_books", JSON.stringify({
+  data: mapped,
+  timestamp: Date.now()
+}));
+      
     } catch (err) {
       console.error(err);
     }
-
   };
 
   const openPreview = (book: any) => {
@@ -110,10 +112,6 @@ localStorage.setItem("drevaia_books", JSON.stringify(mapped));
     setTimeout(() => setSelectedBook(null), 200);
   };
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   const computedBooks = useMemo(() => {
     return searchBooks(books || [], {
       query: debouncedQuery,
@@ -121,20 +119,17 @@ localStorage.setItem("drevaia_books", JSON.stringify(mapped));
     });
   }, [books, debouncedQuery]);
 
-  // 🔥 INTELIGENCIA
   const topBook = computedBooks[0];
   const trendingBooks = computedBooks.slice(0, 3);
 
   const userHistory = JSON.parse(localStorage.getItem("drevaia_history") || "[]");
 
-  const recommendedBooks = computedBooks
-    .filter((book: any) => userHistory.includes(book.id))
-    .slice(0, 3);
+  const recommendedBooks = getSmartRecommendations(computedBooks, userHistory);
 
   const searchResults = computedBooks.map(book => ({
     id: book.id,
     title: book.title,
-    cover: book.coverImage || "https://via.placeholder.com/300x400",
+    cover: book.coverImage || "",
     author: book.author || ""
   }));
 
@@ -151,9 +146,9 @@ localStorage.setItem("drevaia_books", JSON.stringify(mapped));
 
       <div className="max-w-7xl mx-auto px-6 py-8">
 
-        {/* 🔥 MÁS POPULAR */}
+        {/* TOP */}
         {!debouncedQuery && topBook && (
-          <div className="mb-10 p-6 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 text-white">
+          <div className="mb-10 p-6 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600">
             <p className="text-sm mb-2">🔥 Más popular</p>
             <h2 className="text-xl font-bold mb-3">{topBook.title}</h2>
             <button onClick={() => openPreview(topBook)} className="bg-white text-black px-4 py-2 rounded-lg">
@@ -162,16 +157,11 @@ localStorage.setItem("drevaia_books", JSON.stringify(mapped));
           </div>
         )}
 
-        {/* 🚀 TRENDING */}
+        {/* TRENDING */}
         {!debouncedQuery && (
           <div className="mb-10">
             <h3 className="mb-4">🔥 Tendencia</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {books.length === 0 && (
-  <p className="col-span-full text-center text-gray-400">
-    {t.loading}
-  </p>
-)}
               {trendingBooks.map((book: any, i: number) => (
                 <div key={book.id} onClick={() => openPreview(book)} className="cursor-pointer p-4 bg-white/5 rounded-xl">
                   #{i + 1} {book.title}
@@ -181,7 +171,7 @@ localStorage.setItem("drevaia_books", JSON.stringify(mapped));
           </div>
         )}
 
-        {/* 🧠 RECOMENDADO */}
+        {/* RECOMENDADO */}
         {recommendedBooks.length > 0 && (
           <div className="mb-10">
             <h3 className="mb-4">✨ Recomendado para ti</h3>
@@ -214,27 +204,27 @@ localStorage.setItem("drevaia_books", JSON.stringify(mapped));
 
         {/* GRID */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          {computedBooks.length === 0 && (
-  <p className="col-span-full text-center text-gray-400">
-    {t.loading}
-  </p>
-)}
-          {(debouncedQuery ? computedBooks : computedBooks).map(book => (
-            <EbookCard
-              key={book.id}
-              id={book.id}
-              title={book.title}
-              cover={book.coverImage || "https://via.placeholder.com/300x400"}
-              price={book.price}
-              onClick={() => openPreview(book)}
-            />
-          ))}
+          {computedBooks.length === 0
+            ? Array.from({ length: 12 }).map((_, i) => (
+                <SkeletonCard key={i} />
+              ))
+            : computedBooks.map(book => (
+                <EbookCard
+                  key={book.id}
+                  id={book.id}
+                  title={book.title}
+                  cover={book.coverImage || ""}
+                  price={book.price}
+                  onClick={() => openPreview(book)}
+                />
+              ))
+          }
         </div>
 
       </div>
 
       {showTop && (
-        <button onClick={scrollToTop} className="fixed bottom-6 right-6 bg-purple-600 p-3 rounded-full">
+        <button onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })} className="fixed bottom-6 right-6 bg-purple-600 p-3 rounded-full">
           <ChevronUp />
         </button>
       )}

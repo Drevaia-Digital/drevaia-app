@@ -8,12 +8,34 @@ import { Testimonials } from '@/sections/Testimonials';
 import { Footer } from '@/sections/Footer';
 import { useLanguage } from '@/context/LanguageContext';
 import { RealityCheck } from '@/sections/RealityCheck';
+import { prefetchBooks } from "@/lib/prefetchBooks";
+import { useEffect } from "react";
 
 export function HomePage() {
   const { language } = useLanguage();
 
+  // 🚀 PREFETCH AUTOMÁTICO AL ENTRAR
+  useEffect(() => {
+    // pequeño delay para no bloquear render inicial
+    const timer = setTimeout(() => {
+      prefetchBooks();
+    }, 800);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  // 🚀 PREFETCH MANUAL (hover / interacción)
+  const handlePrefetch = () => {
+    prefetchBooks();
+  };
+
   return (
-    <div id="top" className="min-h-screen bg-white dark:bg-gray-900">
+    <div
+      id="top"
+      className="min-h-screen bg-white dark:bg-gray-900"
+      onMouseEnter={handlePrefetch}   // 🖱 desktop
+      onTouchStart={handlePrefetch}   // 📱 mobile
+    >
 
       {/* NAV */}
       <Navigation />
@@ -26,15 +48,17 @@ export function HomePage() {
       <EmotionalPaths />
 
       {/* EBOOKS */}
-      <Ebooks language={language} />
+      <div onMouseEnter={handlePrefetch}>
+        <Ebooks language={language} />
+      </div>
 
       {/* LECTURA DIARIA */}
       <DailyReading />
 
-      {/* 🔥 STATS (NUEVO ORDEN CORRECTO) */}
+      {/* STATS */}
       <Stats />
 
-      {/* 🔥 TESTIMONIOS (AHORA CONECTADO VISUALMENTE) */}
+      {/* TESTIMONIOS */}
       <Testimonials />
 
       {/* FOOTER */}

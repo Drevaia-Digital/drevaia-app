@@ -81,3 +81,39 @@ export function searchBooks(
     .sort((a, b) => b.score - a.score)
     .map((item) => item.book);
 }
+
+export function getSmartRecommendations(books: any[], history: any) {
+  if (!history || Object.keys(history).length === 0) return [];
+
+  const scored = books.map(book => {
+    const h = history[book.id] || { views: 0, clicks: 0 };
+
+    const interactionScore = h.views * 1 + h.clicks * 3;
+
+    let similarity = 0;
+    const title = (book.title || "").toLowerCase();
+
+    Object.keys(history).forEach(id => {
+      const viewed = books.find(b => b.id === id);
+      if (!viewed) return;
+
+      const viewedTitle = (viewed.title || "").toLowerCase();
+
+      viewedTitle.split(" ").forEach((word: string) => {
+        if (word.length > 4 && title.includes(word)) {
+          similarity += 1;
+        }
+      });
+    });
+
+    return {
+      ...book,
+      finalScore: interactionScore + similarity
+    };
+  });
+
+  return scored
+    .filter(b => b.finalScore > 0)
+    .sort((a, b) => b.finalScore - a.finalScore)
+    .slice(0, 4);
+}
