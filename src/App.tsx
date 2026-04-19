@@ -10,7 +10,8 @@ import { AuthPage } from '@/pages/AuthPage';
 import { LegalPage } from '@/pages/LegalPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import BlogPost from "@/pages/BlogPost";
-import LeadMagnetPage from "@/pages/LeadMagnetPage"; // 👈 NUEVO
+import LeadMagnetPage from "@/pages/LeadMagnetPage";
+import LandingPage from "@/pages/LandingPage";
 
 // ⚡ Lazy
 const LibraryPage = lazy(() => import('@/pages/LibraryPage'));
@@ -24,6 +25,9 @@ export default function App() {
 
             {/* 🏠 HOME */}
             <Route path="/" element={<HomePage />} />
+
+            {/* 🌟 LANDING */}
+            <Route path="/landing" element={<LandingPage />} />
 
             {/* 📚 LIBRARY */}
             <Route
