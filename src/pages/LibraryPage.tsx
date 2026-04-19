@@ -124,7 +124,16 @@ localStorage.setItem("drevaia_books", JSON.stringify({
 
   const userHistory = JSON.parse(localStorage.getItem("drevaia_history") || "[]");
 
-  const recommendedBooks = getSmartRecommendations(computedBooks, userHistory);
+  let recommendedBooks = getSmartRecommendations(computedBooks, userHistory);
+
+// 🔥 fallback inteligente (muy importante)
+if (recommendedBooks.length < 3) {
+  const extra = computedBooks.filter(
+    b => !recommendedBooks.find(r => r.id === b.id)
+  );
+
+  recommendedBooks = [...recommendedBooks, ...extra].slice(0, 3);
+}
 
   const searchResults = computedBooks.map(book => ({
     id: book.id,
@@ -177,10 +186,24 @@ localStorage.setItem("drevaia_books", JSON.stringify({
             <h3 className="mb-4">✨ Recomendado para ti</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {recommendedBooks.map((book: any) => (
-                <div key={book.id} onClick={() => openPreview(book)} className="cursor-pointer p-4 bg-white/5 rounded-xl">
-                  {book.title}
-                </div>
-              ))}
+  <div
+    key={book.id}
+    onClick={() => openPreview(book)}
+    className="cursor-pointer p-4 bg-white/5 hover:bg-white/10 transition rounded-xl"
+  >
+    <p className="text-xs text-gray-400 mt-1">
+  {language === "es" && "Recomendado según tu actividad"}
+  {language === "en" && "Based on your activity"}
+  {language === "fr" && "Basé sur ton activité"}
+  {language === "pt" && "Baseado na sua atividade"}
+</p>
+
+    <p className="font-medium">
+      {book.title}
+    </p>
+  </div>
+))}
+
             </div>
           </div>
         )}
