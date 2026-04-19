@@ -15,7 +15,19 @@ export default function LibraryPage() {
   const navigate = useNavigate();
   const { language } = useLanguage();
 
-  const [books, setBooks] = useState<any[]>([]);
+  const [books, setBooks] = useState<any[]>([]);useEffect(() => {
+  const cached = localStorage.getItem("drevaia_books");
+
+  if (cached) {
+    try {
+      const parsed = JSON.parse(cached);
+      setBooks(parsed);
+    } catch (e) {
+      console.error("Error parsing cache", e);
+    }
+  }
+}, []);
+
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedQuery = useDebounce(searchQuery, 200);
   const [showTop, setShowTop] = useState(false);
@@ -81,7 +93,7 @@ export default function LibraryPage() {
         .sort((a, b) => b.score - a.score);
 
       setBooks(mapped);
-
+localStorage.setItem("drevaia_books", JSON.stringify(mapped));
     } catch (err) {
       console.error(err);
     }
