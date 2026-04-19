@@ -11,6 +11,8 @@ export default defineConfig({
     },
   },
 
+  // 🔥 SOLUCIÓN RUTAS (AÑADIR AQUÍ)
+  
   // 🔥 OPTIMIZACIÓN PRO
   build: {
     rollupOptions: {
