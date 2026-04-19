@@ -47,43 +47,30 @@ export interface RegistrationData {
 // BREVO - Guardar contacto
 // ============================================
 export const saveToBrevo = async (data: RegistrationData): Promise<{ success: boolean; error?: string }> => {
-  if (!CONFIG.brevo.apiKey) {
-    console.warn('⚠️ Brevo no configurado');
-    return { success: false, error: 'Brevo API Key no configurada' };
-  }
-
   try {
-    const response = await fetch('https://api.brevo.com/v3/contacts', {
+    const response = await fetch('/api/subscribe', {
       method: 'POST',
       headers: {
-        'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'api-key': CONFIG.brevo.apiKey,
       },
       body: JSON.stringify({
         email: data.email,
-        attributes: {
-          NOMBRE: data.name,
-          IDIOMA: data.language.toUpperCase(),
-          INTERESES: data.interests.join(', '),
-          NEWSLETTER: data.newsletter ? 'Sí' : 'No',
-          FECHA_REGISTRO: data.timestamp,
-          FUENTE: data.source,
-        },
-        listIds: CONFIG.brevo.listId ? [parseInt(CONFIG.brevo.listId)] : undefined,
-        updateEnabled: true,
+        lang: data.language,
       }),
     });
 
+    const result = await response.json();
+
     if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || 'Error en Brevo');
+      console.error('❌ Backend error:', result);
+      return { success: false, error: result?.message || 'Error backend' };
     }
 
-    console.log('✅ Contacto guardado en Brevo:', data.email);
+    console.log('✅ Contacto enviado al backend:', data.email);
     return { success: true };
+
   } catch (error) {
-    console.error('❌ Error Brevo:', error);
+    console.error('❌ Error conexión backend:', error);
     return { success: false, error: String(error) };
   }
 };
