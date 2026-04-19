@@ -1,14 +1,13 @@
-import { PremiumSearch } from "@/components/PremiumSearch";
 import { EbookCard } from '@/components/EbookCard';
 import { BookPreviewModal } from '@/components/BookPreviewModal';
 import { supabase } from '@/lib/supabase';
-import { useState, useEffect, useMemo } from 'react';
-import { ArrowLeft, ChevronUp } from 'lucide-react';
+import { useState, useEffect, useMemo, useRef } from 'react';
+import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { searchBooks, getSmartRecommendations } from "@/engines/searchEngine";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useLanguage } from "@/context/LanguageContext";
-import { SkeletonCard } from "@/components/SkeletonCard";
+import { trackEvent } from "@/lib/analytics";
 
 type Lang = "es" | "en" | "fr" | "pt";
 
@@ -17,15 +16,14 @@ export default function LibraryPage() {
   const { language } = useLanguage();
 
   const [books, setBooks] = useState<any[]>([]);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [searchQuery] = useState('');
   const debouncedQuery = useDebounce(searchQuery, 200);
-  const [showTop, setShowTop] = useState(false);
-
+  
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  
+  const lastTrackedQuery = useRef("");
 
-  // 🌍 COPY MULTIIDIOMA CENTRALIZADO
   const t = {
     es: {
       back: "Volver",
@@ -65,7 +63,6 @@ export default function LibraryPage() {
     }
   }[language as Lang];
 
-  // ⚡ CACHE INSTANTÁNEO
   useEffect(() => {
     const cachedRaw = localStorage.getItem("drevaia_books");
     if (cachedRaw) {
@@ -81,12 +78,24 @@ export default function LibraryPage() {
   }, []);
 
   useEffect(() => {
-    const handleScroll = () => setShowTop(window.scrollY > 250);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    if (
+      debouncedQuery.length > 2 &&
+      debouncedQuery !== lastTrackedQuery.current
+    ) {
+      trackEvent({
+        type: "search",
+        meta: { query: debouncedQuery }
+      });
+
+      lastTrackedQuery.current = debouncedQuery;
+    }
+  }, [debouncedQuery]);
+
+  useEffect(() => {
+    trackEvent({ type: "open_library" });
   }, []);
 
-  const loadBooks = async () => {
+    const loadBooks = async () => {
     try {
       const cachedRaw = localStorage.getItem("drevaia_books");
 
@@ -149,36 +158,32 @@ export default function LibraryPage() {
     });
   }, [books, debouncedQuery]);
 
-  const topBook = computedBooks[0];
-  const trendingBooks = computedBooks.slice(0, 3);
-
   const historyRaw = localStorage.getItem("drevaia_history");
-  const userHistory = historyRaw ? JSON.parse(historyRaw) : {};
+  let userHistory = {};
+  try {
+    userHistory = historyRaw ? JSON.parse(historyRaw) : {};
+  } catch {}
 
-  let recommendedBooks = getSmartRecommendations(computedBooks, userHistory);
+  const recommendedBooks = useMemo(() => {
+    let rec = getSmartRecommendations(computedBooks, userHistory);
 
-  // 🔥 fallback inteligente
-  if (recommendedBooks.length < 4) {
-    const extra = computedBooks.filter(
-      b => !recommendedBooks.find(r => r.id === b.id)
-    );
-    recommendedBooks = [...recommendedBooks, ...extra].slice(0, 4);
-  }
+    if (rec.length < 4) {
+      const extra = computedBooks.filter(
+        b => !rec.find(r => r.id === b.id)
+      );
+
+      rec = [...rec, ...extra].slice(0, 4);
+    }
+
+    return rec;
+  }, [computedBooks, userHistory]);
 
   const getTitle = (book: any) =>
     book[`title_${language}`] || book.title;
 
-  const searchResults = computedBooks.map(book => ({
-    id: book.id,
-    title: getTitle(book),
-    cover: book.coverImage || "",
-    author: book.author || ""
-  }));
-
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white">
 
-      {/* BACK */}
       <div className="max-w-7xl mx-auto px-6 pt-6">
         <button onClick={() => navigate('/')} className="text-gray-400 hover:text-white flex items-center gap-2">
           <ArrowLeft className="w-4 h-4" />
@@ -188,105 +193,31 @@ export default function LibraryPage() {
 
       <div className="max-w-7xl mx-auto px-6 py-8">
 
-        {/* TOP */}
-        {!debouncedQuery && topBook && (
-          <div className="mb-10 p-6 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600">
-            <p className="text-sm mb-2">{t.top}</p>
-            <h2 className="text-xl font-bold mb-3">{getTitle(topBook)}</h2>
-            <button onClick={() => openPreview(topBook)} className="bg-white text-black px-4 py-2 rounded-lg">
-              {t.view}
-            </button>
+        <div className="mb-10">
+          <h3 className="mb-2">{t.recommended}</h3>
+          <p className="text-xs text-gray-400 mb-4">{t.based}</p>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+            {recommendedBooks.map((book: any) => (
+              <EbookCard
+                key={book.id}
+                id={book.id}
+                title={getTitle(book)}
+                cover={book.coverImage || ""}
+                price={book.price}
+                onClick={() => openPreview(book)}
+              />
+            ))}
           </div>
-        )}
-
-        {/* TRENDING */}
-        {!debouncedQuery && (
-          <div className="mb-10">
-            <h3 className="mb-4">{t.trending}</h3>
-            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-              {trendingBooks.map((book: any, i: number) => (
-                <div key={book.id} onClick={() => openPreview(book)} className="cursor-pointer p-4 bg-white/5 rounded-xl hover:bg-white/10 transition">
-                  #{i + 1} {getTitle(book)}
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* RECOMENDADO PRO */}
-        {recommendedBooks.length > 0 && (
-          <div className="mb-10">
-            <h3 className="mb-2">{t.recommended}</h3>
-            <p className="text-xs text-gray-400 mb-4">{t.based}</p>
-
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-              {recommendedBooks.map((book: any) => (
-                <EbookCard
-                  key={book.id}
-                  id={book.id}
-                  title={getTitle(book)}
-                  cover={book.coverImage || ""}
-                  price={book.price}
-                  onClick={() => openPreview(book)}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* SEARCH */}
-        <div onClick={() => setIsSearchOpen(true)} className="mb-8 bg-neutral-900 p-3 rounded-xl cursor-pointer">
-          {t.search}
-        </div>
-
-        <PremiumSearch
-          isOpen={isSearchOpen}
-          onClose={() => setIsSearchOpen(false)}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
-          results={searchResults}
-          onSelectBook={(book) => {
-            const real = books.find(b => b.id === book.id);
-            if (real) openPreview(real);
-          }}
-        />
-
-        {/* GRID PRINCIPAL */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-          {computedBooks.length === 0
-            ? Array.from({ length: 12 }).map((_, i) => (
-                <SkeletonCard key={i} />
-              ))
-            : computedBooks.map(book => (
-                <EbookCard
-                  key={book.id}
-                  id={book.id}
-                  title={getTitle(book)}
-                  cover={book.coverImage || ""}
-                  price={book.price}
-                  onClick={() => openPreview(book)}
-                />
-              ))
-          }
         </div>
 
       </div>
-
-      {showTop && (
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="fixed bottom-6 right-6 bg-purple-600 p-3 rounded-full"
-        >
-          <ChevronUp />
-        </button>
-      )}
 
       <BookPreviewModal
         isOpen={isModalOpen}
         onClose={closePreview}
         book={selectedBook}
       />
-
     </div>
   );
 }

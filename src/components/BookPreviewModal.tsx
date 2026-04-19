@@ -1,8 +1,9 @@
-import { motion, AnimatePresence } from "framer-motion";import { X, BookOpen, CheckCircle } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { X, BookOpen, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/context/LanguageContext";
 import { useEffect, useState } from "react";
-import { supabase } from "@/lib/supabase";
+import { trackEvent } from "@/lib/analytics";
 
 type Lang = "es" | "en" | "fr" | "pt";
 
@@ -14,13 +15,12 @@ interface BookPreviewModalProps {
 
 export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProps) {
   const { language } = useLanguage();
-
   const [viewers, setViewers] = useState(0);
 
-  // 🧠 HISTORIAL INTELIGENTE
   useEffect(() => {
     if (!book?.id) return;
 
+    // 🧠 HISTORIAL
     const raw = localStorage.getItem("drevaia_history");
     const history = raw ? JSON.parse(raw) : {};
 
@@ -32,20 +32,20 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
 
     localStorage.setItem("drevaia_history", JSON.stringify(history));
 
-    // 📊 Evento backend
-    supabase.from("ebook_events").insert([
-      { book_id: book.id, event_type: "view" }
-    ]);
+    // 📊 ANALYTICS
+    trackEvent({
+      type: "view",
+      bookId: book.id
+    });
 
-    // 👀 viewers fake dinámico
+    // 👀 viewers dinámicos
     const base = Math.floor(Math.random() * 6) + 3;
     setViewers(base);
 
     const interval = setInterval(() => {
       setViewers(prev => {
         const change = Math.random() > 0.5 ? 1 : -1;
-        const next = prev + change;
-        return Math.max(2, Math.min(12, next));
+        return Math.max(2, Math.min(12, prev + change));
       });
     }, 3000);
 
@@ -99,7 +99,6 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
   return (
     <AnimatePresence>
       <>
-        {/* OVERLAY */}
         <motion.div
           className="fixed inset-0 z-40 bg-black/70 backdrop-blur-xl"
           initial={{ opacity: 0 }}
@@ -108,17 +107,12 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
           onClick={onClose}
         />
 
-        {/* MODAL */}
         <motion.div className="fixed inset-0 z-50 flex items-center justify-center p-4 pointer-events-none">
           <motion.div
             className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden pointer-events-auto"
-            initial={{ scale: 0.95, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.95, opacity: 0 }}
             onClick={(e) => e.stopPropagation()}
           >
 
-            {/* HEADER */}
             <div className="relative h-48 bg-gradient-to-br from-purple-600 to-indigo-600">
               <button
                 onClick={onClose}
@@ -133,18 +127,19 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
               </div>
             </div>
 
-            {/* CONTENT */}
             <div className="p-6">
               <h2 className="text-xl font-bold mb-3">{title}</h2>
               <p className="text-gray-600 mb-4">{description}</p>
 
               <p className="text-sm text-purple-600 mb-4">{t.text}</p>
+
               <p className="text-xs text-gray-400 mb-4">
-  {language === "es" && "Acceso inmediato. Sin suscripciones. Pago único."}
-  {language === "en" && "Instant access. No subscriptions. One-time payment."}
-  {language === "fr" && "Accès immédiat. Paiement unique."}
-  {language === "pt" && "Acesso imediato. Pagamento único."}
-</p>
+                {language === "es" && "Acceso inmediato. Sin suscripciones. Pago único."}
+                {language === "en" && "Instant access. No subscriptions. One-time payment."}
+                {language === "fr" && "Accès immédiat. Paiement unique."}
+                {language === "pt" && "Acesso imediato. Pagamento único."}
+              </p>
+
               <div className="grid grid-cols-2 gap-2 mb-4">
                 {t.features.map((f, i) => (
                   <div key={i} className="flex items-center gap-2">
@@ -156,15 +151,14 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
 
               <p className="text-xs text-gray-500 mb-2">{t.social}</p>
 
-<p className="text-[11px] text-orange-400 mb-4">
-  {language === "es" && "Disponible ahora · Acceso inmediato"}
-  {language === "en" && "Available now · Instant access"}
-  {language === "fr" && "Disponible maintenant"}
-  {language === "pt" && "Disponível agora"}
-</p>
+              <p className="text-[11px] text-orange-400 mb-4">
+                {language === "es" && "Disponible ahora · Acceso inmediato"}
+                {language === "en" && "Available now · Instant access"}
+                {language === "fr" && "Disponible maintenant"}
+                {language === "pt" && "Disponível agora"}
+              </p>
             </div>
 
-            {/* CTA */}
             <div className="p-4 border-t">
               <button
                 onClick={() => {
@@ -178,6 +172,11 @@ export function BookPreviewModal({ isOpen, onClose, book }: BookPreviewModalProp
                   history[book.id].clicks += 1;
 
                   localStorage.setItem("drevaia_history", JSON.stringify(history));
+
+                  trackEvent({
+                    type: "click",
+                    bookId: book.id
+                  });
 
                   window.open(finalLink, "_blank");
                 }}
