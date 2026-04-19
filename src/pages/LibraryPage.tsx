@@ -18,7 +18,6 @@ export default function LibraryPage() {
   const [books, setBooks] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const debouncedQuery = useDebounce(searchQuery, 200);
-  const [loading, setLoading] = useState(true);
   const [showTop, setShowTop] = useState(false);
 
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
@@ -61,8 +60,7 @@ export default function LibraryPage() {
   }, []);
 
   const loadBooks = async () => {
-    setLoading(true);
-
+    
     try {
       const { data: booksData } = await supabase.from('books').select('*');
       const { data: events } = await supabase.from("ebook_events").select("*");
@@ -88,7 +86,6 @@ export default function LibraryPage() {
       console.error(err);
     }
 
-    setLoading(false);
   };
 
   const openPreview = (book: any) => {
@@ -129,14 +126,6 @@ export default function LibraryPage() {
     author: book.author || ""
   }));
 
-  if (loading) {
-    return (
-      <div className="min-h-screen bg-[#0f0f1a] flex items-center justify-center text-white">
-        {t.loading}
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white">
 
@@ -166,6 +155,11 @@ export default function LibraryPage() {
           <div className="mb-10">
             <h3 className="mb-4">🔥 Tendencia</h3>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {books.length === 0 && (
+  <p className="col-span-full text-center text-gray-400">
+    {t.loading}
+  </p>
+)}
               {trendingBooks.map((book: any, i: number) => (
                 <div key={book.id} onClick={() => openPreview(book)} className="cursor-pointer p-4 bg-white/5 rounded-xl">
                   #{i + 1} {book.title}
@@ -208,6 +202,11 @@ export default function LibraryPage() {
 
         {/* GRID */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+          {computedBooks.length === 0 && (
+  <p className="col-span-full text-center text-gray-400">
+    {t.loading}
+  </p>
+)}
           {(debouncedQuery ? computedBooks : computedBooks).map(book => (
             <EbookCard
               key={book.id}
