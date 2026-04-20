@@ -1,6 +1,7 @@
 import { useLanguage } from "@/context/LanguageContext";
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { motion } from "framer-motion";
 
 type Lang = "es" | "en" | "fr" | "pt";
 
@@ -10,166 +11,169 @@ export default function LandingPage() {
 
   const content = {
     es: {
-      heroTitle: "No todo lo que buscas es información.",
-      heroSubtitle: "A veces necesitas entender lo que sientes.",
-      cta: "Comenzar ahora",
+      heroTop: "Drevaia Digital existe para ser ese punto de encuentro entre lo humano y lo digital:",
+      heroMain: "un lugar donde las palabras no solo se leen...",
+      heroHighlight: "se sienten.",
+      title: "¿Qué es Drevaia Digital y por qué surgió?",
+      story: `Drevaia Digital no nació como un proyecto más en internet. Nació como una respuesta.
 
-      aboutTitle: "¿Qué es Drevaia Digital?",
-      aboutText:
-        "Una biblioteca emocional donde las palabras acompañan procesos reales, no solo ideas.",
+Una respuesta al ruido constante, a la velocidad con la que el mundo exige avanzar sin detenernos a sentir.
 
-      benefits: [
-        "Claridad emocional",
-        "Conexión contigo",
-        "Lectura transformadora",
-        "Espacio para sentir"
-      ],
+En un entorno digital lleno de información, productividad y prisa, surgió una pregunta silenciosa:
+“¿Dónde queda lo humano en medio de todo esto?”
 
-      storyTitle: "Nuestra esencia",
-      storyText:
-        "Drevaia Digital no nació como un proyecto más. Nació como una respuesta al ruido, a la prisa y a la desconexión emocional. Un lugar donde detenerte, escucharte y volver a ti.",
+Drevaia Digital nació precisamente ahí.
 
-      finalCta: "Empieza tu proceso hoy"
+Es un espacio creado para recordar que, detrás de cada pantalla, hay una mente que piensa, un corazón que siente y una historia que merece ser escuchada.
+
+No es solo una colección de ebooks.
+Es una biblioteca emocional.
+
+Un refugio de palabras para quienes atraviesan momentos de duda, cansancio, búsqueda o transformación.
+
+Porque las personas no solo necesitan información…
+también necesitan comprensión.
+
+Un lugar donde detenernos.
+Donde escucharnos.
+Donde volver a nosotros mismos.`,
+      cta: "Comenzar"
     },
 
     en: {
-      heroTitle: "Not everything you need is information.",
-      heroSubtitle: "Sometimes you need to understand what you feel.",
-      cta: "Start now",
+      heroTop: "Drevaia Digital exists as a meeting point between the human and the digital:",
+      heroMain: "a place where words are not just read...",
+      heroHighlight: "they are felt.",
+      title: "What is Drevaia Digital and why was it created?",
+      story: `Drevaia Digital was not born as just another project on the internet. It was born as a response.
 
-      aboutTitle: "What is Drevaia Digital?",
-      aboutText:
-        "An emotional library where words guide real human processes, not just ideas.",
+A response to noise, speed, and the constant pressure to move forward without feeling.
 
-      benefits: [
-        "Emotional clarity",
-        "Self connection",
-        "Transformational reading",
-        "Space to feel"
-      ],
+In a world full of information and productivity, a silent question emerged:
+“Where does the human part go?”
 
-      storyTitle: "Our essence",
-      storyText:
-        "Drevaia Digital was born as a response to noise, speed, and emotional disconnection. A place to pause, listen, and reconnect.",
+Drevaia was born there.
 
-      finalCta: "Start your journey today"
+It is an emotional library.
+A space to pause, listen, and reconnect.`,
+      cta: "Start"
     },
 
     fr: {
-      heroTitle: "Tout ce dont tu as besoin n’est pas de l’information.",
-      heroSubtitle: "Parfois, tu dois comprendre ce que tu ressens.",
-      cta: "Commencer",
+      heroTop: "Drevaia Digital est un point de rencontre entre l’humain et le digital :",
+      heroMain: "un lieu où les mots ne sont pas seulement lus...",
+      heroHighlight: "ils sont ressentis.",
+      title: "Qu'est-ce que Drevaia Digital ?",
+      story: `Drevaia Digital est né comme une réponse au bruit et à la déconnexion émotionnelle.
 
-      aboutTitle: "Qu'est-ce que Drevaia Digital ?",
-      aboutText:
-        "Une bibliothèque émotionnelle où les mots accompagnent des processus réels.",
-
-      benefits: [
-        "Clarté émotionnelle",
-        "Connexion à soi",
-        "Lecture transformative",
-        "Espace pour ressentir"
-      ],
-
-      storyTitle: "Notre essence",
-      storyText:
-        "Drevaia Digital est né comme une réponse au bruit et à la déconnexion émotionnelle. Un espace pour revenir à soi.",
-
-      finalCta: "Commence ton parcours"
+Un espace pour s’arrêter, se comprendre et se retrouver.`,
+      cta: "Commencer"
     },
 
     pt: {
-      heroTitle: "Nem tudo que você precisa é informação.",
-      heroSubtitle: "Às vezes você precisa entender o que sente.",
-      cta: "Começar",
+      heroTop: "Drevaia Digital é um ponto de encontro entre o humano e o digital:",
+      heroMain: "um lugar onde as palavras não são apenas lidas...",
+      heroHighlight: "são sentidas.",
+      title: "O que é Drevaia Digital?",
+      story: `Drevaia Digital nasceu como uma resposta ao ruído e à desconexão emocional.
 
-      aboutTitle: "O que é Drevaia Digital?",
-      aboutText:
-        "Uma biblioteca emocional onde as palavras acompanham processos reais.",
-
-      benefits: [
-        "Clareza emocional",
-        "Conexão consigo",
-        "Leitura transformadora",
-        "Espaço para sentir"
-      ],
-
-      storyTitle: "Nossa essência",
-      storyText:
-        "Drevaia Digital nasceu como resposta ao ruído, à pressa e à desconexão emocional.",
-
-      finalCta: "Comece sua jornada"
+Um espaço para parar, sentir e voltar para si.`,
+      cta: "Começar"
     }
   };
 
-  // 🔥 fallback seguro
   const t = content[language as Lang] || content.es;
 
   return (
-    <div className="bg-[#0f0f1a] text-white">
-
-      {/* SEO */}
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+      transition={{ duration: 0.6 }}
+      className="relative min-h-screen bg-gradient-to-b from-[#3a0a5c] to-[#0f0f1a] text-white px-6 py-20 text-center overflow-hidden"
+    >
       <Helmet>
         <title>Drevaia Digital</title>
-        <meta
-          name="description"
-          content="Biblioteca emocional con ebooks para comprenderte, sanar y transformar tu vida."
-        />
       </Helmet>
 
+      {/* ✨ PARTÍCULAS */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-white/20 rounded-full animate-pulse"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              animationDuration: `${3 + Math.random() * 5}s`
+            }}
+          />
+        ))}
+      </div>
+
       {/* HERO */}
-      <section className="min-h-screen flex flex-col justify-center items-center text-center px-6">
-        <h1 className="text-4xl md:text-6xl font-bold mb-6 max-w-3xl">
-          {t.heroTitle}
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1 }}
+        className="max-w-3xl mx-auto mb-16 relative z-10"
+      >
+        <p className="text-gray-300 mb-4">{t.heroTop}</p>
+
+        <h1 className="text-4xl md:text-6xl font-bold mb-4 leading-tight">
+          {t.heroMain}
         </h1>
 
-        <p className="text-lg text-gray-300 mb-8 max-w-xl">
-          {t.heroSubtitle}
-        </p>
-
-        <button
-          onClick={() => navigate("/empieza")}
-          className="bg-purple-600 px-8 py-4 rounded-xl text-white hover:bg-purple-700 transition text-lg"
+        {/* ✨ GLOW */}
+        <motion.h2
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 1 }}
+          className="text-4xl md:text-6xl font-bold text-yellow-400 relative inline-block"
         >
-          {t.cta}
-        </button>
-      </section>
+          <span className="relative z-10">{t.heroHighlight}</span>
+          <span className="absolute inset-0 blur-2xl opacity-40 bg-yellow-400 rounded-full animate-pulse" />
+        </motion.h2>
+      </motion.div>
 
-      {/* ABOUT */}
-      <section className="py-20 px-6 max-w-5xl mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-4">{t.aboutTitle}</h2>
-        <p className="text-gray-400 max-w-2xl mx-auto">
-          {t.aboutText}
-        </p>
-      </section>
-
-      {/* BENEFITS */}
-      <section className="py-16 px-6 max-w-5xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
-        {t.benefits.map((b, i) => (
-          <div key={i} className="bg-white/5 p-4 rounded-xl">
-            {b}
-          </div>
-        ))}
-      </section>
+      {/* TITLE */}
+      <motion.h2
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.3, duration: 1 }}
+        className="text-2xl font-bold mb-8 relative z-10"
+      >
+        {t.title}
+      </motion.h2>
 
       {/* STORY */}
-      <section className="py-20 px-6 max-w-3xl mx-auto text-center">
-        <h2 className="text-3xl font-bold mb-6">{t.storyTitle}</h2>
-        <p className="text-gray-400 leading-relaxed">
-          {t.storyText}
-        </p>
-      </section>
+      <motion.p
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.6, duration: 1.2 }}
+        className="max-w-2xl mx-auto text-gray-300 leading-relaxed whitespace-pre-line mb-16 relative z-10"
+      >
+        {t.story}
+      </motion.p>
 
-      {/* CTA FINAL */}
-      <section className="py-20 text-center">
-        <button
-          onClick={() => navigate("/empieza")}
-          className="bg-purple-600 px-10 py-4 rounded-xl text-white text-lg hover:bg-purple-700 transition"
-        >
-          {t.finalCta}
-        </button>
-      </section>
-
-    </div>
+      {/* CTA */}
+      <motion.button
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1, duration: 0.6 }}
+        whileHover={{
+          scale: 1.07,
+          boxShadow: "0px 0px 25px rgba(168,85,247,0.7)"
+        }}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => {
+          document.body.style.opacity = "0";
+          setTimeout(() => navigate("/empieza"), 300);
+        }}
+        className="bg-purple-600 hover:bg-purple-700 transition px-10 py-4 rounded-xl text-lg shadow-lg relative z-10"
+      >
+        {t.cta}
+      </motion.button>
+    </motion.div>
   );
 }

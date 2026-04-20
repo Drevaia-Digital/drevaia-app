@@ -1,13 +1,14 @@
 import { EbookCard } from '@/components/EbookCard';
 import { BookPreviewModal } from '@/components/BookPreviewModal';
 import { supabase } from '@/lib/supabase';
-import { useState, useEffect, useMemo, useRef } from 'react';
-import { ArrowLeft } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { searchBooks, getSmartRecommendations } from "@/engines/searchEngine";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useLanguage } from "@/context/LanguageContext";
 import { trackEvent } from "@/lib/analytics";
+import { addToHistory } from "@/lib/userHistory";
+import { ArrowLeft } from 'lucide-react';
 
 type Lang = "es" | "en" | "fr" | "pt";
 
@@ -18,97 +19,53 @@ export default function LibraryPage() {
   const [books, setBooks] = useState<any[]>([]);
   const [searchQuery] = useState('');
   const debouncedQuery = useDebounce(searchQuery, 200);
-  
+
   const [selectedBook, setSelectedBook] = useState<any | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  
-  const lastTrackedQuery = useRef("");
 
   const t = {
     es: {
       back: "Volver",
-      search: "Buscar en Drevaia...",
-      trending: "🔥 Tendencia",
-      top: "🔥 Más popular",
-      view: "Ver ahora",
       recommended: "✨ Recomendado para ti",
       based: "Basado en tu actividad"
     },
     en: {
       back: "Back",
-      search: "Search in Drevaia...",
-      trending: "🔥 Trending",
-      top: "🔥 Most popular",
-      view: "View now",
       recommended: "✨ Recommended for you",
       based: "Based on your activity"
     },
     fr: {
       back: "Retour",
-      search: "Rechercher...",
-      trending: "🔥 Tendance",
-      top: "🔥 Populaire",
-      view: "Voir",
       recommended: "✨ Recommandé pour toi",
       based: "Basé sur ton activité"
     },
     pt: {
       back: "Voltar",
-      search: "Buscar...",
-      trending: "🔥 Tendência",
-      top: "🔥 Mais popular",
-      view: "Ver",
       recommended: "✨ Recomendado para você",
       based: "Baseado na sua atividade"
     }
   }[language as Lang];
 
   useEffect(() => {
-    const cachedRaw = localStorage.getItem("drevaia_books");
-    if (cachedRaw) {
-      try {
-        const cached = JSON.parse(cachedRaw);
-        setBooks(cached.data || []);
-      } catch {}
-    }
-  }, []);
-
-  useEffect(() => {
     loadBooks();
   }, []);
-
-  useEffect(() => {
-    if (
-      debouncedQuery.length > 2 &&
-      debouncedQuery !== lastTrackedQuery.current
-    ) {
-      trackEvent({
-        type: "search",
-        meta: { query: debouncedQuery }
-      });
-
-      lastTrackedQuery.current = debouncedQuery;
-    }
-  }, [debouncedQuery]);
 
   useEffect(() => {
     trackEvent({ type: "open_library" });
   }, []);
 
-    const loadBooks = async () => {
+  const loadBooks = async () => {
     try {
       const cachedRaw = localStorage.getItem("drevaia_books");
 
       if (cachedRaw) {
-        try {
-          const cached = JSON.parse(cachedRaw);
-          const isFresh = Date.now() - cached.timestamp < 1000 * 60 * 10;
+        const cached = JSON.parse(cachedRaw);
+        const isFresh = Date.now() - cached.timestamp < 1000 * 60 * 10;
 
-          if (isFresh && cached.data) {
-            setBooks(cached.data);
-            return;
-          }
-        } catch {}
+        if (isFresh && cached.data) {
+          setBooks(cached.data);
+          return;
+        }
       }
 
       const { data: booksData } = await supabase.from('books').select('*');
@@ -141,9 +98,22 @@ export default function LibraryPage() {
     }
   };
 
+  // 🔥 AQUÍ ACTIVAMOS HISTORIAL REAL
   const openPreview = (book: any) => {
     setSelectedBook(book);
     setIsModalOpen(true);
+
+    // 👉 guarda en historial
+    addToHistory({
+      id: book.id,
+      title: book.title,
+    });
+
+    // 👉 tracking
+    trackEvent({
+      type: "open_book",
+      meta: { id: book.id }
+    });
   };
 
   const closePreview = () => {
@@ -158,12 +128,15 @@ export default function LibraryPage() {
     });
   }, [books, debouncedQuery]);
 
+  // 🔥 HISTORIAL REAL
   const historyRaw = localStorage.getItem("drevaia_history");
-  let userHistory = {};
+  let userHistory: any[] = [];
+
   try {
-    userHistory = historyRaw ? JSON.parse(historyRaw) : {};
+    userHistory = historyRaw ? JSON.parse(historyRaw) : [];
   } catch {}
 
+  // 🔥 RECOMENDACIÓN INTELIGENTE
   const recommendedBooks = useMemo(() => {
     let rec = getSmartRecommendations(computedBooks, userHistory);
 
@@ -185,7 +158,10 @@ export default function LibraryPage() {
     <div className="min-h-screen bg-[#0f0f1a] text-white">
 
       <div className="max-w-7xl mx-auto px-6 pt-6">
-        <button onClick={() => navigate('/')} className="text-gray-400 hover:text-white flex items-center gap-2">
+        <button
+          onClick={() => navigate('/')}
+          className="text-gray-400 hover:text-white flex items-center gap-2"
+        >
           <ArrowLeft className="w-4 h-4" />
           {t.back}
         </button>
@@ -193,6 +169,7 @@ export default function LibraryPage() {
 
       <div className="max-w-7xl mx-auto px-6 py-8">
 
+        {/* 🔥 RECOMENDADO INTELIGENTE */}
         <div className="mb-10">
           <h3 className="mb-2">{t.recommended}</h3>
           <p className="text-xs text-gray-400 mb-4">{t.based}</p>
