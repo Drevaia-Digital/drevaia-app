@@ -29,7 +29,8 @@ export function PortalPage({ t, language, changeLanguage }: PortalPageProps) {
       : 'Here you don’t just access content.\nYou reconnect with yourself.',
     comingSoon: language === 'es' ? 'Próximamente' : 'Coming Soon',
     subscribe: language === 'es' ? 'Suscribirme' : 'Subscribe',
-    subscribed: language === 'es' ? '✨ Ya estás dentro' : '✨ You are in'
+    subscribed: language === 'es' ? '✨ Ya estás dentro' : '✨ You are in',
+    continue: language === 'es' ? '✨ Continuar explorando' : '✨ Continue exploring'
   };
 
   const features = [
@@ -82,7 +83,7 @@ export function PortalPage({ t, language, changeLanguage }: PortalPageProps) {
 
       <Navigation t={t} language={language} changeLanguage={changeLanguage} />
 
-      {/* HERO EMOCIONAL */}
+      {/* HERO */}
       <section className="py-24 text-center px-6">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
@@ -97,22 +98,24 @@ export function PortalPage({ t, language, changeLanguage }: PortalPageProps) {
         </p>
       </section>
 
-{history.length > 0 && (
-  <div className="max-w-6xl mx-auto px-6 mb-16">
-    <h3 className="text-xl mb-4">✨ Continuar explorando</h3>
+      {/* 🔥 HISTORIAL INTELIGENTE */}
+      {history.length > 0 && (
+        <section className="max-w-6xl mx-auto px-6 mb-20">
+          <h3 className="text-xl mb-6">{labels.continue}</h3>
 
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      {history.map((item: any) => (
-        <div
-          key={item.id}
-          className="p-4 bg-white/5 rounded-xl hover:bg-white/10 transition cursor-pointer"
-        >
-          <p className="text-sm">{item.title}</p>
-        </div>
-      ))}
-    </div>
-  </div>
-)}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {history.map((item: any) => (
+              <motion.div
+                key={item.id}
+                whileHover={{ scale: 1.05 }}
+                className="p-5 bg-white/5 rounded-2xl hover:bg-white/10 transition cursor-pointer border border-white/10"
+              >
+                <p className="text-sm text-gray-300">{item.title}</p>
+              </motion.div>
+            ))}
+          </div>
+        </section>
+      )}
 
       {/* FEATURES */}
       <section className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
@@ -175,7 +178,7 @@ export function PortalPage({ t, language, changeLanguage }: PortalPageProps) {
         )}
       </section>
 
-      {/* CTA */}
+      {/* CTA FINAL */}
       <section className="text-center pb-20">
         <Link to="/library">
           <Button className="bg-purple-600 hover:bg-purple-700 px-8 py-4 text-lg">
