@@ -14,7 +14,7 @@ interface CheckoutSuccessPageProps {
   changeLanguage: (lang: Language) => void;
 }
 
-export function CheckoutSuccessPage({ t, language, changeLanguage }: CheckoutSuccessPageProps) {
+export function CheckoutSuccessPage({ t, language }: CheckoutSuccessPageProps) {
   const [searchParams] = useSearchParams();
   const { clearCart } = useCart();
   const paymentIntent = searchParams.get('payment_intent');
@@ -47,7 +47,7 @@ export function CheckoutSuccessPage({ t, language, changeLanguage }: CheckoutSuc
         language={language}
       />
       
-      <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+      <Navigation />
 
       <main className="flex items-center justify-center min-h-[70vh] py-16">
         <div className="max-w-xl mx-auto px-4 text-center">

@@ -41,7 +41,7 @@ interface Tag {
   count: number;
 }
 
-export function BlogPage({ t, language, changeLanguage }: BlogPageProps) {
+export function BlogPage({ t, language }: BlogPageProps) {
   const [posts, setPosts] = useState<Post[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [tags, setTags] = useState<Tag[]>([]);
@@ -122,7 +122,7 @@ export function BlogPage({ t, language, changeLanguage }: BlogPageProps) {
         canonicalUrl={`https://drevaia.com${language === 'es' ? '' : `/${language}`}/blog`}
       />
       
-      <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+      <Navigation />
 
       {/* Hero */}
       <section className="relative py-20 md:py-32 bg-gradient-to-b from-purple-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden">

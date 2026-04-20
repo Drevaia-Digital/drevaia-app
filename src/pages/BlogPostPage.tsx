@@ -10,13 +10,7 @@ import { CommentSystemSupabase } from '@/components/CommentSystemSupabase';
 import { FavoriteButtonSupabase } from '@/components/FavoriteButtonSupabase';
 import { ReadingMode } from '@/components/ReadingMode';
 import { useAnalytics, usePageTracking } from '@/hooks/useAnalytics';
-import type { Translations, Language } from '@/i18n';
-
-interface BlogPostPageProps {
-  t: Translations;
-  language: Language;
-  changeLanguage: (lang: Language) => void;
-}
+import { useLanguage } from "@/context/LanguageContext";
 
 interface Post {
   id: string;
@@ -40,7 +34,7 @@ interface Post {
   };
 }
 
-export function BlogPostPage({ t, language, changeLanguage }: BlogPostPageProps) {
+export function BlogPostPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [post, setPost] = useState<Post | null>(null);
@@ -48,7 +42,8 @@ export function BlogPostPage({ t, language, changeLanguage }: BlogPostPageProps)
   const [loading, setLoading] = useState(true);
   const [liked, setLiked] = useState(false);
   const [readingMode, setReadingMode] = useState(false);
-  
+  const { language } = useLanguage();
+
   const { trackEvent } = useAnalytics();
   usePageTracking(`/blog/${slug}`);
   
@@ -107,7 +102,7 @@ export function BlogPostPage({ t, language, changeLanguage }: BlogPostPageProps)
   if (loading) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900">
-        <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+        <Navigation />
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="animate-pulse flex flex-col items-center">
             <BookOpen className="w-16 h-16 text-purple-300 mb-4" />
@@ -121,7 +116,7 @@ export function BlogPostPage({ t, language, changeLanguage }: BlogPostPageProps)
   if (!post) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900">
-        <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+        <Navigation />
         <div className="flex flex-col items-center justify-center min-h-[60vh]">
           <BookOpen className="w-16 h-16 text-gray-300 mb-4" />
           <p className="text-gray-500 mb-4">{language === 'es' ? 'Artículo no encontrado' : language === 'en' ? 'Article not found' : language === 'fr' ? 'Article non trouvé' : 'Artigo não encontrado'}</p>
@@ -132,7 +127,7 @@ export function BlogPostPage({ t, language, changeLanguage }: BlogPostPageProps)
             </Button>
           </Link>
         </div>
-        <Footer t={t} />
+        <Footer />
       </div>
     );
   }
@@ -148,7 +143,7 @@ export function BlogPostPage({ t, language, changeLanguage }: BlogPostPageProps)
         canonicalUrl={`https://drevaia.com/blog/${post.slug}`}
       />
       
-      <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+      <Navigation />
 
       {/* Breadcrumb */}
       <div className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
@@ -324,7 +319,7 @@ export function BlogPostPage({ t, language, changeLanguage }: BlogPostPageProps)
         </section>
       )}
 
-      <Footer t={t} />
+      <Footer />
     </div>
   );
 }

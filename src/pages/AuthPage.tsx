@@ -9,7 +9,7 @@ import { Footer } from '@/sections/Footer';
 import { SEO } from '@/partials/SEO';
 import { useAuth } from '@/hooks/useAuth';
 
-export function AuthPage({ t, language, changeLanguage, mode }: any) {
+export function AuthPage({ t, language, mode }: any) {
   const navigate = useNavigate();
   const { signIn, isLoading } = useAuth();
 
@@ -59,7 +59,7 @@ export function AuthPage({ t, language, changeLanguage, mode }: any) {
       </div>
 
       <SEO title="Auth" description="Auth Drevaia" language={language} />
-      <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+      <Navigation />
 
       <main className="pt-24 pb-16 relative z-10">
         <div className="max-w-md mx-auto px-4">

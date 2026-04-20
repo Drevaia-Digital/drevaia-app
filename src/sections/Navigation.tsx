@@ -4,16 +4,21 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { motion } from 'framer-motion';
+import { getUserHistory } from "@/lib/userHistory";
 
-export function Navigation(_: any) {
+export function Navigation() {
   const { language, setLanguage } = useLanguage();
   const t = translations[language];
+
   const [open, setOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+
   const location = useLocation();
   const navigate = useNavigate();
 
-  // 🔥 SCROLL PRO (solo cuando estás en home)
+  const hasHistory = getUserHistory().length > 0;
+
+  // 🔥 SCROLL PRO
   const scrollToSection = (id: string) => {
     if (id === 'top') {
       window.scrollTo({ top: 0, behavior: 'auto' });
@@ -28,7 +33,6 @@ export function Navigation(_: any) {
       behavior: 'auto',
     });
 
-    // micro feedback visual
     el.style.transform = 'scale(0.98)';
     el.style.transition = 'transform 0.18s ease-out';
 
@@ -37,27 +41,25 @@ export function Navigation(_: any) {
     }, 120);
   };
 
-  // 🔥 NAVEGACIÓN INTELIGENTE (CLAVE)
+  // 🔥 NAV INTELIGENTE
   const goToHomeSmart = () => {
-  if (location.pathname === "/landing") {
-    scrollToSection('top');
-  } else {
-    navigate('/landing');
-  }
-};
+    if (location.pathname === "/landing") {
+      scrollToSection('top');
+    } else {
+      navigate('/landing');
+    }
+  };
 
   const goToSectionSmart = (section: string) => {
     if (location.pathname === "/") {
       scrollToSection(section);
     } else {
       navigate('/');
-      setTimeout(() => {
-        scrollToSection(section);
-      }, 50);
+      setTimeout(() => scrollToSection(section), 50);
     }
   };
 
-  // Detectar móvil
+  // 📱 DETECTAR MÓVIL
   useEffect(() => {
     const handleResize = () => {
       const isSmallScreen = window.innerWidth < 1024;
@@ -72,7 +74,7 @@ export function Navigation(_: any) {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // Cerrar menú al cambiar ruta
+  // cerrar menú al cambiar ruta
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
@@ -84,10 +86,7 @@ export function Navigation(_: any) {
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
           {/* LOGO */}
-          <button
-            onClick={goToHomeSmart}
-            className="flex items-center gap-2"
-          >
+          <button onClick={goToHomeSmart} className="flex items-center gap-2">
             <Sparkles className="text-amber-400" />
             <span className="text-white font-bold text-lg">Drevaia</span>
           </button>
@@ -96,20 +95,38 @@ export function Navigation(_: any) {
           {!isMobile && (
             <div className="flex items-center gap-6">
 
+              {/* INICIO */}
               <button
-  onClick={() => navigate("/landing")}
-  className="text-white/80 hover:text-white"
->
-  {language === "es" && "Inicio"}
-  {language === "en" && "Start"}
-  {language === "fr" && "Accueil"}
-  {language === "pt" && "Início"}
-</button>
+                onClick={() => navigate("/landing")}
+                className="text-white/80 hover:text-white"
+              >
+                {language === "es" && "Inicio"}
+                {language === "en" && "Start"}
+                {language === "fr" && "Accueil"}
+                {language === "pt" && "Início"}
+              </button>
 
+              {/* LIBRARY */}
               <Link to="/library" className="text-white/80 hover:text-white">
                 {t.nav.library}
               </Link>
 
+              {/* 🔥 PORTAL (NUEVO) */}
+              <button
+                onClick={() => navigate("/portal")}
+                className="text-white/80 hover:text-white relative"
+              >
+                {language === "es" && "Portal"}
+                {language === "en" && "Portal"}
+                {language === "fr" && "Portail"}
+                {language === "pt" && "Portal"}
+
+                {hasHistory && (
+                  <span className="absolute -top-1 -right-2 w-2 h-2 bg-purple-400 rounded-full"></span>
+                )}
+              </button>
+
+              {/* SECCIONES */}
               <button onClick={() => goToSectionSmart('daily')} className="text-white/80 hover:text-white">
                 {language === 'es' ? 'Lectura diaria' : 'Daily reading'}
               </button>
@@ -118,10 +135,12 @@ export function Navigation(_: any) {
                 {language === 'es' ? 'Testimonios' : 'Testimonials'}
               </button>
 
+              {/* LEGAL */}
               <Link to="/legal" className="text-white/80 hover:text-white">
                 {t.nav.legal}
               </Link>
 
+              {/* IDIOMA */}
               <div className="flex gap-2 bg-white/10 px-3 py-1 rounded-full">
                 {['es','en','fr','pt'].map((lang) => (
                   <button
@@ -145,13 +164,13 @@ export function Navigation(_: any) {
           {isMobile && (
             <button
               onClick={() => setOpen(prev => !prev)}
-              className="flex flex-col items-center justify-center text-neutral-400 hover:text-white transition-all duration-200"
+              className="flex flex-col items-center justify-center text-neutral-400 hover:text-white"
             >
               <div className="flex items-center justify-center h-6">
                 {open ? <X size={24} /> : <Menu size={24} />}
               </div>
 
-              <span className="text-[10px] mt-1 leading-none">
+              <span className="text-[10px] mt-1">
                 {open ? "Cerrar" : "Menú"}
               </span>
             </button>
@@ -168,87 +187,21 @@ export function Navigation(_: any) {
           className="fixed top-16 left-0 w-full bg-black/80 backdrop-blur-xl px-6 py-6 space-y-6 z-40"
         >
 
+          {/* INICIO */}
           <button
-  onClick={() => {
-    navigate("/landing");
-    setOpen(false);
-  }}
-  className="block text-white text-lg"
->
-  {language === "es" && "Inicio"}
-  {language === "en" && "Start"}
-  {language === "fr" && "Accueil"}
-  {language === "pt" && "Início"}
-</button>
+            onClick={() => {
+              navigate("/landing");
+              setOpen(false);
+            }}
+            className="block text-white text-lg"
+          >
+            {language === "es" && "Inicio"}
+            {language === "en" && "Start"}
+            {language === "fr" && "Accueil"}
+            {language === "pt" && "Início"}
+          </button>
 
-          <div className="flex items-center gap-2 mt-4">
-
-  {/* ES */}
-  <button
-    onClick={() => {
-      setLanguage("es");
-      setOpen(false);
-      goToHomeSmart();
-    }}
-    className={`text-xs px-3 py-1 rounded-lg transition ${
-      language === "es"
-        ? "bg-purple-600 text-white"
-        : "bg-white/10 text-white hover:bg-white/20"
-    }`}
-  >
-    ES
-  </button>
-
-  {/* EN */}
-  <button
-    onClick={() => {
-      setLanguage("en");
-      setOpen(false);
-      goToHomeSmart();
-    }}
-    className={`text-xs px-3 py-1 rounded-lg transition ${
-      language === "en"
-        ? "bg-purple-600 text-white"
-        : "bg-white/10 text-white hover:bg-white/20"
-    }`}
-  >
-    EN
-  </button>
-
-  {/* FR */}
-  <button
-    onClick={() => {
-      setLanguage("fr");
-      setOpen(false);
-      goToHomeSmart();
-    }}
-    className={`text-xs px-3 py-1 rounded-lg transition ${
-      language === "fr"
-        ? "bg-purple-600 text-white"
-        : "bg-white/10 text-white hover:bg-white/20"
-    }`}
-  >
-    FR
-  </button>
-
-  {/* PT */}
-  <button
-    onClick={() => {
-      setLanguage("pt");
-      setOpen(false);
-      goToHomeSmart();
-    }}
-    className={`text-xs px-3 py-1 rounded-lg transition ${
-      language === "pt"
-        ? "bg-purple-600 text-white"
-        : "bg-white/10 text-white hover:bg-white/20"
-    }`}
-  >
-    PT
-  </button>
-
-</div>
-
+          {/* LIBRARY */}
           <Link
             to="/library"
             className="block text-white text-lg"
@@ -257,6 +210,21 @@ export function Navigation(_: any) {
             {t.nav.library}
           </Link>
 
+          {/* 🔥 PORTAL */}
+          <button
+            onClick={() => {
+              navigate("/portal");
+              setOpen(false);
+            }}
+            className="block text-white text-lg"
+          >
+            {language === "es" && "Portal"}
+            {language === "en" && "Portal"}
+            {language === "fr" && "Portail"}
+            {language === "pt" && "Portal"}
+          </button>
+
+          {/* SECCIONES */}
           <button
             onClick={() => {
               goToSectionSmart('daily');
@@ -277,6 +245,7 @@ export function Navigation(_: any) {
             {language === 'es' ? 'Testimonios' : 'Testimonials'}
           </button>
 
+          {/* LEGAL */}
           <Link
             to="/legal"
             className="block text-white text-lg"
@@ -284,6 +253,27 @@ export function Navigation(_: any) {
           >
             {t.nav.legal}
           </Link>
+
+          {/* IDIOMA */}
+          <div className="flex gap-2 mt-4">
+            {['es','en','fr','pt'].map((lang) => (
+              <button
+                key={lang}
+                onClick={() => {
+                  setLanguage(lang as any);
+                  setOpen(false);
+                  goToHomeSmart();
+                }}
+                className={`text-xs px-3 py-1 rounded-lg ${
+                  language === lang
+                    ? "bg-purple-600 text-white"
+                    : "bg-white/10 text-white"
+                }`}
+              >
+                {lang.toUpperCase()}
+              </button>
+            ))}
+          </div>
 
         </motion.div>
       )}

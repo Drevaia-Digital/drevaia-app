@@ -21,7 +21,7 @@ interface ProfilePageProps {
   changeLanguage: (lang: Language) => void;
 }
 
-export function ProfilePage({ t, language, changeLanguage }: ProfilePageProps) {
+export function ProfilePage({ t, language }: ProfilePageProps) {
   const navigate = useNavigate();
   const { user, profile, isAuthenticated, isLoading: authLoading, signOut, updateProfile } = useAuth();
   
@@ -122,7 +122,7 @@ export function ProfilePage({ t, language, changeLanguage }: ProfilePageProps) {
         language={language}
       />
       
-      <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+      <Navigation />
 
       <main className="pt-24 pb-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">

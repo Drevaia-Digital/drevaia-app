@@ -36,7 +36,7 @@ interface Book {
   bestseller: boolean;
 }
 
-export function BookDetailPage({ t, language, changeLanguage }: BookDetailPageProps) {
+export function BookDetailPage({ t, language }: BookDetailPageProps) {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [book, setBook] = useState<Book | null>(null);
@@ -98,7 +98,7 @@ export function BookDetailPage({ t, language, changeLanguage }: BookDetailPagePr
   if (loading) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900">
-        <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+        <Navigation />
         <div className="flex items-center justify-center min-h-[60vh]">
           <div className="animate-pulse flex flex-col items-center">
             <BookOpen className="w-16 h-16 text-purple-300 mb-4" />
@@ -112,7 +112,7 @@ export function BookDetailPage({ t, language, changeLanguage }: BookDetailPagePr
   if (!book) {
     return (
       <div className="min-h-screen bg-white dark:bg-gray-900">
-        <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+        <Navigation />
         <div className="flex flex-col items-center justify-center min-h-[60vh]">
           <BookOpen className="w-16 h-16 text-gray-300 mb-4" />
           <p className="text-gray-500 mb-4">
@@ -150,7 +150,7 @@ export function BookDetailPage({ t, language, changeLanguage }: BookDetailPagePr
         canonicalUrl={`https://drevaia.com/books/${book.slug}`}
       />
       
-      <Navigation t={t} language={language} changeLanguage={changeLanguage} />
+      <Navigation />
 
       {/* Breadcrumb */}
       <div className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
