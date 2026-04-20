@@ -96,9 +96,15 @@ export function Navigation(_: any) {
           {!isMobile && (
             <div className="flex items-center gap-6">
 
-              <button onClick={goToHomeSmart} className="text-white/80 hover:text-white">
-                {t.nav.home}
-              </button>
+              <button
+  onClick={() => navigate("/landing")}
+  className="text-white/80 hover:text-white"
+>
+  {language === "es" && "Inicio"}
+  {language === "en" && "Start"}
+  {language === "fr" && "Accueil"}
+  {language === "pt" && "Início"}
+</button>
 
               <Link to="/library" className="text-white/80 hover:text-white">
                 {t.nav.library}
@@ -163,14 +169,17 @@ export function Navigation(_: any) {
         >
 
           <button
-            onClick={() => {
-              goToHomeSmart();
-              setOpen(false);
-            }}
-            className="block text-white text-lg"
-          >
-            {t.nav.home}
-          </button>
+  onClick={() => {
+    navigate("/landing");
+    setOpen(false);
+  }}
+  className="block text-white text-lg"
+>
+  {language === "es" && "Inicio"}
+  {language === "en" && "Start"}
+  {language === "fr" && "Accueil"}
+  {language === "pt" && "Início"}
+</button>
 
           <div className="flex items-center gap-2 mt-4">
 
