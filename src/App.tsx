@@ -6,6 +6,7 @@ import { AuthProvider } from '@/hooks/useAuth';
 // 📄 Pages
 import OnboardingPage from "@/pages/OnboardingPage";
 import { HomePage } from '@/pages/HomePage';
+import { PortalPage } from '@/pages/PortalPage';
 import { AuthPage } from '@/pages/AuthPage';
 import { LegalPage } from '@/pages/LegalPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -64,16 +65,11 @@ export default function App() {
 
             {/* 🌐 PORTAL */}
             <Route
-              path="/portal"
-              element={
-                <div className="min-h-screen bg-[#0f0f1a] text-white flex items-center justify-center">
-                  <div className="text-center">
-                    <h1 className="text-3xl font-bold mb-4">Portal en construcción</h1>
-                    <p className="text-gray-400">Este espacio estará disponible próximamente.</p>
-                  </div>
-                </div>
-              }
-            />
+  path="/portal"
+  element={
+    <PortalPage />
+  }
+/>
 
             {/* 🔐 AUTH */}
             <Route path="/auth/login" element={<AuthPage mode="login" />} />

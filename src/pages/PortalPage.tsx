@@ -6,17 +6,13 @@ import { Input } from '@/components/ui/input';
 import { Navigation } from '@/sections/Navigation';
 import { Footer } from '@/sections/Footer';
 import { SEO } from '@/partials/SEO';
-import type { Translations, Language } from '@/i18n';
 import { motion } from 'framer-motion';
 import { getUserHistory } from "@/lib/userHistory";
 
-interface PortalPageProps {
-  t: Translations;
-  language: Language;
-  changeLanguage: (lang: Language) => void;
-}
+import { useLanguage } from "@/context/LanguageContext";
 
-export function PortalPage({ t, language, changeLanguage }: PortalPageProps) {
+export function PortalPage() {
+  const { language } = useLanguage();
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -81,8 +77,7 @@ export function PortalPage({ t, language, changeLanguage }: PortalPageProps) {
 
       <SEO title={labels.title} description={labels.subtitle} language={language} />
 
-      <Navigation t={t} language={language} changeLanguage={changeLanguage} />
-
+    <Navigation />
       {/* HERO */}
       <section className="py-24 text-center px-6">
         <motion.h1
@@ -189,7 +184,7 @@ export function PortalPage({ t, language, changeLanguage }: PortalPageProps) {
         </Link>
       </section>
 
-      <Footer t={t} />
+      <Footer />
     </div>
   );
 }
