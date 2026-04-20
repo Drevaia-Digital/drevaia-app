@@ -191,10 +191,14 @@ export default function LibraryPage() {
       </div>
 
       <BookPreviewModal
-        isOpen={isModalOpen}
-        onClose={closePreview}
-        book={selectedBook}
-      />
+  isOpen={isModalOpen}
+  onClose={closePreview}
+  book={selectedBook}
+  recommendedBooks={recommendedBooks}
+  onSelectBook={(book) => {
+    setSelectedBook(book);
+  }}
+/>
     </div>
   );
 }
