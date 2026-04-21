@@ -94,21 +94,27 @@ export default function LibraryPage() {
   // 🤖 IA REAL (embeddings backend)
 
 useEffect(() => {
-  if (!selectedBook || !isModalOpen) return;
+  if (!selectedBook || !isModalOpen || !books.length) return;
 
-  // 🔥 limpia antes de cargar → evita parpadeo
   setAiBooks([]);
 
   getAIRecommendations(selectedBook)
-  .then((data) => {
-    console.log("AI response:", data);
-    setAiBooks(Array.isArray(data) ? data : data?.data || []);
-  })
-  .catch((err) => {
-    console.error("AI error:", err);
-  });
+    .then((data) => {
+      console.log("AI response:", data);
 
-}, [selectedBook, isModalOpen]);
+      setAiBooks(
+        (Array.isArray(data) ? data : data?.data || []).map((b: any) => {
+          const original = books.find((bk) => bk.id === b.id);
+
+          return original ? { ...original } : null;
+        }).filter(Boolean)
+      );
+    })
+    .catch((err) => {
+      console.error("AI error:", err);
+    });
+
+}, [selectedBook, isModalOpen, books]);
 
   const updateUserHistory = () => {
     const raw = localStorage.getItem("drevaia_history");
@@ -250,7 +256,7 @@ useEffect(() => {
         isOpen={isModalOpen}
         onClose={closePreview}
         book={selectedBook}
-        recommendedBooks={recommendedBooks}
+        recommendedBooks={aiBooks.length > 0 ? aiBooks : recommendedBooks}
         onSelectBook={(book) => {
   setSelectedBook(book);
   setIsModalOpen(true);

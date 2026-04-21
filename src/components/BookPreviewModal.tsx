@@ -89,7 +89,7 @@ export function BookPreviewModal({
       cta: "Accéder maintenant →",
       explore: "Continuer",
       text: "Une nouvelle façon de voir ta vie.",
-      features: ["Accès immédiat", "Contenu transformateur"],
+      features: ["Accès immédiat", "Contenu transformador"],
       social: `${viewers} personnes consultent cet ebook`,
       also: "Tu pourrais aussi aimer"
     },
@@ -106,12 +106,11 @@ export function BookPreviewModal({
   const t = copy[language as Lang];
 
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {isOpen && (
         <>
           {/* OVERLAY */}
           <motion.div
-            key="overlay"
             className="fixed inset-0 z-40 bg-black/70 backdrop-blur-xl"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -121,8 +120,7 @@ export function BookPreviewModal({
 
           {/* MODAL */}
           <motion.div
-            key="modal"
-            className="fixed inset-0 z-50 flex items-center justify-center p-4"
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 overflow-y-auto"
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
@@ -131,16 +129,15 @@ export function BookPreviewModal({
               key={book.id}
               className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden"
               onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
             >
-
               {/* HEADER */}
               <div className="relative h-48 bg-gradient-to-br from-purple-600 to-indigo-600">
                 <button
-                  onClick={onClose}
-                  className="absolute top-4 right-4 w-10 h-10 bg-white/30 rounded-full flex items-center justify-center hover:bg-white/50 transition"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onClose();
+                  }}
+                  className="absolute top-4 right-4 w-10 h-10 bg-white/30 rounded-full flex items-center justify-center hover:bg-white/50 transition z-50"
                 >
                   <X className="w-5 h-5 text-white" />
                 </button>
@@ -158,13 +155,6 @@ export function BookPreviewModal({
 
                 <p className="text-sm text-purple-600 mb-4">{t.text}</p>
 
-                <p className="text-xs text-gray-400 mb-4">
-                  {language === "es" && "Acceso inmediato. Sin suscripciones. Pago único."}
-                  {language === "en" && "Instant access. No subscriptions. One-time payment."}
-                  {language === "fr" && "Accès immédiat. Paiement unique."}
-                  {language === "pt" && "Acesso imediato. Pagamento único."}
-                </p>
-
                 <div className="grid grid-cols-2 gap-2 mb-4">
                   {t.features.map((f, i) => (
                     <div key={i} className="flex items-center gap-2">
@@ -173,8 +163,6 @@ export function BookPreviewModal({
                     </div>
                   ))}
                 </div>
-
-                <p className="text-xs text-gray-500 mb-4">{t.social}</p>
 
                 {/* RECOMENDACIONES */}
                 {recommendedBooks.length > 0 && (
@@ -203,24 +191,7 @@ export function BookPreviewModal({
               {/* FOOTER */}
               <div className="p-4 border-t">
                 <button
-                  onClick={() => {
-                    const raw = localStorage.getItem("drevaia_history");
-                    const history = raw ? JSON.parse(raw) : {};
-
-                    if (!history[book.id]) {
-                      history[book.id] = { views: 0, clicks: 0 };
-                    }
-
-                    history[book.id].clicks += 1;
-                    localStorage.setItem("drevaia_history", JSON.stringify(history));
-
-                    trackEvent({
-                      type: "click",
-                      bookId: book.id
-                    });
-
-                    window.open(finalLink, "_blank");
-                  }}
+                  onClick={() => window.open(finalLink, "_blank")}
                   className="w-full bg-purple-600 text-white py-3 rounded-xl hover:bg-purple-700 transition"
                 >
                   {t.cta}
@@ -234,7 +205,6 @@ export function BookPreviewModal({
                   {t.explore}
                 </Button>
               </div>
-
             </motion.div>
           </motion.div>
         </>
