@@ -100,13 +100,13 @@ useEffect(() => {
   setAiBooks([]);
 
   getAIRecommendations(selectedBook)
-    .then((data) => {
-      console.log("AI response:", data);
-      setAiBooks(Array.isArray(data) ? data : data?.data || []);
-    })
-    .catch((err) => {
-      console.error("AI error:", err);
-    });
+  .then((data) => {
+    console.log("AI response:", data);
+    setAiBooks(Array.isArray(data) ? data : data?.data || []);
+  })
+  .catch((err) => {
+    console.error("AI error:", err);
+  });
 
 }, [selectedBook, isModalOpen]);
 
