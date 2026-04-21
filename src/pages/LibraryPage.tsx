@@ -10,13 +10,14 @@ import { trackEvent } from "@/lib/analytics";
 import { addToHistory } from "@/lib/userHistory";
 import { ArrowLeft } from 'lucide-react';
 import type { Book } from "@/types/book";
+import { getAIRecommendations } from "@/lib/aiBackend";
 
 type Lang = "es" | "en" | "fr" | "pt";
 
 export default function LibraryPage() {
   const navigate = useNavigate();
   const { language } = useLanguage();
-
+  const [aiBooks, setAiBooks] = useState<any[]>([]);
   const [books, setBooks] = useState<Book[]>([]);
   const [searchQuery] = useState('');
   const debouncedQuery = useDebounce(searchQuery, 200);
@@ -89,6 +90,25 @@ export default function LibraryPage() {
       setUserHistory({});
     }
   }, []);
+
+  // 🤖 IA REAL (embeddings backend)
+
+useEffect(() => {
+  if (!selectedBook || !isModalOpen) return;
+
+  // 🔥 limpia antes de cargar → evita parpadeo
+  setAiBooks([]);
+
+  getAIRecommendations(selectedBook)
+    .then((data) => {
+      console.log("AI response:", data);
+      setAiBooks(Array.isArray(data) ? data : data?.data || []);
+    })
+    .catch((err) => {
+      console.error("AI error:", err);
+    });
+
+}, [selectedBook, isModalOpen]);
 
   const updateUserHistory = () => {
     const raw = localStorage.getItem("drevaia_history");
@@ -211,7 +231,7 @@ export default function LibraryPage() {
           <p className="text-xs text-gray-400 mb-4">{t.based}</p>
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
-            {recommendedBooks.map((book: any) => (
+            {(aiBooks.length ? aiBooks : recommendedBooks).map((book: any) => (
               <EbookCard
                 key={book.id}
                 id={book.id}
@@ -232,9 +252,10 @@ export default function LibraryPage() {
         book={selectedBook}
         recommendedBooks={recommendedBooks}
         onSelectBook={(book) => {
-          setSelectedBook(book);
-          setTimeout(updateUserHistory, 50);
-        }}
+  setSelectedBook(book);
+  setIsModalOpen(true);
+  setTimeout(updateUserHistory, 50);
+}}
       />
     </div>
   );
