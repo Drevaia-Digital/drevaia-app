@@ -25,6 +25,8 @@ export function PortalPage() {
   const [aiBooks, setAiBooks] = useState<any[]>([]);
 
   const history = getUserHistory();
+  const baseBook =
+  history?.[0] || books?.[0] || null;
 
   // 🌍 MULTI IDIOMA COMPLETO (FIX REAL)
   const translations = {
@@ -85,7 +87,8 @@ export function PortalPage() {
   useEffect(() => {
     if (!books.length) return;
 
-    const base = books[0];
+    const base = baseBook;
+if (!base) return;
 
     getAIRecommendations(base)
       .then((data) => {
