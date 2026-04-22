@@ -21,21 +21,23 @@ export function PortalPage() {
   // 🌍 MULTI IDIOMA
   const translations = {
     es: {
-      title: "No es solo contenido.",
-      subtitle: "Es un lugar donde empiezas a verte diferente.",
-      discover: "Descubre por dónde empezar",
+      title: "No viniste aquí por casualidad.",
+      subtitle: "Algo en ti ya sabía que era momento de cambiar.",
+      line: "No es solo lo que lees.\nEs lo que empieza a moverse dentro de ti.",
+      discover: "Empieza por aquí",
       explore: "Entrar a la biblioteca",
-      community: "Recibe contenido que sí te cambia",
+      community: "Recibe contenido que sí transforma",
       placeholder: "tu email",
       subscribe: "Quiero entrar",
       success: "✨ Ya estás dentro"
     },
     en: {
-      title: "This is not just content.",
-      subtitle: "It’s where you start seeing yourself differently.",
-      discover: "Where to start",
+      title: "You didn’t arrive here by accident.",
+      subtitle: "Something in you knew it was time.",
+      line: "It’s not just what you read.\nIt’s what starts shifting inside you.",
+      discover: "Start here",
       explore: "Enter library",
-      community: "Receive content that actually changes you",
+      community: "Receive content that transforms you",
       placeholder: "your email",
       subscribe: "Join now",
       success: "✨ You're in"
@@ -67,53 +69,67 @@ export function PortalPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0f0f1a] text-white">
+    <div className="min-h-screen text-white relative overflow-hidden">
+
+      {/* 🔥 FONDO PREMIUM */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#0f0f1a] via-[#1a1a2e] to-[#0f0f1a]" />
+      <div className="absolute inset-0 opacity-20 blur-3xl bg-purple-600/30" />
 
       <SEO title={t.title} description={t.subtitle} language={language} />
       <Navigation />
 
       {/* HERO */}
-      <section className="py-32 text-center px-6 max-w-3xl mx-auto">
+      <section className="relative py-32 text-center px-6 max-w-3xl mx-auto z-10">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-6xl font-bold mb-6"
+          className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
         >
           {t.title}
         </motion.h1>
 
-        <p className="text-gray-400 text-lg">
+        <p className="text-gray-300 text-lg mb-6">
           {t.subtitle}
+        </p>
+
+        <p className="text-gray-500 whitespace-pre-line mb-8">
+          {t.line}
         </p>
 
         <Button
           onClick={() => navigate("/library")}
-          className="mt-8 bg-purple-600 hover:bg-purple-700 px-8 py-4 text-lg rounded-xl"
+          className="bg-purple-600 hover:bg-purple-700 px-10 py-5 text-lg rounded-2xl shadow-xl"
         >
           {t.explore}
         </Button>
       </section>
 
       {/* DESTACADOS */}
-      <section className="max-w-5xl mx-auto px-6 mb-24">
-        <h2 className="text-xl mb-8 text-center">{t.discover}</h2>
+      <section className="relative max-w-5xl mx-auto px-6 mb-28 z-10">
+        <h2 className="text-center text-xl mb-10">{t.discover}</h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {featured.map((book: any) => (
-            <EbookCard
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {featured.map((book: any, i) => (
+            <motion.div
               key={book.id}
-              id={book.id}
-              title={getTitle(book)}
-              cover={book.coverImage || book.image || ""}
-              price={book.price}
-              onClick={() => navigate("/library")}
-            />
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: i * 0.2 }}
+            >
+              <EbookCard
+                id={book.id}
+                title={getTitle(book)}
+                cover={book.coverImage || book.image || ""}
+                price={book.price}
+                onClick={() => navigate("/library")}
+              />
+            </motion.div>
           ))}
         </div>
       </section>
 
       {/* NEWSLETTER */}
-      <section className="text-center px-6 mb-24 max-w-xl mx-auto">
+      <section className="relative text-center px-6 mb-28 max-w-xl mx-auto z-10">
         <h2 className="text-2xl font-semibold mb-4">
           {t.community}
         </h2>
@@ -121,16 +137,16 @@ export function PortalPage() {
         {isSubscribed ? (
           <p>{t.success}</p>
         ) : (
-          <form
-            onSubmit={handleSubscribe}
-            className="flex gap-2 justify-center"
-          >
+          <form onSubmit={handleSubscribe} className="flex gap-2 justify-center">
             <Input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t.placeholder}
+              className="bg-white/10 border-white/20"
             />
-            <Button>{t.subscribe}</Button>
+            <Button className="bg-purple-600 hover:bg-purple-700">
+              {t.subscribe}
+            </Button>
           </form>
         )}
       </section>
