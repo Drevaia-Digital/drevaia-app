@@ -18,7 +18,6 @@ export function PortalPage() {
   const [email, setEmail] = useState('');
   const [isSubscribed, setIsSubscribed] = useState(false);
 
-  // 🌍 MULTI IDIOMA
   const translations = {
     es: {
       title: "No viniste aquí por casualidad.",
@@ -46,7 +45,6 @@ export function PortalPage() {
 
   const t = translations[language as keyof typeof translations] || translations.es;
 
-  // 🔥 LIBROS
   useEffect(() => {
     const loadBooks = async () => {
       const { data } = await supabase.from("books").select("*");
@@ -69,23 +67,31 @@ export function PortalPage() {
   };
 
   return (
-    <div className="min-h-screen text-white relative overflow-hidden">
-
-      {/* 🔥 FONDO PREMIUM */}
-      <div className="absolute inset-0 bg-gradient-to-br from-[#0f0f1a] via-[#1a1a2e] to-[#0f0f1a]" />
-      <div className="absolute inset-0 opacity-20 blur-3xl bg-purple-600/30" />
+    <div className="min-h-screen text-white relative overflow-hidden bg-[#0f0f1a]">
 
       <SEO title={t.title} description={t.subtitle} language={language} />
       <Navigation />
 
+      {/* 🌌 FONDO + ÁRBOL */}
+      <div className="absolute inset-0 z-0 pointer-events-none">
+
+        {/* gradiente base */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0f0f1a] via-[#1a1a2e] to-[#0f0f1a]" />
+
+        {/* árbol */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          <img
+            src="/tree.png"
+            alt="Drevaia Tree"
+            className="opacity-20 md:opacity-30 w-[500px] md:w-[700px] object-contain"
+          />
+        </div>
+
+        {/* partículas suaves */}
+        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:25px_25px]" />
+      </div>
+
       {/* HERO */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-  <img
-    src="/tree.png"
-    alt="Drevaia Tree"
-    className="opacity-10 md:opacity-20 max-w-[600px] w-full object-contain"
-  />
-</div>
       <section className="relative py-32 text-center px-6 max-w-3xl mx-auto z-10">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}

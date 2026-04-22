@@ -43,7 +43,7 @@ export function Navigation() {
 
   // 🔥 NAV INTELIGENTE
   const goToHomeSmart = () => {
-    if (location.pathname === "/landing") {
+    if (location.pathname === "/") {
       scrollToSection('top');
     } else {
       navigate('/landing');
@@ -97,7 +97,7 @@ export function Navigation() {
 
               {/* INICIO */}
               <button
-                onClick={() => navigate("/landing")}
+                onClick={() => navigate("/")}
                 className="text-white/80 hover:text-white"
               >
                 {language === "es" && "Inicio"}
@@ -113,7 +113,7 @@ export function Navigation() {
 
               {/* 🔥 PORTAL (NUEVO) */}
               <button
-                onClick={() => navigate("/portal")}
+                onClick={() => navigate("/")}
                 className="text-white/80 hover:text-white relative"
               >
                 {language === "es" && "Portal"}
@@ -190,7 +190,7 @@ export function Navigation() {
           {/* INICIO */}
           <button
             onClick={() => {
-              navigate("/landing");
+              navigate("/");
               setOpen(false);
             }}
             className="block text-white text-lg"
