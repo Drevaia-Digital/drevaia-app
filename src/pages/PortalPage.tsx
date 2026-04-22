@@ -1,18 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
-import { BookOpen, Heart, Zap, Users, ChevronRight, Mail } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Navigation } from '@/sections/Navigation';
 import { Footer } from '@/sections/Footer';
 import { SEO } from '@/partials/SEO';
 import { motion } from 'framer-motion';
-import { getUserHistory } from "@/lib/userHistory";
 import { useLanguage } from "@/context/LanguageContext";
 import { EbookCard } from "@/components/EbookCard";
 import { supabase } from "@/lib/supabase";
 import { getAIRecommendations } from "@/lib/aiBackend";
-
 
 export function PortalPage() {
   const { language } = useLanguage();
@@ -24,55 +22,52 @@ export function PortalPage() {
   const [books, setBooks] = useState<any[]>([]);
   const [aiBooks, setAiBooks] = useState<any[]>([]);
 
-  const history = getUserHistory();
-  const baseBook =
-  history?.[0] || books?.[0] || null;
-
-  // 🌍 MULTI IDIOMA COMPLETO (FIX REAL)
+  // 🌍 MULTI IDIOMA
   const translations = {
     es: {
       title: "Portal Drevaia",
       subtitle: "Aquí no solo accedes a contenido.\nAquí te encuentras contigo.",
-      continue: "✨ Continuar explorando",
-      subscribe: "Suscribirme",
-      subscribed: "✨ Ya estás dentro",
+      continue: "✨ Para ti",
+      explore: "Explorar eBooks",
       community: "Únete a la comunidad",
       communityText: "Contenido que se siente, no solo se lee.",
-      explore: "Explorar eBooks"
+      subscribe: "Suscribirme",
+      subscribed: "✨ Ya estás dentro"
     },
     en: {
       title: "Drevaia Portal",
-      subtitle: "Here you don’t just access content.\nYou reconnect with yourself.",
-      continue: "✨ Continue exploring",
-      subscribe: "Subscribe",
-      subscribed: "✨ You are in",
+      subtitle: "Reconnect with yourself.",
+      continue: "✨ For you",
+      explore: "Explore eBooks",
       community: "Join the community",
       communityText: "Content you feel, not just read.",
-      explore: "Explore eBooks"
+      subscribe: "Subscribe",
+      subscribed: "✨ You are in"
     },
     fr: {
       title: "Portail Drevaia",
-      subtitle: "Ici, tu n'accèdes pas seulement au contenu.\nTu te reconnectes à toi-même.",
-      continue: "✨ Continuer à explorer",
-      subscribe: "S’abonner",
-      subscribed: "✨ Tu es déjà dedans",
+      subtitle: "Reconnecte-toi à toi-même.",
+      continue: "✨ Pour toi",
+      explore: "Explorer",
       community: "Rejoins la communauté",
-      communityText: "Un contenu que l'on ressent, pas seulement que l'on lit.",
-      explore: "Explorer les eBooks"
+      communityText: "Un contenu que l'on ressent.",
+      subscribe: "S’abonner",
+      subscribed: "✨ Tu es dedans"
     },
     pt: {
       title: "Portal Drevaia",
-      subtitle: "Aqui você não apenas acessa conteúdo.\nVocê se reconecta consigo mesmo.",
-      continue: "✨ Continuar explorando",
-      subscribe: "Inscrever-se",
-      subscribed: "✨ Você já está dentro",
+      subtitle: "Reconecte-se com você.",
+      continue: "✨ Para você",
+      explore: "Explorar",
       community: "Junte-se à comunidade",
-      communityText: "Conteúdo que se sente, não apenas se lê.",
-      explore: "Explorar eBooks"
+      communityText: "Conteúdo que se sente.",
+      subscribe: "Inscrever-se",
+      subscribed: "✨ Você está dentro"
     }
   };
 
-  const t = translations[language as keyof typeof translations] || translations.es;
+  const lang = (language in translations ? language : "es") as keyof typeof translations;
+  const t = translations[lang];
 
   // 🔥 CARGAR LIBROS
   useEffect(() => {
@@ -83,25 +78,41 @@ export function PortalPage() {
     loadBooks();
   }, []);
 
-  // 🤖 IA REAL
+  // 🤖 IA PROACTIVA
   useEffect(() => {
     if (!books.length) return;
 
-    const base = baseBook;
-if (!base) return;
+    const raw = localStorage.getItem("drevaia_history");
+    const history = raw ? JSON.parse(raw) : {};
 
-    getAIRecommendations(base)
+    const profile = Object.entries(history)
+      .map(([id, data]: any) => ({
+        id,
+        score: data.views * 2 + data.clicks * 5
+      }))
+      .sort((a, b) => b.score - a.score);
+
+    const baseBook =
+      profile.length
+        ? books.find(b => b.id === profile[0].id)
+        : books[0];
+
+    if (!baseBook) return;
+
+    getAIRecommendations(baseBook)
       .then((data) => {
-        setAiBooks(
+        const mapped =
           (Array.isArray(data) ? data : data?.data || [])
             .map((b: any) => {
               const original = books.find((bk) => bk.id === b.id);
               return original ? { ...original } : null;
             })
-            .filter(Boolean)
-        );
+            .filter(Boolean);
+
+        setAiBooks(mapped);
       })
       .catch(() => setAiBooks([]));
+
   }, [books]);
 
   const handleSubscribe = (e: React.FormEvent) => {
@@ -136,12 +147,32 @@ if (!base) return;
         </p>
       </section>
 
-      {/* 🤖 IA + HISTORIAL */}
+      {/* 🤖 IA */}
+      {aiBooks.length > 0 && (
+        <section className="max-w-6xl mx-auto px-6 mb-16">
+          <h3 className="text-xl mb-6">{t.continue}</h3>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {aiBooks.slice(0, 4).map((book: any) => (
+              <EbookCard
+                key={book.id}
+                id={book.id}
+                title={getTitle(book)}
+                cover={book.coverImage || book.image || ""}
+                price={book.price}
+                onClick={() => navigate("/library")}
+              />
+            ))}
+          </div>
+        </section>
+      )}
+
+      {/* 📚 CATÁLOGO */}
       <section className="max-w-6xl mx-auto px-6 mb-20">
-        <h3 className="text-xl mb-6">{t.continue}</h3>
+        <h3 className="text-xl mb-6">{t.explore}</h3>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {(aiBooks.length ? aiBooks : history).slice(0, 4).map((book: any) => (
+          {books.slice(0, 8).map((book: any) => (
             <EbookCard
               key={book.id}
               id={book.id}
@@ -152,29 +183,6 @@ if (!base) return;
             />
           ))}
         </div>
-      </section>
-
-      {/* FEATURES */}
-      <section className="max-w-6xl mx-auto px-6 grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
-        {[BookOpen, Heart, Zap, Users].map((Icon, i) => (
-          <motion.div
-            key={i}
-            whileHover={{ scale: 1.03 }}
-            className={`p-6 rounded-2xl border ${
-              i === 0
-                ? 'bg-purple-600/10 border-purple-500/40'
-                : 'bg-white/5 border-white/10 opacity-60'
-            }`}
-          >
-            <Icon className="w-6 h-6 mb-4 text-purple-400" />
-            <h3 className="font-semibold mb-2">
-              {["Mi Biblioteca", "Favoritos", "Contenido Exclusivo", "Comunidad"][i]}
-            </h3>
-            <p className="text-sm text-gray-400">
-              {i === 0 ? "Accede a todos tus eBooks" : "Próximamente"}
-            </p>
-          </motion.div>
-        ))}
       </section>
 
       {/* NEWSLETTER */}
@@ -199,17 +207,6 @@ if (!base) return;
             <Button>{t.subscribe}</Button>
           </form>
         )}
-      </section>
-
-      {/* CTA FINAL */}
-      <section className="text-center pb-20">
-        <Link to="/library">
-          <Button className="bg-purple-600 hover:bg-purple-700 px-8 py-4 text-lg">
-            <BookOpen className="mr-2" />
-            {t.explore}
-            <ChevronRight className="ml-2" />
-          </Button>
-        </Link>
       </section>
 
       <Footer />
