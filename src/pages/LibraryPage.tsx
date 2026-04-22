@@ -26,7 +26,20 @@ export default function LibraryPage() {
   const [searchQuery] = useState('');
   const debouncedQuery = useDebounce(searchQuery, 200);
 
-  // 🌍 MULTI IDIOMA CORRECTO
+  // 🧠 PERFIL USUARIO
+  const getUserProfile = () => {
+    const raw = localStorage.getItem("drevaia_history");
+    const history = raw ? JSON.parse(raw) : {};
+
+    return Object.entries(history)
+      .map(([id, data]: any) => ({
+        id,
+        score: data.views * 2 + data.clicks * 5
+      }))
+      .sort((a, b) => b.score - a.score);
+  };
+
+  // 🌍 MULTI IDIOMA
   const translations = {
     es: {
       back: "Volver",
@@ -57,7 +70,7 @@ export default function LibraryPage() {
   const lang = (language in translations ? language : "es") as keyof typeof translations;
   const t = translations[lang];
 
-  // 🔥 LOAD BOOKS + POPULARIDAD
+  // 🔥 CARGAR LIBROS
   useEffect(() => {
     const loadBooks = async () => {
       const { data: booksData } = await supabase.from('books').select('*');
@@ -83,16 +96,25 @@ export default function LibraryPage() {
     trackEvent({ type: "open_library" });
   }, []);
 
-  // 🤖 IA CON CACHE (ESTABLE)
+  // 🤖 IA PROACTIVA (SIN BUGS)
   useEffect(() => {
-    if (!selectedBook || !isModalOpen) return;
+    if (!books.length) return;
 
-    if (aiCache[selectedBook.id]) {
-      setAiBooks(aiCache[selectedBook.id]);
+    const profile = getUserProfile();
+
+    const baseBook =
+      profile.length
+        ? books.find(b => b.id === profile[0].id)
+        : books[0];
+
+    if (!baseBook) return;
+
+    if (aiCache[baseBook.id]) {
+      setAiBooks(aiCache[baseBook.id]);
       return;
     }
 
-    getAIRecommendations(selectedBook)
+    getAIRecommendations(baseBook)
       .then((data) => {
         const mapped =
           (Array.isArray(data) ? data : data?.data || [])
@@ -106,12 +128,12 @@ export default function LibraryPage() {
 
         setAiCache(prev => ({
           ...prev,
-          [selectedBook.id]: mapped
+          [baseBook.id]: mapped
         }));
       })
       .catch(() => setAiBooks([]));
 
-  }, [selectedBook, isModalOpen, books]);
+  }, [books]);
 
   const openPreview = (book: any) => {
     setSelectedBook(book);
@@ -140,7 +162,6 @@ export default function LibraryPage() {
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white">
 
-      {/* 🔙 BACK */}
       <div className="max-w-7xl mx-auto px-6 pt-6">
         <button
           onClick={() => navigate('/')}
