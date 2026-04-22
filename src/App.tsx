@@ -1,18 +1,16 @@
 import { HelmetProvider } from 'react-helmet-async';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { AuthProvider } from '@/hooks/useAuth';
 
 // 📄 Pages
 import OnboardingPage from "@/pages/OnboardingPage";
-import { HomePage } from '@/pages/HomePage';
 import { PortalPage } from '@/pages/PortalPage';
 import { AuthPage } from '@/pages/AuthPage';
 import { LegalPage } from '@/pages/LegalPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import BlogPost from "@/pages/BlogPost";
 import LeadMagnetPage from "@/pages/LeadMagnetPage";
-import LandingPage from "@/pages/LandingPage";
 
 // ⚡ Lazy
 const LibraryPage = lazy(() => import('@/pages/LibraryPage'));
@@ -25,10 +23,10 @@ export default function App() {
           <Routes>
 
             {/* 🏠 HOME */}
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<PortalPage />} />
 
             {/* 🌟 LANDING */}
-            <Route path="/landing" element={<LandingPage />} />
+            <Route path="/landing" element={<Navigate to="/" />} />
 
             {/* 📚 LIBRARY */}
             <Route
