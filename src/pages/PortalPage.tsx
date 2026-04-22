@@ -79,6 +79,13 @@ export function PortalPage() {
       <Navigation />
 
       {/* HERO */}
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+  <img
+    src="/tree.png"
+    alt="Drevaia Tree"
+    className="opacity-10 md:opacity-20 max-w-[600px] w-full object-contain"
+  />
+</div>
       <section className="relative py-32 text-center px-6 max-w-3xl mx-auto z-10">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
