@@ -1,6 +1,6 @@
 import { translations } from '../i18n/translations';
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { Menu, X, Sparkles } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 import { motion } from 'framer-motion';
@@ -13,6 +13,7 @@ export function Navigation() {
   const [isMobile, setIsMobile] = useState(false);
 
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     const handleResize = () => {
@@ -24,9 +25,36 @@ export function Navigation() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // 🔥 navegación normal
   const go = (path: string) => {
-    navigate(path);
+    if (location.pathname !== path) {
+      navigate(path);
+    }
     window.scrollTo({ top: 0, behavior: "auto" });
+  };
+
+  // 🔥 scroll inteligente (funciona incluso si vienes de otra página)
+  const scrollTo = (id: string) => {
+    if (location.pathname !== "/") {
+      navigate("/");
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (!el) return;
+
+        window.scrollTo({
+          top: el.offsetTop - 80,
+          behavior: "smooth",
+        });
+      }, 100);
+    } else {
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      window.scrollTo({
+        top: el.offsetTop - 80,
+        behavior: "smooth",
+      });
+    }
   };
 
   return (
@@ -76,14 +104,14 @@ export function Navigation() {
               </button>
 
               <button
-                onClick={() => go("/")}
+                onClick={() => scrollTo("daily")}
                 className="text-white hover:text-amber-300 transition"
               >
                 {language === "es" ? "Lectura diaria" : "Daily reading"}
               </button>
 
               <button
-                onClick={() => go("/")}
+                onClick={() => scrollTo("testimonials")}
                 className="text-white hover:text-amber-300 transition"
               >
                 {language === "es" ? "Testimonios" : "Testimonials"}
@@ -116,12 +144,9 @@ export function Navigation() {
             </div>
           )}
 
-          {/* MOBILE BUTTON */}
+          {/* MOBILE */}
           {isMobile && (
-            <button
-              onClick={() => setOpen(!open)}
-              className="text-white"
-            >
+            <button onClick={() => setOpen(!open)} className="text-white">
               {open ? <X /> : <Menu />}
             </button>
           )}
@@ -151,11 +176,11 @@ export function Navigation() {
             {t.nav.library}
           </button>
 
-          <button onClick={() => { go("/"); setOpen(false); }}>
+          <button onClick={() => { scrollTo("daily"); setOpen(false); }}>
             Lectura diaria
           </button>
 
-          <button onClick={() => { go("/"); setOpen(false); }}>
+          <button onClick={() => { scrollTo("testimonials"); setOpen(false); }}>
             Testimonios
           </button>
 

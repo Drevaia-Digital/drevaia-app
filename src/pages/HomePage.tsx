@@ -14,9 +14,8 @@ import { Stats } from '@/sections/Stats';
 export function HomePage() {
   const { language } = useLanguage();
 
-  // 🚀 PREFETCH AUTOMÁTICO AL ENTRAR
+  // 🚀 PREFETCH AUTOMÁTICO
   useEffect(() => {
-    // pequeño delay para no bloquear render inicial
     const timer = setTimeout(() => {
       prefetchBooks();
     }, 800);
@@ -24,7 +23,7 @@ export function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // 🚀 PREFETCH MANUAL (hover / interacción)
+  // 🚀 PREFETCH INTERACCIÓN
   const handlePrefetch = () => {
     prefetchBooks();
   };
@@ -32,9 +31,9 @@ export function HomePage() {
   return (
     <div
       id="top"
-      className="min-h-screen bg-white dark:bg-gray-900"
-      onMouseEnter={handlePrefetch}   // 🖱 desktop
-      onTouchStart={handlePrefetch}   // 📱 mobile
+      className="min-h-screen pt-20 bg-white dark:bg-gray-900"
+      onMouseEnter={handlePrefetch}
+      onTouchStart={handlePrefetch}
     >
 
       {/* NAV */}
@@ -42,9 +41,11 @@ export function HomePage() {
 
       {/* HERO */}
       <Hero language={language} />
+
+      {/* REALITY */}
       <RealityCheck />
 
-      {/* CAMINOS EMOCIONALES */}
+      {/* CAMINOS */}
       <EmotionalPaths />
 
       {/* EBOOKS */}
@@ -53,17 +54,17 @@ export function HomePage() {
       </div>
 
       {/* LECTURA DIARIA */}
-<div id="daily">
-  <DailyReading />
-</div>
+      <section id="daily" className="scroll-mt-24">
+        <DailyReading />
+      </section>
 
-{/* CONTADOR */}
-<Stats />
+      {/* CONTADOR */}
+      <Stats />
 
-{/* TESTIMONIOS */}
-<div id="testimonials">
-  <Testimonials />
-</div>
+      {/* TESTIMONIOS */}
+      <section id="testimonials" className="scroll-mt-24">
+        <Testimonials />
+      </section>
 
       {/* FOOTER */}
       <Footer />
