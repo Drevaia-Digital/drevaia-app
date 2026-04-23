@@ -157,7 +157,7 @@ export function Hero({ language }: Props) {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-0">
 
       <div className="absolute inset-0 bg-[#0f0f1a]" />
 
@@ -172,30 +172,30 @@ export function Hero({ language }: Props) {
 
       <div ref={contentRef} className="relative z-10 text-center max-w-4xl px-4">
 
-        <h1 ref={titleRef} className="text-5xl md:text-7xl font-bold text-white mb-4">
+        <h1 ref={titleRef} className="text-3xl sm:text-4xl md:text-7xl font-bold text-white mb-4 leading-tight">
           DREVAIA DIGITAL
         </h1>
 
-        <p className="text-2xl md:text-4xl text-amber-300 font-semibold mb-6">
+        <p className="text-lg sm:text-xl md:text-4xl text-amber-300 font-semibold mb-4">
           {dynamicTitle}
         </p>
 
-        <p ref={descRef} className="text-white/80 mb-10 text-lg">
+        <p ref={descRef} className="text-white/80 mb-8 text-sm sm:text-base">
           {t.hero.description}
         </p>
 
-        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 justify-center items-center w-full">
 
           {dynamicLink ? (
             <a href={dynamicLink} target="_blank">
-              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white">
+              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-3 text-sm sm:text-base rounded-full text-white">
                 <Heart className="mr-2" />
                 {dynamicCTA}
               </Button>
             </a>
           ) : (
             <Link to="/auth/register">
-              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white">
+              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-3 text-sm sm:text-base rounded-full text-white">
                 <Heart className="mr-2" />
                 {t.hero.cta}
               </Button>
@@ -203,7 +203,7 @@ export function Hero({ language }: Props) {
           )}
 
           <Link to="/library">
-            <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-8 py-4 rounded-full">
+            <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-6 py-3 text-sm sm:text-base rounded-full">
               {t.hero.explore}
               <ArrowRight className="ml-2" />
             </Button>
