@@ -9,6 +9,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { RealityCheck } from '@/sections/RealityCheck';
 import { prefetchBooks } from "@/lib/prefetchBooks";
 import { useEffect } from "react";
+import { Stats } from '@/sections/Stats';
 
 export function HomePage() {
   const { language } = useLanguage();
@@ -52,10 +53,14 @@ export function HomePage() {
       </div>
 
       {/* LECTURA DIARIA */}
-     <div id="daily">
+<div id="daily">
   <DailyReading />
 </div>
 
+{/* CONTADOR */}
+<Stats />
+
+{/* TESTIMONIOS */}
 <div id="testimonials">
   <Testimonials />
 </div>
