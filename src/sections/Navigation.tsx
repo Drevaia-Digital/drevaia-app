@@ -27,14 +27,12 @@ export function Navigation() {
 
   // 🔥 navegación normal
   const go = (path: string) => {
-    if (location.pathname !== path) {
-      navigate(path);
-    }
+    navigate(path);
     window.scrollTo({ top: 0, behavior: "auto" });
   };
 
-  // 🔥 scroll inteligente (funciona incluso si vienes de otra página)
-  const scrollTo = (id: string) => {
+  // 🔥 navegación directa a sección (SIN animación)
+  const goToSection = (id: string) => {
     if (location.pathname !== "/") {
       navigate("/");
       setTimeout(() => {
@@ -43,7 +41,7 @@ export function Navigation() {
 
         window.scrollTo({
           top: el.offsetTop - 80,
-          behavior: "smooth",
+          behavior: "auto",
         });
       }, 100);
     } else {
@@ -52,7 +50,7 @@ export function Navigation() {
 
       window.scrollTo({
         top: el.offsetTop - 80,
-        behavior: "smooth",
+        behavior: "auto",
       });
     }
   };
@@ -76,51 +74,27 @@ export function Navigation() {
           {!isMobile && (
             <div className="flex items-center gap-6 text-sm font-medium">
 
-              <button
-                onClick={() => go("/")}
-                className="text-white hover:text-amber-300 transition"
-              >
-                {language === "es" && "Inicio"}
-                {language === "en" && "Start"}
-                {language === "fr" && "Accueil"}
-                {language === "pt" && "Início"}
+              <button onClick={() => go("/")} className="text-white hover:text-amber-300">
+                {language === "es" ? "Inicio" : "Start"}
               </button>
 
-              <Link
-                to="/library"
-                className="text-white hover:text-amber-300 transition"
-              >
+              <Link to="/library" className="text-white hover:text-amber-300">
                 {t.nav.library}
               </Link>
 
-              <button
-                onClick={() => go("/portal")}
-                className="text-white hover:text-amber-300 transition"
-              >
-                {language === "es" && "Portal"}
-                {language === "en" && "Portal"}
-                {language === "fr" && "Portail"}
-                {language === "pt" && "Portal"}
+              <button onClick={() => go("/portal")} className="text-white hover:text-amber-300">
+                Portal
               </button>
 
-              <button
-                onClick={() => scrollTo("daily")}
-                className="text-white hover:text-amber-300 transition"
-              >
+              <button onClick={() => goToSection("daily")} className="text-white hover:text-amber-300">
                 {language === "es" ? "Lectura diaria" : "Daily reading"}
               </button>
 
-              <button
-                onClick={() => scrollTo("testimonials")}
-                className="text-white hover:text-amber-300 transition"
-              >
+              <button onClick={() => goToSection("testimonials")} className="text-white hover:text-amber-300">
                 {language === "es" ? "Testimonios" : "Testimonials"}
               </button>
 
-              <Link
-                to="/legal"
-                className="text-white hover:text-amber-300 transition"
-              >
+              <Link to="/legal" className="text-white hover:text-amber-300">
                 {t.nav.legal}
               </Link>
 
@@ -130,10 +104,10 @@ export function Navigation() {
                   <button
                     key={lang}
                     onClick={() => setLanguage(lang as any)}
-                    className={`px-2 py-1 rounded-full text-xs transition ${
+                    className={`px-2 py-1 rounded-full text-xs ${
                       language === lang
                         ? 'bg-amber-400 text-black'
-                        : 'text-white hover:text-amber-300'
+                        : 'text-white'
                     }`}
                   >
                     {lang.toUpperCase()}
@@ -144,7 +118,7 @@ export function Navigation() {
             </div>
           )}
 
-          {/* MOBILE */}
+          {/* MOBILE BUTTON */}
           {isMobile && (
             <button onClick={() => setOpen(!open)} className="text-white">
               {open ? <X /> : <Menu />}
@@ -161,33 +135,34 @@ export function Navigation() {
           animate={{ opacity: 1 }}
           className="fixed top-16 left-0 w-full 
             bg-[#0f0f1a]/95 backdrop-blur-xl 
-            p-6 z-[9998] space-y-4 text-white"
+            p-6 z-[9998] flex flex-col gap-4 text-white"
         >
 
-          <button onClick={() => { go("/"); setOpen(false); }}>
+          <button onClick={() => { go("/"); setOpen(false); }} className="w-full text-left">
             Inicio
           </button>
 
-          <button onClick={() => { go("/portal"); setOpen(false); }}>
+          <button onClick={() => { go("/portal"); setOpen(false); }} className="w-full text-left">
             Portal
           </button>
 
-          <button onClick={() => { go("/library"); setOpen(false); }}>
+          <button onClick={() => { go("/library"); setOpen(false); }} className="w-full text-left">
             {t.nav.library}
           </button>
 
-          <button onClick={() => { scrollTo("daily"); setOpen(false); }}>
+          <button onClick={() => { goToSection("daily"); setOpen(false); }} className="w-full text-left">
             Lectura diaria
           </button>
 
-          <button onClick={() => { scrollTo("testimonials"); setOpen(false); }}>
+          <button onClick={() => { goToSection("testimonials"); setOpen(false); }} className="w-full text-left">
             Testimonios
           </button>
 
-          <Link to="/legal" onClick={() => setOpen(false)}>
+          <Link to="/legal" onClick={() => setOpen(false)} className="w-full text-left">
             {t.nav.legal}
           </Link>
 
+          {/* IDIOMA */}
           <div className="flex gap-2 mt-4">
             {['es','en','fr','pt'].map((lang) => (
               <button
