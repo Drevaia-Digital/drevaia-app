@@ -6,6 +6,7 @@ import { AuthProvider } from '@/hooks/useAuth';
 // 📄 Pages
 import OnboardingPage from "@/pages/OnboardingPage";
 import { PortalPage } from '@/pages/PortalPage';
+import { HomePage } from '@/pages/HomePage';
 import { AuthPage } from '@/pages/AuthPage';
 import { LegalPage } from '@/pages/LegalPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -23,7 +24,7 @@ export default function App() {
           <Routes>
 
             {/* 🏠 HOME */}
-            <Route path="/" element={<PortalPage />} />
+            <Route path="/" element={<HomePage />} />
 
             {/* 🌟 LANDING */}
             <Route path="/landing" element={<Navigate to="/" />} />

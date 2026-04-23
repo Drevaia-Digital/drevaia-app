@@ -16,10 +16,8 @@ export function Hero({ language }: Props) {
 
   const t = translations[language];
 
-  // 🌍 EMOCIÓN SEGURA
   const emotion = userProfile.getEmotion() as Emotion | null;
 
-  // 🔥 CONTENIDO EMOCIONAL
   const emotionalContent = {
     ansiedad: {
       es: "No estás roto. Estás agotado de sostener demasiado.",
@@ -41,14 +39,12 @@ export function Hero({ language }: Props) {
     },
   };
 
-  // 🔥 CTA
   const emotionalCTA = {
     ansiedad: { es: "Encontrar calma", en: "Find calm", fr: "Trouver la paix", pt: "Encontrar calma" },
     proposito: { es: "Descubrir mi camino", en: "Find my path", fr: "Trouver mon chemin", pt: "Descobrir meu caminho" },
     patrones: { es: "Romper este ciclo", en: "Break the cycle", fr: "Briser ce cycle", pt: "Quebrar esse ciclo" },
   };
 
-  // 🔥 LINKS
   const emotionalLinks = {
     ansiedad: {
       es: "https://payhip.com/b/Wz0IG",
@@ -70,7 +66,6 @@ export function Hero({ language }: Props) {
     },
   };
 
-  // 🔥 DINÁMICOS
   const dynamicTitle =
     emotion && emotionalContent[emotion]
       ? emotionalContent[emotion][language]
@@ -86,7 +81,6 @@ export function Hero({ language }: Props) {
       ? emotionalLinks[emotion][language]
       : null;
 
-  // 🎬 ANIMACIONES
   const contentRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLHeadingElement>(null);
   const descRef = useRef<HTMLParagraphElement>(null);
@@ -104,7 +98,6 @@ export function Hero({ language }: Props) {
     return () => ctx.revert();
   }, []);
 
-  // ✨ PARTÍCULAS
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
@@ -123,13 +116,13 @@ export function Hero({ language }: Props) {
 
     const createParticles = () => {
       particles = [];
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 60; i++) {
         particles.push({
           x: Math.random() * canvas.width,
           y: Math.random() * canvas.height,
           size: Math.random() * 2 + 1,
-          speedX: (Math.random() - 0.5) * 0.3,
-          speedY: (Math.random() - 0.5) * 0.3,
+          speedX: (Math.random() - 0.5) * 0.2,
+          speedY: -Math.random() * 0.3,
         });
       }
     };
@@ -141,14 +134,14 @@ export function Hero({ language }: Props) {
         p.x += p.speedX;
         p.y += p.speedY;
 
-        if (p.x < 0) p.x = canvas.width;
-        if (p.x > canvas.width) p.x = 0;
-        if (p.y < 0) p.y = canvas.height;
-        if (p.y > canvas.height) p.y = 0;
+        if (p.y < 0) {
+          p.y = canvas.height;
+          p.x = Math.random() * canvas.width;
+        }
 
         ctx.beginPath();
         ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 200, 150, 0.4)';
+        ctx.fillStyle = 'rgba(255, 210, 140, 0.6)';
         ctx.fill();
       });
 
@@ -166,16 +159,16 @@ export function Hero({ language }: Props) {
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
 
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-950 via-gray-900 to-black" />
+      <div className="absolute inset-0 bg-[#0f0f1a]" />
 
       <div
-        className="absolute inset-0 bg-cover bg-center opacity-40"
+        className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-70"
         style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
       />
 
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(168,85,247,0.15),transparent_60%)]" />
+      <div className="absolute inset-0 bg-gradient-to-b from-purple-900/40 via-purple-800/30 to-purple-900/60" />
 
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none" />
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-80" />
 
       <div ref={contentRef} className="relative z-10 text-center max-w-4xl px-4">
 
@@ -183,15 +176,9 @@ export function Hero({ language }: Props) {
           DREVAIA DIGITAL
         </h1>
 
-        <div className="reveal-container reveal-active mb-6">
-
-  <p className="reveal-text text-2xl md:text-4xl text-amber-300 font-semibold">
-    {dynamicTitle}
-  </p>
-
-  <span className="reveal-line"></span>
-
-</div>
+        <p className="text-2xl md:text-4xl text-amber-300 font-semibold mb-6">
+          {dynamicTitle}
+        </p>
 
         <p ref={descRef} className="text-white/80 mb-10 text-lg">
           {t.hero.description}
@@ -201,14 +188,14 @@ export function Hero({ language }: Props) {
 
           {dynamicLink ? (
             <a href={dynamicLink} target="_blank">
-              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white hover:scale-105 transition">
+              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white">
                 <Heart className="mr-2" />
                 {dynamicCTA}
               </Button>
             </a>
           ) : (
             <Link to="/auth/register">
-              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white hover:scale-105 transition">
+              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-8 py-4 rounded-full text-white">
                 <Heart className="mr-2" />
                 {t.hero.cta}
               </Button>
@@ -216,9 +203,9 @@ export function Hero({ language }: Props) {
           )}
 
           <Link to="/library">
-            <Button className="group bg-gradient-to-r from-purple-600 to-amber-400 text-white px-8 py-4 rounded-full font-semibold hover:scale-105 transition-all">
+            <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-8 py-4 rounded-full">
               {t.hero.explore}
-              <ArrowRight className="ml-2 group-hover:translate-x-1 transition" />
+              <ArrowRight className="ml-2" />
             </Button>
           </Link>
 
