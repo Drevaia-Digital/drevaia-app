@@ -73,9 +73,22 @@ export function PortalPage() {
       <SEO title={t.title} description={t.subtitle} language={language} />
       <Navigation />
 
+      {/* 🌳 FONDO ORIGINAL (IMAGEN + ATMÓSFERA) */}
       <div className="absolute inset-0 z-0">
-  <EnergyTreeBackground />
-</div>
+
+        {/* Imagen bosque con árbol */}
+        <div
+          className="absolute inset-0 bg-cover bg-center"
+          style={{ backgroundImage: "url('/hero-bg.jpg')" }}
+        />
+
+        {/* Overlay Drevaia (clave visual) */}
+        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/70 via-purple-800/40 to-purple-900/80" />
+
+      </div>
+
+      {/* ✨ PARTÍCULAS */}
+      <EnergyTreeBackground />
 
       {/* HERO */}
       <section className="relative py-32 text-center px-6 max-w-3xl mx-auto z-20">
@@ -91,13 +104,13 @@ export function PortalPage() {
           {t.subtitle}
         </p>
 
-        <p className="text-gray-500 whitespace-pre-line mb-8">
+        <p className="text-gray-400 whitespace-pre-line mb-8">
           {t.line}
         </p>
 
         <Button
           onClick={() => navigate("/library")}
-          className="bg-purple-600 hover:bg-purple-700 px-10 py-5 text-lg rounded-2xl shadow-xl"
+          className="bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 px-10 py-5 text-lg rounded-2xl shadow-xl"
         >
           {t.explore}
         </Button>
