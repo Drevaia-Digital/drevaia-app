@@ -31,7 +31,7 @@ export function Navigation() {
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-[#0f0f1a] border-b border-white/10">
+      <nav className="fixed top-0 left-0 right-0 z-[9999] bg-[#0f0f1a] border-b border-white/10">
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
           {/* LOGO */}
