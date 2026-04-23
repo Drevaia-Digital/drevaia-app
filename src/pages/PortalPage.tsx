@@ -9,6 +9,7 @@ import { supabase } from "@/lib/supabase";
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { motion } from "framer-motion";
+import { EnergyTreeBackground } from "@/components/EnergyTreeBackground";
 
 export function PortalPage() {
   const { language } = useLanguage();
@@ -72,27 +73,12 @@ export function PortalPage() {
       <SEO title={t.title} description={t.subtitle} language={language} />
       <Navigation />
 
-      {/* 🌌 FONDO + ÁRBOL */}
-      <div className="absolute inset-0 z-0 pointer-events-none">
-
-        {/* gradiente base */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#0f0f1a] via-[#1a1a2e] to-[#0f0f1a]" />
-
-        {/* árbol */}
-        <div className="absolute inset-0 flex items-center justify-center">
-          <img
-            src="/tree.png"
-            alt="Drevaia Tree"
-            className="opacity-20 md:opacity-30 w-[500px] md:w-[700px] object-contain"
-          />
-        </div>
-
-        {/* partículas suaves */}
-        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:25px_25px]" />
-      </div>
+      <div className="absolute inset-0 z-0">
+  <EnergyTreeBackground />
+</div>
 
       {/* HERO */}
-      <section className="relative py-32 text-center px-6 max-w-3xl mx-auto z-10">
+      <section className="relative py-32 text-center px-6 max-w-3xl mx-auto z-20">
         <motion.h1
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
@@ -118,7 +104,7 @@ export function PortalPage() {
       </section>
 
       {/* DESTACADOS */}
-      <section className="relative max-w-5xl mx-auto px-6 mb-28 z-10">
+      <section className="relative max-w-5xl mx-auto px-6 mb-28 z-20">
         <h2 className="text-center text-xl mb-10">{t.discover}</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
@@ -142,7 +128,7 @@ export function PortalPage() {
       </section>
 
       {/* NEWSLETTER */}
-      <section className="relative text-center px-6 mb-28 max-w-xl mx-auto z-10">
+      <section className="relative text-center px-6 mb-28 max-w-xl mx-auto z-20">
         <h2 className="text-2xl font-semibold mb-4">
           {t.community}
         </h2>
