@@ -18,45 +18,11 @@ export function Navigation() {
 
   const hasHistory = getUserHistory().length > 0;
 
-  // 🔥 SCROLL PRO
-  const scrollToSection = (id: string) => {
-    if (id === 'top') {
-      window.scrollTo({ top: 0, behavior: 'auto' });
-      return;
-    }
-
-    const el = document.getElementById(id);
-    if (!el) return;
-
-    window.scrollTo({
-      top: el.offsetTop,
-      behavior: 'auto',
-    });
-
-    el.style.transform = 'scale(0.98)';
-    el.style.transition = 'transform 0.18s ease-out';
-
-    setTimeout(() => {
-      el.style.transform = 'scale(1)';
-    }, 120);
-  };
-
-  // 🔥 NAV INTELIGENTE
-  const goToHomeSmart = () => {
-    if (location.pathname === "/") {
-      scrollToSection('top');
-    } else {
-      navigate('/landing');
-    }
-  };
-
-  const goToSectionSmart = (section: string) => {
-    if (location.pathname === "/") {
-      scrollToSection(section);
-    } else {
-      navigate('/');
-      setTimeout(() => scrollToSection(section), 50);
-    }
+  // 🔥 SCROLL SIMPLE
+  
+  // 🔥 HOME
+  const goToHome = () => {
+    navigate("/");
   };
 
   // 📱 DETECTAR MÓVIL
@@ -74,7 +40,6 @@ export function Navigation() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  // cerrar menú al cambiar ruta
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
@@ -86,7 +51,7 @@ export function Navigation() {
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
           {/* LOGO */}
-          <button onClick={goToHomeSmart} className="flex items-center gap-2">
+          <button onClick={goToHome} className="flex items-center gap-2">
             <Sparkles className="text-amber-400" />
             <span className="text-white font-bold text-lg">Drevaia</span>
           </button>
@@ -96,10 +61,7 @@ export function Navigation() {
             <div className="flex items-center gap-6">
 
               {/* INICIO */}
-              <button
-                onClick={() => navigate("/")}
-                className="text-white/80 hover:text-white"
-              >
+              <button onClick={() => navigate("/")} className="text-white/80 hover:text-white">
                 {language === "es" && "Inicio"}
                 {language === "en" && "Start"}
                 {language === "fr" && "Accueil"}
@@ -111,11 +73,8 @@ export function Navigation() {
                 {t.nav.library}
               </Link>
 
-              {/* 🔥 PORTAL (NUEVO) */}
-              <button
-                onClick={() => navigate("/")}
-                className="text-white/80 hover:text-white relative"
-              >
+              {/* PORTAL (APUNTA A HOME) */}
+              <button onClick={() => navigate("/")} className="text-white/80 hover:text-white relative">
                 {language === "es" && "Portal"}
                 {language === "en" && "Portal"}
                 {language === "fr" && "Portail"}
@@ -126,12 +85,12 @@ export function Navigation() {
                 )}
               </button>
 
-              {/* SECCIONES */}
-              <button onClick={() => goToSectionSmart('daily')} className="text-white/80 hover:text-white">
+              {/* 🔥 SIMPLIFICADO (SIN SCROLL ROTO) */}
+              <button onClick={() => navigate("/library")} className="text-white/80 hover:text-white">
                 {language === 'es' ? 'Lectura diaria' : 'Daily reading'}
               </button>
 
-              <button onClick={() => goToSectionSmart('testimonials')} className="text-white/80 hover:text-white">
+              <button onClick={() => navigate("/library")} className="text-white/80 hover:text-white">
                 {language === 'es' ? 'Testimonios' : 'Testimonials'}
               </button>
 
@@ -166,10 +125,7 @@ export function Navigation() {
               onClick={() => setOpen(prev => !prev)}
               className="flex flex-col items-center justify-center text-neutral-400 hover:text-white"
             >
-              <div className="flex items-center justify-center h-6">
-                {open ? <X size={24} /> : <Menu size={24} />}
-              </div>
-
+              {open ? <X size={24} /> : <Menu size={24} />}
               <span className="text-[10px] mt-1">
                 {open ? "Cerrar" : "Menú"}
               </span>
@@ -187,74 +143,30 @@ export function Navigation() {
           className="fixed top-16 left-0 w-full bg-black/80 backdrop-blur-xl px-6 py-6 space-y-6 z-40"
         >
 
-          {/* INICIO */}
-          <button
-            onClick={() => {
-              navigate("/");
-              setOpen(false);
-            }}
-            className="block text-white text-lg"
-          >
-            {language === "es" && "Inicio"}
-            {language === "en" && "Start"}
-            {language === "fr" && "Accueil"}
-            {language === "pt" && "Início"}
+          <button onClick={() => { navigate("/"); setOpen(false); }} className="block text-white text-lg">
+            Inicio
           </button>
 
-          {/* LIBRARY */}
-          <Link
-            to="/library"
-            className="block text-white text-lg"
-            onClick={() => setOpen(false)}
-          >
+          <Link to="/library" className="block text-white text-lg" onClick={() => setOpen(false)}>
             {t.nav.library}
           </Link>
 
-          {/* 🔥 PORTAL */}
-          <button
-            onClick={() => {
-              navigate("/portal");
-              setOpen(false);
-            }}
-            className="block text-white text-lg"
-          >
-            {language === "es" && "Portal"}
-            {language === "en" && "Portal"}
-            {language === "fr" && "Portail"}
-            {language === "pt" && "Portal"}
+          <button onClick={() => { navigate("/"); setOpen(false); }} className="block text-white text-lg">
+            Portal
           </button>
 
-          {/* SECCIONES */}
-          <button
-            onClick={() => {
-              goToSectionSmart('daily');
-              setOpen(false);
-            }}
-            className="block text-white text-lg"
-          >
-            {language === 'es' ? 'Lectura diaria' : 'Daily reading'}
+          <button onClick={() => { navigate("/library"); setOpen(false); }} className="block text-white text-lg">
+            Lectura diaria
           </button>
 
-          <button
-            onClick={() => {
-              goToSectionSmart('testimonials');
-              setOpen(false);
-            }}
-            className="block text-white text-lg"
-          >
-            {language === 'es' ? 'Testimonios' : 'Testimonials'}
+          <button onClick={() => { navigate("/library"); setOpen(false); }} className="block text-white text-lg">
+            Testimonios
           </button>
 
-          {/* LEGAL */}
-          <Link
-            to="/legal"
-            className="block text-white text-lg"
-            onClick={() => setOpen(false)}
-          >
+          <Link to="/legal" className="block text-white text-lg" onClick={() => setOpen(false)}>
             {t.nav.legal}
           </Link>
 
-          {/* IDIOMA */}
           <div className="flex gap-2 mt-4">
             {['es','en','fr','pt'].map((lang) => (
               <button
@@ -262,7 +174,7 @@ export function Navigation() {
                 onClick={() => {
                   setLanguage(lang as any);
                   setOpen(false);
-                  goToHomeSmart();
+                  navigate("/");
                 }}
                 className={`text-xs px-3 py-1 rounded-lg ${
                   language === lang
