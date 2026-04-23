@@ -3,7 +3,6 @@ import { Hero } from '@/sections/Hero';
 import { EmotionalPaths } from '@/sections/EmotionalPaths';
 import { Ebooks } from '@/sections/Ebooks';
 import { DailyReading } from '../sections/DailyReading';
-import { Stats } from '@/sections/Stats';
 import { Testimonials } from '@/sections/Testimonials';
 import { Footer } from '@/sections/Footer';
 import { useLanguage } from '@/context/LanguageContext';
@@ -53,13 +52,13 @@ export function HomePage() {
       </div>
 
       {/* LECTURA DIARIA */}
-      <DailyReading />
+     <div id="daily">
+  <DailyReading />
+</div>
 
-      {/* STATS */}
-      <Stats />
-
-      {/* TESTIMONIOS */}
-      <Testimonials />
+<div id="testimonials">
+  <Testimonials />
+</div>
 
       {/* FOOTER */}
       <Footer />

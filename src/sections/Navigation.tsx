@@ -18,9 +18,12 @@ export function Navigation() {
 
   const hasHistory = getUserHistory().length > 0;
 
-  // 🔥 HOME → SIEMPRE PORTAL
-  const goToHome = () => {
-    navigate("/portal");
+  // 🔥 NAVIGACIÓN SEGURA (FIX REAL)
+  const goTo = (path: string) => {
+    if (location.pathname !== path) {
+      navigate(path);
+    }
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
 
   // 📱 DETECTAR MÓVIL
@@ -50,7 +53,7 @@ export function Navigation() {
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
           {/* LOGO */}
-          <button onClick={goToHome} className="flex items-center gap-2">
+          <button onClick={() => goTo("/portal")} className="flex items-center gap-2">
             <Sparkles className="text-amber-400" />
             <span className="text-white font-bold text-lg">Drevaia</span>
           </button>
@@ -60,10 +63,7 @@ export function Navigation() {
             <div className="flex items-center gap-6">
 
               {/* INICIO */}
-              <button
-                onClick={() => navigate("/portal")}
-                className="text-white/80 hover:text-white"
-              >
+              <button onClick={() => goTo("/")} className="text-white/80 hover:text-white">
                 {language === "es" && "Inicio"}
                 {language === "en" && "Start"}
                 {language === "fr" && "Accueil"}
@@ -77,7 +77,7 @@ export function Navigation() {
 
               {/* PORTAL */}
               <button
-                onClick={() => navigate("/portal")}
+                onClick={() => goTo("/portal")}
                 className="text-white/80 hover:text-white relative"
               >
                 {language === "es" && "Portal"}
@@ -90,18 +90,12 @@ export function Navigation() {
                 )}
               </button>
 
-              {/* 🔥 TEMP (hasta crear páginas reales) */}
-              <button
-                onClick={() => navigate("/library")}
-                className="text-white/80 hover:text-white"
-              >
+              {/* TEMP */}
+              <button onClick={() => goTo("/library")} className="text-white/80 hover:text-white">
                 {language === 'es' ? 'Lectura diaria' : 'Daily reading'}
               </button>
 
-              <button
-                onClick={() => navigate("/library")}
-                className="text-white/80 hover:text-white"
-              >
+              <button onClick={() => goTo("/library")} className="text-white/80 hover:text-white">
                 {language === 'es' ? 'Testimonios' : 'Testimonials'}
               </button>
 
@@ -154,7 +148,7 @@ export function Navigation() {
           className="fixed top-16 left-0 w-full bg-black/80 backdrop-blur-xl px-6 py-6 space-y-6 z-40"
         >
 
-          <button onClick={() => { navigate("/portal"); setOpen(false); }} className="block text-white text-lg">
+          <button onClick={() => { goTo("/"); setOpen(false); }} className="block text-white text-lg">
             Inicio
           </button>
 
@@ -162,15 +156,15 @@ export function Navigation() {
             {t.nav.library}
           </Link>
 
-          <button onClick={() => { navigate("/portal"); setOpen(false); }} className="block text-white text-lg">
+          <button onClick={() => { goTo("/portal"); setOpen(false); }} className="block text-white text-lg">
             Portal
           </button>
 
-          <button onClick={() => { navigate("/library"); setOpen(false); }} className="block text-white text-lg">
+          <button onClick={() => { goTo("/library"); setOpen(false); }} className="block text-white text-lg">
             Lectura diaria
           </button>
 
-          <button onClick={() => { navigate("/library"); setOpen(false); }} className="block text-white text-lg">
+          <button onClick={() => { goTo("/library"); setOpen(false); }} className="block text-white text-lg">
             Testimonios
           </button>
 
@@ -185,7 +179,7 @@ export function Navigation() {
                 onClick={() => {
                   setLanguage(lang as any);
                   setOpen(false);
-                  navigate("/portal");
+                  goTo("/portal");
                 }}
                 className={`text-xs px-3 py-1 rounded-lg ${
                   language === lang
