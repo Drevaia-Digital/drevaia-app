@@ -18,11 +18,9 @@ export function Navigation() {
 
   const hasHistory = getUserHistory().length > 0;
 
-  // 🔥 SCROLL SIMPLE
-  
-  // 🔥 HOME
+  // 🔥 HOME → SIEMPRE PORTAL
   const goToHome = () => {
-    navigate("/");
+    navigate("/portal");
   };
 
   // 📱 DETECTAR MÓVIL
@@ -40,6 +38,7 @@ export function Navigation() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
+  // cerrar menú al cambiar ruta
   useEffect(() => {
     setOpen(false);
   }, [location.pathname]);
@@ -61,7 +60,10 @@ export function Navigation() {
             <div className="flex items-center gap-6">
 
               {/* INICIO */}
-              <button onClick={() => navigate("/")} className="text-white/80 hover:text-white">
+              <button
+                onClick={() => navigate("/portal")}
+                className="text-white/80 hover:text-white"
+              >
                 {language === "es" && "Inicio"}
                 {language === "en" && "Start"}
                 {language === "fr" && "Accueil"}
@@ -73,8 +75,11 @@ export function Navigation() {
                 {t.nav.library}
               </Link>
 
-              {/* PORTAL (APUNTA A HOME) */}
-              <button onClick={() => navigate("/")} className="text-white/80 hover:text-white relative">
+              {/* PORTAL */}
+              <button
+                onClick={() => navigate("/portal")}
+                className="text-white/80 hover:text-white relative"
+              >
                 {language === "es" && "Portal"}
                 {language === "en" && "Portal"}
                 {language === "fr" && "Portail"}
@@ -85,12 +90,18 @@ export function Navigation() {
                 )}
               </button>
 
-              {/* 🔥 SIMPLIFICADO (SIN SCROLL ROTO) */}
-              <button onClick={() => navigate("/library")} className="text-white/80 hover:text-white">
+              {/* 🔥 TEMP (hasta crear páginas reales) */}
+              <button
+                onClick={() => navigate("/library")}
+                className="text-white/80 hover:text-white"
+              >
                 {language === 'es' ? 'Lectura diaria' : 'Daily reading'}
               </button>
 
-              <button onClick={() => navigate("/library")} className="text-white/80 hover:text-white">
+              <button
+                onClick={() => navigate("/library")}
+                className="text-white/80 hover:text-white"
+              >
                 {language === 'es' ? 'Testimonios' : 'Testimonials'}
               </button>
 
@@ -143,7 +154,7 @@ export function Navigation() {
           className="fixed top-16 left-0 w-full bg-black/80 backdrop-blur-xl px-6 py-6 space-y-6 z-40"
         >
 
-          <button onClick={() => { navigate("/"); setOpen(false); }} className="block text-white text-lg">
+          <button onClick={() => { navigate("/portal"); setOpen(false); }} className="block text-white text-lg">
             Inicio
           </button>
 
@@ -151,7 +162,7 @@ export function Navigation() {
             {t.nav.library}
           </Link>
 
-          <button onClick={() => { navigate("/"); setOpen(false); }} className="block text-white text-lg">
+          <button onClick={() => { navigate("/portal"); setOpen(false); }} className="block text-white text-lg">
             Portal
           </button>
 
@@ -174,7 +185,7 @@ export function Navigation() {
                 onClick={() => {
                   setLanguage(lang as any);
                   setOpen(false);
-                  navigate("/");
+                  navigate("/portal");
                 }}
                 className={`text-xs px-3 py-1 rounded-lg ${
                   language === lang
