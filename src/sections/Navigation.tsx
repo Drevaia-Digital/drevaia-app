@@ -26,12 +26,16 @@ export function Navigation() {
 
   const go = (path: string) => {
     navigate(path);
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, behavior: "auto" });
   };
 
   return (
     <>
-      <nav className="fixed top-0 left-0 right-0 z-[9999] bg-[#0f0f1a] border-b border-white/10">
+      {/* NAVBAR */}
+      <nav className="fixed top-0 left-0 right-0 z-[9999] 
+        bg-[#0f0f1a]/80 backdrop-blur-xl 
+        border-b border-white/10 shadow-lg">
+
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
           {/* LOGO */}
@@ -40,24 +44,70 @@ export function Navigation() {
             <span className="text-white font-bold text-lg">Drevaia</span>
           </button>
 
+          {/* DESKTOP */}
           {!isMobile && (
-            <div className="flex items-center gap-6">
+            <div className="flex items-center gap-6 text-sm font-medium">
 
-              <button onClick={() => go("/")}>Inicio</button>
+              <button
+                onClick={() => go("/")}
+                className="text-white hover:text-amber-300 transition"
+              >
+                {language === "es" && "Inicio"}
+                {language === "en" && "Start"}
+                {language === "fr" && "Accueil"}
+                {language === "pt" && "Início"}
+              </button>
 
-              <Link to="/library">{t.nav.library}</Link>
+              <Link
+                to="/library"
+                className="text-white hover:text-amber-300 transition"
+              >
+                {t.nav.library}
+              </Link>
 
-              <button onClick={() => go("/portal")}>Portal</button>
+              <button
+                onClick={() => go("/portal")}
+                className="text-white hover:text-amber-300 transition"
+              >
+                {language === "es" && "Portal"}
+                {language === "en" && "Portal"}
+                {language === "fr" && "Portail"}
+                {language === "pt" && "Portal"}
+              </button>
 
-              <button onClick={() => go("/")}>Lectura diaria</button>
+              <button
+                onClick={() => go("/")}
+                className="text-white hover:text-amber-300 transition"
+              >
+                {language === "es" ? "Lectura diaria" : "Daily reading"}
+              </button>
 
-              <button onClick={() => go("/")}>Testimonios</button>
+              <button
+                onClick={() => go("/")}
+                className="text-white hover:text-amber-300 transition"
+              >
+                {language === "es" ? "Testimonios" : "Testimonials"}
+              </button>
 
-              <Link to="/legal">{t.nav.legal}</Link>
+              <Link
+                to="/legal"
+                className="text-white hover:text-amber-300 transition"
+              >
+                {t.nav.legal}
+              </Link>
 
-              <div className="flex gap-2">
+              {/* IDIOMA */}
+              <div className="flex gap-2 ml-2 bg-white/10 px-2 py-1 rounded-full">
                 {['es','en','fr','pt'].map((lang) => (
-                  <button key={lang} onClick={() => setLanguage(lang as any)}>
+                  <button
+                    key={lang}
+                    onClick={() => setLanguage(lang as any)}
+                    className={`px-2 py-1 rounded-full text-xs transition ${
+                      language === lang
+                        ? 'bg-amber-400 text-black'
+                        : 'text-white hover:text-amber-300'
+                    }`}
+                  >
                     {lang.toUpperCase()}
                   </button>
                 ))}
@@ -66,8 +116,12 @@ export function Navigation() {
             </div>
           )}
 
+          {/* MOBILE BUTTON */}
           {isMobile && (
-            <button onClick={() => setOpen(!open)}>
+            <button
+              onClick={() => setOpen(!open)}
+              className="text-white"
+            >
               {open ? <X /> : <Menu />}
             </button>
           )}
@@ -75,12 +129,58 @@ export function Navigation() {
         </div>
       </nav>
 
+      {/* MOBILE MENU */}
       {open && isMobile && (
-        <motion.div className="fixed top-16 left-0 w-full bg-black p-6 z-40">
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed top-16 left-0 w-full 
+            bg-[#0f0f1a]/95 backdrop-blur-xl 
+            p-6 z-[9998] space-y-4 text-white"
+        >
 
-          <button onClick={() => go("/")}>Inicio</button>
-          <button onClick={() => go("/portal")}>Portal</button>
-          <button onClick={() => go("/library")}>Library</button>
+          <button onClick={() => { go("/"); setOpen(false); }}>
+            Inicio
+          </button>
+
+          <button onClick={() => { go("/portal"); setOpen(false); }}>
+            Portal
+          </button>
+
+          <button onClick={() => { go("/library"); setOpen(false); }}>
+            {t.nav.library}
+          </button>
+
+          <button onClick={() => { go("/"); setOpen(false); }}>
+            Lectura diaria
+          </button>
+
+          <button onClick={() => { go("/"); setOpen(false); }}>
+            Testimonios
+          </button>
+
+          <Link to="/legal" onClick={() => setOpen(false)}>
+            {t.nav.legal}
+          </Link>
+
+          <div className="flex gap-2 mt-4">
+            {['es','en','fr','pt'].map((lang) => (
+              <button
+                key={lang}
+                onClick={() => {
+                  setLanguage(lang as any);
+                  setOpen(false);
+                }}
+                className={`px-3 py-1 rounded ${
+                  language === lang
+                    ? 'bg-amber-400 text-black'
+                    : 'bg-white/10 text-white'
+                }`}
+              >
+                {lang.toUpperCase()}
+              </button>
+            ))}
+          </div>
 
         </motion.div>
       )}
