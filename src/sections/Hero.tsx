@@ -157,7 +157,7 @@ export function Hero({ language }: Props) {
   }, []);
 
   return (
-    <section className="relative min-h-[85vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-12 md:pt-0">
+    <section className="relative min-h-[85vh] md:min-h-screen flex items-start justify-center overflow-hidden pt-24 sm:pt-28 md:pt-0">
 
       <div className="absolute inset-0 bg-[#0f0f1a]" />
 
@@ -168,11 +168,11 @@ export function Hero({ language }: Props) {
 
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/40 via-purple-800/30 to-purple-900/60" />
 
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-80" />
+      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-90 scale-110 sm:scale-115 md:scale-100 -translate-y-4 sm:-translate-y-6 md:translate-y-0" />
 
-      <div ref={contentRef} className="relative z-10 text-center max-w-4xl px-4">
+      <div ref={contentRef} className="relative z-10 text-center max-w-3xl sm:max-w-4xl px-4 mt-6 sm:mt-8 md:mt-0">
 
-        <h1 ref={titleRef} className="text-3xl sm:text-4xl md:text-7xl font-bold text-white mb-4 leading-tight">
+        <h1 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4 leading-tight">
           DREVAIA DIGITAL
         </h1>
 
@@ -188,7 +188,7 @@ export function Hero({ language }: Props) {
 
           {dynamicLink ? (
             <a href={dynamicLink} target="_blank">
-              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-3 text-sm sm:text-base rounded-full text-white">
+              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
                 <Heart className="mr-2" />
                 {dynamicCTA}
               </Button>
