@@ -1,7 +1,8 @@
 import { useLanguage } from '@/context/LanguageContext';
 import { useState, useEffect } from 'react';
-import { ChevronLeft, ChevronRight, Star, ArrowUp } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Star } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 interface Testimonial {
   id: number;
@@ -23,29 +24,9 @@ const testimonialsES: Testimonial[] = [
   { id: 5, name: 'Carlos Mendoza', role: 'Psicólogo', content: 'Una obra profunda que realmente transforma.', rating: 5, avatar: 'C' },
 ];
 
-const testimonialsEN: Testimonial[] = [
-  { id: 1, name: 'Maria Gonzalez', role: 'Digital Entrepreneur', content: 'Drevaia Digital eBooks completely changed how I see marketing.', rating: 5, avatar: 'M' },
-  { id: 2, name: 'Lucas Silva', role: 'Life Coach', content: 'Each book has a depth that truly touches the soul.', rating: 5, avatar: 'L' },
-  { id: 3, name: 'Sophie Martin', role: 'SEO Consultant', content: 'The combination of SEO + AI is brilliant. It helped me a lot.', rating: 5, avatar: 'S' },
-  { id: 4, name: 'Emma Thompson', role: 'Content Creator', content: 'It opened my eyes to the power of emotional connection.', rating: 5, avatar: 'E' },
-  { id: 5, name: 'Carlos Mendoza', role: 'Psychologist', content: 'A deep work that truly transforms.', rating: 5, avatar: 'C' },
-];
-
-const testimonialsFR: Testimonial[] = [
-  { id: 1, name: 'Maria Gonzalez', role: 'Entrepreneuse Digitale', content: 'Les eBooks Drevaia Digital ont transformé ma vision du marketing.', rating: 5, avatar: 'M' },
-  { id: 2, name: 'Lucas Silva', role: 'Coach de Vie', content: 'Chaque livre a une profondeur qui touche vraiment l’âme.', rating: 5, avatar: 'L' },
-  { id: 3, name: 'Sophie Martin', role: 'Consultante SEO', content: 'La combinaison SEO + IA est brillante. Cela m’a beaucoup aidé.', rating: 5, avatar: 'S' },
-  { id: 4, name: 'Emma Thompson', role: 'Créatrice de Contenu', content: 'Cela m’a ouvert les yeux sur la connexion émotionnelle.', rating: 5, avatar: 'E' },
-  { id: 5, name: 'Carlos Mendoza', role: 'Psychologue', content: 'Une œuvre profonde qui transforme réellement.', rating: 5, avatar: 'C' },
-];
-
-const testimonialsPT: Testimonial[] = [
-  { id: 1, name: 'Maria Gonzalez', role: 'Empreendedora Digital', content: 'Os eBooks da Drevaia Digital mudaram completamente minha visão de marketing.', rating: 5, avatar: 'M' },
-  { id: 2, name: 'Lucas Silva', role: 'Coach de Vida', content: 'Cada livro tem uma profundidade que realmente toca a alma.', rating: 5, avatar: 'L' },
-  { id: 3, name: 'Sophie Martin', role: 'Consultora SEO', content: 'A combinação de SEO + IA é brilhante. Me ajudou muito.', rating: 5, avatar: 'S' },
-  { id: 4, name: 'Emma Thompson', role: 'Criadora de Conteúdo', content: 'Abriu meus olhos para o poder da conexão emocional.', rating: 5, avatar: 'E' },
-  { id: 5, name: 'Carlos Mendoza', role: 'Psicólogo', content: 'Uma obra profunda que realmente transforma.', rating: 5, avatar: 'C' },
-];
+const testimonialsEN = testimonialsES;
+const testimonialsFR = testimonialsES;
+const testimonialsPT = testimonialsES;
 
 const getTestimonialsByLanguage = (language: Lang): Testimonial[] => {
   switch (language) {
@@ -58,10 +39,30 @@ const getTestimonialsByLanguage = (language: Lang): Testimonial[] => {
 
 // ===== TEXTOS =====
 const uiText = {
-  es: { badge: 'Testimonios reales', title: 'Historias de transformación real', subtitle: 'Personas que ya han transformado su vida desde dentro.' },
-  en: { badge: 'Real testimonials', title: 'Real transformation stories', subtitle: 'People who have transformed their lives from within.' },
-  fr: { badge: 'Témoignages réels', title: 'Histoires de transformation réelle', subtitle: 'Des personnes qui ont transformé leur vie.' },
-  pt: { badge: 'Depoimentos reais', title: 'Histórias de transformação real', subtitle: 'Pessoas que transformaram suas vidas.' },
+  es: {
+    badge: 'Testimonios reales',
+    title: 'Historias de transformación real',
+    subtitle: 'Personas que ya han transformado su vida desde dentro.',
+    back: '← Volver al inicio'
+  },
+  en: {
+    badge: 'Real testimonials',
+    title: 'Real transformation stories',
+    subtitle: 'People who have transformed their lives from within.',
+    back: '← Back to home'
+  },
+  fr: {
+    badge: 'Témoignages réels',
+    title: 'Histoires de transformation réelle',
+    subtitle: 'Des personnes qui ont transformé leur vie.',
+    back: '← Retour à l’accueil'
+  },
+  pt: {
+    badge: 'Depoimentos reais',
+    title: 'Histórias de transformação real',
+    subtitle: 'Pessoas que transformaram suas vidas.',
+    back: '← Voltar ao início'
+  },
 };
 
 export function Testimonials() {
@@ -69,10 +70,11 @@ export function Testimonials() {
   const lang = (language || "es") as Lang;
   const t = uiText[lang];
 
+  const navigate = useNavigate();
+
   const testimonials = getTestimonialsByLanguage(lang);
   const [index, setIndex] = useState(0);
-  
-  // autoplay
+
   useEffect(() => {
     const interval = setInterval(() => {
       setIndex((prev) => (prev + 1) % testimonials.length);
@@ -80,12 +82,11 @@ export function Testimonials() {
     return () => clearInterval(interval);
   }, [testimonials.length]);
 
-  // 👇 DETECTAR SCROLL
- 
   const current = testimonials[index];
 
-  const goTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  const goHome = () => {
+    navigate("/");
+    window.scrollTo(0, 0);
   };
 
   if (!current) return null;
@@ -145,21 +146,18 @@ export function Testimonials() {
           </button>
         </div>
 
+        {/* 🔥 VOLVER AL INICIO */}
+        <div className="mt-10 text-center">
+          <button
+            onClick={goHome}
+            className="text-gray-400 hover:text-amber-300 
+            transition text-sm flex items-center justify-center gap-2 mx-auto"
+          >
+            {t.back}
+          </button>
+        </div>
+
       </div>
-
-      {/* 🔥 BOTÓN VOLVER ARRIBA */}
-      <div className="fixed bottom-6 right-6 z-[99999]">
-
-  <button
-    onClick={goTop}
-    className="bg-amber-400 text-black 
-    p-4 rounded-full shadow-2xl 
-    hover:scale-110 active:scale-95 transition"
-  >
-    <ArrowUp size={22} />
-  </button>
-
-</div>
 
     </section>
   );
