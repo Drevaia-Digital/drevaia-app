@@ -156,27 +156,25 @@ export function Hero({ language }: Props) {
   }, []);
 
   return (
-    <section className="relative min-h-[85vh] md:min-h-screen flex flex-col items-center justify-start md:justify-center pt-28 md:pt-0 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-between items-center pt-28 pb-16 overflow-hidden">
 
+      {/* FONDO */}
       <div className="absolute inset-0 bg-[#0f0f1a]" />
-
-      <div
-        className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-70"
-        style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
-      />
-
+      <div className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-70" style={{ backgroundImage: 'url(/hero-bg.jpg)' }} />
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/40 via-purple-800/30 to-purple-900/60" />
 
+      {/* ÁRBOL + PARTÍCULAS */}
       <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none opacity-90 
-        scale-150 sm:scale-[1.6] md:scale-125 lg:scale-100 
-        -translate-y-2 sm:-translate-y-4 md:-translate-y-2 lg:translate-y-0"
+        scale-[1.8] sm:scale-[2] md:scale-[1.3] lg:scale-100 
+        -translate-y-4 sm:-translate-y-6 md:-translate-y-2 lg:translate-y-0"
       />
 
-      <div ref={contentRef} className="relative z-10 text-center max-w-2xl sm:max-w-3xl px-4">
+      {/* TEXTO ARRIBA */}
+      <div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-6">
 
-        <h1 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4 leading-tight">
+        <h1 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4">
           DREVAIA DIGITAL
         </h1>
 
@@ -184,36 +182,37 @@ export function Hero({ language }: Props) {
           {dynamicTitle}
         </p>
 
-        <p ref={descRef} className="text-white/80 mb-6 md:mb-8 text-sm sm:text-base">
+        <p ref={descRef} className="text-white/80 text-sm sm:text-base">
           {t.hero.description}
         </p>
 
-        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 justify-center items-center mt-8 md:mt-10">
+      </div>
 
-          {dynamicLink ? (
-            <a href={dynamicLink} target="_blank">
-              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
-                <Heart className="mr-2" />
-                {dynamicCTA}
-              </Button>
-            </a>
-          ) : (
-            <Link to="/auth/register">
-              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
-                <Heart className="mr-2" />
-                {t.hero.cta}
-              </Button>
-            </Link>
-          )}
+      {/* BOTONES ABAJO (NO TOCAN EL ÁRBOL) */}
+      <div ref={buttonsRef} className="relative z-10 flex flex-col sm:flex-row gap-3 mb-10">
 
-          <Link to="/library">
-            <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-7 py-4 text-base sm:text-lg rounded-full">
-              {t.hero.explore}
-              <ArrowRight className="ml-2" />
+        {dynamicLink ? (
+          <a href={dynamicLink} target="_blank">
+            <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
+              <Heart className="mr-2" />
+              {dynamicCTA}
+            </Button>
+          </a>
+        ) : (
+          <Link to="/auth/register">
+            <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
+              <Heart className="mr-2" />
+              {t.hero.cta}
             </Button>
           </Link>
+        )}
 
-        </div>
+        <Link to="/library">
+          <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-7 py-4 text-base sm:text-lg rounded-full">
+            {t.hero.explore}
+            <ArrowRight className="ml-2" />
+          </Button>
+        </Link>
 
       </div>
 
