@@ -157,7 +157,7 @@ export function Hero({ language }: Props) {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-24 md:pt-0">
+    <section className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden pt-16 md:pt-0">
 
       <div className="absolute inset-0 bg-[#0f0f1a]" />
 
