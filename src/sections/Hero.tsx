@@ -170,8 +170,8 @@ export function Hero({ language }: Props) {
       <canvas
         ref={canvasRef}
         className="absolute inset-0 pointer-events-none opacity-90 
-        scale-125 sm:scale-120 md:scale-105 lg:scale-100 
-        -translate-y-10 sm:-translate-y-12 md:-translate-y-4 lg:translate-y-0"
+        scale-150 sm:scale-[1.6] md:scale-125 lg:scale-100 
+        -translate-y-2 sm:-translate-y-4 md:-translate-y-2 lg:translate-y-0"
       />
 
       <div ref={contentRef} className="relative z-10 text-center max-w-2xl sm:max-w-3xl px-4">
@@ -188,7 +188,7 @@ export function Hero({ language }: Props) {
           {t.hero.description}
         </p>
 
-        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 justify-center items-center mt-8 md:mt-10">
 
           {dynamicLink ? (
             <a href={dynamicLink} target="_blank">
