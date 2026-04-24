@@ -175,7 +175,7 @@ export function Hero({ language }: Props) {
 />
 
   {/* TEXTO */}
-  <div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-4">
+  <div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-12 md:mt-6">
 
     <h1 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4">
       DREVAIA DIGITAL
@@ -195,7 +195,7 @@ export function Hero({ language }: Props) {
 <div 
   ref={buttonsRef} 
   className="
-    absolute bottom-6 left-0 w-full px-6
+    absolute bottom-12 left-0 w-full px-6
     flex justify-between items-center
     md:bottom-10 md:left-1/2 md:-translate-x-1/2 md:w-auto md:px-0 md:justify-center md:gap-4
     z-20
