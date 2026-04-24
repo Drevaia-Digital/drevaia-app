@@ -15,7 +15,6 @@ type Emotion = 'ansiedad' | 'proposito' | 'patrones';
 export function Hero({ language }: Props) {
 
   const t = translations[language];
-
   const emotion = userProfile.getEmotion() as Emotion | null;
 
   const emotionalContent = {
@@ -90,9 +89,9 @@ export function Hero({ language }: Props) {
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-      tl.fromTo(titleRef.current, { opacity: 0, y: 50 }, { opacity: 1, y: 0, duration: 1 })
-        .fromTo(descRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.6')
-        .fromTo(buttonsRef.current, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.4');
+      tl.fromTo(titleRef.current, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1 })
+        .fromTo(descRef.current, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.6')
+        .fromTo(buttonsRef.current, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.4');
     }, contentRef);
 
     return () => ctx.revert();
@@ -157,7 +156,7 @@ export function Hero({ language }: Props) {
   }, []);
 
   return (
-    <section className="relative min-h-[85vh] md:min-h-screen flex items-start justify-center overflow-hidden pt-24 sm:pt-28 md:pt-0">
+    <section className="relative min-h-[85vh] md:min-h-screen flex flex-col items-center justify-start md:justify-center pt-28 md:pt-0 overflow-hidden">
 
       <div className="absolute inset-0 bg-[#0f0f1a]" />
 
@@ -168,23 +167,28 @@ export function Hero({ language }: Props) {
 
       <div className="absolute inset-0 bg-gradient-to-b from-purple-900/40 via-purple-800/30 to-purple-900/60" />
 
-      <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-90 scale-110 sm:scale-115 md:scale-100 -translate-y-4 sm:-translate-y-6 md:translate-y-0" />
+      <canvas
+        ref={canvasRef}
+        className="absolute inset-0 pointer-events-none opacity-90 
+        scale-125 sm:scale-120 md:scale-105 lg:scale-100 
+        -translate-y-10 sm:-translate-y-12 md:-translate-y-4 lg:translate-y-0"
+      />
 
-      <div ref={contentRef} className="relative z-10 text-center max-w-3xl sm:max-w-4xl px-4 mt-6 sm:mt-8 md:mt-0">
+      <div ref={contentRef} className="relative z-10 text-center max-w-2xl sm:max-w-3xl px-4">
 
         <h1 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4 leading-tight">
           DREVAIA DIGITAL
         </h1>
 
-        <p className="text-lg sm:text-xl md:text-4xl text-amber-300 font-semibold mb-4">
+        <p className="text-xl sm:text-2xl md:text-4xl text-amber-300 font-semibold mb-4">
           {dynamicTitle}
         </p>
 
-        <p ref={descRef} className="text-white/80 mb-8 text-sm sm:text-base">
+        <p ref={descRef} className="text-white/80 mb-6 md:mb-8 text-sm sm:text-base">
           {t.hero.description}
         </p>
 
-        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 justify-center items-center w-full">
+        <div ref={buttonsRef} className="flex flex-col sm:flex-row gap-3 justify-center items-center">
 
           {dynamicLink ? (
             <a href={dynamicLink} target="_blank">
@@ -195,7 +199,7 @@ export function Hero({ language }: Props) {
             </a>
           ) : (
             <Link to="/auth/register">
-              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-6 py-3 text-sm sm:text-base rounded-full text-white">
+              <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
                 <Heart className="mr-2" />
                 {t.hero.cta}
               </Button>
@@ -203,7 +207,7 @@ export function Hero({ language }: Props) {
           )}
 
           <Link to="/library">
-            <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-6 py-3 text-sm sm:text-base rounded-full">
+            <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-7 py-4 text-base sm:text-lg rounded-full">
               {t.hero.explore}
               <ArrowRight className="ml-2" />
             </Button>
@@ -212,6 +216,7 @@ export function Hero({ language }: Props) {
         </div>
 
       </div>
+
     </section>
   );
 }
