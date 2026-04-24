@@ -165,11 +165,11 @@ export function Hero({ language }: Props) {
 
   {/* ÁRBOL + PARTÍCULAS (AJUSTADO) */}
   <canvas
-    ref={canvasRef}
-    className="absolute inset-0 pointer-events-none opacity-90 
-    scale-[1.4] sm:scale-[1.5] md:scale-[1.2] lg:scale-100 
-    -translate-y-2 sm:-translate-y-4 md:-translate-y-2 lg:translate-y-0"
-  />
+  ref={canvasRef}
+  className="absolute inset-0 pointer-events-none opacity-90 
+  scale-[1.6] sm:scale-[1.8] md:scale-[1.2] lg:scale-100 
+  -translate-y-6 sm:-translate-y-8 md:-translate-y-2 lg:translate-y-0"
+/>
 
   {/* TEXTO */}
   <div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-4">
@@ -190,13 +190,14 @@ export function Hero({ language }: Props) {
 
   {/* BOTONES (VISIBLE EN MÓVIL + PERFECTO EN DESKTOP) */}
   <div 
-    ref={buttonsRef} 
-    className="
-      relative mt-8
-      md:absolute md:bottom-10 md:left-1/2 md:-translate-x-1/2
-      z-20 flex flex-col sm:flex-row gap-3 items-center
-    "
-  >
+  ref={buttonsRef} 
+  className="
+    relative mt-6
+    sm:mt-8
+    md:absolute md:bottom-10 md:left-1/2 md:-translate-x-1/2
+    z-20 flex flex-col sm:flex-row gap-3 items-center
+  "
+>
 
     {dynamicLink ? (
       <a href={dynamicLink} target="_blank">
