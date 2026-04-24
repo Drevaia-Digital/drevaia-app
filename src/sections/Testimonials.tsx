@@ -92,7 +92,7 @@ export function Testimonials() {
   if (!current) return null;
 
   return (
-    <section id="testimonials" className="py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+    <section id="testimonials" className="py-16 md:py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
 
       {/* HEADER */}
       <div className="text-center mb-14">
@@ -147,7 +147,7 @@ export function Testimonials() {
         </div>
 
         {/* 🔥 VOLVER AL INICIO */}
-        <div className="mt-10 text-center">
+        <div className="mt-6 md:mt-10 text-center">
           <button
             onClick={goHome}
             className="text-gray-400 hover:text-amber-300 
