@@ -71,8 +71,7 @@ export function Testimonials() {
 
   const testimonials = getTestimonialsByLanguage(lang);
   const [index, setIndex] = useState(0);
-  const [showTop, setShowTop] = useState(false);
-
+  
   // autoplay
   useEffect(() => {
     const interval = setInterval(() => {
@@ -82,15 +81,7 @@ export function Testimonials() {
   }, [testimonials.length]);
 
   // 👇 DETECTAR SCROLL
-  useEffect(() => {
-    const handleScroll = () => {
-      setShowTop(window.scrollY > 150);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
+ 
   const current = testimonials[index];
 
   const goTop = () => {
@@ -157,25 +148,18 @@ export function Testimonials() {
       </div>
 
       {/* 🔥 BOTÓN VOLVER ARRIBA */}
-      <AnimatePresence>
-        {(true || showTop) && (
-          <motion.button
-            onClick={goTop}
-            initial={{ opacity: 0, scale: 0.6 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 0.6 }}
-            transition={{ duration: 0.3 }}
-            className="fixed bottom-6 right-6 z-[9999] 
-              bg-white/10 backdrop-blur-md 
-              border border-white/20 
-              hover:bg-amber-400 hover:text-black 
-              text-white p-3 rounded-full 
-              shadow-xl transition"
-          >
-            <ArrowUp size={18} />
-          </motion.button>
-        )}
-      </AnimatePresence>
+      <div className="fixed bottom-6 right-6 z-[99999]">
+
+  <button
+    onClick={goTop}
+    className="bg-amber-400 text-black 
+    p-4 rounded-full shadow-2xl 
+    hover:scale-110 active:scale-95 transition"
+  >
+    <ArrowUp size={22} />
+  </button>
+
+</div>
 
     </section>
   );
