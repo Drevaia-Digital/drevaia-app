@@ -191,7 +191,11 @@ export function Hero({ language }: Props) {
       {/* BOTONES ABAJO (NO TOCAN EL ÁRBOL) */}
       <div 
   ref={buttonsRef} 
-  className="absolute bottom-10 left-1/2 -translate-x-1/2 z-20 flex flex-col sm:flex-row gap-3 items-center"
+  className="
+    relative mt-10
+    md:absolute md:bottom-10 md:left-1/2 md:-translate-x-1/2
+    z-20 flex flex-col sm:flex-row gap-3 items-center
+  "
 >
 
         {dynamicLink ? (
