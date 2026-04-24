@@ -84,7 +84,7 @@ export function Testimonials() {
   // 👇 DETECTAR SCROLL
   useEffect(() => {
     const handleScroll = () => {
-      setShowTop(window.scrollY > 400);
+      setShowTop(window.scrollY > 150);
     };
 
     window.addEventListener("scroll", handleScroll);

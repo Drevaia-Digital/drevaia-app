@@ -69,8 +69,8 @@ export function EnergyTreeBackground() {
 
   return (
     <canvas
-      ref={canvasRef}
-      className="absolute inset-0 w-full h-full z-0 opacity-60"
-    />
+  ref={canvasRef}
+  className="absolute inset-0 w-full h-full z-0 opacity-70 scale-125 md:scale-100 translate-y-[-10%] md:translate-y-0"
+/>
   );
 }
