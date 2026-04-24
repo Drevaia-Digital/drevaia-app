@@ -156,73 +156,73 @@ export function Hero({ language }: Props) {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col justify-between items-center pt-28 pb-16 overflow-hidden">
+    <section className="relative min-h-screen flex flex-col justify-start md:justify-between items-center overflow-hidden pt-24 md:pt-0">
 
-      {/* FONDO */}
-      <div className="absolute inset-0 bg-[#0f0f1a]" />
-      <div className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-70" style={{ backgroundImage: 'url(/hero-bg.jpg)' }} />
-      <div className="absolute inset-0 bg-gradient-to-b from-purple-900/40 via-purple-800/30 to-purple-900/60" />
+  {/* FONDO */}
+  <div className="absolute inset-0 bg-[#0f0f1a]" />
+  <div className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-70" style={{ backgroundImage: 'url(/hero-bg.jpg)' }} />
+  <div className="absolute inset-0 bg-gradient-to-b from-purple-900/40 via-purple-800/30 to-purple-900/60" />
 
-      {/* ÁRBOL + PARTÍCULAS */}
-      <canvas
-  ref={canvasRef}
-  className="absolute inset-0 pointer-events-none opacity-90 
-  scale-[2.2] sm:scale-[2.4] md:scale-[1.4] lg:scale-100 
-  -translate-y-6 sm:-translate-y-8 md:-translate-y-2 lg:translate-y-0"
-/>
+  {/* ÁRBOL + PARTÍCULAS (AJUSTADO) */}
+  <canvas
+    ref={canvasRef}
+    className="absolute inset-0 pointer-events-none opacity-90 
+    scale-[1.4] sm:scale-[1.5] md:scale-[1.2] lg:scale-100 
+    -translate-y-2 sm:-translate-y-4 md:-translate-y-2 lg:translate-y-0"
+  />
 
-      {/* TEXTO ARRIBA */}
-      <div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-6">
+  {/* TEXTO */}
+  <div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-4">
 
-        <h1 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4">
-          DREVAIA DIGITAL
-        </h1>
+    <h1 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4">
+      DREVAIA DIGITAL
+    </h1>
 
-        <p className="text-xl sm:text-2xl md:text-4xl text-amber-300 font-semibold mb-4">
-          {dynamicTitle}
-        </p>
+    <p className="text-xl sm:text-2xl md:text-4xl text-amber-300 font-semibold mb-4">
+      {dynamicTitle}
+    </p>
 
-        <p ref={descRef} className="text-white/80 text-sm sm:text-base">
-          {t.hero.description}
-        </p>
+    <p ref={descRef} className="text-white/80 text-sm sm:text-base">
+      {t.hero.description}
+    </p>
 
-      </div>
+  </div>
 
-      {/* BOTONES ABAJO (NO TOCAN EL ÁRBOL) */}
-      <div 
-  ref={buttonsRef} 
-  className="
-    relative mt-10
-    md:absolute md:bottom-10 md:left-1/2 md:-translate-x-1/2
-    z-20 flex flex-col sm:flex-row gap-3 items-center
-  "
->
+  {/* BOTONES (VISIBLE EN MÓVIL + PERFECTO EN DESKTOP) */}
+  <div 
+    ref={buttonsRef} 
+    className="
+      relative mt-8
+      md:absolute md:bottom-10 md:left-1/2 md:-translate-x-1/2
+      z-20 flex flex-col sm:flex-row gap-3 items-center
+    "
+  >
 
-        {dynamicLink ? (
-          <a href={dynamicLink} target="_blank">
-            <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
-              <Heart className="mr-2" />
-              {dynamicCTA}
-            </Button>
-          </a>
-        ) : (
-          <Link to="/auth/register">
-            <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
-              <Heart className="mr-2" />
-              {t.hero.cta}
-            </Button>
-          </Link>
-        )}
+    {dynamicLink ? (
+      <a href={dynamicLink} target="_blank">
+        <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
+          <Heart className="mr-2" />
+          {dynamicCTA}
+        </Button>
+      </a>
+    ) : (
+      <Link to="/auth/register">
+        <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
+          <Heart className="mr-2" />
+          {t.hero.cta}
+        </Button>
+      </Link>
+    )}
 
-        <Link to="/library">
-          <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-7 py-4 text-base sm:text-lg rounded-full">
-            {t.hero.explore}
-            <ArrowRight className="ml-2" />
-          </Button>
-        </Link>
+    <Link to="/library">
+      <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-7 py-4 text-base sm:text-lg rounded-full">
+        {t.hero.explore}
+        <ArrowRight className="ml-2" />
+      </Button>
+    </Link>
 
-      </div>
+  </div>
 
-    </section>
+</section>
   );
 }
