@@ -158,7 +158,7 @@ export function Testimonials() {
 
       {/* 🔥 BOTÓN VOLVER ARRIBA */}
       <AnimatePresence>
-        {showTop && (
+        {(true || showTop) && (
           <motion.button
             onClick={goTop}
             initial={{ opacity: 0, scale: 0.6 }}
