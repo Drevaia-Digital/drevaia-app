@@ -176,7 +176,7 @@ export function Hero({ language }: Props) {
 
   {/* TEXTO */}
 
-<div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-36 md:mt-16">    
+<div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-44 md:mt-20">    
 <h1 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4">
       DREVAIA DIGITAL
     </h1>
