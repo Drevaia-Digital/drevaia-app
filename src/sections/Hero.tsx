@@ -167,8 +167,8 @@ export function Hero({ language }: Props) {
   <canvas
   ref={canvasRef}
   className="absolute inset-0 pointer-events-none opacity-90 
-  scale-[1.6] sm:scale-[1.8] md:scale-[1.2] lg:scale-100 
-  -translate-y-6 sm:-translate-y-8 md:-translate-y-2 lg:translate-y-0"
+  scale-[1.3] sm:scale-[1.4] md:scale-[1.15] lg:scale-100 
+  -translate-y-4 sm:-translate-y-6 md:-translate-y-2 lg:translate-y-0"
 />
 
   {/* TEXTO */}
@@ -188,41 +188,43 @@ export function Hero({ language }: Props) {
 
   </div>
 
-  {/* BOTONES (VISIBLE EN MÓVIL + PERFECTO EN DESKTOP) */}
-  <div 
+ {/* BOTONES (RESPONSIVO REAL) */}
+<div 
   ref={buttonsRef} 
   className="
-    relative mt-6
-    sm:mt-8
-    md:absolute md:bottom-10 md:left-1/2 md:-translate-x-1/2
-    z-20 flex flex-col sm:flex-row gap-3 items-center
+    absolute bottom-6 left-0 w-full px-6
+    flex justify-between items-center
+    md:bottom-10 md:left-1/2 md:-translate-x-1/2 md:w-auto md:px-0 md:justify-center md:gap-4
+    z-20
   "
 >
 
-    {dynamicLink ? (
-      <a href={dynamicLink} target="_blank">
-        <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
-          <Heart className="mr-2" />
-          {dynamicCTA}
-        </Button>
-      </a>
-    ) : (
-      <Link to="/auth/register">
-        <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-7 py-4 text-base sm:text-lg rounded-full text-white">
-          <Heart className="mr-2" />
-          {t.hero.cta}
-        </Button>
-      </Link>
-    )}
-
-    <Link to="/library">
-      <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-7 py-4 text-base sm:text-lg rounded-full">
-        {t.hero.explore}
-        <ArrowRight className="ml-2" />
+  {/* IZQUIERDA */}
+  {dynamicLink ? (
+    <a href={dynamicLink} target="_blank">
+      <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-5 py-3 text-sm sm:text-base rounded-full text-white">
+        <Heart className="mr-2" />
+        {dynamicCTA}
+      </Button>
+    </a>
+  ) : (
+    <Link to="/auth/register">
+      <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-5 py-3 text-sm sm:text-base rounded-full text-white">
+        <Heart className="mr-2" />
+        {t.hero.cta}
       </Button>
     </Link>
+  )}
 
-  </div>
+  {/* DERECHA */}
+  <Link to="/library">
+    <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-5 py-3 text-sm sm:text-base rounded-full">
+      {t.hero.explore}
+      <ArrowRight className="ml-2" />
+    </Button>
+  </Link>
+
+</div>
 
 </section>
   );
