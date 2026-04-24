@@ -160,15 +160,18 @@ export function Hero({ language }: Props) {
 
   {/* FONDO */}
   <div className="absolute inset-0 bg-[#0f0f1a]" />
-  <div className="absolute inset-0 bg-contain bg-center bg-no-repeat opacity-70" style={{ backgroundImage: 'url(/hero-bg.jpg)' }} />
+  <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70" style={{ backgroundImage: 'url(/hero-bg.jpg)' }} />
   <div className="absolute inset-0 bg-gradient-to-b from-purple-900/40 via-purple-800/30 to-purple-900/60" />
 
   {/* ÁRBOL + PARTÍCULAS (AJUSTADO) */}
   <canvas
   ref={canvasRef}
-  className="absolute inset-0 pointer-events-none opacity-90 
-  scale-[1.3] sm:scale-[1.4] md:scale-[1.15] lg:scale-100 
-  -translate-y-4 sm:-translate-y-6 md:-translate-y-2 lg:translate-y-0"
+  className="
+    absolute inset-0 
+    pointer-events-none 
+    opacity-90
+    md:scale-100
+  "
 />
 
   {/* TEXTO */}
