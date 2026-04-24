@@ -92,73 +92,80 @@ export function Testimonials() {
   if (!current) return null;
 
   return (
-    <section id="testimonials" className="py-16 md:py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white">
+    <section
+  id="testimonials"
+  className="min-h-[85vh] md:min-h-screen flex flex-col justify-center items-center px-4 py-12 md:py-24 bg-gradient-to-b from-gray-900 to-gray-800 text-white"
+>
 
-      {/* HEADER */}
-      <div className="text-center mb-14">
-        <div className="text-amber-400 font-semibold">{t.badge}</div>
-        <h2 className="text-3xl font-bold mt-2">{t.title}</h2>
-        <p className="text-gray-400 mt-2">{t.subtitle}</p>
-      </div>
+  {/* HEADER */}
+  <div className="text-center mb-6 md:mb-14">
+    <div className="text-amber-400 font-semibold">{t.badge}</div>
+    <h2 className="text-2xl md:text-3xl font-bold mt-2">{t.title}</h2>
+    <p className="text-gray-400 mt-2 text-sm md:text-base">{t.subtitle}</p>
+  </div>
 
-      {/* CARD */}
-      <div className="max-w-xl mx-auto">
+  {/* CARD + CONTROLES */}
+  <div className="w-full max-w-xl flex flex-col items-center">
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={current.id}
-            initial={{ opacity: 0, y: 30, filter: "blur(6px)" }}
-            animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-            exit={{ opacity: 0, y: -20, filter: "blur(6px)" }}
-            transition={{ duration: 0.45 }}
-            className="bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-8 shadow-lg"
-          >
+    <AnimatePresence mode="wait">
+      <motion.div
+        key={current.id}
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -20 }}
+        transition={{ duration: 0.4 }}
+        className="w-full bg-white/5 backdrop-blur-md border border-white/10 rounded-2xl p-6 md:p-8 shadow-lg"
+      >
 
-            <div className="flex justify-center gap-1 mb-4">
-              {[...Array(current.rating)].map((_, i) => (
-                <Star key={i} className="w-5 h-5 text-amber-400 fill-amber-400" />
-              ))}
-            </div>
-
-            <p className="text-center italic text-gray-300 mb-6">
-              "{current.content}"
-            </p>
-
-            <div className="flex flex-col items-center gap-3">
-              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400/30 to-orange-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-semibold">
-                {current.avatar}
-              </div>
-
-              <h4 className="font-semibold">{current.name}</h4>
-              <p className="text-sm text-gray-400">{current.role}</p>
-            </div>
-
-          </motion.div>
-        </AnimatePresence>
-
-        <div className="flex justify-center gap-4 mt-8">
-          <button onClick={() => setIndex((i) => (i - 1 + testimonials.length) % testimonials.length)} className="p-2 rounded-full bg-white/10 hover:bg-white/20">
-            <ChevronLeft />
-          </button>
-
-          <button onClick={() => setIndex((i) => (i + 1) % testimonials.length)} className="p-2 rounded-full bg-white/10 hover:bg-white/20">
-            <ChevronRight />
-          </button>
+        <div className="flex justify-center gap-1 mb-3">
+          {[...Array(current.rating)].map((_, i) => (
+            <Star key={i} className="w-4 h-4 md:w-5 md:h-5 text-amber-400 fill-amber-400" />
+          ))}
         </div>
 
-        {/* 🔥 VOLVER AL INICIO */}
-        <div className="mt-6 md:mt-10 text-center">
-          <button
-            onClick={goHome}
-            className="text-gray-400 hover:text-amber-300 
-            transition text-sm flex items-center justify-center gap-2 mx-auto"
-          >
-            {t.back}
-          </button>
+        <p className="text-center italic text-gray-300 mb-5 text-sm md:text-base">
+          "{current.content}"
+        </p>
+
+        <div className="flex flex-col items-center gap-2">
+          <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gradient-to-br from-amber-400/30 to-orange-500/20 border border-amber-400/40 flex items-center justify-center text-amber-300 font-semibold">
+            {current.avatar}
+          </div>
+
+          <h4 className="font-semibold text-sm md:text-base">{current.name}</h4>
+          <p className="text-xs md:text-sm text-gray-400">{current.role}</p>
         </div>
 
-      </div>
+      </motion.div>
+    </AnimatePresence>
 
-    </section>
+    {/* CONTROLES */}
+    <div className="flex justify-center gap-4 mt-5">
+      <button
+        onClick={() => setIndex((i) => (i - 1 + testimonials.length) % testimonials.length)}
+        className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+      >
+        <ChevronLeft />
+      </button>
+
+      <button
+        onClick={() => setIndex((i) => (i + 1) % testimonials.length)}
+        className="p-2 rounded-full bg-white/10 hover:bg-white/20 transition"
+      >
+        <ChevronRight />
+      </button>
+    </div>
+
+    {/* VOLVER */}
+    <button
+      onClick={goHome}
+      className="mt-4 text-xs md:text-sm text-gray-400 hover:text-amber-300 transition"
+    >
+      {t.back}
+    </button>
+
+  </div>
+
+</section>
   );
 }
