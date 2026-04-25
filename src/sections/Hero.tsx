@@ -218,8 +218,8 @@ export function Hero({ language }: Props) {
     relative z-20
     mt-12 md:mt-16
     w-full max-w-xl px-6
-    flex justify-between items-center
-    md:justify-center md:gap-4
+    flex flex-col items-center gap-3
+    md:flex-row md:justify-center md:gap-4
   "
 >
 
