@@ -198,7 +198,7 @@ export function PortalPage() {
                 title={getTitle(book)}
                 cover={book.coverImage || book.image || ""}
                 price={book.price}
-                onClick={() => navigate("/library")}
+                onClick={() => navigate(`/library?book=${book.id}`)}
               />
             </motion.div>
           ))}
