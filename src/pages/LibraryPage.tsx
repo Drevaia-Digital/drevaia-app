@@ -8,11 +8,12 @@ import { useDebounce } from "@/hooks/useDebounce";
 import { useLanguage } from "@/context/LanguageContext";
 import { trackEvent } from "@/lib/analytics";
 import { addToHistory } from "@/lib/userHistory";
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, ArrowUp } from 'lucide-react';
 import type { Book } from "@/types/book";
 import { getAIRecommendations } from "@/lib/aiBackend";
 
 export default function LibraryPage() {
+  const [showTop, setShowTop] = useState(false);
   const navigate = useNavigate();
   const { language } = useLanguage();
   const [searchParams] = useSearchParams();
@@ -124,6 +125,16 @@ export default function LibraryPage() {
     }
   }, [books, searchParams]);
 
+useEffect(() => {
+  const handleScroll = () => {
+    setShowTop(window.scrollY > 500);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+
   // 🤖 IA PROACTIVA
   useEffect(() => {
     if (!books.length) return;
@@ -179,9 +190,16 @@ export default function LibraryPage() {
   };
 
   const closePreview = () => {
-    setIsModalOpen(false);
-    setTimeout(() => setSelectedBook(null), 200);
-  };
+  setIsModalOpen(false);
+  setTimeout(() => setSelectedBook(null), 200);
+};
+
+const goTop = () => {
+  window.scrollTo({
+    top: 0,
+    behavior: "smooth"
+  });
+};
 
   const computedBooks = useMemo(() => {
     return searchBooks(books || [], {
@@ -264,7 +282,14 @@ export default function LibraryPage() {
           setIsModalOpen(true);
         }}
       />
-
+{showTop && (
+  <button
+    onClick={goTop}
+    className="fixed bottom-6 right-6 z-50 bg-purple-600 hover:bg-purple-700 text-white p-3 rounded-full shadow-2xl transition"
+  >
+    <ArrowUp size={20} />
+  </button>
+)}
     </div>
   );
 }
