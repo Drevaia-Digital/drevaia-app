@@ -158,10 +158,30 @@ export function Hero({ language }: Props) {
   return (
     <section className="relative min-h-screen flex flex-col justify-start md:justify-between items-center overflow-hidden pt-24 md:pt-0">
 
-  {/* FONDO */}
-  <div className="absolute inset-0 bg-[#0f0f1a]" />
-  <div className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-70" style={{ backgroundImage: 'url(/hero-bg.jpg)' }} />
-  <div className="absolute inset-0 bg-gradient-to-b from-purple-900/40 via-purple-800/30 to-purple-900/60" />
+  {/* FONDO NIVEL LEGENDARIO */}
+<div className="absolute inset-0 bg-[#090611]" />
+
+{/* imagen base */}
+<div
+  className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-55"
+  style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
+/>
+
+{/* glow central premium */}
+<div
+  className="absolute inset-0"
+  style={{
+    background:
+      "radial-gradient(circle at center, rgba(168,85,247,0.28) 0%, rgba(99,32,182,0.18) 28%, rgba(9,6,17,0) 62%)",
+  }}
+/>
+
+{/* viñeta elegante */}
+<div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/45" />
+
+{/* bordes laterales premium */}
+<div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-black/25 to-transparent" />
+<div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-black/25 to-transparent" />
 
   {/* ÁRBOL + PARTÍCULAS (AJUSTADO) */}
   <canvas
