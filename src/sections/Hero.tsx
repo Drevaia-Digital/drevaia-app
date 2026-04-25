@@ -156,7 +156,7 @@ export function Hero({ language }: Props) {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-12 pb-16">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-0 pb-6">
 
   {/* FONDO NIVEL LEGENDARIO */}
 <div className="absolute inset-0 bg-[#090611]" />
