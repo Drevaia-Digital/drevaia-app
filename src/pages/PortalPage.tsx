@@ -31,36 +31,65 @@ export function PortalPage() {
       subscribe: "Quiero entrar",
       success: "✨ Ya estás dentro"
     },
+
     en: {
       title: "You didn’t arrive here by accident.",
-      subtitle: "Something in you knew it was time.",
-      line: "It’s not just what you read.\nIt’s what starts shifting inside you.",
+      subtitle: "Something in you already knew it was time to change.",
+      line: "It’s not only what you read.\nIt’s what begins to move inside you.",
       discover: "Start here",
-      explore: "Enter library",
-      community: "Receive content that transforms you",
+      explore: "Enter the library",
+      community: "Receive content that truly transforms",
       placeholder: "your email",
       subscribe: "Join now",
       success: "✨ You're in"
+    },
+
+    fr: {
+      title: "Tu n’es pas arrivé ici par hasard.",
+      subtitle: "Quelque chose en toi savait déjà que le moment était venu.",
+      line: "Ce n’est pas seulement ce que tu lis.\nC’est ce qui commence à bouger en toi.",
+      discover: "Commence ici",
+      explore: "Entrer dans la bibliothèque",
+      community: "Reçois du contenu qui transforme vraiment",
+      placeholder: "votre email",
+      subscribe: "Je veux entrer",
+      success: "✨ Tu es dedans"
+    },
+
+    pt: {
+      title: "Você não chegou aqui por acaso.",
+      subtitle: "Algo em você já sabia que era hora de mudar.",
+      line: "Não é só o que você lê.\nÉ o que começa a se mover dentro de você.",
+      discover: "Comece por aqui",
+      explore: "Entrar na biblioteca",
+      community: "Receba conteúdo que realmente transforma",
+      placeholder: "seu email",
+      subscribe: "Quero entrar",
+      success: "✨ Você entrou"
     }
   };
 
-  const t = translations[language as keyof typeof translations] || translations.es;
+  const t =
+    translations[language as keyof typeof translations] || translations.es;
 
   useEffect(() => {
     const loadBooks = async () => {
       const { data } = await supabase.from("books").select("*");
       setBooks(data || []);
     };
+
     loadBooks();
   }, []);
 
   const featured = books.slice(0, 3);
 
-  const getTitle = (book: any) =>
-    book[`title_${language}`] || book.title;
+  const getTitle = (book: any) => {
+    return book[`title_${language}`] || book.title;
+  };
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!email) return;
 
     setIsSubscribed(true);
@@ -68,71 +97,101 @@ export function PortalPage() {
   };
 
   return (
-    <div className="min-h-screen text-white relative overflow-hidden bg-[#090611]">
+    <div className="min-h-screen relative overflow-hidden bg-[#090611] text-white">
 
-      <SEO title={t.title} description={t.subtitle} language={language} />
+      <SEO
+        title={t.title}
+        description={t.subtitle}
+        language={language}
+      />
+
       <Navigation />
 
-      {/* Fondo Drevaia uniforme */}
-<div className="absolute inset-0 z-0">
+      {/* FONDO PREMIUM */}
+      <div className="absolute inset-0 -z-10">
 
-  {/* árbol actual */}
-  <EnergyTreeBackground />
+        {/* base */}
+        <div className="absolute inset-0 bg-[#090611]" />
 
-  {/* glow premium */}
-  <div
-    className="absolute inset-0"
-    style={{
-      background:
-        "radial-gradient(circle at center, rgba(168,85,247,0.22) 0%, rgba(99,32,182,0.14) 28%, rgba(9,6,17,0) 62%)",
-    }}
-  />
+        {/* glow central */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at center, rgba(168,85,247,0.24) 0%, rgba(99,32,182,0.14) 28%, rgba(9,6,17,0) 62%)"
+          }}
+        />
 
-  {/* viñeta elegante */}
-  <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/45" />
+        {/* viñeta */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/45" />
 
-</div>
+      </div>
 
-      {/* ✨ PARTÍCULAS */}
+      {/* PARTÍCULAS */}
       <EnergyTreeBackground />
 
       {/* HERO */}
-      <section className="relative py-32 text-center px-6 max-w-3xl mx-auto z-20">
+      <section className="relative z-20 max-w-4xl mx-auto px-6 pt-28 pb-20 text-center">
+
         <motion.h1
-          initial={{ opacity: 0, y: 40 }}
+          initial={{ opacity: 0, y: 35 }}
           animate={{ opacity: 1, y: 0 }}
-          className="text-4xl md:text-6xl font-bold mb-6 leading-tight"
+          transition={{ duration: 0.8 }}
+          className="text-4xl sm:text-5xl md:text-7xl font-bold leading-tight mb-6"
         >
           {t.title}
         </motion.h1>
 
-        <p className="text-gray-300 text-lg mb-6">
-          {t.subtitle}
-        </p>
-
-        <p className="text-gray-400 whitespace-pre-line mb-8">
-          {t.line}
-        </p>
-
-        <Button
-          onClick={() => navigate("/library")}
-          className="bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 px-10 py-5 text-lg rounded-2xl shadow-xl"
+        <motion.p
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.15, duration: 0.8 }}
+          className="text-lg md:text-2xl text-gray-200 mb-6"
         >
-          {t.explore}
-        </Button>
+          {t.subtitle}
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="text-gray-400 whitespace-pre-line max-w-2xl mx-auto mb-10 text-sm sm:text-base"
+        >
+          {t.line}
+        </motion.p>
+
+        <motion.div
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.45, duration: 0.8 }}
+        >
+          <Button
+            onClick={() => navigate("/library")}
+            className="bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 px-10 py-6 text-lg rounded-2xl shadow-2xl"
+          >
+            {t.explore}
+          </Button>
+        </motion.div>
+
       </section>
 
       {/* DESTACADOS */}
-      <section className="relative max-w-5xl mx-auto px-6 mb-28 z-20">
-        <h2 className="text-center text-xl mb-10">{t.discover}</h2>
+      <section className="relative z-20 max-w-6xl mx-auto px-6 pb-24">
+
+        <h2 className="text-center text-2xl font-semibold mb-12">
+          {t.discover}
+        </h2>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+
           {featured.map((book: any, i) => (
             <motion.div
               key={book.id}
-              initial={{ opacity: 0, y: 30 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.2 }}
+              initial={{ opacity: 0, y: 35 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: i * 0.15, duration: 0.7 }}
+              className="backdrop-blur-md bg-white/5 border border-white/10 rounded-3xl p-3 shadow-xl"
             >
               <EbookCard
                 id={book.id}
@@ -143,33 +202,49 @@ export function PortalPage() {
               />
             </motion.div>
           ))}
+
         </div>
+
       </section>
 
       {/* NEWSLETTER */}
-      <section className="relative text-center px-6 mb-28 max-w-xl mx-auto z-20">
-        <h2 className="text-2xl font-semibold mb-4">
+      <section className="relative z-20 max-w-2xl mx-auto px-6 pb-24 text-center">
+
+        <h2 className="text-2xl md:text-3xl font-semibold mb-4">
           {t.community}
         </h2>
 
         {isSubscribed ? (
-          <p>{t.success}</p>
+          <p className="text-emerald-300 text-lg">
+            {t.success}
+          </p>
         ) : (
-          <form onSubmit={handleSubscribe} className="flex gap-2 justify-center">
+          <form
+            onSubmit={handleSubscribe}
+            className="flex flex-col sm:flex-row gap-3 justify-center mt-6"
+          >
+
             <Input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder={t.placeholder}
-              className="bg-white/10 border-white/20"
+              className="bg-white/10 border-white/20 h-12"
             />
-            <Button className="bg-purple-600 hover:bg-purple-700">
+
+            <Button
+              type="submit"
+              className="bg-purple-600 hover:bg-purple-700 h-12 px-8"
+            >
               {t.subscribe}
             </Button>
+
           </form>
         )}
+
       </section>
 
       <Footer />
+
     </div>
   );
 }
