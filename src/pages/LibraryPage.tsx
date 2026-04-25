@@ -2,7 +2,7 @@ import { EbookCard } from '@/components/EbookCard';
 import { BookPreviewModal } from '@/components/BookPreviewModal';
 import { supabase } from '@/lib/supabase';
 import { useState, useEffect, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { searchBooks } from "@/engines/searchEngine";
 import { useDebounce } from "@/hooks/useDebounce";
 import { useLanguage } from "@/context/LanguageContext";
@@ -15,6 +15,7 @@ import { getAIRecommendations } from "@/lib/aiBackend";
 export default function LibraryPage() {
   const navigate = useNavigate();
   const { language } = useLanguage();
+  const [searchParams] = useSearchParams();
 
   const [books, setBooks] = useState<Book[]>([]);
   const [aiBooks, setAiBooks] = useState<any[]>([]);
@@ -67,7 +68,9 @@ export default function LibraryPage() {
     }
   };
 
-  const lang = (language in translations ? language : "es") as keyof typeof translations;
+  const lang =
+    (language in translations ? language : "es") as keyof typeof translations;
+
   const t = translations[lang];
 
   // 🔥 CARGAR LIBROS
@@ -96,7 +99,32 @@ export default function LibraryPage() {
     trackEvent({ type: "open_library" });
   }, []);
 
-  // 🤖 IA PROACTIVA (SIN BUGS)
+  // 🎯 ABRIR EBOOK DIRECTO DESDE PORTAL
+  useEffect(() => {
+    if (!books.length) return;
+
+    const targetId = searchParams.get("book");
+    if (!targetId) return;
+
+    const found = books.find((b: any) => String(b.id) === String(targetId));
+
+    if (found) {
+      setSelectedBook(found);
+      setIsModalOpen(true);
+
+      addToHistory({
+        id: found.id,
+        title: found.title
+      });
+
+      trackEvent({
+        type: "open_book_from_portal",
+        meta: { id: found.id }
+      });
+    }
+  }, [books, searchParams]);
+
+  // 🤖 IA PROACTIVA
   useEffect(() => {
     if (!books.length) return;
 
@@ -139,9 +167,15 @@ export default function LibraryPage() {
     setSelectedBook(book);
     setIsModalOpen(true);
 
-    addToHistory({ id: book.id, title: book.title });
+    addToHistory({
+      id: book.id,
+      title: book.title
+    });
 
-    trackEvent({ type: "open_book", meta: { id: book.id } });
+    trackEvent({
+      type: "open_book",
+      meta: { id: book.id }
+    });
   };
 
   const closePreview = () => {
@@ -162,6 +196,7 @@ export default function LibraryPage() {
   return (
     <div className="min-h-screen bg-[#0f0f1a] text-white">
 
+      {/* TOP */}
       <div className="max-w-7xl mx-auto px-6 pt-6">
         <button
           onClick={() => navigate('/')}
@@ -172,13 +207,16 @@ export default function LibraryPage() {
         </button>
       </div>
 
+      {/* CONTENT */}
       <div className="max-w-7xl mx-auto px-6 py-8">
 
-        {/* 🤖 IA */}
+        {/* IA */}
         {aiBooks.length > 0 && (
           <div className="mb-12">
             <h3 className="mb-2">{t.recommended}</h3>
-            <p className="text-xs text-gray-400 mb-4">{t.based}</p>
+            <p className="text-xs text-gray-400 mb-4">
+              {t.based}
+            </p>
 
             <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
               {aiBooks.map((book: any) => (
@@ -195,7 +233,7 @@ export default function LibraryPage() {
           </div>
         )}
 
-        {/* 📚 CATÁLOGO */}
+        {/* CATÁLOGO */}
         <div>
           <h3 className="mb-6">{t.all}</h3>
 
@@ -215,6 +253,7 @@ export default function LibraryPage() {
 
       </div>
 
+      {/* MODAL */}
       <BookPreviewModal
         isOpen={isModalOpen}
         onClose={closePreview}
@@ -225,6 +264,7 @@ export default function LibraryPage() {
           setIsModalOpen(true);
         }}
       />
+
     </div>
   );
 }
