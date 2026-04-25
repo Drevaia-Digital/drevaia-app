@@ -211,14 +211,15 @@ export function Hero({ language }: Props) {
 
   </div>
 
- {/* BOTONES (RESPONSIVO REAL) */}
-<div 
-  ref={buttonsRef} 
+ {/* BOTONES POSICIÓN REAL */}
+<div
+  ref={buttonsRef}
   className="
-    absolute bottom-12 left-0 w-full px-6
+    relative z-20
+    mt-12 md:mt-16
+    w-full max-w-xl px-6
     flex justify-between items-center
-    md:bottom-10 md:left-1/2 md:-translate-x-1/2 md:w-auto md:px-0 md:justify-center md:gap-4
-    z-20
+    md:justify-center md:gap-4
   "
 >
 
