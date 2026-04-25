@@ -68,24 +68,30 @@ export function PortalPage() {
   };
 
   return (
-    <div className="min-h-screen text-white relative overflow-hidden bg-[#0f0f1a]">
+    <div className="min-h-screen text-white relative overflow-hidden bg-[#090611]">
 
       <SEO title={t.title} description={t.subtitle} language={language} />
       <Navigation />
 
-      {/* 🌳 FONDO ORIGINAL (IMAGEN + ATMÓSFERA) */}
-      <div className="absolute inset-0 z-0">
+      {/* Fondo Drevaia uniforme */}
+<div className="absolute inset-0 z-0">
 
-        {/* Imagen bosque con árbol */}
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{ backgroundImage: "url('/hero-bg.jpg')" }}
-        />
+  {/* árbol actual */}
+  <EnergyTreeBackground />
 
-        {/* Overlay Drevaia (clave visual) */}
-        <div className="absolute inset-0 bg-gradient-to-b from-purple-900/70 via-purple-800/40 to-purple-900/80" />
+  {/* glow premium */}
+  <div
+    className="absolute inset-0"
+    style={{
+      background:
+        "radial-gradient(circle at center, rgba(168,85,247,0.22) 0%, rgba(99,32,182,0.14) 28%, rgba(9,6,17,0) 62%)",
+    }}
+  />
 
-      </div>
+  {/* viñeta elegante */}
+  <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/45" />
+
+</div>
 
       {/* ✨ PARTÍCULAS */}
       <EnergyTreeBackground />
