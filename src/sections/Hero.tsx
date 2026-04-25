@@ -156,7 +156,7 @@ export function Hero({ language }: Props) {
   }, []);
 
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-0 pb-6">
+    <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden">
 
   {/* FONDO NIVEL LEGENDARIO */}
 <div className="absolute inset-0 bg-[#090611]" />
@@ -196,7 +196,7 @@ export function Hero({ language }: Props) {
 
   {/* TEXTO */}
 
-<div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-44 md:mt-20">    
+<div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-24 md:mt-28">    
 <h1 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4">
       DREVAIA DIGITAL
     </h1>
