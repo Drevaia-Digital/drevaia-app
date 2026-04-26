@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { posts } from "@/data/posts";
 
@@ -114,22 +114,53 @@ export default function BlogPost() {
   return (
     <>
       <Helmet>
-        <title>{title} | Drevaia</title>
-        <meta name="description" content={description} />
+  <html lang={language} />
 
-        <link rel="canonical" href={canonical} />
+  <title>{title} | Drevaia</title>
+  <meta name="description" content={description} />
 
-        <link rel="alternate" hrefLang="es" href={urls.es} />
-        <link rel="alternate" hrefLang="en" href={urls.en} />
-        <link rel="alternate" hrefLang="fr" href={urls.fr} />
-        <link rel="alternate" hrefLang="pt" href={urls.pt} />
-        <link rel="alternate" hrefLang="x-default" href={urls.es} />
+  <link rel="canonical" href={canonical} />
 
-        <meta property="og:title" content={title} />
-        <meta property="og:description" content={description} />
-        <meta property="og:url" content={canonical} />
-        <meta property="og:type" content="article" />
-      </Helmet>
+  <link rel="alternate" hrefLang="es" href={urls.es} />
+  <link rel="alternate" hrefLang="en" href={urls.en} />
+  <link rel="alternate" hrefLang="fr" href={urls.fr} />
+  <link rel="alternate" hrefLang="pt" href={urls.pt} />
+  <link rel="alternate" hrefLang="x-default" href={urls.es} />
+
+  <meta property="og:type" content="article" />
+  <meta property="og:title" content={title} />
+  <meta property="og:description" content={description} />
+  <meta property="og:url" content={canonical} />
+  <meta property="og:site_name" content="Drevaia Digital" />
+  <meta property="og:image" content="https://drevaia.com/images/hero-bg.jpg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={title} />
+  <meta name="twitter:description" content={description} />
+  <meta name="twitter:image" content="https://drevaia.com/images/hero-bg.jpg" />
+
+  <meta name="author" content="Drevaia Digital" />
+
+  <script type="application/ld+json">
+    {JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      headline: title,
+      description: description,
+      author: {
+        "@type": "Organization",
+        name: "Drevaia Digital"
+      },
+      publisher: {
+        "@type": "Organization",
+        name: "Drevaia Digital"
+      },
+      mainEntityOfPage: canonical,
+      url: canonical,
+image: "https://drevaia.com/images/hero-bg.jpg"
+    })}
+  </script>
+</Helmet>
 
       <div className="min-h-screen bg-[#0f0f1a] text-white px-6 py-10 pb-28 max-w-3xl mx-auto">
 
@@ -158,7 +189,7 @@ export default function BlogPost() {
             {t.urgency}
           </p>
 
-          <a href={buyLink} target="_blank">
+          <a href={buyLink} target="_blank" rel="noopener noreferrer">
             <button className="px-7 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-amber-400 hover:scale-105 transition font-semibold shadow-lg">
               {t.button}
             </button>
@@ -174,14 +205,14 @@ export default function BlogPost() {
 
           <div className="space-y-2">
             {relatedPosts.map((p, i) => (
-              <a
-                key={i}
-                href={`/${language}/blog/${p.slug[language]}`}
-                className="block text-gray-400 hover:text-white transition"
-              >
-                → {p.title[language]}
-              </a>
-            ))}
+  <Link
+    key={i}
+    to={`/${language}/blog/${p.slug[language]}`}
+    className="block text-gray-400 hover:text-white transition"
+  >
+    → {p.title[language]}
+  </Link>
+))}
           </div>
         </div>
 
@@ -190,7 +221,7 @@ export default function BlogPost() {
       {/* 🔥 STICKY CTA PRO */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-md">
 
-        <a href={buyLink} target="_blank">
+        <a href={buyLink} target="_blank" rel="noopener noreferrer">
           <div className="flex items-center justify-between px-5 py-3 rounded-xl 
           bg-gradient-to-r from-purple-600 to-amber-400 
           shadow-xl backdrop-blur-xl 
