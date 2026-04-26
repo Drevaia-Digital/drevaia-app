@@ -171,8 +171,8 @@ export const posts: Post[] = [
           Você aprendeu a funcionar, mas não a sentir.
         </p>
       </>
-    ),
- },
+        ),
+  },
 },
 {
   slug: {
