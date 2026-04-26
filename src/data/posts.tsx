@@ -757,4 +757,127 @@ export const posts: Post[] = [
     ),
   },
 },
+{
+  slug: {
+    es: "sanar-abandono-emocional",
+    en: "heal-emotional-abandonment",
+    fr: "guerir-abandon-emotionnel",
+    pt: "curar-abandono-emocional",
+  },
+
+  title: {
+    es: "Cómo sanar el abandono emocional y volver a sentirte suficiente",
+    en: "How to heal emotional abandonment",
+    fr: "Guérir l’abandon émotionnel",
+    pt: "Como curar o abandono emocional",
+  },
+
+  description: {
+    es: "Descubre cómo sanar el abandono emocional, recuperar seguridad interna y dejar de mendigar amor.",
+    en: "Learn how to heal emotional abandonment.",
+    fr: "Découvrez comment guérir l’abandon émotionnel.",
+    pt: "Aprenda a curar o abandono emocional.",
+  },
+
+  content: {
+    es: (
+      <>
+        <p className="mb-4">
+          El abandono emocional no siempre ocurre cuando alguien se va.
+        </p>
+
+        <p className="mb-4">
+          A veces ocurre cuando alguien se queda… pero nunca está realmente contigo.
+        </p>
+
+        <p className="mb-4">
+          También ocurre cuando aprendiste a abandonarte para que otros no te dejaran.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Señales comunes
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Miedo intenso a que te dejen.</li>
+          <li>Necesidad de aprobación constante.</li>
+          <li>Tolerar migajas afectivas.</li>
+          <li>Ansiedad cuando alguien se distancia.</li>
+          <li>Sentirte insuficiente.</li>
+          <li>Abandonarte para agradar.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cómo empezar a sanar
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Reconoce que dolió.</li>
+          <li>Deja de normalizar vínculos fríos.</li>
+          <li>Aprende a darte lo que pides afuera.</li>
+          <li>Pon límites al amor inconsistente.</li>
+          <li>Fortalece tu valor interno.</li>
+          <li>Busca relaciones recíprocas.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Algo clave
+        </h2>
+
+        <p className="mb-4">
+          Sanar abandono emocional no es dejar de amar.
+        </p>
+
+        <p className="mb-4">
+          Es dejar de perseguir amor donde nunca hubo presencia real.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cierre Drevaia
+        </h2>
+
+        <p className="mb-4">
+          No eras difícil de amar.
+        </p>
+
+        <p className="mb-4">
+          Solo buscaste calor en lugares fríos.
+        </p>
+
+        <p className="mb-4">
+          Y mereces aprender la diferencia.
+        </p>
+
+        <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
+          <ul className="space-y-1">
+            <li><a href="/es/blog/apego-ansioso-senales">Apego ansioso</a></li>
+            <li><a href="/es/blog/como-reconstruir-autoestima">Autoestima</a></li>
+            <li><a href="/es/blog/como-sanar-heridas-emocionales">Heridas emocionales</a></li>
+          </ul>
+        </div>
+      </>
+    ),
+
+    en: (
+      <>
+        <p className="mb-4">Emotional abandonment often starts inside.</p>
+        <p className="mb-4">Healing means choosing reciprocal love.</p>
+      </>
+    ),
+
+    fr: (
+      <>
+        <p className="mb-4">L’abandon émotionnel commence souvent à l’intérieur.</p>
+        <p className="mb-4">Guérir, c’est choisir l’amour réciproque.</p>
+      </>
+    ),
+
+    pt: (
+      <>
+        <p className="mb-4">O abandono emocional muitas vezes começa por dentro.</p>
+        <p className="mb-4">Curar é escolher amor recíproco.</p>
+      </>
+    ),
+  },
+},
 ];
