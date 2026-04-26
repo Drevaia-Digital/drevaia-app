@@ -173,5 +173,73 @@ export const posts: Post[] = [
       </>
     ),
  },
-}
+},
+{
+  slug: {
+    es: "vivir-en-automatico",
+    en: "living-on-autopilot",
+    fr: "vivre-en-mode-automatique",
+    pt: "viver-no-automatico",
+  },
+
+  title: {
+    es: "Vivir en automático",
+    en: "Living on autopilot",
+    fr: "Vivre en mode automatique",
+    pt: "Viver no automático",
+  },
+
+  description: {
+    es: "Descubre cómo dejar de vivir en automático y volver a sentir tu vida.",
+    en: "Learn how to stop living on autopilot.",
+    fr: "Sortir du mode automatique.",
+    pt: "Sair do automático.",
+  },
+
+  content: {
+    es: (
+      <>
+        <p className="mb-4">
+          Vivir en automático es avanzar sin presencia.
+        </p>
+
+        <p className="mb-4">
+          Haces lo necesario, cumples, respondes… pero algo dentro se apagó.
+        </p>
+
+        <p className="mb-4">
+          No siempre estás triste. A veces solo estás desconectado.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Señales comunes
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Los días pasan rápido.</li>
+          <li>Todo parece rutina.</li>
+          <li>Cuesta disfrutar.</li>
+          <li>Te distraes para no sentir.</li>
+          <li>Sientes vacío interno.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cómo empezar a salir
+        </h2>
+
+        <p className="mb-4">
+          Haz pausas. Respira. Pregúntate cómo estás realmente.
+        </p>
+
+        <p className="mb-4">
+          Volver a sentir comienza con detenerte.
+        </p>
+      </>
+    ),
+
+    en: (<p>Coming soon...</p>),
+    fr: (<p>Contenu en construction...</p>),
+    pt: (<p>Conteúdo em construção...</p>),
+  },
+},
 ];
