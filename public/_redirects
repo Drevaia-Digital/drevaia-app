@@ -25,8 +25,7 @@
 /shop.html                             /es/ebooks                                 301
 
 # ROOT
-/                                       /es                                        302
-
+/                                       /es/                                       301
 # THANK YOU PAGES
 /gracias                               /gracias                                   200
 /fr/merci                              /fr/merci                                  200

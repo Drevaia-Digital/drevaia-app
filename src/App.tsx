@@ -24,7 +24,12 @@ export default function App() {
           <Routes>
 
             {/* 🏠 HOME */}
-            <Route path="/" element={<HomePage />} />
+<Route path="/" element={<Navigate to="/es" replace />} />
+
+<Route path="/es" element={<HomePage />} />
+<Route path="/en" element={<HomePage />} />
+<Route path="/fr" element={<HomePage />} />
+<Route path="/pt" element={<HomePage />} />
 
             {/* 🌟 LANDING */}
             <Route path="/landing" element={<Navigate to="/" />} />
