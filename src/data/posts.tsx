@@ -314,4 +314,135 @@ export const posts: Post[] = [
     pt: (<p>Curar começa quando você para de viver da dor antiga.</p>),
   },
 },
+{
+  slug: {
+    es: "por-que-me-siento-perdido",
+    en: "why-do-i-feel-lost",
+    fr: "pourquoi-je-me-sens-perdu",
+    pt: "por-que-me-sinto-perdido",
+  },
+
+  title: {
+    es: "¿Por qué me siento perdido?",
+    en: "Why do I feel lost?",
+    fr: "Pourquoi je me sens perdu ?",
+    pt: "Por que me sinto perdido?",
+  },
+
+  description: {
+    es: "Descubre por qué te sientes perdido y cómo volver a encontrarte.",
+    en: "Understand why you feel lost and how to reconnect.",
+    fr: "Comprendre pourquoi tu te sens perdu.",
+    pt: "Entenda por que você se sente perdido.",
+  },
+
+  content: {
+    es: (
+      <>
+        <p className="mb-4">
+          Sentirse perdido no siempre significa no saber qué hacer.
+        </p>
+
+        <p className="mb-4">
+          A veces significa haber avanzado tanto hacia afuera… que dejaste de escucharte por dentro.
+        </p>
+
+        <p className="mb-4">
+          Sigues funcionando, pero ya no sabes hacia dónde vas ni por qué.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Razones comunes por las que te sientes perdido
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Viviste mucho tiempo complaciendo a otros.</li>
+          <li>Seguiste caminos que no eran tuyos.</li>
+          <li>Ignoraste lo que sentías.</li>
+          <li>Perdiste conexión contigo.</li>
+          <li>Cambiaste por sobrevivir.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Señales frecuentes
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>No sabes qué quieres realmente.</li>
+          <li>Todo parece confuso.</li>
+          <li>Comparas tu vida con la de otros.</li>
+          <li>Sientes vacío aunque avances.</li>
+          <li>Te cuesta tomar decisiones.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cómo empezar a encontrarte
+        </h2>
+
+        <p className="mb-4">
+          No necesitas tener toda la respuesta hoy.
+        </p>
+
+        <p className="mb-4">
+          Empieza con preguntas pequeñas:
+        </p>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>¿Qué ya no quiero seguir cargando?</li>
+          <li>¿Qué deseo de verdad?</li>
+          <li>¿Dónde me traiciono?</li>
+          <li>¿Qué me haría sentir más vivo?</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cierre Drevaia
+        </h2>
+
+        <p className="mb-4">
+          Tal vez no estás perdido.
+        </p>
+
+        <p className="mb-4">
+          Tal vez estás dejando atrás una versión que ya no eres.
+        </p>
+
+        <p className="mb-4">
+          Y eso también es avanzar.
+        </p>
+
+        <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
+          <ul className="space-y-1">
+            <li><a href="/es/blog/por-que-me-siento-vacio">Vacío emocional</a></li>
+            <li><a href="/es/blog/vivir-en-automatico">Vivir en automático</a></li>
+            <li><a href="/es/blog/como-reconectar-contigo-mismo">Reconectar contigo</a></li>
+          </ul>
+        </div>
+      </>
+    ),
+
+    en: (
+      <>
+        <p className="mb-4">Feeling lost often means being disconnected from yourself.</p>
+        <p className="mb-4">You may have followed paths that were never yours.</p>
+        <p className="mb-4">Reconnection starts with honesty.</p>
+      </>
+    ),
+
+    fr: (
+      <>
+        <p className="mb-4">Se sentir perdu signifie souvent être déconnecté de soi.</p>
+        <p className="mb-4">Tu as peut-être suivi des chemins qui n’étaient pas les tiens.</p>
+        <p className="mb-4">Le retour commence par l’honnêteté.</p>
+      </>
+    ),
+
+    pt: (
+      <>
+        <p className="mb-4">Sentir-se perdido muitas vezes é estar desconectado de si.</p>
+        <p className="mb-4">Talvez você seguiu caminhos que não eram seus.</p>
+        <p className="mb-4">O reencontro começa com honestidade.</p>
+      </>
+    ),
+  },
+},
 ];
