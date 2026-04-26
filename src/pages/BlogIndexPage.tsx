@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import { Link } from "react-router-dom";
 import { posts } from "@/data/posts";
 import { useLanguage } from "@/context/LanguageContext";
@@ -37,6 +38,33 @@ export default function BlogIndexPage() {
   }, [search, activeCategory, language]);
 
   return (
+  <>
+  <Helmet>
+    <title>Blog Drevaia | Sanación emocional, autoestima y crecimiento interior</title>
+
+    <meta
+      name="description"
+      content="Descubre artículos profundos sobre heridas emocionales, autoestima, relaciones y transformación personal en Drevaia."
+    />
+
+    <link rel="canonical" href="https://drevaia.com/blog" />
+
+    <meta property="og:title" content="Blog Drevaia" />
+    <meta
+      property="og:description"
+      content="Artículos transformadores sobre bienestar emocional y crecimiento interior."
+    />
+    <meta property="og:url" content="https://drevaia.com/blog" />
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Blog Drevaia" />
+    <meta
+      name="twitter:description"
+      content="Sanación emocional, autoestima y evolución interior."
+    />
+  </Helmet>
+
     <main className="min-h-screen bg-[#090910] text-white px-4 py-20">
       <div className="max-w-7xl mx-auto">
   <section className="mb-10 rounded-2xl border border-violet-400/20 bg-violet-500/10 px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
@@ -47,7 +75,14 @@ export default function BlogIndexPage() {
     <p className="text-sm text-gray-300">
       Reflexiones profundas + recursos exclusivos Drevaia.
     </p>
-  </div>
+    <div className="mt-3 flex gap-2 flex-col sm:flex-row">
+  <input
+    type="email"
+    placeholder="Tu mejor email"
+    className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400"
+  />
+</div>
+</div>
 
   <a
     href="/empieza"
@@ -239,5 +274,6 @@ export default function BlogIndexPage() {
 
       </div>
     </main>
+ </>
   );
 }
