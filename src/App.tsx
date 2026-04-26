@@ -12,6 +12,7 @@ import { LegalPage } from '@/pages/LegalPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 import BlogPost from "@/pages/BlogPost";
 import LeadMagnetPage from "@/pages/LeadMagnetPage";
+import BlogIndexPage from "@/pages/BlogIndexPage";
 
 // ⚡ Lazy
 const LibraryPage = lazy(() => import('@/pages/LibraryPage'));
@@ -51,17 +52,7 @@ export default function App() {
             <Route path="/:lang/onboarding" element={<OnboardingPage />} />
 
             {/* 📝 BLOG ROOT */}
-            <Route
-              path="/blog"
-              element={
-                <div className="min-h-screen bg-[#0f0f1a] text-white flex items-center justify-center">
-                  <div className="text-center">
-                    <h1 className="text-3xl font-bold mb-4">Blog Drevaia</h1>
-                    <p className="text-gray-400">Muy pronto encontrarás contenido aquí.</p>
-                  </div>
-                </div>
-              }
-            />
+<Route path="/blog" element={<BlogIndexPage />} />
 
             {/* ⚖️ LEGAL */}
             <Route path="/legal" element={<LegalPage />} />
