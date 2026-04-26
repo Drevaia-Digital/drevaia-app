@@ -77,10 +77,10 @@ export default function BlogIndexPage() {
     </p>
     <div className="mt-3 flex gap-2 flex-col sm:flex-row">
   <input
-    type="email"
-    placeholder="Tu mejor email"
-    className="px-4 py-2 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-400"
-  />
+  type="email"
+  placeholder="Tu mejor email"
+  className="w-full sm:w-72 px-4 py-3 rounded-xl bg-white text-black border border-white/20 placeholder-gray-500 shadow-lg"
+/>
 </div>
 </div>
 
