@@ -1,3 +1,4 @@
+import { Helmet } from 'react-helmet-async';
 import { Navigation } from '@/sections/Navigation';
 import { Hero } from '@/sections/Hero';
 import { EmotionalPaths } from '@/sections/EmotionalPaths';
@@ -14,7 +15,6 @@ import { Stats } from '@/sections/Stats';
 export function HomePage() {
   const { language } = useLanguage();
 
-  // 🚀 PREFETCH AUTOMÁTICO
   useEffect(() => {
     const timer = setTimeout(() => {
       prefetchBooks();
@@ -23,52 +23,65 @@ export function HomePage() {
     return () => clearTimeout(timer);
   }, []);
 
-  // 🚀 PREFETCH INTERACCIÓN
   const handlePrefetch = () => {
     prefetchBooks();
   };
 
+  const seo = {
+    es: {
+      title: "Drevaia Digital | Sanación emocional y crecimiento personal",
+      desc: "Ebooks y recursos para sanar heridas emocionales, crecer y transformar tu vida."
+    },
+    en: {
+      title: "Drevaia Digital | Emotional Healing and Personal Growth",
+      desc: "Books and resources to heal emotional wounds and transform your life."
+    },
+    fr: {
+      title: "Drevaia Digital | Guérison émotionnelle et croissance personnelle",
+      desc: "Ressources pour guérir intérieurement et transformer votre vie."
+    },
+    pt: {
+      title: "Drevaia Digital | Cura emocional e crescimento pessoal",
+      desc: "Recursos para curar feridas emocionais e transformar sua vida."
+    }
+  }[language];
+
   return (
-    <div
-      id="top"
-      className="min-h-screen pt-20 bg-white dark:bg-gray-900"
-      onMouseEnter={handlePrefetch}
-      onTouchStart={handlePrefetch}
-    >
+    <>
+      <Helmet>
+        <html lang={language} />
+        <title>{seo.title}</title>
+        <meta name="description" content={seo.desc} />
+        <link rel="canonical" href={`https://drevaia.com/${language}`} />
+      </Helmet>
 
-      {/* NAV */}
-      <Navigation />
+      <div
+        id="top"
+        className="min-h-screen pt-20 bg-white dark:bg-gray-900"
+        onMouseEnter={handlePrefetch}
+        onTouchStart={handlePrefetch}
+      >
+        <Navigation />
+        <Hero language={language} />
+        <RealityCheck />
+        <EmotionalPaths />
 
-      {/* HERO */}
-      <Hero language={language} />
+        <div onMouseEnter={handlePrefetch}>
+          <Ebooks language={language} />
+        </div>
 
-      {/* REALITY */}
-      <RealityCheck />
+        <section id="daily" className="scroll-mt-24">
+          <DailyReading />
+        </section>
 
-      {/* CAMINOS */}
-      <EmotionalPaths />
+        <Stats />
 
-      {/* EBOOKS */}
-      <div onMouseEnter={handlePrefetch}>
-        <Ebooks language={language} />
+        <section id="testimonials" className="scroll-mt-24">
+          <Testimonials />
+        </section>
+
+        <Footer />
       </div>
-
-      {/* LECTURA DIARIA */}
-      <section id="daily" className="scroll-mt-24">
-        <DailyReading />
-      </section>
-
-      {/* CONTADOR */}
-      <Stats />
-
-      {/* TESTIMONIOS */}
-      <section id="testimonials" className="scroll-mt-24">
-        <Testimonials />
-      </section>
-
-      {/* FOOTER */}
-      <Footer />
-
-    </div>
+    </>
   );
 }
