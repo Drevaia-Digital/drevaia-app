@@ -242,4 +242,76 @@ export const posts: Post[] = [
     pt: (<p>Conteúdo em construção...</p>),
   },
 },
+{
+  slug: {
+    es: "como-sanar-heridas-emocionales",
+    en: "heal-emotional-wounds",
+    fr: "guerir-blessures-emotionnelles",
+    pt: "curar-feridas-emocionais",
+  },
+
+  title: {
+    es: "Cómo sanar heridas emocionales",
+    en: "How to heal emotional wounds",
+    fr: "Comment guérir les blessures émotionnelles",
+    pt: "Como curar feridas emocionais",
+  },
+
+  description: {
+    es: "Descubre cómo sanar heridas emocionales y recuperar tu paz interior.",
+    en: "Learn how to heal emotional wounds.",
+    fr: "Guérir les blessures émotionnelles.",
+    pt: "Curar feridas emocionais.",
+  },
+
+  content: {
+    es: (
+      <>
+        <p className="mb-4">
+          Sanar heridas emocionales no es olvidar lo que pasó.
+        </p>
+
+        <p className="mb-4">
+          Es dejar de vivir desde ese dolor.
+        </p>
+
+        <p className="mb-4">
+          Muchas heridas nacieron cuando tuviste que adaptarte para sobrevivir emocionalmente.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Señales comunes
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Reacciones intensas.</li>
+          <li>Miedo al abandono.</li>
+          <li>Patrones repetitivos.</li>
+          <li>Autoexigencia constante.</li>
+          <li>Vacío interno.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cómo empezar a sanar
+        </h2>
+
+        <p className="mb-4">
+          Comprender tu historia es el inicio.
+        </p>
+
+        <p className="mb-4">
+          Escucharte sin juicio cambia todo.
+        </p>
+
+        <p className="mb-4">
+          Sanar es volver a ti.
+        </p>
+      </>
+    ),
+
+    en: (<p>Healing starts when you stop living from old pain.</p>),
+    fr: (<p>Guérir commence quand tu cesses de vivre depuis l’ancienne douleur.</p>),
+    pt: (<p>Curar começa quando você para de viver da dor antiga.</p>),
+  },
+},
 ];
