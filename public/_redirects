@@ -1,8 +1,19 @@
-/como-sanar-heridas-emocionales.html   /vivir-en-automatico   301!
-# =========================================
-# idioma por defecto (ES)
-/*.html   /es/blog/:splat   301!
+# ===============================
+# REDIRECTS ESPECÍFICOS BLOG
+# ===============================
 
-# =========================================
-# ⚛️ SPA
+/como-sanar-heridas-emocionales.html   /es/blog/como-sanar-heridas-emocionales   301
+/vivir-en-automatico.html              /es/blog/vivir-en-automatico              301
+
+# ===============================
+# THANK YOU PAGES
+# ===============================
+
+/gracias       /gracias     200
+/fr/merci      /fr/merci    200
+
+# ===============================
+# SPA REACT ROUTER
+# ===============================
+
 /*   /index.html   200

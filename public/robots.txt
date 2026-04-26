@@ -1,38 +1,23 @@
 # robots.txt - Drevaia Digital
-# https://drevaia.com/robots.txt
 
 User-agent: *
 Allow: /
 
-# Sitemaps
+Disallow: /api/
+Disallow: /admin/
+Disallow: /private/
+Disallow: /temp/
+
+# bloquear solo parámetros inútiles
+Disallow: /*?utm_
+Disallow: /*?fbclid=
+Disallow: /*?gclid=
+
 Sitemap: https://drevaia.com/sitemap.xml
 Sitemap: https://drevaia.com/sitemap-images.xml
 
-# Crawl-delay para bots agresivos
 User-agent: AhrefsBot
 Crawl-delay: 10
 
 User-agent: SemrushBot
 Crawl-delay: 10
-
-# Bloquear rutas de administración y API
-User-agent: *
-Disallow: /api/
-Disallow: /admin/
-Disallow: /private/
-Disallow: /temp/
-Disallow: /*?*
-
-# Permitir recursos estáticos
-Allow: /*.js$
-Allow: /*.css$
-Allow: /*.png$
-Allow: /*.jpg$
-Allow: /*.jpeg$
-Allow: /*.gif$
-Allow: /*.svg$
-Allow: /*.webp$
-Allow: /*.ico$
-Allow: /*.woff$
-Allow: /*.woff2$
-Allow: /*.ttf$
