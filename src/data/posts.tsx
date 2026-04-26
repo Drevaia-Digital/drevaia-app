@@ -505,4 +505,128 @@ export const posts: Post[] = [
     pt: (<p>Reconectar-se consigo é voltar para casa.</p>),
   },
 },
+{
+  slug: {
+    es: "apego-ansioso-senales",
+    en: "anxious-attachment-signs",
+    fr: "signes-attachement-anxieux",
+    pt: "sinais-apego-ansioso",
+  },
+
+  title: {
+    es: "Apego ansioso: señales y cómo empezar a sanarlo",
+    en: "Anxious attachment: signs and healing",
+    fr: "Attachement anxieux : signes et guérison",
+    pt: "Apego ansioso: sinais e cura",
+  },
+
+  description: {
+    es: "Descubre las señales del apego ansioso y cómo empezar a sanar relaciones desde dentro.",
+    en: "Learn the signs of anxious attachment.",
+    fr: "Découvrez les signes de l’attachement anxieux.",
+    pt: "Descubra os sinais do apego ansioso.",
+  },
+
+  content: {
+    es: (
+      <>
+        <p className="mb-4">
+          El apego ansioso no significa amar demasiado.
+        </p>
+
+        <p className="mb-4">
+          Muchas veces significa temer perder tanto… que terminas perdiéndote tú.
+        </p>
+
+        <p className="mb-4">
+          Nace cuando el amor se sintió incierto, inconsistente o condicionado.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Señales comunes de apego ansioso
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Necesitas mucha validación.</li>
+          <li>Temes que te abandonen.</li>
+          <li>Sobrepiensas mensajes y silencios.</li>
+          <li>Te cuesta estar en calma si alguien se aleja.</li>
+          <li>Das demasiado por miedo a perder.</li>
+          <li>Tu paz depende de la respuesta externa.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Qué lo origina
+        </h2>
+
+        <p className="mb-4">
+          Suele nacer en vínculos donde el cariño era impredecible:
+          a veces sí, a veces no.
+        </p>
+
+        <p className="mb-4">
+          Aprendiste a vigilar el amor en lugar de sentirlo seguro.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cómo empezar a sanarlo
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Aprende a regularte antes de reaccionar.</li>
+          <li>Observa tus miedos sin obedecerlos.</li>
+          <li>Construye vida propia fuera de la relación.</li>
+          <li>Comunica necesidades con calma.</li>
+          <li>Elige vínculos consistentes.</li>
+          <li>Fortalece autoestima diaria.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cierre Drevaia
+        </h2>
+
+        <p className="mb-4">
+          No eres intenso por sentir.
+        </p>
+
+        <p className="mb-4">
+          Quizá solo aprendiste a amar desde el miedo.
+        </p>
+
+        <p className="mb-4">
+          Y todo cambia cuando aprendes a amar desde la seguridad.
+        </p>
+
+        <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
+          <ul className="space-y-1">
+            <li><a href="/es/blog/por-que-me-siento-vacio">Vacío emocional</a></li>
+            <li><a href="/es/blog/como-sanar-heridas-emocionales">Heridas emocionales</a></li>
+            <li><a href="/es/blog/como-reconectar-contigo-mismo">Reconectar contigo</a></li>
+          </ul>
+        </div>
+      </>
+    ),
+
+    en: (
+      <>
+        <p className="mb-4">Anxious attachment often means loving through fear.</p>
+        <p className="mb-4">Healing begins with inner safety.</p>
+      </>
+    ),
+
+    fr: (
+      <>
+        <p className="mb-4">L’attachement anxieux signifie souvent aimer avec peur.</p>
+        <p className="mb-4">La guérison commence par la sécurité intérieure.</p>
+      </>
+    ),
+
+    pt: (
+      <>
+        <p className="mb-4">Apego ansioso muitas vezes é amar com medo.</p>
+        <p className="mb-4">A cura começa com segurança interna.</p>
+      </>
+    ),
+  },
+},
 ];
