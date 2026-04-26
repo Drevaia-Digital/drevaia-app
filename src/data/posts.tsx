@@ -629,4 +629,132 @@ export const posts: Post[] = [
     ),
   },
 },
+{
+  slug: {
+    es: "como-reconstruir-autoestima",
+    en: "how-to-rebuild-self-esteem",
+    fr: "comment-reconstruire-estime-de-soi",
+    pt: "como-reconstruir-autoestima",
+  },
+
+  title: {
+    es: "Cómo reconstruir la autoestima después de años de dolor",
+    en: "How to rebuild self-esteem after years of pain",
+    fr: "Reconstruire l’estime de soi après des années de douleur",
+    pt: "Como reconstruir a autoestima após anos de dor",
+  },
+
+  description: {
+    es: "Guía profunda para reconstruir la autoestima, sanar la autocrítica y volver a valorarte.",
+    en: "Learn how to rebuild self-esteem and self-worth.",
+    fr: "Reconstruire l’estime de soi et retrouver sa valeur.",
+    pt: "Reconstruir a autoestima e recuperar seu valor.",
+  },
+
+  content: {
+    es: (
+      <>
+        <p className="mb-4">
+          La autoestima no siempre se rompe en un solo día.
+        </p>
+
+        <p className="mb-4">
+          A veces se desgasta lentamente entre críticas, rechazo, abandono,
+          comparaciones y años olvidándote de ti.
+        </p>
+
+        <p className="mb-4">
+          Pero lo que fue herido también puede reconstruirse.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Señales de autoestima dañada
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Sientes que nunca eres suficiente.</li>
+          <li>Te comparas constantemente.</li>
+          <li>Te cuesta poner límites.</li>
+          <li>Buscas validación externa.</li>
+          <li>Te hablas con dureza.</li>
+          <li>Saboteas oportunidades buenas.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cómo empezar a reconstruirla
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Cuestiona la voz interna que te humilla.</li>
+          <li>Habla contigo como hablarías con alguien amado.</li>
+          <li>Celebra avances pequeños.</li>
+          <li>Aléjate de vínculos que te destruyen.</li>
+          <li>Haz promesas pequeñas y cúmplelas.</li>
+          <li>Recuerda que tu valor no depende del rendimiento.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Algo importante
+        </h2>
+
+        <p className="mb-4">
+          La baja autoestima muchas veces no nació contigo.
+        </p>
+
+        <p className="mb-4">
+          Fue aprendida en ambientes donde no supieron reflejar tu valor.
+        </p>
+
+        <p className="mb-4">
+          Y lo aprendido también puede desaprenderse.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cierre Drevaia
+        </h2>
+
+        <p className="mb-4">
+          No necesitas convertirte en otra persona para merecer amor.
+        </p>
+
+        <p className="mb-4">
+          Quizá solo necesitas dejar de mirarte con ojos que no eran tuyos.
+        </p>
+
+        <p className="mb-4">
+          Y empezar a verte con verdad.
+        </p>
+
+        <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
+          <ul className="space-y-1">
+            <li><a href="/es/blog/como-sanar-heridas-emocionales">Sanar heridas emocionales</a></li>
+            <li><a href="/es/blog/apego-ansioso-senales">Apego ansioso</a></li>
+            <li><a href="/es/blog/como-reconectar-contigo-mismo">Reconectar contigo</a></li>
+          </ul>
+        </div>
+      </>
+    ),
+
+    en: (
+      <>
+        <p className="mb-4">Self-esteem can be rebuilt.</p>
+        <p className="mb-4">Your value was never lost.</p>
+      </>
+    ),
+
+    fr: (
+      <>
+        <p className="mb-4">L’estime de soi peut se reconstruire.</p>
+        <p className="mb-4">Ta valeur n’a jamais disparu.</p>
+      </>
+    ),
+
+    pt: (
+      <>
+        <p className="mb-4">A autoestima pode ser reconstruída.</p>
+        <p className="mb-4">Seu valor nunca foi perdido.</p>
+      </>
+    ),
+  },
+},
 ];
