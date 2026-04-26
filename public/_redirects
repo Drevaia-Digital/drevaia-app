@@ -1,19 +1,43 @@
-# ===============================
-# REDIRECTS ESPECÍFICOS BLOG
-# ===============================
+# =========================================
+# DREVAIA SEO MIGRATION PRO
+# =========================================
 
+# BLOG HISTÓRICO
 /como-sanar-heridas-emocionales.html   /es/blog/como-sanar-heridas-emocionales   301
-/vivir-en-automatico.html              /es/blog/vivir-en-automatico              301
+/vivir-en-automatico.html              /es/blog/vivir-en-automatico               301
 
-# ===============================
+# HOME ANTIGUA
+/index.html                            /es                                         301
+/home.html                             /es                                         301
+/inicio.html                           /es                                         301
+
+# CONTACTO ANTIGUO
+/contact.html                          /es/contacto                               301
+/contacto.html                         /es/contacto                               301
+
+# BLOG ANTIGUO
+/blog.html                             /es/blog                                   301
+/blog                                  /es/blog                                   301
+
+# EBOOKS ANTIGUOS
+/ebooks.html                           /es/ebooks                                 301
+/tienda.html                           /es/ebooks                                 301
+/shop.html                             /es/ebooks                                 301
+
+# ROOT
+/                                       /es                                        302
+
 # THANK YOU PAGES
-# ===============================
+/gracias                               /gracias                                   200
+/fr/merci                              /fr/merci                                  200
 
-/gracias       /gracias     200
-/fr/merci      /fr/merci    200
+# MULTIIDIOMA DIRECTO
+/en                                    /en                                         200
+/fr                                    /fr                                         200
+/pt                                    /pt                                         200
+/es                                    /es                                         200
 
-# ===============================
-# SPA REACT ROUTER
-# ===============================
-
-/*   /index.html   200
+# =========================================
+# SPA REACT ROUTER FINAL
+# =========================================
+/*                                     /index.html                                200
