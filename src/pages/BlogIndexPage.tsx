@@ -67,7 +67,7 @@ export default function BlogIndexPage() {
 
     <main className="min-h-screen bg-[#090910] text-white px-4 py-20">
       <div className="max-w-7xl mx-auto">
-  <section className="mb-10 rounded-2xl border border-violet-400/20 bg-violet-500/10 px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+  <section className="mb-10 rounded-2xl border border-violet-400/20 bg-violet-500/10 px-6 py-4 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
   <div>
     <h2 className="font-semibold text-lg">
       Recibe guía emocional gratuita + recursos exclusivos
