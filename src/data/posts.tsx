@@ -445,4 +445,64 @@ export const posts: Post[] = [
     ),
   },
 },
+{
+  slug: {
+    es: "como-reconectar-contigo-mismo",
+    en: "how-to-reconnect-with-yourself",
+    fr: "comment-se-reconnecter-a-soi",
+    pt: "como-se-reconectar-consigo",
+  },
+
+  title: {
+    es: "Cómo reconectar contigo mismo",
+    en: "How to reconnect with yourself",
+    fr: "Comment se reconnecter à soi",
+    pt: "Como se reconectar consigo",
+  },
+
+  description: {
+    es: "Guía para volver a ti, recuperar claridad y reconectar con tu esencia.",
+    en: "Reconnect with yourself and regain clarity.",
+    fr: "Se reconnecter à soi.",
+    pt: "Reconecte-se consigo.",
+  },
+
+  content: {
+    es: (
+      <>
+        <p className="mb-4">
+          A veces no estás roto. Solo estás lejos de ti.
+        </p>
+
+        <p className="mb-4">
+          Entre responsabilidades, ruido y supervivencia, muchas personas se abandonan sin notarlo.
+        </p>
+
+        <p className="mb-4">
+          Reconectar contigo no es volverte otra persona. Es regresar.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cómo empezar
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Haz pausas diarias.</li>
+          <li>Escucha lo que sientes.</li>
+          <li>Reduce ruido externo.</li>
+          <li>Haz algo que te nutra.</li>
+          <li>Di la verdad interna.</li>
+        </ul>
+
+        <p className="mb-4">
+          Volver a ti puede cambiar toda tu vida.
+        </p>
+      </>
+    ),
+
+    en: (<p>Reconnecting with yourself is coming home.</p>),
+    fr: (<p>Se reconnecter à soi, c’est rentrer chez soi.</p>),
+    pt: (<p>Reconectar-se consigo é voltar para casa.</p>),
+  },
+},
 ];
