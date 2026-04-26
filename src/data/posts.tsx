@@ -880,4 +880,127 @@ export const posts: Post[] = [
     ),
   },
 },
+{
+  slug: {
+    es: "por-que-atraigo-personas-frias",
+    en: "why-do-i-attract-cold-people",
+    fr: "pourquoi-jattire-des-personnes-froides",
+    pt: "por-que-atraio-pessoas-frias",
+  },
+
+  title: {
+    es: "¿Por qué atraigo personas frías?",
+    en: "Why do I attract cold people?",
+    fr: "Pourquoi j’attire des personnes froides ?",
+    pt: "Por que atraio pessoas frias?",
+  },
+
+  description: {
+    es: "Descubre por qué repites vínculos fríos y cómo empezar a elegir relaciones sanas.",
+    en: "Understand why you attract emotionally cold people.",
+    fr: "Comprendre pourquoi vous attirez des personnes froides.",
+    pt: "Entenda por que atrai pessoas frias.",
+  },
+
+  content: {
+    es: (
+      <>
+        <p className="mb-4">
+          No siempre atraes personas frías.
+        </p>
+
+        <p className="mb-4">
+          A veces reconoces como familiar lo que un día te dolió.
+        </p>
+
+        <p className="mb-4">
+          Y el sistema nervioso suele confundir intensidad, distancia o incertidumbre con amor.
+        </p>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Razones comunes por las que repites este patrón
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Normalizaste el afecto inconsistente.</li>
+          <li>Confundes perseguir con amar.</li>
+          <li>Sientes que debes ganarte el cariño.</li>
+          <li>La disponibilidad emocional te parece aburrida.</li>
+          <li>Tu autoestima tolera menos de lo que mereces.</li>
+          <li>Buscas reparar heridas antiguas en relaciones nuevas.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Señales de una persona emocionalmente fría
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Inconsistencia constante.</li>
+          <li>Evita conversaciones profundas.</li>
+          <li>Da migajas afectivas.</li>
+          <li>Solo aparece cuando le conviene.</li>
+          <li>Te hace dudar de lo evidente.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cómo romper el patrón
+        </h2>
+
+        <ul className="list-disc pl-6 space-y-2 mb-4 text-gray-300">
+          <li>Trabaja tu valor personal.</li>
+          <li>Aprende a tolerar la calma, no solo la intensidad.</li>
+          <li>Observa hechos, no promesas.</li>
+          <li>Retírate de lo ambiguo.</li>
+          <li>Elige reciprocidad.</li>
+          <li>Sana heridas de abandono previas.</li>
+        </ul>
+
+        <h2 className="text-2xl font-semibold mt-8 mb-4">
+          Cierre Drevaia
+        </h2>
+
+        <p className="mb-4">
+          No atraes personas frías porque vales poco.
+        </p>
+
+        <p className="mb-4">
+          Quizá solo aprendiste a llamar amor a lo que dolía.
+        </p>
+
+        <p className="mb-4">
+          Y hoy puedes aprender algo nuevo.
+        </p>
+
+        <div className="mt-10 border-t border-white/10 pt-6 text-gray-400">
+          <ul className="space-y-1">
+            <li><a href="/es/blog/apego-ansioso-senales">Apego ansioso</a></li>
+            <li><a href="/es/blog/sanar-abandono-emocional">Abandono emocional</a></li>
+            <li><a href="/es/blog/como-reconstruir-autoestima">Autoestima</a></li>
+          </ul>
+        </div>
+      </>
+    ),
+
+    en: (
+      <>
+        <p className="mb-4">You may be repeating familiar emotional patterns.</p>
+        <p className="mb-4">Healing means choosing consistency.</p>
+      </>
+    ),
+
+    fr: (
+      <>
+        <p className="mb-4">Vous répétez peut-être des schémas émotionnels familiers.</p>
+        <p className="mb-4">Guérir, c’est choisir la constance.</p>
+      </>
+    ),
+
+    pt: (
+      <>
+        <p className="mb-4">Você pode estar repetindo padrões emocionais familiares.</p>
+        <p className="mb-4">Curar é escolher constância.</p>
+      </>
+    ),
+  },
+},
 ];
