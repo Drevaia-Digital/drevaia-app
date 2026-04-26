@@ -39,6 +39,23 @@ export default function BlogIndexPage() {
   return (
     <main className="min-h-screen bg-[#090910] text-white px-4 py-20">
       <div className="max-w-7xl mx-auto">
+  <section className="mb-10 rounded-2xl border border-violet-400/20 bg-violet-500/10 px-6 py-4 flex flex-col md:flex-row items-center justify-between gap-4">
+  <div>
+    <h2 className="font-semibold text-lg">
+      Recibe guía emocional gratuita + recursos exclusivos
+    </h2>
+    <p className="text-sm text-gray-300">
+      Reflexiones profundas + recursos exclusivos Drevaia.
+    </p>
+  </div>
+
+  <a
+    href="/empieza"
+    className="px-5 py-3 rounded-xl bg-violet-500 hover:bg-violet-600 transition"
+  >
+    Acceder gratis
+  </a>
+</section>
 
         {/* HERO */}
         <header className="text-center mb-14">
@@ -135,6 +152,34 @@ export default function BlogIndexPage() {
           </div>
         </section>
 
+        <section className="mb-16">
+  <h2 className="text-2xl font-semibold mb-6">
+    Tendencia ahora
+  </h2>
+
+  <div className="grid gap-4 md:grid-cols-3">
+    {posts.slice(3, 6).map((post, i) => (
+      <Link
+        key={i}
+        to={`/${language}/blog/${post.slug[language]}`}
+        className="rounded-2xl border border-white/10 bg-white/5 p-5 hover:border-violet-400/30 transition"
+      >
+        <div className="text-xs text-violet-300 mb-2">
+          Trending
+        </div>
+
+        <h3 className="font-semibold mb-2">
+          {post.title[language]}
+        </h3>
+
+        <p className="text-sm text-gray-400">
+          {post.description[language]}
+        </p>
+      </Link>
+    ))}
+  </div>
+</section>
+
         {/* ALL POSTS */}
         <section className="mb-16">
           <h2 className="text-2xl font-semibold mb-6">
@@ -164,24 +209,33 @@ export default function BlogIndexPage() {
           </div>
         </section>
 
-        {/* CTA */}
-        <section className="rounded-3xl border border-violet-400/20 bg-gradient-to-br from-violet-600/10 to-white/5 p-10 text-center">
-          <h2 className="text-3xl font-bold mb-4">
-            Empieza tu transformación hoy
-          </h2>
+       {/* CTA */}
+<section className="rounded-3xl border border-violet-400/20 bg-gradient-to-br from-violet-600/20 to-white/5 p-10 text-center">
+  <h2 className="text-4xl font-bold mb-4">
+    Cambia tu historia desde dentro
+  </h2>
 
-          <p className="text-gray-400 max-w-2xl mx-auto mb-6">
-            Accede a ebooks y herramientas profundas para sanar heridas emocionales,
-            elevar autoestima y cambiar tu historia.
-          </p>
+  <p className="text-gray-300 max-w-2xl mx-auto mb-8">
+    Accede a ebooks, herramientas y procesos diseñados para sanar heridas,
+    elevar autoestima y reconstruirte emocionalmente.
+  </p>
 
-          <Link
-            to="/empieza"
-            className="inline-block px-7 py-4 rounded-2xl bg-violet-500 hover:bg-violet-600 transition font-medium"
-          >
-            Comenzar ahora
-          </Link>
-        </section>
+  <div className="flex flex-col md:flex-row gap-4 justify-center">
+    <Link
+      to="/empieza"
+      className="px-7 py-4 rounded-2xl bg-violet-500 hover:bg-violet-600 transition font-medium"
+    >
+      Empezar gratis
+    </Link>
+
+    <Link
+      to="/library"
+      className="px-7 py-4 rounded-2xl border border-white/10 hover:border-violet-400 transition"
+    >
+      Ver biblioteca
+    </Link>
+  </div>
+</section>
 
       </div>
     </main>
