@@ -16,8 +16,8 @@
 /contacto.html                         /es/contacto                               301
 
 # BLOG ANTIGUO
-/blog.html                             /es/blog                                   301
-/blog                                  /es/blog                                   301
+/blog.html   /blog   301
+
 
 # EBOOKS ANTIGUOS
 /ebooks.html                           /es/ebooks                                 301
