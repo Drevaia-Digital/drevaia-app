@@ -12,18 +12,43 @@ const LanguageContext = createContext<LanguageContextType>({
   setLanguage: () => {},
 });
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
+function detectLanguageFromPath(): Language | null {
+  const path = window.location.pathname.toLowerCase();
+
+  if (path.startsWith('/es')) return 'es';
+  if (path.startsWith('/en')) return 'en';
+  if (path.startsWith('/fr')) return 'fr';
+  if (path.startsWith('/pt')) return 'pt';
+
+  return null;
+}
+
+export function LanguageProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [language, setLanguageState] = useState<Language>('es');
 
-  // 🌍 DETECCIÓN AUTOMÁTICA (SOLO PRIMERA VEZ)
   useEffect(() => {
+    // 1️⃣ PRIORIDAD ABSOLUTA: URL
+    const pathLang = detectLanguageFromPath();
+
+    if (pathLang) {
+      setLanguageState(pathLang);
+      localStorage.setItem('language', pathLang);
+      return;
+    }
+
+    // 2️⃣ LOCAL STORAGE
     const saved = localStorage.getItem('language');
 
-    if (saved) {
+    if (saved && ['es', 'en', 'fr', 'pt'].includes(saved)) {
       setLanguageState(saved as Language);
       return;
     }
 
+    // 3️⃣ NAVEGADOR
     const browserLang = navigator.language.toLowerCase();
 
     if (browserLang.startsWith('es')) setLanguageState('es');
@@ -32,7 +57,6 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     else setLanguageState('en');
   }, []);
 
-  // 💾 GUARDAR ELECCIÓN DEL USUARIO
   const setLanguage = (lang: Language) => {
     localStorage.setItem('language', lang);
     setLanguageState(lang);
