@@ -25,8 +25,23 @@ export default function App() {
           <Routes>
 
             {/* 🏠 HOME */}
-<Route path="/" element={<Navigate to="/es" replace />} />
-
+<Route
+  path="/"
+  element={
+    <Navigate
+      to={
+        navigator.language.startsWith("fr")
+          ? "/fr"
+          : navigator.language.startsWith("pt")
+          ? "/pt"
+          : navigator.language.startsWith("en")
+          ? "/en"
+          : "/es"
+      }
+      replace
+    />
+  }
+/>
 <Route path="/es" element={<HomePage />} />
 <Route path="/en" element={<HomePage />} />
 <Route path="/fr" element={<HomePage />} />
