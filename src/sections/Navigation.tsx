@@ -35,7 +35,7 @@ const goToSection = (id: string) => {
 
   if (el) {
     el.scrollIntoView({
-      behavior: "smooth",
+      behavior: "auto",
       block: "start"
     });
   }

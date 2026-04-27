@@ -270,6 +270,21 @@ export function Stats({ language = "es" }: { language?: Lang }) {
           />
         ))}
       </motion.div>
-    </section>
+
+<div className="relative max-w-6xl mx-auto mt-14 px-6 flex justify-center">
+  <button
+    onClick={() =>
+      window.scrollTo({
+        top: 0,
+        behavior: "auto",
+      })
+    }
+    className="text-sm text-gray-400 hover:text-white transition flex items-center gap-2 tracking-wide"
+  >
+    ↑ Volver al inicio
+  </button>
+</div>
+
+</section>
   );
 }
