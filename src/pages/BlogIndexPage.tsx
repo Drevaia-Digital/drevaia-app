@@ -146,7 +146,7 @@ export default function BlogIndexPage() {
           </section>
 
           {/* CATEGORIES */}
-          <section className="mb-14 flex flex-wrap gap-3 justify-center">
+          <section className="mb-14 flex flex-wrap gap-3 justify-start">
             <button
               onClick={() => setActiveCategory("Todos")}
               className="px-4 py-2 rounded-full bg-violet-500"
