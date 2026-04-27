@@ -22,10 +22,26 @@ export function Navigation() {
   }, []);
 
   const go = (path: string) => {
-    navigate(path);
-    window.scrollTo({ top: 0, behavior: "auto" });
-    setOpen(false);
-  };
+  navigate(path);
+  window.scrollTo({
+    top: 0,
+    behavior: "auto"
+  });
+  setOpen(false);
+};
+
+const goToSection = (id: string) => {
+  const el = document.getElementById(id);
+
+  if (el) {
+    el.scrollIntoView({
+      behavior: "smooth",
+      block: "start"
+    });
+  }
+
+  setOpen(false);
+};
 
   const item =
     "text-white/85 hover:text-white transition duration-200 text-sm tracking-wide";
@@ -78,15 +94,15 @@ export function Navigation() {
                   Blog
                 </button>
 
-                <button onClick={() => go(`/${language}#daily`)} className={item}>
+                <button onClick={() => goToSection("daily")} className={item}>
   Palabra del día
 </button>
 
-                <button onClick={() => go(`/${language}#stats`)} className={item}>
+                <button onClick={() => goToSection("stats")} className={item}>
   Contador
 </button>
 
-                <button onClick={() => go(`/${language}#testimonials`)} className={item}>
+                <button onClick={() => goToSection("testimonials")} className={item}>
   Testimonios
 </button>
 
@@ -147,6 +163,17 @@ export function Navigation() {
           <button onClick={() => go(`/${language}`)}>Inicio</button>
           <button onClick={() => go("/library")}>{t.nav.library}</button>
           <button onClick={() => go("/blog")}>Blog</button>
+          <button onClick={() => goToSection("daily")}>
+  Palabra del día
+</button>
+
+<button onClick={() => goToSection("stats")}>
+  Contador
+</button>
+
+<button onClick={() => goToSection("testimonials")}>
+  Testimonios
+</button>
           <button onClick={() => go("/portal")}>Portal</button>
           <button onClick={() => go("/legal")}>{t.nav.legal}</button>
 
