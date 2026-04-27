@@ -1,9 +1,9 @@
-import { translations } from '../i18n/translations';
-import { useState, useEffect } from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
-import { Menu, X, Sparkles } from 'lucide-react';
-import { useLanguage } from '@/context/LanguageContext';
-import { motion } from 'framer-motion';
+import { translations } from "../i18n/translations";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { Menu, X, Sparkles } from "lucide-react";
+import { useLanguage } from "@/context/LanguageContext";
+import { motion } from "framer-motion";
 
 export function Navigation() {
   const { language, setLanguage } = useLanguage();
@@ -13,7 +13,6 @@ export function Navigation() {
   const [isMobile, setIsMobile] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
 
   useEffect(() => {
     const handleResize = () => {
@@ -21,93 +20,74 @@ export function Navigation() {
     };
 
     handleResize();
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-  // 🔥 navegación normal
   const go = (path: string) => {
     navigate(path);
     window.scrollTo({ top: 0, behavior: "auto" });
-  };
-
-  // 🔥 navegación directa a sección (SIN animación)
-  const goToSection = (id: string) => {
-    if (location.pathname !== "/") {
-      navigate("/");
-      setTimeout(() => {
-        const el = document.getElementById(id);
-        if (!el) return;
-
-        window.scrollTo({
-          top: el.offsetTop - 80,
-          behavior: "auto",
-        });
-      }, 100);
-    } else {
-      const el = document.getElementById(id);
-      if (!el) return;
-
-      window.scrollTo({
-        top: el.offsetTop - 80,
-        behavior: "auto",
-      });
-    }
+    setOpen(false);
   };
 
   return (
     <>
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-[9999] 
-        bg-[#0f0f1a]/80 backdrop-blur-xl 
-        border-b border-white/10 shadow-lg">
+      <nav className="fixed top-0 left-0 right-0 z-[9999] bg-[#0f0f1a]/80 backdrop-blur-xl border-b border-white/10 shadow-lg">
 
         <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-16">
 
           {/* LOGO */}
-          <button onClick={() => go("/")} className="flex items-center gap-2">
+          <button onClick={() => go(`/${language}`)} className="flex items-center gap-2">
             <Sparkles className="text-amber-400" />
-            <span className="text-white font-bold text-lg">Drevaia</span>
+            <span className="text-white font-bold text-lg">
+              Drevaia
+            </span>
           </button>
 
           {/* DESKTOP */}
           {!isMobile && (
             <div className="flex items-center gap-6 text-sm font-medium">
 
-              <button onClick={() => go("/")} className="text-white hover:text-amber-300">
-                {language === "es" ? "Inicio" : "Start"}
+              <button onClick={() => go(`/${language}`)} className="text-white hover:text-amber-300">
+                {language === "es" ? "Inicio" : "Home"}
               </button>
 
-              <Link to="/library" className="text-white hover:text-amber-300">
+              <button onClick={() => go("/library")} className="text-white hover:text-amber-300">
                 {t.nav.library}
-              </Link>
+              </button>
+
+              <button onClick={() => go("/blog")} className="text-white hover:text-amber-300">
+                Blog
+              </button>
 
               <button onClick={() => go("/portal")} className="text-white hover:text-amber-300">
                 Portal
               </button>
 
-              <button onClick={() => goToSection("daily")} className="text-white hover:text-amber-300">
-                {language === "es" ? "Lectura diaria" : "Daily reading"}
+              <button onClick={() => go("/reading")} className="text-white hover:text-amber-300">
+                {language === "es" ? "Lectura diaria" : "Daily Reading"}
               </button>
 
-              <button onClick={() => goToSection("testimonials")} className="text-white hover:text-amber-300">
+              <button onClick={() => go("/testimonials")} className="text-white hover:text-amber-300">
                 {language === "es" ? "Testimonios" : "Testimonials"}
               </button>
 
-              <Link to="/legal" className="text-white hover:text-amber-300">
+              <button onClick={() => go("/legal")} className="text-white hover:text-amber-300">
                 {t.nav.legal}
-              </Link>
+              </button>
 
-              {/* IDIOMA */}
+              {/* LANG */}
               <div className="flex gap-2 ml-2 bg-white/10 px-2 py-1 rounded-full">
-                {['es','en','fr','pt'].map((lang) => (
+                {["es", "en", "fr", "pt"].map((lang) => (
                   <button
                     key={lang}
                     onClick={() => setLanguage(lang as any)}
                     className={`px-2 py-1 rounded-full text-xs ${
                       language === lang
-                        ? 'bg-amber-400 text-black'
-                        : 'text-white'
+                        ? "bg-amber-400 text-black"
+                        : "text-white"
                     }`}
                   >
                     {lang.toUpperCase()}
@@ -118,7 +98,7 @@ export function Navigation() {
             </div>
           )}
 
-          {/* MOBILE BUTTON */}
+          {/* MOBILE BTN */}
           {isMobile && (
             <button onClick={() => setOpen(!open)} className="text-white">
               {open ? <X /> : <Menu />}
@@ -133,38 +113,19 @@ export function Navigation() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="fixed top-16 left-0 w-full 
-            bg-[#0f0f1a]/95 backdrop-blur-xl 
-            p-6 z-[9998] flex flex-col gap-4 text-white"
+          className="fixed top-16 left-0 w-full bg-[#0f0f1a]/95 backdrop-blur-xl p-6 z-[9998] flex flex-col gap-4 text-white"
         >
 
-          <button onClick={() => { go("/"); setOpen(false); }} className="w-full text-left">
-            Inicio
-          </button>
+          <button onClick={() => go(`/${language}`)}>Inicio</button>
+          <button onClick={() => go("/library")}>{t.nav.library}</button>
+          <button onClick={() => go("/blog")}>Blog</button>
+          <button onClick={() => go("/portal")}>Portal</button>
+          <button onClick={() => go("/reading")}>Lectura diaria</button>
+          <button onClick={() => go("/testimonials")}>Testimonios</button>
+          <button onClick={() => go("/legal")}>{t.nav.legal}</button>
 
-          <button onClick={() => { go("/portal"); setOpen(false); }} className="w-full text-left">
-            Portal
-          </button>
-
-          <button onClick={() => { go("/library"); setOpen(false); }} className="w-full text-left">
-            {t.nav.library}
-          </button>
-
-          <button onClick={() => { goToSection("daily"); setOpen(false); }} className="w-full text-left">
-            Lectura diaria
-          </button>
-
-          <button onClick={() => { goToSection("testimonials"); setOpen(false); }} className="w-full text-left">
-            Testimonios
-          </button>
-
-          <Link to="/legal" onClick={() => setOpen(false)} className="w-full text-left">
-            {t.nav.legal}
-          </Link>
-
-          {/* IDIOMA */}
           <div className="flex gap-2 mt-4">
-            {['es','en','fr','pt'].map((lang) => (
+            {["es", "en", "fr", "pt"].map((lang) => (
               <button
                 key={lang}
                 onClick={() => {
@@ -173,8 +134,8 @@ export function Navigation() {
                 }}
                 className={`px-3 py-1 rounded ${
                   language === lang
-                    ? 'bg-amber-400 text-black'
-                    : 'bg-white/10 text-white'
+                    ? "bg-amber-400 text-black"
+                    : "bg-white/10 text-white"
                 }`}
               >
                 {lang.toUpperCase()}
