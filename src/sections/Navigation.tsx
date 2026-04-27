@@ -76,9 +76,9 @@ const goToSection = (id: string) => {
   className="flex items-center gap-3"
 >
   <img
-    src="/assets/logo/logo-azul.png"
+    src="/assets/logo/logo-icon-azul.png"
     alt="Drevaia Digital"
-    className="w-8 h-8 object-contain"
+    className="w-10 h-10 object-contain drop-shadow-[0_0_10px_rgba(59,130,246,.35)]"
   />
 
   <span className="text-white text-lg font-semibold tracking-[0.28em]">
