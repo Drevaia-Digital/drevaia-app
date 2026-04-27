@@ -1,7 +1,7 @@
 import { translations } from "../i18n/translations";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Menu, X, Sparkles } from "lucide-react";
+import { Menu, X } from "lucide-react";
 import { useLanguage } from "@/context/LanguageContext";
 import { motion } from "framer-motion";
 
@@ -15,14 +15,10 @@ export function Navigation() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth < 1024);
-    };
-
-    handleResize();
-    window.addEventListener("resize", handleResize);
-
-    return () => window.removeEventListener("resize", handleResize);
+    const resize = () => setIsMobile(window.innerWidth < 1024);
+    resize();
+    window.addEventListener("resize", resize);
+    return () => window.removeEventListener("resize", resize);
   }, []);
 
   const go = (path: string) => {
@@ -31,28 +27,28 @@ export function Navigation() {
     setOpen(false);
   };
 
-  const navItem =
-    "text-white hover:text-amber-300 transition duration-200";
+  const item =
+    "text-white/85 hover:text-white transition duration-200 text-sm tracking-wide";
 
   return (
     <>
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-[9999] bg-[#0f0f1a]/85 backdrop-blur-xl border-b border-white/10 shadow-lg">
+      <nav className="fixed top-0 left-0 right-0 z-[9999] border-b border-white/10 bg-black/55 backdrop-blur-2xl">
 
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
+        <div className="max-w-7xl mx-auto h-16 px-5 flex items-center justify-between">
 
-          {/* LEFT SIDE */}
-          <div className="flex items-center gap-4">
+          {/* LEFT */}
+          <div className="flex items-center gap-6">
 
-            {/* MOBILE MENU BUTTON */}
+            {/* MOBILE */}
             {isMobile && (
               <button
                 onClick={() => setOpen(!open)}
                 className="text-white flex flex-col items-center leading-none"
               >
-                {open ? <X size={24} /> : <Menu size={24} />}
+                {open ? <X size={22} /> : <Menu size={22} />}
 
-                <span className="text-[10px] tracking-[0.25em] mt-1 text-gray-300">
+                <span className="text-[10px] mt-1 tracking-[0.22em] text-white/60">
                   MENU
                 </span>
               </button>
@@ -61,48 +57,32 @@ export function Navigation() {
             {/* LOGO */}
             <button
               onClick={() => go(`/${language}`)}
-              className="flex items-center gap-2"
+              className="text-white text-lg font-semibold tracking-[0.28em]"
             >
-              <Sparkles className="text-amber-400" size={18} />
-
-              <span className="text-white font-bold text-lg">
-                Drevaia
-              </span>
+              DREVAIA
             </button>
 
             {/* DESKTOP MENU */}
             {!isMobile && (
-              <div className="flex items-center gap-6 text-sm font-medium ml-6">
+              <div className="flex items-center gap-6 ml-4">
 
-                <button onClick={() => go(`/${language}`)} className={navItem}>
+                <button onClick={() => go(`/${language}`)} className={item}>
                   {language === "es" ? "Inicio" : "Home"}
                 </button>
 
-                <button onClick={() => go("/library")} className={navItem}>
+                <button onClick={() => go("/library")} className={item}>
                   {t.nav.library}
                 </button>
 
-                <button onClick={() => go("/blog")} className={navItem}>
+                <button onClick={() => go("/blog")} className={item}>
                   Blog
                 </button>
 
-                <button onClick={() => go("/portal")} className={navItem}>
+                <button onClick={() => go("/portal")} className={item}>
                   Portal
                 </button>
 
-                <button onClick={() => go("/reading")} className={navItem}>
-                  {language === "es"
-                    ? "Lectura diaria"
-                    : "Daily Reading"}
-                </button>
-
-                <button onClick={() => go("/testimonials")} className={navItem}>
-                  {language === "es"
-                    ? "Testimonios"
-                    : "Testimonials"}
-                </button>
-
-                <button onClick={() => go("/legal")} className={navItem}>
+                <button onClick={() => go("/legal")} className={item}>
                   {t.nav.legal}
                 </button>
 
@@ -110,43 +90,60 @@ export function Navigation() {
             )}
           </div>
 
-          {/* LANG DESKTOP */}
+          {/* RIGHT */}
           {!isMobile && (
-            <div className="flex gap-2 bg-white/10 px-2 py-1 rounded-full">
-              {["es", "en", "fr", "pt"].map((lang) => (
-                <button
-                  key={lang}
-                  onClick={() => setLanguage(lang as any)}
-                  className={`px-2 py-1 rounded-full text-xs ${
-                    language === lang
-                      ? "bg-amber-400 text-black"
-                      : "text-white"
-                  }`}
-                >
-                  {lang.toUpperCase()}
-                </button>
-              ))}
+            <div className="flex items-center gap-4">
+
+              {/* LANG */}
+              <div className="flex gap-1 rounded-full border border-white/10 bg-white/5 px-1 py-1">
+                {["es", "en", "fr", "pt"].map((lang) => (
+                  <button
+                    key={lang}
+                    onClick={() => setLanguage(lang as any)}
+                    className={`px-2 py-1 text-[11px] rounded-full transition ${
+                      language === lang
+                        ? "bg-white text-black"
+                        : "text-white/75 hover:text-white"
+                    }`}
+                  >
+                    {lang.toUpperCase()}
+                  </button>
+                ))}
+              </div>
+
+              {/* CTA */}
+              <button
+                onClick={() => go("/empieza")}
+                className="px-5 py-2 rounded-full border border-white/15 bg-white text-black text-sm font-medium hover:scale-[1.03] transition"
+              >
+                Empezar
+              </button>
+
             </div>
           )}
-
         </div>
       </nav>
 
-      {/* MOBILE MENU */}
+      {/* MOBILE PANEL */}
       {open && isMobile && (
         <motion.div
-          initial={{ opacity: 0, y: -12 }}
+          initial={{ opacity: 0, y: -14 }}
           animate={{ opacity: 1, y: 0 }}
-          className="fixed top-16 left-0 w-full bg-[#0f0f1a]/95 backdrop-blur-xl p-6 z-[9998] flex flex-col items-start gap-5 text-white text-left"
+          className="fixed top-16 left-0 w-full z-[9998] bg-black/92 backdrop-blur-2xl border-b border-white/10 px-6 py-7 flex flex-col items-start gap-5 text-white"
         >
 
           <button onClick={() => go(`/${language}`)}>Inicio</button>
           <button onClick={() => go("/library")}>{t.nav.library}</button>
           <button onClick={() => go("/blog")}>Blog</button>
           <button onClick={() => go("/portal")}>Portal</button>
-          <button onClick={() => go("/reading")}>Lectura diaria</button>
-          <button onClick={() => go("/testimonials")}>Testimonios</button>
           <button onClick={() => go("/legal")}>{t.nav.legal}</button>
+
+          <button
+            onClick={() => go("/empieza")}
+            className="mt-2 px-5 py-2 rounded-full bg-white text-black text-sm"
+          >
+            Empezar
+          </button>
 
           <div className="flex gap-2 pt-2">
             {["es", "en", "fr", "pt"].map((lang) => (
@@ -156,9 +153,9 @@ export function Navigation() {
                   setLanguage(lang as any);
                   setOpen(false);
                 }}
-                className={`px-3 py-1 rounded ${
+                className={`px-3 py-1 rounded-full text-xs ${
                   language === lang
-                    ? "bg-amber-400 text-black"
+                    ? "bg-white text-black"
                     : "bg-white/10 text-white"
                 }`}
               >
