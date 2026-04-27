@@ -232,7 +232,7 @@ md:flex-row md:justify-center md:gap-6
       </Button>
     </a>
   ) : (
-    <Link to="/auth/register">
+    <Link to={`/${language}/auth/register`}>
       <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-5 py-3 text-sm sm:text-base rounded-full text-white">
         <Heart className="mr-2" />
         {t.hero.cta}
@@ -241,7 +241,7 @@ md:flex-row md:justify-center md:gap-6
   )}
 
   {/* DERECHA */}
-  <Link to="/library">
+  <Link to={`/${language}/library`}>
     <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-5 py-3 text-sm sm:text-base rounded-full">
       {t.hero.explore}
       <ArrowRight className="ml-2" />
