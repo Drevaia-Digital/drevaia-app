@@ -78,6 +78,18 @@ export function Navigation() {
                   Blog
                 </button>
 
+                <button onClick={() => go(`/${language}#daily`)} className={item}>
+  Palabra del día
+</button>
+
+                <button onClick={() => go(`/${language}#stats`)} className={item}>
+  Contador
+</button>
+
+                <button onClick={() => go(`/${language}#testimonials`)} className={item}>
+  Testimonios
+</button>
+
                 <button onClick={() => go("/portal")} className={item}>
                   Portal
                 </button>

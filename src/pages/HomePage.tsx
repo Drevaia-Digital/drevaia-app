@@ -74,7 +74,9 @@ export function HomePage() {
           <DailyReading />
         </section>
 
-        <Stats />
+        <section id="stats" className="scroll-mt-24">
+  <Stats />
+</section>
 
         <section id="testimonials" className="scroll-mt-24">
           <Testimonials />
