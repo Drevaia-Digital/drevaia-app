@@ -31,78 +31,102 @@ export function Navigation() {
     setOpen(false);
   };
 
+  const navItem =
+    "text-white hover:text-amber-300 transition duration-200";
+
   return (
     <>
       {/* NAVBAR */}
-      <nav className="fixed top-0 left-0 right-0 z-[9999] bg-[#0f0f1a]/80 backdrop-blur-xl border-b border-white/10 shadow-lg">
+      <nav className="fixed top-0 left-0 right-0 z-[9999] bg-[#0f0f1a]/85 backdrop-blur-xl border-b border-white/10 shadow-lg">
 
-        <div className="max-w-7xl mx-auto px-4 flex items-center h-16 gap-10">
+        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
 
-          {/* LOGO */}
-          <button onClick={() => go(`/${language}`)} className="flex items-center gap-2">
-            <Sparkles className="text-amber-400" />
-            <span className="text-white font-bold text-lg">
-              Drevaia
-            </span>
-          </button>
+          {/* LEFT SIDE */}
+          <div className="flex items-center gap-4">
 
-          {/* DESKTOP */}
-          {!isMobile && (
-            <div className="flex items-center gap-6 text-sm font-medium">
+            {/* MOBILE MENU BUTTON */}
+            {isMobile && (
+              <button
+                onClick={() => setOpen(!open)}
+                className="text-white flex flex-col items-center leading-none"
+              >
+                {open ? <X size={24} /> : <Menu size={24} />}
 
-              <button onClick={() => go(`/${language}`)} className="text-white hover:text-amber-300">
-                {language === "es" ? "Inicio" : "Home"}
+                <span className="text-[10px] tracking-[0.25em] mt-1 text-gray-300">
+                  MENU
+                </span>
               </button>
+            )}
 
-              <button onClick={() => go("/library")} className="text-white hover:text-amber-300">
-                {t.nav.library}
-              </button>
+            {/* LOGO */}
+            <button
+              onClick={() => go(`/${language}`)}
+              className="flex items-center gap-2"
+            >
+              <Sparkles className="text-amber-400" size={18} />
 
-              <button onClick={() => go("/blog")} className="text-white hover:text-amber-300">
-                Blog
-              </button>
-
-              <button onClick={() => go("/portal")} className="text-white hover:text-amber-300">
-                Portal
-              </button>
-
-              <button onClick={() => go("/reading")} className="text-white hover:text-amber-300">
-                {language === "es" ? "Lectura diaria" : "Daily Reading"}
-              </button>
-
-              <button onClick={() => go("/testimonials")} className="text-white hover:text-amber-300">
-                {language === "es" ? "Testimonios" : "Testimonials"}
-              </button>
-
-              <button onClick={() => go("/legal")} className="text-white hover:text-amber-300">
-                {t.nav.legal}
-              </button>
-
-              {/* LANG */}
-              <div className="flex gap-2 ml-2 bg-white/10 px-2 py-1 rounded-full">
-                {["es", "en", "fr", "pt"].map((lang) => (
-                  <button
-                    key={lang}
-                    onClick={() => setLanguage(lang as any)}
-                    className={`px-2 py-1 rounded-full text-xs ${
-                      language === lang
-                        ? "bg-amber-400 text-black"
-                        : "text-white"
-                    }`}
-                  >
-                    {lang.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-
-            </div>
-          )}
-
-          {/* MOBILE BTN */}
-          {isMobile && (
-            <button onClick={() => setOpen(!open)} className="text-white">
-              {open ? <X /> : <Menu />}
+              <span className="text-white font-bold text-lg">
+                Drevaia
+              </span>
             </button>
+
+            {/* DESKTOP MENU */}
+            {!isMobile && (
+              <div className="flex items-center gap-6 text-sm font-medium ml-6">
+
+                <button onClick={() => go(`/${language}`)} className={navItem}>
+                  {language === "es" ? "Inicio" : "Home"}
+                </button>
+
+                <button onClick={() => go("/library")} className={navItem}>
+                  {t.nav.library}
+                </button>
+
+                <button onClick={() => go("/blog")} className={navItem}>
+                  Blog
+                </button>
+
+                <button onClick={() => go("/portal")} className={navItem}>
+                  Portal
+                </button>
+
+                <button onClick={() => go("/reading")} className={navItem}>
+                  {language === "es"
+                    ? "Lectura diaria"
+                    : "Daily Reading"}
+                </button>
+
+                <button onClick={() => go("/testimonials")} className={navItem}>
+                  {language === "es"
+                    ? "Testimonios"
+                    : "Testimonials"}
+                </button>
+
+                <button onClick={() => go("/legal")} className={navItem}>
+                  {t.nav.legal}
+                </button>
+
+              </div>
+            )}
+          </div>
+
+          {/* LANG DESKTOP */}
+          {!isMobile && (
+            <div className="flex gap-2 bg-white/10 px-2 py-1 rounded-full">
+              {["es", "en", "fr", "pt"].map((lang) => (
+                <button
+                  key={lang}
+                  onClick={() => setLanguage(lang as any)}
+                  className={`px-2 py-1 rounded-full text-xs ${
+                    language === lang
+                      ? "bg-amber-400 text-black"
+                      : "text-white"
+                  }`}
+                >
+                  {lang.toUpperCase()}
+                </button>
+              ))}
+            </div>
           )}
 
         </div>
@@ -111,9 +135,9 @@ export function Navigation() {
       {/* MOBILE MENU */}
       {open && isMobile && (
         <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          className="fixed top-16 left-0 w-full bg-[#0f0f1a]/95 backdrop-blur-xl p-6 z-[9998] flex flex-col gap-4 text-white"
+          initial={{ opacity: 0, y: -12 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="fixed top-16 left-0 w-full bg-[#0f0f1a]/95 backdrop-blur-xl p-6 z-[9998] flex flex-col items-start gap-5 text-white text-left"
         >
 
           <button onClick={() => go(`/${language}`)}>Inicio</button>
@@ -124,7 +148,7 @@ export function Navigation() {
           <button onClick={() => go("/testimonials")}>Testimonios</button>
           <button onClick={() => go("/legal")}>{t.nav.legal}</button>
 
-          <div className="flex gap-2 mt-4">
+          <div className="flex gap-2 pt-2">
             {["es", "en", "fr", "pt"].map((lang) => (
               <button
                 key={lang}
