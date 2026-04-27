@@ -67,9 +67,13 @@ export default function App() {
 />
 
             {/* 🔐 AUTH */}
-            <Route path="/auth/login" element={<AuthPage mode="login" />} />
-            <Route path="/auth/register" element={<AuthPage mode="register" />} />
-            <Route path="/auth/forgot-password" element={<AuthPage mode="forgot-password" />} />
+<Route path="/auth/login" element={<AuthPage mode="login" />} />
+<Route path="/auth/register" element={<AuthPage mode="register" />} />
+<Route path="/auth/forgot-password" element={<AuthPage mode="forgot-password" />} />
+
+<Route path="/:lang/auth/login" element={<AuthPage mode="login" />} />
+<Route path="/:lang/auth/register" element={<AuthPage mode="register" />} />
+<Route path="/:lang/auth/forgot-password" element={<AuthPage mode="forgot-password" />} />
 
             {/* 🎯 LEAD MAGNET */}
             <Route path="/empieza" element={<LeadMagnetPage />} />
