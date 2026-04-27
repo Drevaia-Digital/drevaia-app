@@ -32,12 +32,12 @@ export function AuthPage({ t, language, mode }: any) {
       create: 'Crear mi cuenta',
       phrase: 'Aquí puedes ser tú, sin filtros.',
       privacy: 'No compartimos tu información. Sin spam.',
+      google: 'Continuar con Google',
       needEmail: 'Escribe tu correo',
       invalidEmail: 'Correo no válido',
       needPassword: 'Crea una contraseña',
       minPassword: 'Mínimo 6 caracteres',
     },
-
     en: {
       back: 'Back',
       login: 'Sign in',
@@ -52,12 +52,12 @@ export function AuthPage({ t, language, mode }: any) {
       create: 'Create my account',
       phrase: 'Here you can be yourself, without filters.',
       privacy: 'We do not share your information. No spam.',
+      google: 'Continue with Google',
       needEmail: 'Enter your email',
       invalidEmail: 'Invalid email',
       needPassword: 'Create a password',
       minPassword: 'Minimum 6 characters',
     },
-
     fr: {
       back: 'Retour',
       login: 'Connexion',
@@ -72,12 +72,12 @@ export function AuthPage({ t, language, mode }: any) {
       create: 'Créer mon compte',
       phrase: 'Ici, vous pouvez être vous-même.',
       privacy: 'Nous ne partageons pas vos informations.',
+      google: 'Continuer avec Google',
       needEmail: 'Entrez votre e-mail',
       invalidEmail: 'E-mail invalide',
       needPassword: 'Créez un mot de passe',
       minPassword: 'Minimum 6 caractères',
     },
-
     pt: {
       back: 'Voltar',
       login: 'Entrar',
@@ -92,6 +92,7 @@ export function AuthPage({ t, language, mode }: any) {
       create: 'Criar minha conta',
       phrase: 'Aqui você pode ser você mesmo.',
       privacy: 'Não compartilhamos suas informações.',
+      google: 'Continuar com Google',
       needEmail: 'Digite seu e-mail',
       invalidEmail: 'E-mail inválido',
       needPassword: 'Crie uma senha',
@@ -129,7 +130,6 @@ export function AuthPage({ t, language, mode }: any) {
     }
 
     setErrors(newErrors);
-
     return Object.keys(newErrors).length === 0;
   };
 
@@ -148,7 +148,6 @@ export function AuthPage({ t, language, mode }: any) {
     <div className="min-h-screen bg-gray-900 text-white relative overflow-hidden">
       <GlowCursor />
 
-      {/* BACKGROUND */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-purple-600/20 rounded-full blur-[120px] animate-pulse" />
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-amber-500/20 rounded-full blur-[120px] animate-pulse" />
@@ -168,7 +167,6 @@ export function AuthPage({ t, language, mode }: any) {
           </Link>
 
           <div className="bg-white/5 backdrop-blur-xl border border-white/10 rounded-3xl p-8 shadow-2xl">
-            {/* HEADER */}
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold text-white mb-2">
                 {mode === 'login' ? A.login : A.register}
@@ -202,10 +200,9 @@ export function AuthPage({ t, language, mode }: any) {
                           : undefined,
                     }));
                   }}
-                  className={`pl-10 w-full bg-white/10 text-white placeholder:text-white/50 border rounded-lg px-4 py-2.5 transition-all duration-300
-                  ${errors.email ? 'border-red-500' : 'border-white/10'}
-                  focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20
-                  focus:shadow-[0_0_25px_rgba(168,85,247,0.25)]`}
+                  className={`pl-10 w-full bg-white/10 text-white placeholder:text-white/50 border rounded-lg px-4 py-2.5 transition-all duration-300 ${
+                    errors.email ? 'border-red-500' : 'border-white/10'
+                  } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20`}
                 />
 
                 <p className="text-xs text-gray-400 mt-2 ml-1">
@@ -241,16 +238,15 @@ export function AuthPage({ t, language, mode }: any) {
                           : undefined,
                     }));
                   }}
-                  className={`pl-10 pr-10 w-full bg-white/10 text-white placeholder:text-white/50 border rounded-lg px-4 py-2.5 transition-all duration-300
-                  ${errors.password ? 'border-red-500' : 'border-white/10'}
-                  focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20
-                  focus:shadow-[0_0_25px_rgba(168,85,247,0.25)]`}
+                  className={`pl-10 pr-10 w-full bg-white/10 text-white placeholder:text-white/50 border rounded-lg px-4 py-2.5 transition-all duration-300 ${
+                    errors.password ? 'border-red-500' : 'border-white/10'
+                  } focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20`}
                 />
 
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition active:scale-90"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white transition"
                 >
                   {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
                 </button>
@@ -262,43 +258,29 @@ export function AuthPage({ t, language, mode }: any) {
                 )}
               </div>
 
+              {/* GOOGLE */}
               <Button
-  type="button"
-  onClick={signInWithGoogle}
-  disabled={isLoading}
-  className="w-full bg-white text-black hover:bg-gray-100 transition-all duration-300 hover:scale-105 active:scale-95 rounded-xl font-medium border border-white/20"
->
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 48 48"
-    className="w-5 h-5 mr-2"
-  >
-    <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3C33.6 32.7 29.2 36 24 36c-6.6 0-12-5.4-12-12S17.4 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34.1 6.1 29.3 4 24 4 12.9 4 4 12.9 4 24s8.9 20 20 20 20-8.9 20-20c0-1.3-.1-2.3-.4-3.5z"/>
-    <path fill="#FF3D00" d="M6.3 14.7l6.6 4.8C14.7 15.5 19 12 24 12c3 0 5.7 1.1 7.8 3l5.7-5.7C34.1 6.1 29.3 4 24 4 16.3 4 9.7 8.3 6.3 14.7z"/>
-    <path fill="#4CAF50" d="M24 44c5.1 0 9.8-1.9 13.3-5.1l-6.1-5c-2 1.5-4.5 2.1-7.2 2.1-5.2 0-9.6-3.3-11.2-8l-6.5 5C9.7 39.5 16.3 44 24 44z"/>
-    <path fill="#1976D2" d="M43.6 20.5H42V20H24v8h11.3c-1.1 3.2-3.4 5.7-6.1 7.1l6.1 5C39.1 36.6 44 31 44 24c0-1.3-.1-2.3-.4-3.5z"/>
-  </svg>
+                type="button"
+                onClick={signInWithGoogle}
+                disabled={isLoading}
+                className="w-full bg-white text-black hover:bg-gray-100 rounded-xl font-medium"
+              >
+                {A.google}
+              </Button>
 
-  Continuar con Google
-</Button>
+              <div className="flex items-center gap-3 my-4">
+                <div className="flex-1 h-px bg-white/10"></div>
+                <span className="text-xs text-gray-400 uppercase tracking-[0.25em]">
+                  o
+                </span>
+                <div className="flex-1 h-px bg-white/10"></div>
+              </div>
 
-<div className="relative py-2">
-  <div className="border-t border-white/10"></div>
-  <span className="absolute left-1/2 -translate-x-1/2 -top-1 bg-gray-900 px-3 text-xs text-gray-500">
-    o
-  </span>
-</div>
-
-              {/* BUTTON */}
+              {/* MAIN BUTTON */}
               <Button
                 type="submit"
                 disabled={isLoading}
-                className="w-full bg-gradient-to-r from-purple-600 to-amber-500
-                hover:from-purple-700 hover:to-amber-600
-                transition-all duration-300
-                hover:scale-105 active:scale-95
-                hover:shadow-[0_0_30px_rgba(168,85,247,0.4)]
-                disabled:opacity-50"
+                className="w-full bg-gradient-to-r from-purple-600 to-amber-500 hover:from-purple-700 hover:to-amber-600"
               >
                 {isLoading
                   ? A.loading
