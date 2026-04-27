@@ -72,11 +72,19 @@ const goToSection = (id: string) => {
 
             {/* LOGO */}
             <button
-              onClick={() => go(`/${language}`)}
-              className="text-white text-lg font-semibold tracking-[0.28em]"
-            >
-              DREVAIA
-            </button>
+  onClick={() => go(`/${language}`)}
+  className="flex items-center gap-3"
+>
+  <img
+    src="/assets/logo/logo-azul.png"
+    alt="Drevaia Digital"
+    className="w-8 h-8 object-contain"
+  />
+
+  <span className="text-white text-lg font-semibold tracking-[0.28em]">
+    DREVAIA
+  </span>
+</button>
 
             {/* DESKTOP MENU */}
             {!isMobile && (
