@@ -211,40 +211,66 @@ export function Hero({ language }: Props) {
 
   </div>
 
- {/* BOTONES POSICIÓN REAL */}
+ {/* BOTONES SUPREMOS V2 */}
 <div
   ref={buttonsRef}
   className="
     relative z-20
     mt-12 md:mt-16
-    w-full max-w-xl px-6
+    w-full max-w-2xl px-6
     flex flex-col items-center gap-4
-md:flex-row md:justify-center md:gap-6
+    md:flex-row md:justify-center md:gap-5
   "
 >
 
-  {/* IZQUIERDA */}
+  {/* BOTÓN PRINCIPAL */}
   {dynamicLink ? (
-    <a href={dynamicLink} target="_blank">
-      <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-5 py-3 text-sm sm:text-base rounded-full text-white">
-        <Heart className="mr-2" />
+    <a href={dynamicLink} target="_blank" rel="noreferrer">
+      <Button
+        className="
+          h-14 px-7 rounded-full
+          bg-gradient-to-r from-amber-400 to-orange-500
+          text-white font-semibold text-base
+          shadow-xl hover:scale-105
+          transition-all duration-300
+        "
+      >
+        <Heart className="mr-2 h-5 w-5" />
         {dynamicCTA}
       </Button>
     </a>
   ) : (
     <Link to={`/${language}/auth/register`}>
-      <Button className="bg-gradient-to-r from-amber-400 to-orange-500 px-5 py-3 text-sm sm:text-base rounded-full text-white">
-        <Heart className="mr-2" />
+      <Button
+        className="
+          h-14 px-7 rounded-full
+          bg-gradient-to-r from-amber-400 to-orange-500
+          text-white font-semibold text-base
+          shadow-xl hover:scale-105
+          transition-all duration-300
+        "
+      >
+        <Heart className="mr-2 h-5 w-5" />
         {t.hero.cta}
       </Button>
     </Link>
   )}
 
-  {/* DERECHA */}
-  <Link to={`/${language}/library`}>
-    <Button className="bg-gradient-to-r from-purple-600 to-amber-400 text-white px-5 py-3 text-sm sm:text-base rounded-full">
-      {t.hero.explore}
-      <ArrowRight className="ml-2" />
+  {/* BOTÓN SECUNDARIO */}
+  <Link to={`/${language}/empieza`}>
+    <Button
+      variant="outline"
+      className="
+        h-14 px-7 rounded-full
+        border border-white/25
+        bg-white/10 backdrop-blur-md
+        text-white font-medium text-base
+        hover:bg-white/15 hover:scale-105
+        transition-all duration-300
+      "
+    >
+      Empieza gratis
+      <ArrowRight className="ml-2 h-5 w-5" />
     </Button>
   </Link>
 
