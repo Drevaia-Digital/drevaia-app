@@ -269,7 +269,12 @@ export function Hero({ language }: Props) {
         transition-all duration-300
       "
     >
-      Empieza gratis
+      {{
+  es: "Empieza gratis",
+  en: "Start free",
+  fr: "Commencer gratuit",
+  pt: "Começar grátis"
+}[language]}
       <ArrowRight className="ml-2 h-5 w-5" />
     </Button>
   </Link>
