@@ -257,7 +257,7 @@ export function Hero({ language }: Props) {
   )}
 
   {/* BOTÓN SECUNDARIO */}
-  <Link to={`/${language}/empieza`}>
+  <Link to="/empieza">
     <Button
       variant="outline"
       className="
