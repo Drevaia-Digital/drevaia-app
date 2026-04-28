@@ -268,7 +268,7 @@ export function AuthPage({ t, language, mode }: any) {
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 48 48"
-    className="w-5 h-5"
+    className="w-7 h-7 shrink-0"
   >
     <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3..." />
     <path fill="#FF3D00" d="M6.3 14.7..." />
