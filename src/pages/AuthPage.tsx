@@ -266,15 +266,27 @@ export function AuthPage({ t, language, mode }: any) {
   className="w-full bg-white text-black hover:bg-gray-100 rounded-xl font-medium h-12 flex items-center justify-center gap-3"
 >
   <svg
-    xmlns="http://www.w3.org/2000/svg"
-    viewBox="0 0 48 48"
-    className="w-7 h-7 shrink-0"
-  >
-    <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3..." />
-    <path fill="#FF3D00" d="M6.3 14.7..." />
-    <path fill="#4CAF50" d="M24 44..." />
-    <path fill="#1976D2" d="M43.6 20.5..." />
-  </svg>
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 48 48"
+  className="w-6 h-6 shrink-0"
+>
+  <path
+    fill="#EA4335"
+    d="M24 9.5c3.54 0 6.72 1.22 9.22 3.6l6.86-6.86C35.91 2.43 30.37 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.42 17.74 9.5 24 9.5z"
+  />
+  <path
+    fill="#4285F4"
+    d="M46.5 24.5c0-1.64-.15-3.22-.42-4.75H24v9h12.72c-.55 2.96-2.23 5.47-4.75 7.16l7.36 5.71C43.86 37.53 46.5 31.58 46.5 24.5z"
+  />
+  <path
+    fill="#FBBC05"
+    d="M10.54 28.41A14.5 14.5 0 0 1 9.5 24c0-1.53.27-3 .74-4.41l-7.98-6.19A23.9 23.9 0 0 0 0 24c0 3.86.92 7.51 2.56 10.6l7.98-6.19z"
+  />
+  <path
+    fill="#34A853"
+    d="M24 48c6.48 0 11.91-2.14 15.88-5.82l-7.36-5.71c-2.05 1.37-4.68 2.18-8.52 2.18-6.26 0-11.57-3.92-13.46-9.41l-7.98 6.19C6.51 42.62 14.62 48 24 48z"
+  />
+</svg>
 
   {A.google}
 </Button>
