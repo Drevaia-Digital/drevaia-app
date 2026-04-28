@@ -260,13 +260,24 @@ export function AuthPage({ t, language, mode }: any) {
 
               {/* GOOGLE */}
               <Button
-                type="button"
-                onClick={signInWithGoogle}
-                disabled={isLoading}
-                className="w-full bg-white text-black hover:bg-gray-100 rounded-xl font-medium"
-              >
-                {A.google}
-              </Button>
+  type="button"
+  onClick={signInWithGoogle}
+  disabled={isLoading}
+  className="w-full bg-white text-black hover:bg-gray-100 rounded-xl font-medium h-12 flex items-center justify-center gap-3"
+>
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 48 48"
+    className="w-5 h-5"
+  >
+    <path fill="#FFC107" d="M43.6 20.5H42V20H24v8h11.3..." />
+    <path fill="#FF3D00" d="M6.3 14.7..." />
+    <path fill="#4CAF50" d="M24 44..." />
+    <path fill="#1976D2" d="M43.6 20.5..." />
+  </svg>
+
+  {A.google}
+</Button>
 
               <div className="flex items-center gap-3 my-4">
                 <div className="flex-1 h-px bg-white/10"></div>
