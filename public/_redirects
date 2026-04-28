@@ -1,60 +1,83 @@
 # =========================================
-# DREVAIA SEO MIGRATION PRO
+# DREVAIA DIGITAL SEO MIGRATION PREMIUM
 # =========================================
-
-# -----------------------------------------
-# BLOG HISTÓRICO
-# -----------------------------------------
-/como-sanar-heridas-emocionales.html   /es/blog/como-sanar-heridas-emocionales   301
-/vivir-en-automatico.html              /es/blog/vivir-en-automatico              301
-/porque-me-siento-perdido   /es/blog/porque-me-siento-perdido   301
-
-# -----------------------------------------
-# HOME ANTIGUA
-# -----------------------------------------
-/index.html                            /es                                        301
-/home.html                             /es                                        301
-/inicio.html                           /es                                        301
-
-# -----------------------------------------
-# CONTACTO ANTIGUO
-# -----------------------------------------
-/contact.html                          /es                                        301
-/contacto.html                         /es                                        301
-
-# -----------------------------------------
-# BLOG ANTIGUO HTML
-# -----------------------------------------
-/blog.html                             /blog                                      301
-
-# -----------------------------------------
-# EBOOKS ANTIGUOS
-# -----------------------------------------
-/ebooks.html                           /library                                   301
-/tienda.html                           /library                                   301
-/shop.html                             /library                                   301
 
 # -----------------------------------------
 # ROOT
 # -----------------------------------------
-/                                       /es                                       301
+/                         /es                                301
 
 # -----------------------------------------
-# THANK YOU PAGES
+# HOME ANTIGUA
 # -----------------------------------------
-/gracias                               /gracias                                   200
-/fr/merci                              /fr/merci                                  200
+/index.html               /es                                301
+/home.html                /es                                301
+/inicio.html              /es                                301
+
+# -----------------------------------------
+# CONTACTO ANTIGUO
+# -----------------------------------------
+/contact.html             /es                                301
+/contacto.html            /es                                301
+
+# -----------------------------------------
+# TIENDA ANTIGUA
+# -----------------------------------------
+/ebooks.html              /es/library                        301
+/tienda.html              /es/library                        301
+/shop.html                /es/library                        301
+
+# -----------------------------------------
+# BLOG INDEX ANTIGUO
+# -----------------------------------------
+/blog.html                /es/blog                           301
+
+# -----------------------------------------
+# BLOG HISTÓRICO HTML → BLOG NUEVO
+# -----------------------------------------
+/por-que-siento-que-no-soy-suficiente.html     /es/blog/por-que-siento-que-no-soy-suficiente     301
+/por-que-siento-que-nadie-me-entiende.html     /es/blog/por-que-siento-que-nadie-me-entiende     301
+/por-que-siento-ganas-de-llorar.html           /es/blog/por-que-siento-ganas-de-llorar           301
+/por-que-no-soy-feliz.html                     /es/blog/por-que-no-soy-feliz                     301
+/por-que-me-siento-vacio.html                 /es/blog/por-que-me-siento-vacio                  301
+/por-que-me-siento-triste-todo-el-tiempo.html /es/blog/por-que-me-siento-triste-todo-el-tiempo  301
+/por-que-me-siento-triste-sin-motivo.html     /es/blog/por-que-me-siento-triste-sin-motivo      301
+/por-que-me-siento-solo.html                  /es/blog/por-que-me-siento-solo                   301
+/por-que-me-siento-perdido.html               /es/blog/por-que-me-siento-perdido                301
+/por-que-me-siento-mal-sin-razon.html         /es/blog/por-que-me-siento-mal-sin-razon          301
+/por-que-me-siento-desconectado-de-todo.html  /es/blog/por-que-me-siento-desconectado-de-todo   301
+/por-que-me-siento-cansado-de-todo.html       /es/blog/por-que-me-siento-cansado-de-todo        301
+/por-que-me-siento-asi.html                   /es/blog/por-que-me-siento-asi                    301
+/por-que-me-cuesta-poner-limites.html         /es/blog/por-que-me-cuesta-poner-limites          301
+/por-que-me-cuesta-decir-no.html              /es/blog/por-que-me-cuesta-decir-no               301
+/por-que-me-critico-tanto.html                /es/blog/por-que-me-critico-tanto                 301
+/por-que-me-comparo-con-los-demas.html        /es/blog/por-que-me-comparo-con-los-demas         301
+/no-tengo-proposito-en-la-vida.html           /es/blog/no-tengo-proposito-en-la-vida            301
+/no-se-que-hacer-con-mi-vida-a-los-30.html    /es/blog/no-se-que-hacer-con-mi-vida-a-los-30     301
+/no-se-que-hacer-con-mi-vida.html             /es/blog/no-se-que-hacer-con-mi-vida              301
+/mapa-emocional.html                          /es/blog/mapa-emocional                           301
+/emociones.html                               /es/blog/emociones                                301
+/como-superar-el-miedo.html                   /es/blog/como-superar-el-miedo                    301
+/como-sanar-heridas-emocionales.html          /es/blog/como-sanar-heridas-emocionales           301
+/como-encontrar-mi-camino.html                /es/blog/como-encontrar-mi-camino                 301
+/como-aprender-a-confiar-en-mi.html           /es/blog/como-aprender-a-confiar-en-mi            301
+/vivir-en-automatico.html                     /es/blog/vivir-en-automatico                      301
+
+# -----------------------------------------
+# THANK YOU
+# -----------------------------------------
+/gracias                  /gracias                           200
+/fr/merci                 /fr/merci                          200
 
 # -----------------------------------------
 # MULTIIDIOMA DIRECTO
 # -----------------------------------------
-/es                                    /es                                        200
-/en                                    /en                                        200
-/fr                                    /fr                                        200
-/pt                                    /pt                                        200
+/es                       /es                                200
+/en                       /en                                200
+/fr                       /fr                                200
+/pt                       /pt                                200
 
 # -----------------------------------------
-# SPA REACT ROUTER FINAL
+# SPA FINAL REACT ROUTER
 # -----------------------------------------
-/*                                     /index.html                               200
-# deploy refresh
+/*                        /index.html                        200
