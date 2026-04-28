@@ -6,15 +6,17 @@ export default function LeadMagnetPage() {
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // 🌍 Idioma
+  // 🌍 Idioma REAL por URL
+  const path = window.location.pathname.toLowerCase();
+
   const language =
-    navigator.language.startsWith("es")
-      ? "es"
-      : navigator.language.startsWith("pt")
-      ? "pt"
-      : navigator.language.startsWith("fr")
+    path.startsWith("/en")
+      ? "en"
+      : path.startsWith("/fr")
       ? "fr"
-      : "en";
+      : path.startsWith("/pt")
+      ? "pt"
+      : "es";
 
   const texts = {
     es: {
@@ -33,13 +35,14 @@ export default function LeadMagnetPage() {
       seoDesc:
         "No estás perdido. Aprende a escucharte y reconectar contigo desde hoy.",
     },
+
     en: {
       title1: "You are not lost.",
       title2: "You are just disconnected from yourself.",
       subtitle:
         "No one taught you how to listen to yourself. But you can start now.",
       placeholder: "Your email here...",
-      button: "Start now",
+      button: "I want to begin",
       loading: "Sending...",
       success: "Check your email ✨",
       error: "Something went wrong. Try again.",
@@ -49,6 +52,7 @@ export default function LeadMagnetPage() {
       seoDesc:
         "You are not lost. Learn to reconnect with yourself starting today.",
     },
+
     pt: {
       title1: "Você não está perdido.",
       title2: "Você só está desconectado de si.",
@@ -65,18 +69,19 @@ export default function LeadMagnetPage() {
       seoDesc:
         "Você não está perdido. Reconecte-se consigo mesmo.",
     },
+
     fr: {
       title1: "Tu n'es pas perdu.",
       title2: "Tu es juste déconnecté de toi-même.",
       subtitle:
         "Personne ne t’a appris à t’écouter. Mais tu peux commencer maintenant.",
       placeholder: "Ton email ici...",
-      button: "Commencer",
+      button: "Je commence",
       loading: "Envoi...",
       success: "Vérifie ton email ✨",
       error: "Une erreur est survenue.",
       footer:
-        "Tu ne peux pas guérir ce que tu n’écoutes pas.",
+        "Tu ne peux pas guérir ce que tu n’écoutes pas. Ton corps est le journal où ton âme écrit.",
       seoTitle: "Commence avec toi | Drevaia",
       seoDesc:
         "Reconnecte-toi à toi-même dès aujourd’hui.",
@@ -88,6 +93,7 @@ export default function LeadMagnetPage() {
   // 🔌 Envío
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
     if (!email) return;
 
     setLoading(true);
@@ -98,7 +104,10 @@ export default function LeadMagnetPage() {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, lang: language }),
+        body: JSON.stringify({
+          email,
+          lang: language,
+        }),
       });
 
       const data = await res.json();
@@ -115,20 +124,30 @@ export default function LeadMagnetPage() {
     }
   };
 
+  const canonical =
+    language === "en"
+      ? "https://drevaia.com/en/empieza"
+      : language === "fr"
+      ? "https://drevaia.com/fr/empieza"
+      : language === "pt"
+      ? "https://drevaia.com/pt/empieza"
+      : "https://drevaia.com/es/empieza";
+
   return (
     <>
-      {/* 🔥 SEO REAL */}
+      {/* SEO PREMIUM */}
       <Helmet>
         <title>{t.seoTitle}</title>
         <meta name="description" content={t.seoDesc} />
-        <link rel="canonical" href="https://drevaia.com/empieza" />
+        <link rel="canonical" href={canonical} />
       </Helmet>
 
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-black via-gray-900 to-black text-white px-6">
         <div className="max-w-xl w-full text-center">
 
-          <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-6">
-            {t.title1} <br />
+          <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-6">
+            {t.title1}
+            <br />
             <span className="text-gray-300">{t.title2}</span>
           </h1>
 
@@ -145,13 +164,13 @@ export default function LeadMagnetPage() {
                 placeholder={t.placeholder}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="p-4 rounded-xl bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white"
+                className="p-4 rounded-2xl bg-white/10 border border-white/20 focus:outline-none focus:ring-2 focus:ring-white"
               />
 
               <button
                 type="submit"
                 disabled={loading}
-                className="p-4 rounded-xl bg-white text-black font-semibold hover:bg-gray-200 transition disabled:opacity-50"
+                className="p-4 rounded-2xl bg-white text-black font-semibold hover:bg-gray-200 transition disabled:opacity-50"
               >
                 {loading ? t.loading : t.button}
               </button>
@@ -163,7 +182,7 @@ export default function LeadMagnetPage() {
             </p>
           )}
 
-          <p className="text-xs text-gray-500 mt-10">
+          <p className="text-xs text-gray-500 mt-10 leading-relaxed">
             {t.footer}
           </p>
 
