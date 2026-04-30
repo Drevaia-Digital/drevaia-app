@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { Menu } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type Props = {
   language: "es" | "en" | "fr" | "pt";
@@ -8,21 +8,46 @@ type Props = {
 
 export function Navbar({ language }: Props) {
   const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
+  // 🌊 DETECCIÓN DE SCROLL (premium UX)
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 40);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  // 🌍 MULTI IDIOMA
   const labels = {
-    es: { menu: "MENÚ", library: "Biblioteca", legal: "Legal" },
-    en: { menu: "MENU", library: "Library", legal: "Legal" },
-    fr: { menu: "MENU", library: "Bibliothèque", legal: "Légal" },
-    pt: { menu: "MENU", library: "Biblioteca", legal: "Legal" },
+    es: { menu: "MENÚ", library: "Biblioteca", legal: "Legal", home: "Inicio" },
+    en: { menu: "MENU", library: "Library", legal: "Legal", home: "Home" },
+    fr: { menu: "MENU", library: "Bibliothèque", legal: "Légal", home: "Accueil" },
+    pt: { menu: "MENU", library: "Biblioteca", legal: "Legal", home: "Início" },
   };
 
   const t = labels[language];
 
   return (
     <header className="fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl z-50">
-      
-      <div className="flex items-center justify-between px-6 py-3 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 shadow-xl">
-        
+
+      {/* CONTENEDOR PRINCIPAL */}
+      <div
+        className={`
+          flex items-center justify-between
+          px-6 py-3
+          rounded-2xl
+          transition-all duration-300
+          ${
+            scrolled
+              ? "bg-[#0f0f1a]/95 backdrop-blur-xl border border-white/10 shadow-2xl"
+              : "bg-white/10 backdrop-blur-xl border border-white/10 shadow-xl"
+          }
+        `}
+      >
+
         {/* IZQUIERDA */}
         <div className="flex items-center gap-3">
 
@@ -31,14 +56,16 @@ export function Navbar({ language }: Props) {
             className="flex items-center gap-2 text-white/80 hover:text-white transition"
           >
             <Menu size={18} />
-            <span className="text-xs tracking-widest">{t.menu}</span>
+            <span className="text-xs tracking-widest">
+              {t.menu}
+            </span>
           </button>
 
           <Link to="/" className="flex items-center gap-3 ml-2">
             <img
               src="/assets/logo/logo-icon-azul.png"
               alt="Drevaia"
-              className="h-9 md:h-10 w-auto"
+              className="h-9 md:h-10 w-auto object-contain"
             />
             <span className="text-white font-semibold tracking-[0.2em] text-sm md:text-base">
               DREVAIA
@@ -46,16 +73,25 @@ export function Navbar({ language }: Props) {
           </Link>
 
         </div>
-
       </div>
 
       {/* MENÚ DESPLEGABLE */}
       {open && (
-        <div className="mt-3 rounded-2xl bg-[#0f0f1a]/95 backdrop-blur-xl border border-white/10 p-6 shadow-xl text-white">
+        <div
+          className="
+            mt-3
+            rounded-2xl
+            bg-[#0f0f1a]/95 backdrop-blur-xl
+            border border-white/10
+            p-6
+            shadow-xl
+            text-white
+          "
+        >
           <nav className="flex flex-col gap-4">
 
             <Link to="/" onClick={() => setOpen(false)}>
-              Home
+              {t.home}
             </Link>
 
             <Link to="/library" onClick={() => setOpen(false)}>
