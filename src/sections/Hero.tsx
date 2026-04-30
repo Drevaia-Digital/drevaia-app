@@ -177,7 +177,7 @@ export function Hero({ language }: Props) {
       </header>
 
       {/* HERO */}
-      <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-14 md:pt-16">
+      <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden">
 
         <div className="absolute inset-0 bg-[#090611]" />
 
@@ -198,7 +198,7 @@ export function Hero({ language }: Props) {
 
         <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-90" />
 
-        <div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4">
+        <div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-20 md:mt-24">
 
           <h1 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4">
             DREVAIA DIGITAL
