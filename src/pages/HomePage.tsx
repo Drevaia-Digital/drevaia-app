@@ -3,7 +3,7 @@ import { Navigation } from '@/sections/Navigation';
 import { Hero } from '@/sections/Hero';
 import { EmotionalPaths } from '@/sections/EmotionalPaths';
 import { Ebooks } from '@/sections/Ebooks';
-import { DailyReading } from '../sections/DailyReading';
+import { DailyReading } from '@/sections/DailyReading';
 import { Testimonials } from '@/sections/Testimonials';
 import { Footer } from '@/sections/Footer';
 import { useLanguage } from '@/context/LanguageContext';
@@ -12,7 +12,7 @@ import { prefetchBooks } from "@/lib/prefetchBooks";
 import { useEffect } from "react";
 import { Stats } from '@/sections/Stats';
 
-export function HomePage() {
+export default function HomePage() {
   const { language } = useLanguage();
 
   useEffect(() => {
@@ -75,8 +75,8 @@ export function HomePage() {
         </section>
 
         <section id="stats" className="scroll-mt-24">
-  <Stats />
-</section>
+          <Stats />
+        </section>
 
         <section id="testimonials" className="scroll-mt-24">
           <Testimonials />

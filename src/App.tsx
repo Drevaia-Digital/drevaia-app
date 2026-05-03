@@ -6,7 +6,8 @@ import { AuthProvider } from '@/hooks/useAuth';
 // 📄 Pages
 import OnboardingPage from "@/pages/OnboardingPage";
 import { PortalPage } from '@/pages/PortalPage';
-import { HomePage } from '@/pages/HomePage';
+import HomePage from '@/pages/HomePage';
+import { EbookPage } from '@/pages/EbookPage';
 import { AuthPage } from '@/pages/AuthPage';
 import { LegalPage } from '@/pages/LegalPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -49,6 +50,9 @@ export default function App() {
 
             {/* 🌟 LANDING */}
             <Route path="/landing" element={<Navigate to="/" />} />
+            {/* 📘 EBOOK LANDING */}
+<Route path="/no-se-que-hacer-con-mi-vida" element={<EbookPage />} />
+<Route path="/ebook" element={<EbookPage />} />    
 
             {/* 📚 LIBRARY */}
             <Route
