@@ -77,7 +77,7 @@ export function EbookPage() {
 
           {/* LOGO */}
           <img
-            src="/logo-dorado.png"
+            src="/logo.png"
             alt="Drevaia Digital"
             className="w-28 mx-auto mb-10 opacity-90 drop-shadow-lg"
           />
