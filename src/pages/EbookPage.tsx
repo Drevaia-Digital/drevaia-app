@@ -93,13 +93,21 @@ export function EbookPage() {
 
           {/* CTA PRINCIPAL */}
           <a
-            href="https://payhip.com/b/EkKRT"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full bg-white text-black py-3 rounded-xl font-semibold text-lg mb-8 hover:opacity-90 transition"
-          >
-            Quiero salir de este bloqueo
-          </a>
+  href="https://payhip.com/b/EkKRT"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block w-full bg-white text-black py-3 rounded-xl font-semibold text-lg mb-8 hover:opacity-90 transition"
+  onClick={() => {
+    if ((window as any).gtag) {
+      (window as any).gtag("event", "cta_click", {
+        event_category: "ebook",
+        event_label: "top_button",
+      });
+    }
+  }}
+>
+  Quiero salir de este bloqueo
+</a>
 
           {/* SUBHEAD */}
           <p className="text-gray-400 text-lg mb-10 leading-relaxed">
@@ -134,13 +142,21 @@ export function EbookPage() {
 
           {/* CTA FINAL */}
           <a
-            href="https://payhip.com/b/EkKRT"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block w-full bg-white text-black py-4 rounded-xl font-semibold text-lg hover:opacity-90 transition"
-          >
-            Empezar a entenderme
-          </a>
+  href="https://payhip.com/b/EkKRT"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="block w-full bg-white text-black py-4 rounded-xl font-semibold text-lg hover:opacity-90 transition"
+  onClick={() => {
+    if ((window as any).gtag) {
+      (window as any).gtag("event", "cta_click", {
+        event_category: "ebook",
+        event_label: "bottom_button",
+      });
+    }
+  }}
+>
+  Empezar a entenderme
+</a>
 
           {/* MICRO COPY */}
           <p className="text-xs text-gray-500 mt-3">
