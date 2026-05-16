@@ -86,6 +86,48 @@ export function SEO({
       canonical.setAttribute('href', canonicalUrl);
     }
 
+// Add hreflang alternates
+const hreflangs = [
+  { lang: 'es', url: canonicalUrl?.replace(/\/(es|en|fr|pt)\//, '/es/') },
+  { lang: 'en', url: canonicalUrl?.replace(/\/(es|en|fr|pt)\//, '/en/') },
+  { lang: 'fr', url: canonicalUrl?.replace(/\/(es|en|fr|pt)\//, '/fr/') },
+  { lang: 'pt', url: canonicalUrl?.replace(/\/(es|en|fr|pt)\//, '/pt/') },
+];
+
+hreflangs.forEach(({ lang, url }) => {
+  if (!url) return;
+
+  let link = document.querySelector(
+    `link[hreflang="${lang}"]`
+  ) as HTMLLinkElement;
+
+  if (!link) {
+    link = document.createElement('link');
+    link.setAttribute('rel', 'alternate');
+    link.setAttribute('hreflang', lang);
+    document.head.appendChild(link);
+  }
+
+  link.setAttribute('href', url);
+});
+
+// x-default
+let xDefault = document.querySelector(
+  'link[hreflang="x-default"]'
+) as HTMLLinkElement;
+
+if (!xDefault) {
+  xDefault = document.createElement('link');
+  xDefault.setAttribute('rel', 'alternate');
+  xDefault.setAttribute('hreflang', 'x-default');
+  document.head.appendChild(xDefault);
+}
+
+xDefault.setAttribute(
+  'href',
+  canonicalUrl?.replace(/\/(es|en|fr|pt)\//, '/es/') || ''
+);
+
     // Update language
     document.documentElement.lang = language;
 
