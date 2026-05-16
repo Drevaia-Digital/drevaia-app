@@ -49,11 +49,44 @@ export default function HomePage() {
   return (
     <>
       <Helmet>
-        <html lang={language} />
-        <title>{seo.title}</title>
-        <meta name="description" content={seo.desc} />
-        <link rel="canonical" href={`https://drevaia.com/${language}`} />
-      </Helmet>
+  <html lang={language} />
+
+  <title>{seo.title}</title>
+
+  <meta name="description" content={seo.desc} />
+
+  <meta
+    name="robots"
+    content="index,follow,max-image-preview:large"
+  />
+
+  {/* Canonical */}
+  <link
+    rel="canonical"
+    href={`https://drevaia.com/${language}`}
+  />
+
+  {/* Hreflang */}
+  <link rel="alternate" hrefLang="es" href="https://drevaia.com/es" />
+  <link rel="alternate" hrefLang="en" href="https://drevaia.com/en" />
+  <link rel="alternate" hrefLang="fr" href="https://drevaia.com/fr" />
+  <link rel="alternate" hrefLang="pt" href="https://drevaia.com/pt" />
+  <link rel="alternate" hrefLang="x-default" href="https://drevaia.com/es" />
+
+  {/* Open Graph */}
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Drevaia Digital" />
+  <meta property="og:title" content={seo.title} />
+  <meta property="og:description" content={seo.desc} />
+  <meta property="og:url" content={`https://drevaia.com/${language}`} />
+  <meta property="og:image" content="https://drevaia.com/logo.png" />
+
+  {/* Twitter */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content={seo.title} />
+  <meta name="twitter:description" content={seo.desc} />
+  <meta name="twitter:image" content="https://drevaia.com/logo.png" />
+</Helmet>
 
       <div
         id="top"

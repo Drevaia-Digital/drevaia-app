@@ -89,7 +89,7 @@ export function BookDetailPage({ t, language }: BookDetailPageProps) {
       document.title = `${bookData.title} | Drevaia Digital`;
     } else {
       // Book not found, redirect to library
-      navigate('/library');
+      navigate(`/${language}/library`);
     }
     
     setLoading(false);
@@ -118,7 +118,7 @@ export function BookDetailPage({ t, language }: BookDetailPageProps) {
           <p className="text-gray-500 mb-4">
             {language === 'es' ? 'Libro no encontrado' : language === 'en' ? 'Book not found' : language === 'fr' ? 'Livre non trouvé' : 'Livro não encontrado'}
           </p>
-          <Link to="/library">
+          <Link to={`/${language}/library`}>
             <Button>
               <ArrowLeft className="w-4 h-4 mr-2" />
               {language === 'es' ? 'Volver a la librería' : language === 'en' ? 'Back to library' : language === 'fr' ? 'Retour à la bibliothèque' : 'Voltar à biblioteca'}
@@ -147,7 +147,7 @@ export function BookDetailPage({ t, language }: BookDetailPageProps) {
         keywords={book.tags.join(', ')}
         ogImage={book.coverImage}
         language={language}
-        canonicalUrl={`https://drevaia.com/books/${book.slug}`}
+        canonicalUrl={`https://drevaia.com/${language}/books/${book.slug}`}
       />
       
       <Navigation />
@@ -155,7 +155,10 @@ export function BookDetailPage({ t, language }: BookDetailPageProps) {
       {/* Breadcrumb */}
       <div className="bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <Link to="/library" className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-purple-600 transition-colors">
+          <Link
+  to={`/${language}/library`}
+  className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-purple-600 transition-colors"
+>
             <ArrowLeft className="w-4 h-4" />
             {labels.back}
           </Link>
@@ -266,7 +269,7 @@ export function BookDetailPage({ t, language }: BookDetailPageProps) {
                     id={book.id}
                     type="book"
                     title={book.title}
-                    url={`/books/${book.slug}`}
+                    url={`/${language}/books/${book.slug}`}
                     image={book.coverImage}
                     language={language}
                     variant="outline"
@@ -320,7 +323,7 @@ export function BookDetailPage({ t, language }: BookDetailPageProps) {
               {relatedBooks.map((relatedBook) => (
                 <Link 
                   key={relatedBook.id} 
-                  to={`/books/${relatedBook.slug}`}
+                  to={`/${language}/books/${relatedBook.slug}`}
                   className="group bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden transition-all duration-300 hover:-translate-y-1"
                 >
                   <div className="h-40 bg-gradient-to-br from-purple-100 to-amber-100 dark:from-purple-900/30 dark:to-amber-900/30 flex items-center justify-center">
