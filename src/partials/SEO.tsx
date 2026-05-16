@@ -34,7 +34,9 @@ export function SEO({
       'description': description,
       'keywords': keywords,
       'author': author,
-      'robots': noIndex ? 'noindex, nofollow' : 'index, follow',
+      'robots': noIndex
+  ? 'noindex,nofollow'
+  : 'index,follow,max-image-preview:large',
       'og:title': title,
       'og:description': description,
       'og:type': ogType,
