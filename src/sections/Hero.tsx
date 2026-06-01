@@ -1,6 +1,6 @@
 import { translations } from '../i18n/translations';
 import { useEffect, useRef } from 'react';
-import { ArrowRight, Heart, Menu } from 'lucide-react';
+import { ArrowRight, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import gsap from 'gsap';
 import { Link } from 'react-router-dom';
@@ -157,29 +157,11 @@ export function Hero({ language }: Props) {
 
   return (
     <>
-      {/* NAVBAR */}
-      <header className="fixed top-4 left-1/2 -translate-x-1/2 w-[92%] max-w-6xl z-50">
-        <div className="flex items-center justify-between px-6 py-3 rounded-2xl bg-white/10 backdrop-blur-xl border border-white/10 shadow-xl">
-          <div className="flex items-center gap-3">
-            <div className="flex items-center gap-2 text-white/80">
-              <Menu size={18} />
-              <span className="text-xs tracking-widest">MENU</span>
-            </div>
-
-            <Link to="/" className="flex items-center gap-3 ml-2">
-              <img src="/assets/logo/logo-icon-azul.png" alt="Drevaia" className="h-9 md:h-10 w-auto" />
-              <span className="text-white font-semibold tracking-[0.2em] text-sm md:text-base">
-                DREVAIA
-              </span>
-            </Link>
-          </div>
-        </div>
-      </header>
-
+     
       {/* HERO */}
       <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden">
 
-        <div className="absolute inset-0 bg-[#090611]" />
+        <div className="absolute inset-0 bg-[#050505]" />
 
         <div
           className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-55"
@@ -190,7 +172,7 @@ export function Hero({ language }: Props) {
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle at center, rgba(168,85,247,0.28) 0%, rgba(99,32,182,0.18) 28%, rgba(9,6,17,0) 62%)",
+  "radial-gradient(circle at center, rgba(214,164,92,0.18) 0%, rgba(214,164,92,0.08) 28%, rgba(5,5,5,0) 62%)",
           }}
         />
 
@@ -200,11 +182,28 @@ export function Hero({ language }: Props) {
 
         <div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-20 md:mt-24">
 
-          <h1 ref={titleRef} className="text-4xl sm:text-5xl md:text-7xl font-bold text-white mb-4">
-            DREVAIA DIGITAL
-          </h1>
+          <h1
+  ref={titleRef}
+  className="
+    text-5xl
+    sm:text-6xl
+    md:text-8xl
 
-          <p className="text-xl sm:text-2xl md:text-4xl text-amber-300 font-semibold mb-4">
+    font-black
+
+    tracking-[0.18em]
+
+    text-white
+
+    drop-shadow-[0_0_40px_rgba(214,164,92,0.12)]
+
+    mb-6
+  "
+>
+  DREVAIA
+</h1>
+
+          <p className="text-xl sm:text-2xl md:text-4xl text-primary font-semibold mb-4">
             {dynamicTitle}
           </p>
 

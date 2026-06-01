@@ -1,0 +1,157 @@
+:root {
+
+/* =========================
+CORE PALETTE
+========================= */
+
+--background: 18 18 18;
+--foreground: 245 239 231;
+
+--surface: 24 24 24;
+--surface-elevated: 32 32 32;
+
+--card: 22 22 22;
+--card-foreground: 245 239 231;
+
+--popover: 24 24 24;
+--popover-foreground: 245 239 231;
+
+/* =========================
+CINEMATIC GOLD SYSTEM
+========================= */
+
+--primary: 214 164 92;
+--primary-foreground: 10 10 10;
+
+--secondary: 40 40 40;
+--secondary-foreground: 245 239 231;
+
+--accent: 214 164 92;
+--accent-foreground: 10 10 10;
+
+--muted: 42 42 42;
+--muted-foreground: 180 180 180;
+
+/* =========================
+UI
+========================= */
+
+--border: 45 45 45;
+--input: 38 38 38;
+--ring: 214 164 92;
+
+--destructive: 180 60 60;
+--destructive-foreground: 255 255 255;
+
+/* =========================
+SIDEBAR
+========================= */
+
+--sidebar-background: 14 14 14;
+--sidebar-foreground: 245 239 231;
+
+--sidebar-primary: 214 164 92;
+--sidebar-primary-foreground: 10 10 10;
+
+--sidebar-accent: 32 32 32;
+--sidebar-accent-foreground: 245 239 231;
+
+--sidebar-border: 40 40 40;
+--sidebar-ring: 214 164 92;
+
+/* =========================
+RADIUS
+========================= */
+
+--radius: 1rem;
+
+/* =========================
+CINEMATIC GLOWS
+========================= */
+
+--glow-gold:
+0 0 30px rgba(214, 164, 92, 0.18),
+0 0 60px rgba(214, 164, 92, 0.12),
+0 0 120px rgba(214, 164, 92, 0.08);
+
+--glow-soft:
+0 0 40px rgba(255,255,255,0.04);
+
+/* =========================
+SHADOWS
+========================= */
+
+--shadow-card:
+0 10px 30px rgba(0,0,0,0.35);
+
+--shadow-elevated:
+0 20px 60px rgba(0,0,0,0.45);
+
+/* =========================
+CINEMATIC GRADIENTS
+========================= */
+
+--gradient-gold:
+linear-gradient(
+135deg,
+rgba(214,164,92,0.22),
+rgba(214,164,92,0.04)
+);
+
+--gradient-dark:
+radial-gradient(
+circle at top,
+rgba(214,164,92,0.08),
+rgba(0,0,0,0) 60%
+);
+
+/* =========================
+MOTION
+========================= */
+
+--ease-cinematic:
+cubic-bezier(0.22, 1, 0.36, 1);
+
+--duration-fast: 180ms;
+--duration-normal: 320ms;
+--duration-slow: 700ms;
+
+}
+
+/* =========================
+GLOBAL CINEMATIC HELPERS
+========================= */
+
+.drevaia-glow {
+box-shadow: var(--glow-gold);
+}
+
+.drevaia-surface {
+background:
+linear-gradient(
+to bottom right,
+rgba(255,255,255,0.02),
+rgba(255,255,255,0.01)
+);
+
+backdrop-filter: blur(24px);
+
+border: 1px solid rgba(255,255,255,0.06);
+}
+
+.drevaia-card {
+background: rgb(var(--card));
+border: 1px solid rgba(255,255,255,0.06);
+box-shadow: var(--shadow-card);
+border-radius: calc(var(--radius) * 1.2);
+}
+
+.drevaia-gradient {
+background: var(--gradient-dark);
+}
+
+.drevaia-transition {
+transition:
+all var(--duration-normal)
+var(--ease-cinematic);
+}
