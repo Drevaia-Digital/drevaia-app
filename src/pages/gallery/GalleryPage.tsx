@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { supabase } from '@/lib/supabase';
+import { SmartImage } from '@/components/ui/SmartImage';
 
 interface Post {
   id: string;
@@ -149,22 +150,21 @@ export default function GalleryPage() {
             {/* Image */}
             <div className="relative overflow-hidden">
 
-              <img
-                src={post.image_url}
-                alt={post.caption}
-                loading="lazy"
-                className="
-                  max-h-[620px]
-                  h-auto
-                  w-full
-                  object-cover
+              <SmartImage
+  src={post.image_url}
+  alt={post.caption}
+  className="
+    max-h-[620px]
+    h-auto
+    w-full
+    object-cover
 
-                  transition-transform
-                  duration-700
+    transition-transform
+    duration-700
 
-                  group-hover:scale-[1.03]
-                "
-              />
+    group-hover:scale-[1.03]
+  "
+/>
 
               {/* Overlay */}
               <div

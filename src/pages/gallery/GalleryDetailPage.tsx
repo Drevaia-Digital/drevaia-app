@@ -9,6 +9,7 @@ import {
 } from 'react-router-dom';;
 
 import { supabase } from '@/lib/supabase';
+import { SmartImage } from '@/components/ui/SmartImage';
 
 interface Post {
   id: string;
@@ -193,15 +194,15 @@ setLoading(false);
             "
           >
 
-            <img
-              src={post.image_url}
-              alt={post.caption}
-              className="
-                max-h-[82vh]
-                w-full
-                object-cover
-              "
-            />
+            <SmartImage
+  src={post.image_url}
+  alt={post.caption}
+  className="
+    max-h-[82vh]
+    w-full
+    object-cover
+  "
+/>
 
           </div>
 
