@@ -2,7 +2,10 @@ import { useEffect, useState } from 'react';
 
 import { Helmet } from 'react-helmet-async';
 import { Share2 } from 'lucide-react';
-import { useParams, Link } from 'react-router-dom';
+import {
+  Link,
+  useParams,
+} from 'react-router-dom';
 
 import { supabase } from '@/lib/supabase';
 
@@ -17,9 +20,10 @@ interface Post {
 
 export default function GalleryDetailPage() {
   const { id } = useParams();
-
+    
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
+    
   async function handleShare() {
   const url = window.location.href;
 
@@ -51,9 +55,8 @@ export default function GalleryDetailPage() {
       setPost(data);
     }
 
-    setLoading(false);
-  }
-
+setLoading(false);
+}
   useEffect(() => {
     loadPost();
   }, [id]);
@@ -85,36 +88,6 @@ export default function GalleryDetailPage() {
         <title>
   {post.caption.slice(0, 60)} | Drevaia AI Gallery
 </title>
-
-<meta
-  name="description"
-  content={post.caption.slice(0, 155)}
-/>
-
-<link
-  rel="canonical"
-  href={`https://drevaia.com/gallery/${post.id}`}
-/>
-
-<meta
-  property="og:type"
-  content="website"
-/>
-
-<meta
-  property="og:title"
-  content="Drevaia AI Creation"
-/>
-
-<meta
-  property="og:description"
-  content={post.caption.slice(0, 155)}
-/>
-
-<meta
-  property="og:image"
-  content={post.image_url}
-/>
 
 <meta
   property="og:url"
