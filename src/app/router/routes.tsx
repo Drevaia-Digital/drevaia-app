@@ -11,6 +11,7 @@ import { NotFoundPage } from '@/pages/NotFoundPage';
 import BlogPost from '@/pages/BlogPost';
 import LeadMagnetPage from '@/pages/LeadMagnetPage';
 import BlogIndexPage from '@/pages/BlogIndexPage';
+import GalleryPage from '@/pages/gallery/GalleryPage';
 
 import { PageLoader } from '@/components/motion/PageLoader';
 
@@ -67,6 +68,12 @@ export function AppRoutes() {
           </Suspense>
         }
       />
+      
+      {/* 🖼️ GALLERY */}
+<Route
+  path="/gallery"
+  element={<GalleryPage />}
+/>
 
       {/* 🔥 BLOG */}
       <Route path="/:lang/blog/:slug" element={<BlogPost />} />
