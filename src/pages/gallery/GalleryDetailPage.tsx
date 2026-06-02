@@ -63,8 +63,63 @@ export default function GalleryDetailPage() {
       <Helmet>
 
         <title>
-          Drevaia AI Creation
-        </title>
+  {post.caption.slice(0, 60)} | Drevaia AI Gallery
+</title>
+
+<meta
+  name="description"
+  content={post.caption.slice(0, 155)}
+/>
+
+<link
+  rel="canonical"
+  href={`https://drevaia.com/gallery/${post.id}`}
+/>
+
+<meta
+  property="og:type"
+  content="website"
+/>
+
+<meta
+  property="og:title"
+  content="Drevaia AI Creation"
+/>
+
+<meta
+  property="og:description"
+  content={post.caption.slice(0, 155)}
+/>
+
+<meta
+  property="og:image"
+  content={post.image_url}
+/>
+
+<meta
+  property="og:url"
+  content={`https://drevaia.com/gallery/${post.id}`}
+/>
+
+<meta
+  name="twitter:card"
+  content="summary_large_image"
+/>
+
+<meta
+  name="twitter:title"
+  content="Drevaia AI Creation"
+/>
+
+<meta
+  name="twitter:description"
+  content={post.caption.slice(0, 155)}
+/>
+
+<meta
+  name="twitter:image"
+  content={post.image_url}
+/>
 
         <meta
           name="description"
