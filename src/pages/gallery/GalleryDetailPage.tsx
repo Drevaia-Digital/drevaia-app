@@ -4,8 +4,9 @@ import { Helmet } from 'react-helmet-async';
 import { Share2 } from 'lucide-react';
 import {
   Link,
+  useNavigate,
   useParams,
-} from 'react-router-dom';
+} from 'react-router-dom';;
 
 import { supabase } from '@/lib/supabase';
 
@@ -20,10 +21,12 @@ interface Post {
 
 export default function GalleryDetailPage() {
   const { id } = useParams();
-    
+  const navigate = useNavigate();
+  
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
-    
+  const [relatedPosts, setRelatedPosts] = useState<Post[]>([]);    
+
   async function handleShare() {
   const url = window.location.href;
 
@@ -52,8 +55,19 @@ export default function GalleryDetailPage() {
       .single();
 
     if (!error && data) {
-      setPost(data);
-    }
+
+  setPost(data);
+
+  const { data: related } = await supabase
+    .from('drevaia_posts')
+    .select('*')
+    .neq('id', data.id)
+    .limit(3);
+
+  if (related) {
+    setRelatedPosts(related);
+  }
+}
 
 setLoading(false);
 }
@@ -280,7 +294,118 @@ setLoading(false);
           </div>
 
         </div>
+{/* Related */}
+<section className="mt-24">
 
+  <div className="mb-10">
+
+    <p
+      className="
+        mb-3
+        text-sm
+        uppercase
+        tracking-[0.3em]
+
+        text-primary/70
+      "
+    >
+      Continue Exploring
+    </p>
+
+    <h2
+      className="
+        text-3xl
+        font-black
+
+        text-white/95
+      "
+    >
+      Related AI Creations
+    </h2>
+
+  </div>
+
+  <div
+    className="
+      grid
+      gap-6
+
+      md:grid-cols-3
+    "
+  >
+
+    {relatedPosts.map((relatedPost) => (
+
+      <article
+        key={relatedPost.id}
+
+        onClick={() =>
+          navigate(`/gallery/${relatedPost.id}`)
+        }
+
+        className="
+          group
+          cursor-pointer
+          overflow-hidden
+
+          rounded-3xl
+
+          border
+          border-white/10
+
+          bg-white/[0.03]
+
+          transition-all
+          duration-500
+
+          hover:-translate-y-1
+          hover:border-primary/20
+        "
+      >
+
+        <div className="overflow-hidden">
+
+          <img
+            src={relatedPost.image_url}
+            alt={relatedPost.caption}
+            className="
+              h-[280px]
+              w-full
+              object-cover
+
+              transition-transform
+              duration-700
+
+              group-hover:scale-[1.03]
+            "
+          />
+
+        </div>
+
+        <div className="p-5">
+
+          <p
+            className="
+              line-clamp-3
+
+              text-sm
+              leading-relaxed
+
+              text-white/75
+            "
+          >
+            {relatedPost.caption}
+          </p>
+
+        </div>
+
+      </article>
+
+    ))}
+
+  </div>
+
+</section>
       </main>
     </>
   );
