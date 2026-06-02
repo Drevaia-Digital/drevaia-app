@@ -1,10 +1,11 @@
 import { HelmetProvider } from 'react-helmet-async';
 import { BrowserRouter, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { AuthProvider } from '@/hooks/useAuth';
 import { MainLayout } from '@/app/layouts/MainLayout';
 import { AppRoutes } from '@/app/router/routes';
+import { RouteLoader } from '@/components/motion/RouteLoader';
 
 // 🔥 TRACKING SPA (Google Analytics)
 function TrackPageViews() {
@@ -22,6 +23,9 @@ function TrackPageViews() {
 }
 
 export default function App() {
+
+  const [loadingRoute] = useState(false);
+
   return (
     <AuthProvider>
       <HelmetProvider>
@@ -29,6 +33,7 @@ export default function App() {
 
           {/* 🔥 TRACKER */}
           <TrackPageViews />
+          <RouteLoader loading={loadingRoute} />
 
           {/* 🌌 CINEMATIC APP SHELL */}
           <MainLayout>
