@@ -102,24 +102,28 @@ export default function GalleryPage() {
 
       </div>
 
-      {/* Grid */}
-      <div
-        className="
-          mx-auto
-          grid
-          max-w-7xl
-          gap-6
+      {/* Masonry Grid */}
+<div
+  className="
+    mx-auto
+    max-w-7xl
 
-          sm:grid-cols-2
-          lg:grid-cols-3
-        "
-      >
+    columns-1
+    gap-6
+
+    sm:columns-2
+    lg:columns-3
+  "
+>
 
         {posts.map((post) => (
           <article
             key={post.id}
             onClick={() => setSelectedPost(post)}
             className="
+              mb-6
+              break-inside-avoid  
+              
               group
               cursor-pointer
               overflow-hidden
@@ -149,7 +153,7 @@ export default function GalleryPage() {
                 alt={post.caption}
                 loading="lazy"
                 className="
-                  h-[420px]
+                  max-h-[620px]
                   w-full
                   object-cover
 
