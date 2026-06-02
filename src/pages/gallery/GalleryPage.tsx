@@ -24,8 +24,15 @@ export default function GalleryPage() {
       .order('created_at', { ascending: false });
 
     if (!error && data) {
-      setPosts(data);
-    }
+
+  const validPosts = data.filter(
+    (post) =>
+      post.image_url &&
+      post.image_url.trim() !== ''
+  );
+
+  setPosts(validPosts);
+}
 
     setLoading(false);
   }
