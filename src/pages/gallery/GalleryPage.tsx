@@ -24,15 +24,8 @@ export default function GalleryPage() {
       .order('created_at', { ascending: false });
 
     if (!error && data) {
-
-  const validPosts = data.filter(
-    (post) =>
-      post.image_url &&
-      post.image_url.trim() !== ''
-  );
-
-  setPosts(validPosts);
-}
+      setPosts(data);
+    }
 
     setLoading(false);
   }
@@ -71,22 +64,34 @@ export default function GalleryPage() {
   }
 
   return (
-    <main className="min-h-screen px-5 pt-32 pb-20">
+    <main className="min-h-screen px-5 pb-20 pt-32">
 
       {/* Header */}
       <div className="mx-auto mb-16 max-w-6xl">
 
-        <p className="mb-3 text-sm uppercase tracking-[0.3em] text-primary/70">
+        <p
+          className="
+            mb-3
+            text-sm
+            uppercase
+            tracking-[0.3em]
+
+            text-primary/70
+          "
+        >
           Drevaia AI Gallery
         </p>
 
         <h1
           className="
             max-w-4xl
+
             text-4xl
             font-black
             leading-tight
-            text-white
+
+            text-white/95
+            drop-shadow-[0_0_30px_rgba(255,255,255,0.08)]
 
             sm:text-5xl
             md:text-6xl
@@ -115,9 +120,10 @@ export default function GalleryPage() {
             key={post.id}
             onClick={() => setSelectedPost(post)}
             className="
-              cursor-pointer
               group
+              cursor-pointer
               overflow-hidden
+
               rounded-3xl
 
               border
@@ -177,6 +183,7 @@ export default function GalleryPage() {
                 <span
                   className="
                     rounded-full
+
                     border
                     border-primary/20
 
@@ -204,8 +211,10 @@ export default function GalleryPage() {
               <p
                 className="
                   line-clamp-4
+
                   text-sm
                   leading-relaxed
+
                   text-white/80
                 "
               >
@@ -218,13 +227,15 @@ export default function GalleryPage() {
         ))}
 
       </div>
-<GalleryModal
-  open={!!selectedPost}
-  onClose={() => setSelectedPost(null)}
-  image={selectedPost?.image_url || ''}
-  caption={selectedPost?.caption || ''}
-  platform={selectedPost?.platform || ''}
-/>
+
+      <GalleryModal
+        open={!!selectedPost}
+        onClose={() => setSelectedPost(null)}
+        image={selectedPost?.image_url || ''}
+        caption={selectedPost?.caption || ''}
+        platform={selectedPost?.platform || ''}
+      />
+
     </main>
   );
 }
