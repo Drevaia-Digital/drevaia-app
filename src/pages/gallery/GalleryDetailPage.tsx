@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Helmet } from 'react-helmet-async';
+import { Share2 } from 'lucide-react';
 import { useParams, Link } from 'react-router-dom';
 
 import { supabase } from '@/lib/supabase';
@@ -19,6 +20,25 @@ export default function GalleryDetailPage() {
 
   const [post, setPost] = useState<Post | null>(null);
   const [loading, setLoading] = useState(true);
+  async function handleShare() {
+  const url = window.location.href;
+
+  if (navigator.share) {
+    try {
+      await navigator.share({
+        title: 'Drevaia AI Creation',
+        text: post?.caption,
+        url,
+      });
+    } catch {
+      // ignore
+    }
+  } else {
+    await navigator.clipboard.writeText(url);
+
+    alert('Link copied to clipboard');
+  }
+}
 
   async function loadPost() {
     const { data, error } = await supabase
@@ -198,7 +218,7 @@ export default function GalleryDetailPage() {
 
           </div>
 
-          {/* Content */}
+                    {/* Content */}
           <div
             className="
               mt-10
@@ -206,7 +226,7 @@ export default function GalleryDetailPage() {
             "
           >
 
-            <div className="mb-6 flex items-center gap-4">
+            <div className="mb-6 flex flex-wrap items-center gap-4">
 
               <span
                 className="
@@ -233,6 +253,44 @@ export default function GalleryDetailPage() {
               <span className="text-sm text-white/40">
                 {post.status}
               </span>
+
+              <button
+                onClick={handleShare}
+                className="
+                  inline-flex
+                  items-center
+                  gap-2
+
+                  rounded-full
+
+                  border
+                  border-white/10
+
+                  bg-white/[0.04]
+
+                  px-4
+                  py-2
+
+                  text-xs
+                  uppercase
+                  tracking-[0.18em]
+
+                  text-white/70
+
+                  transition-all
+                  duration-300
+
+                  hover:border-primary/20
+                  hover:text-white
+                  hover:bg-white/[0.08]
+                "
+              >
+
+                <Share2 className="h-4 w-4" />
+
+                Share
+
+              </button>
 
             </div>
 
