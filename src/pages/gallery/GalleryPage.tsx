@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { supabase } from '@/lib/supabase';
+import { GalleryModal } from '@/components/gallery/GalleryModal';
 
 interface Post {
   id: string;
@@ -14,6 +15,7 @@ interface Post {
 export default function GalleryPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
 
   async function loadPosts() {
     const { data, error } = await supabase
@@ -104,7 +106,9 @@ export default function GalleryPage() {
         {posts.map((post) => (
           <article
             key={post.id}
+            onClick={() => setSelectedPost(post)}
             className="
+              cursor-pointer
               group
               overflow-hidden
               rounded-3xl
@@ -207,7 +211,13 @@ export default function GalleryPage() {
         ))}
 
       </div>
-
+<GalleryModal
+  open={!!selectedPost}
+  onClose={() => setSelectedPost(null)}
+  image={selectedPost?.image_url || ''}
+  caption={selectedPost?.caption || ''}
+  platform={selectedPost?.platform || ''}
+/>
     </main>
   );
 }
