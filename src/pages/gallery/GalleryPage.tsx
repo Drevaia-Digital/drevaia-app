@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { supabase } from '@/lib/supabase';
-import { GalleryModal } from '@/components/gallery/GalleryModal';
 
 interface Post {
   id: string;
@@ -15,7 +15,8 @@ interface Post {
 export default function GalleryPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
+  
+  const navigate = useNavigate();
 
   async function loadPosts() {
     const { data, error } = await supabase
@@ -119,7 +120,7 @@ export default function GalleryPage() {
         {posts.map((post) => (
           <article
             key={post.id}
-            onClick={() => setSelectedPost(post)}
+            onClick={() => navigate(`/gallery/${post.id}`)}
             className="
               mb-6
               break-inside-avoid  
@@ -154,6 +155,7 @@ export default function GalleryPage() {
                 loading="lazy"
                 className="
                   max-h-[620px]
+                  h-auto
                   w-full
                   object-cover
 
@@ -232,14 +234,6 @@ export default function GalleryPage() {
 
       </div>
 
-      <GalleryModal
-        open={!!selectedPost}
-        onClose={() => setSelectedPost(null)}
-        image={selectedPost?.image_url || ''}
-        caption={selectedPost?.caption || ''}
-        platform={selectedPost?.platform || ''}
-      />
-
-    </main>
+      </main>
   );
 }

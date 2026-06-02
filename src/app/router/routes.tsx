@@ -12,6 +12,7 @@ import BlogPost from '@/pages/BlogPost';
 import LeadMagnetPage from '@/pages/LeadMagnetPage';
 import BlogIndexPage from '@/pages/BlogIndexPage';
 import GalleryPage from '@/pages/gallery/GalleryPage';
+import GalleryDetailPage from '@/pages/gallery/GalleryDetailPage';
 
 import { PageLoader } from '@/components/motion/PageLoader';
 
@@ -73,6 +74,11 @@ export function AppRoutes() {
 <Route
   path="/gallery"
   element={<GalleryPage />}
+/>
+
+<Route
+  path="/gallery/:id"
+  element={<GalleryDetailPage />}
 />
 
       {/* 🔥 BLOG */}
