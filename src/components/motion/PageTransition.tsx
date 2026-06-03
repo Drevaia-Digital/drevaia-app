@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 
-import { AnimatePresence, motion } from 'framer-motion';
-import { useLocation } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
 interface PageTransitionProps {
   children: ReactNode;
@@ -10,40 +9,25 @@ interface PageTransitionProps {
 export function PageTransition({
   children,
 }: PageTransitionProps) {
-
-  const location = useLocation();
-
   return (
-    <AnimatePresence mode="wait">
+    <motion.div
+      initial={{
+        opacity: 0,
+        y: 10,
+      }}
 
-      <motion.div
-        key={location.pathname}
+      animate={{
+        opacity: 1,
+        y: 0,
+      }}
 
-        initial={{
-          opacity: 0,
-          y: 18,
-        }}
+      transition={{
+        duration: 0.35,
+      }}
+    >
 
-        animate={{
-          opacity: 1,
-          y: 0,
-        }}
+      {children}
 
-        exit={{
-          opacity: 0,
-          y: -10,
-        }}
-
-        transition={{
-          duration: 0.55,
-          ease: [0.22, 1, 0.36, 1],
-        }}
-      >
-
-        {children}
-
-      </motion.div>
-
-    </AnimatePresence>
+    </motion.div>
   );
 }
