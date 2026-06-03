@@ -1,3 +1,10 @@
+import heridasCover from '@/assets/ebooks/heridas-invisibles.webp';
+import espejosCover from '@/assets/ebooks/espejos.webp';
+import simpatiaCover from '@/assets/ebooks/pesa-mas-la-simpatia.webp';
+import noCover from '@/assets/ebooks/how-to-say-no.webp';
+import referenteCover from '@/assets/ebooks/de-invisible-a-referente.webp';
+import susurrosCover from '@/assets/ebooks/susurros.webp';
+
 import type { Language } from '@/i18n';
 
 interface EbooksProps {
@@ -8,6 +15,7 @@ interface Ebook {
   title: string;
   description: string;
   link: string;
+  cover?: string;
 }
 
 interface Collection {
@@ -61,39 +69,45 @@ const collections: Collection[] = [
 
     books: [
       {
-        title: "Heridas Invisibles",
-        description: "Descubre cómo tu pasado sigue viviendo en ti",
-        link: "https://payhip.com/b/Wz0IG",
-      },
+  title: "Heridas Invisibles",
+  description: "Descubre cómo tu pasado sigue viviendo en ti",
+  link: "https://payhip.com/b/Wz0IG",
+  cover: heridasCover,
+},
 
       {
         title: "Espejos para tu herida",
         description: "Lo que ves fuera, habla de lo que llevas dentro",
         link: "https://payhip.com/b/cFJTb",
+        cover: espejosCover,
       },
 
       {
         title: "Pesa más la simpatía",
         description: "Conexión emocional que transforma relaciones",
         link: "https://payhip.com/b/Y9KTs",
+        cover: simpatiaCover,
       },
 
       {
         title: "Cómo decir 'no' sin culpa",
         description: "Pon límites sin sentirte mal",
         link: "https://payhip.com/b/2g89T",
+        cover: noCover,
       },
 
       {
-        title: "Cosas que no sabías que te hacían libre",
-        description: "Libérate sin darte cuenta",
-        link: "https://payhip.com/b/kNSQa",
-      },
+  title: "Cosas que no sabías que te hacían libre",
+  description: "Libérate sin darte cuenta",
+  link: "https://payhip.com/b/kNSQa",
+  cover: susurrosCover,
+},
 
       {
         title: "De Invisible a Referente",
         description: "Construye tu autoridad desde dentro",
         link: "https://payhip.com/b/m0sQ3",
+        cover: referenteCover,
       },
     ],
   },
@@ -109,36 +123,42 @@ const collections: Collection[] = [
         title: "Invisible Wounds",
         description: "Your past is still shaping your present",
         link: "https://payhip.com/b/BYviE",
+        cover: heridasCover,
       },
 
       {
         title: "Mirrors",
         description: "What you see outside reflects what’s inside",
         link: "https://payhip.com/b/lFxuV",
+        cover: espejosCover,
       },
 
       {
         title: "Sympathy Weighs More",
         description: "Emotional intelligence that connects deeply",
         link: "https://payhip.com/b/DGOd6",
+        cover: simpatiaCover,
       },
 
       {
         title: "How to say no without guilt",
         description: "Set boundaries without fear",
         link: "https://payhip.com/b/gTQLM",
+        cover: noCover,
       },
 
       {
         title: "Things you didn’t know made you free",
         description: "Freedom starts within",
         link: "https://payhip.com/b/CdrP5",
+        cover: susurrosCover,
       },
 
       {
         title: "From Invisible to Authority",
         description: "Build your presence with purpose",
         link: "https://payhip.com/b/8QCbG",
+        cover: referenteCover,
       },
     ],
   },
@@ -154,36 +174,42 @@ const collections: Collection[] = [
         title: "Blessures Invisibles",
         description: "Ton passé influence encore ta réalité",
         link: "https://payhip.com/b/6xTwV",
+        cover: heridasCover,
       },
 
       {
         title: "Miroirs",
         description: "Ce que tu vois reflète ton intérieur",
         link: "https://payhip.com/b/jOcke",
+        cover: espejosCover,
       },
 
       {
         title: "La Sympathie Pèse Davantage",
         description: "Connexion émotionnelle profonde",
         link: "https://payhip.com/b/HQ1Lb",
+        cover: simpatiaCover,
       },
 
       {
         title: "Dire non sans culpabilité",
         description: "Pose des limites sans peur",
         link: "https://payhip.com/b/K9r3R",
+        cover: noCover,
       },
 
       {
         title: "Ce que tu ignorais te rend libre",
         description: "Liberté intérieure réelle",
         link: "https://payhip.com/b/MDdsb",
+        cover: susurrosCover,
       },
 
       {
         title: "De l’Invisible à la Référence",
         description: "Construis ton autorité",
         link: "https://payhip.com/b/VjwyZ",
+        cover: referenteCover,
       },
     ],
   },
@@ -199,36 +225,42 @@ const collections: Collection[] = [
         title: "Feridas Invisíveis",
         description: "Seu passado ainda vive em você",
         link: "https://payhip.com/b/OWV4T",
+        cover: heridasCover,
       },
 
       {
         title: "Espelhos",
         description: "O exterior reflete o interior",
         link: "https://payhip.com/b/BpZPY",
+        cover: espejosCover,
       },
 
       {
         title: "A Simpatia Pesa Mais",
         description: "Conexões que transformam",
         link: "https://payhip.com/b/3BvRa",
+        cover: simpatiaCover,
       },
 
       {
         title: "Dizer não sem culpa",
         description: "Limites com liberdade",
         link: "https://payhip.com/b/Z7yfI",
+        cover: noCover,
       },
 
       {
         title: "Coisas que te libertam",
         description: "Descubra sua liberdade",
         link: "https://payhip.com/b/KGMWi",
+        cover: susurrosCover,
       },
 
       {
         title: "Do Invisível para Referência",
         description: "Construa sua presença",
         link: "https://payhip.com/b/mcWN5",
+        cover: referenteCover,
       },
     ],
   },
@@ -386,6 +418,70 @@ export function Ebooks({ language }: EbooksProps) {
                       />
 
                     </div>
+                    
+                    {/* Cover */}
+{book.cover && (
+
+  <div
+    className="
+      relative
+      z-10
+
+      mb-6
+
+      overflow-hidden
+      rounded-2xl
+
+      border
+      border-white/10
+
+      bg-black/20
+
+      shadow-[0_20px_60px_rgba(0,0,0,0.35)]
+
+      transition-all
+      duration-700
+
+      group-hover:scale-[1.015]
+      group-hover:shadow-[0_30px_90px_rgba(214,164,92,0.22)]
+    "
+  >
+
+    <img
+      src={book.cover}
+      alt={book.title}
+
+      className="
+        aspect-[3/4]
+        w-full
+        object-cover
+
+        transition-transform
+        duration-700
+
+        group-hover:scale-[1.04]
+      "
+    />
+
+    {/* Cinematic Overlay */}
+    <div
+      className="
+        pointer-events-none
+
+        absolute
+        inset-0
+
+        bg-gradient-to-t
+        from-black/40
+        via-transparent
+        to-transparent
+      "
+    />
+
+  </div>
+
+)}                     
+
 
                     {/* Title */}
                     <h4
