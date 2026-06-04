@@ -81,7 +81,7 @@ export default function GalleryPage() {
             text-primary/70
           "
         >
-          Drevaia AI Gallery
+          DREVAIA TEST 999
         </p>
 
         <h1
