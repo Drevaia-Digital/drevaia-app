@@ -16,25 +16,21 @@ interface Post {
 export default function GalleryPage() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  
+
   const navigate = useNavigate();
 
   async function loadPosts() {
+    const { data, error } = await supabase
+      .from('drevaia_posts')
+      .select('*')
+      .order('created_at', { ascending: false });
 
-  const { data, error } = await supabase
-    .from('drevaia_posts')
-    .select('*')
-    .order('created_at', { ascending: false });
+    if (!error && data) {
+      setPosts(data);
+    }
 
-  console.log('DATA:', data);
-  console.log('ERROR:', error);
-
-  if (!error && data) {
-    setPosts(data);
+    setLoading(false);
   }
-
-  setLoading(false);
-}
 
   useEffect(() => {
     loadPosts();
@@ -71,17 +67,16 @@ export default function GalleryPage() {
 
   return (
     <main
-  className="
-    min-h-screen
-    px-5
-    pb-20
-    pt-32
+      className="
+        min-h-screen
+        px-5
+        pb-20
+        pt-32
 
-    bg-[#050816]
-    text-white
-  "
->
-
+        bg-[#050816]
+        text-white
+      "
+    >
       {/* Header */}
       <div className="mx-auto mb-16 max-w-6xl">
 
@@ -117,35 +112,35 @@ export default function GalleryPage() {
         </h1>
 
         <p
-  className="
-    mt-6
-    max-w-3xl
+          className="
+            mt-6
+            max-w-3xl
 
-    text-lg
-    leading-relaxed
+            text-lg
+            leading-relaxed
 
-    text-white/70
-  "
->
-  Every frame is an emotion. Browse your AI-crafted moments —
-  warm-lit, elegant, and made to feel something.
-</p>
+            text-white/70
+          "
+        >
+          Every frame is an emotion. Browse your AI-crafted moments —
+          warm-lit, elegant, and made to feel something.
+        </p>
 
       </div>
 
       {/* Masonry Grid */}
-<div
-  className="
-    mx-auto
-    max-w-7xl
+      <div
+        className="
+          mx-auto
+          max-w-7xl
 
-    columns-1
-    gap-6
+          columns-1
+          gap-6
 
-    sm:columns-2
-    lg:columns-3
-  "
->
+          sm:columns-2
+          lg:columns-3
+        "
+      >
 
         {posts.map((post) => (
           <article
@@ -153,8 +148,8 @@ export default function GalleryPage() {
             onClick={() => navigate(`/gallery/${post.id}`)}
             className="
               mb-6
-              break-inside-avoid  
-              
+              break-inside-avoid
+
               group
               cursor-pointer
               overflow-hidden
@@ -180,20 +175,19 @@ export default function GalleryPage() {
             <div className="relative overflow-hidden">
 
               <SmartImage
-  src={post.image_url}
-  alt={post.caption}
-  className="
-    max-h-none
-    h-auto
-    w-full
-    object-cover
+                src={post.image_url}
+                alt={post.caption}
+                className="
+                  h-auto
+                  w-full
+                  object-cover
 
-    transition-transform
-    duration-700
+                  transition-transform
+                  duration-700
 
-    group-hover:scale-[1.03]
-  "
-/>
+                  group-hover:scale-[1.03]
+                "
+              />
 
               {/* Overlay */}
               <div
@@ -243,9 +237,20 @@ export default function GalleryPage() {
 
               </div>
 
+              <h3
+                className="
+                  text-lg
+                  font-semibold
+
+                  text-white
+                "
+              >
+                Drevaia Reflection
+              </h3>
+
               <p
                 className="
-                  line-clamp-4
+                  line-clamp-2
 
                   text-sm
                   leading-relaxed
@@ -263,6 +268,6 @@ export default function GalleryPage() {
 
       </div>
 
-      </main>
+    </main>
   );
 }
