@@ -20,17 +20,21 @@ export default function GalleryPage() {
   const navigate = useNavigate();
 
   async function loadPosts() {
-    const { data, error } = await supabase
-      .from('drevaia_posts')
-      .select('*')
-      .order('created_at', { ascending: false });
 
-    if (!error && data) {
-      setPosts(data);
-    }
+  const { data, error } = await supabase
+    .from('drevaia_posts')
+    .select('*')
+    .order('created_at', { ascending: false });
 
-    setLoading(false);
+  console.log('DATA:', data);
+  console.log('ERROR:', error);
+
+  if (!error && data) {
+    setPosts(data);
   }
+
+  setLoading(false);
+}
 
   useEffect(() => {
     loadPosts();
