@@ -117,6 +117,9 @@ export default function GalleryPage() {
     lg:columns-3
   "
 >
+<div className="text-red-500 text-2xl">
+  POSTS: {posts.length}
+</div>
 
         {posts.map((post) => (
           <article
