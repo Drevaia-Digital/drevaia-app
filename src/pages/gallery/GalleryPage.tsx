@@ -70,7 +70,17 @@ export default function GalleryPage() {
   }
 
   return (
-    <main className="min-h-screen px-5 pb-20 pt-32">
+    <main
+  className="
+    min-h-screen
+    px-5
+    pb-20
+    pt-32
+
+    bg-[#050816]
+    text-white
+  "
+>
 
       {/* Header */}
       <div className="mx-auto mb-16 max-w-6xl">
@@ -85,7 +95,7 @@ export default function GalleryPage() {
             text-primary/70
           "
         >
-          DREVAIA TEST 999
+          DREVAIA · VOLUME I
         </p>
 
         <h1
@@ -103,8 +113,23 @@ export default function GalleryPage() {
             md:text-6xl
           "
         >
-          Cinematic emotional creations powered by AI.
+          The cinematic gallery of your imagination.
         </h1>
+
+        <p
+  className="
+    mt-6
+    max-w-3xl
+
+    text-lg
+    leading-relaxed
+
+    text-white/70
+  "
+>
+  Every frame is an emotion. Browse your AI-crafted moments —
+  warm-lit, elegant, and made to feel something.
+</p>
 
       </div>
 
@@ -121,9 +146,6 @@ export default function GalleryPage() {
     lg:columns-3
   "
 >
-<div className="text-red-500 text-2xl">
-  POSTS: {posts.length}
-</div>
 
         {posts.map((post) => (
           <article
@@ -142,7 +164,7 @@ export default function GalleryPage() {
               border
               border-white/10
 
-              bg-white/[0.03]
+              bg-[#0c1023]
               backdrop-blur-xl
 
               transition-all
@@ -161,7 +183,7 @@ export default function GalleryPage() {
   src={post.image_url}
   alt={post.caption}
   className="
-    max-h-[620px]
+    max-h-none
     h-auto
     w-full
     object-cover
@@ -180,8 +202,8 @@ export default function GalleryPage() {
                   inset-0
 
                   bg-gradient-to-t
-                  from-black/80
-                  via-black/10
+                  from-black/40
+                  via-transparent
                   to-transparent
                 "
               />
@@ -215,7 +237,7 @@ export default function GalleryPage() {
                   {post.platform}
                 </span>
 
-                <span className="text-xs text-white/40">
+                <span className="text-xs text-white/60">
                   {post.status}
                 </span>
 
@@ -228,7 +250,7 @@ export default function GalleryPage() {
                   text-sm
                   leading-relaxed
 
-                  text-white/80
+                  text-white
                 "
               >
                 {post.caption}
