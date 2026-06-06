@@ -229,15 +229,14 @@ export default function GalleryPage() {
 </div>
 
               <h3
-                className="
-                  text-lg
-                  font-semibold
-
-                  text-white
-                "
-              >
-                Drevaia Reflection TEST 777
-              </h3>
+  className="
+    text-lg
+    font-semibold
+    text-white
+  "
+>
+  Inner Reflection
+</h3>
 
               <p
                 className="
