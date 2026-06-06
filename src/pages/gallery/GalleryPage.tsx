@@ -108,7 +108,7 @@ export default function GalleryPage() {
             md:text-6xl
           "
         >
-          The cinematic gallery of your imagination.
+          THE NEW DREVAIA GALLERY 777
         </h1>
 
         <p
@@ -210,32 +210,23 @@ export default function GalleryPage() {
               <div className="flex items-center justify-between">
 
                 <span
-                  className="
-                    rounded-full
-
-                    border
-                    border-primary/20
-
-                    bg-primary/10
-
-                    px-3
-                    py-1
-
-                    text-xs
-                    uppercase
-                    tracking-[0.18em]
-
-                    text-primary
-                  "
-                >
-                  {post.platform}
-                </span>
-
-                <span className="text-xs text-white/60">
-                  {post.status}
-                </span>
-
-              </div>
+  className="
+    rounded-full
+    border
+    border-primary/20
+    bg-primary/10
+    px-3
+    py-1
+    text-xs
+    uppercase
+    tracking-[0.18em]
+    text-primary
+  "
+>
+  Reflection
+</span>
+          
+</div>
 
               <h3
                 className="
@@ -245,7 +236,7 @@ export default function GalleryPage() {
                   text-white
                 "
               >
-                Drevaia Reflection
+                Drevaia Reflection TEST 777
               </h3>
 
               <p
