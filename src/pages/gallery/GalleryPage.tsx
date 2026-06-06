@@ -108,7 +108,7 @@ export default function GalleryPage() {
             md:text-6xl
           "
         >
-          THE NEW DREVAIA GALLERY 777
+          DREVAIA GALLERY
         </h1>
 
         <p
