@@ -1,19 +1,20 @@
 /**
  * Post Engine - Drevaia Digital
  * Sistema de gestión de contenido para Blog
- * Motor interno de artículos multiidioma
+ * Ahora usa Edge Functions de Supabase para mejor performance
  */
+
+const SUPABASE_FUNCTION_URL = 'https://hkjiqihczalnekzuwjtw.supabase.co/functions/v1';
 
 class PostEngine {
   constructor() {
     this.cache = new Map();
-    this.basePath = '/src/content/blog';
     this.languages = ['es', 'en', 'fr', 'pt'];
     this.postsPerPage = 9;
   }
 
   /**
-   * Carga todos los posts para un idioma
+   * Carga posts desde Edge Function de Supabase
    */
   async loadPosts(language = 'es') {
     const cacheKey = `posts-${language}`;
@@ -23,15 +24,20 @@ class PostEngine {
     }
 
     try {
-      const response = await fetch(`${this.basePath}/posts-${language}.json`);
-      const data = await response.json();
+      // Llamar a la Edge Function
+      const response = await fetch(`${SUPABASE_FUNCTION_URL}/get-posts?pageSize=100`);
       
-      // Procesar y enriquecer posts
-      const enrichedPosts = data.posts?.map(post => this.enrichPost(post, language)) || [];
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       
-      const result = {
+      const result = await response.json();
+      
+      // Mapear posts de Supabase al formato del frontend
+      const enrichedPosts = result.data?.map(post => this.mapSupabasePost(post, language)) || [];
+      
+      const finalResult = {
         meta: {
-          ...data.meta,
           language,
           totalPosts: enrichedPosts.length,
           totalPages: Math.ceil(enrichedPosts.length / this.postsPerPage),
@@ -41,8 +47,8 @@ class PostEngine {
         tags: this.extractTags(enrichedPosts),
       };
       
-      this.cache.set(cacheKey, result);
-      return result;
+      this.cache.set(cacheKey, finalResult);
+      return finalResult;
     } catch (error) {
       console.error(`Error loading posts for ${language}:`, error);
       return this.getFallbackPosts(language);
@@ -50,26 +56,51 @@ class PostEngine {
   }
 
   /**
-   * Enriquece un post con metadatos adicionales
+   * Mapea post de Supabase al formato del frontend
    */
-  enrichPost(post, language) {
+  mapSupabasePost(post, language) {
+    const title = this.extractTitleFromCaption(post.caption);
+    const content = post.caption || '';
+    
     return {
-      ...post,
-      id: post.slug || this.generateSlug(post.title),
-      slug: post.slug || this.generateSlug(post.title),
-      language,
-      readingTime: this.estimateReadingTime(post.content),
-      wordCount: post.content?.split(/\s+/).length || 0,
-      excerpt: post.excerpt || this.generateExcerpt(post.content),
-      publishedDate: post.publishedDate || new Date().toISOString(),
-      formattedDate: this.formatDate(post.publishedDate, language),
+      id: post.id.toString(),
+      slug: this.generateSlug(title),
+      title: title,
+      content: content,
+      excerpt: this.generateExcerpt(content, 150),
+      category: 'Reflexiones',
+      tags: ['sanación', 'crecimiento personal'],
+      publishedDate: post.published_at || post.created_at,
+      formattedDate: this.formatDate(post.published_at || post.created_at, language),
+      readingTime: this.estimateReadingTime(content),
+      wordCount: content.split(/\s+/).length,
+      featured: false,
+      coverImage: post.image_url || '',
+      language: language,
       seo: {
-        title: post.seo?.title || post.title,
-        description: post.seo?.description || this.generateExcerpt(post.content, 160),
-        keywords: post.seo?.keywords || post.tags?.join(', ') || '',
-        ogImage: post.seo?.ogImage || post.coverImage,
+        title: title,
+        description: this.generateExcerpt(content, 160),
+        keywords: 'sanación, crecimiento personal, drevaia',
+        ogImage: post.image_url || '',
       },
     };
+  }
+
+  /**
+   * Extrae título del caption (primera línea o primera frase)
+   */
+  extractTitleFromCaption(caption) {
+    if (!caption) return 'Sin título';
+    
+    const firstLine = caption.split('\n')[0].trim();
+    if (firstLine.length > 10 && firstLine.length < 100) {
+      return firstLine;
+    }
+    
+    const firstSentence = caption.split(/[.!?]/)[0];
+    return firstSentence.length > 100 
+      ? firstSentence.substring(0, 100) + '...' 
+      : firstSentence;
   }
 
   /**
@@ -171,40 +202,54 @@ class PostEngine {
    */
   async getPostsPage(page = 1, language = 'es', options = {}) {
     const { category, tag, search } = options;
-    const data = await this.loadPosts(language);
-    let posts = data.posts;
+    
+    try {
+      const params = new URLSearchParams({
+        page: page.toString(),
+        pageSize: this.postsPerPage.toString(),
+      });
+      
+      if (category) params.append('platform', category);
+      
+      const response = await fetch(`${SUPABASE_FUNCTION_URL}/get-posts?${params}`);
+      const result = await response.json();
+      
+      const posts = result.data?.map(post => this.mapSupabasePost(post, language)) || [];
+      
+      let filteredPosts = posts;
+      
+      if (search) {
+        const query = search.toLowerCase();
+        filteredPosts = filteredPosts.filter(p => 
+          p.title.toLowerCase().includes(query) ||
+          p.content.toLowerCase().includes(query) ||
+          p.excerpt.toLowerCase().includes(query)
+        );
+      }
 
-    // Aplicar filtros
-    if (category) {
-      posts = posts.filter(p => this.generateSlug(p.category) === category);
+      return {
+        posts: filteredPosts,
+        pagination: result.pagination || {
+          currentPage: page,
+          totalPages: 1,
+          totalPosts: filteredPosts.length,
+          hasNext: false,
+          hasPrev: page > 1,
+        },
+      };
+    } catch (error) {
+      console.error('Error fetching paginated posts:', error);
+      return {
+        posts: [],
+        pagination: {
+          currentPage: page,
+          totalPages: 0,
+          totalPosts: 0,
+          hasNext: false,
+          hasPrev: false,
+        },
+      };
     }
-    if (tag) {
-      posts = posts.filter(p => p.tags?.some(t => this.generateSlug(t) === tag));
-    }
-    if (search) {
-      const query = search.toLowerCase();
-      posts = posts.filter(p => 
-        p.title.toLowerCase().includes(query) ||
-        p.content.toLowerCase().includes(query) ||
-        p.excerpt.toLowerCase().includes(query)
-      );
-    }
-
-    // Paginación
-    const start = (page - 1) * this.postsPerPage;
-    const end = start + this.postsPerPage;
-    const paginatedPosts = posts.slice(start, end);
-
-    return {
-      posts: paginatedPosts,
-      pagination: {
-        currentPage: page,
-        totalPages: Math.ceil(posts.length / this.postsPerPage),
-        totalPosts: posts.length,
-        hasNext: end < posts.length,
-        hasPrev: page > 1,
-      },
-    };
   }
 
   /**
@@ -227,11 +272,8 @@ class PostEngine {
     return data.posts
       ?.filter(post => {
         if (post.id === postId) return false;
-        
-        // Misma categoría
         if (post.category === currentPost.category) return true;
         
-        // Tags en común
         const commonTags = post.tags?.filter(tag => 
           currentPost.tags?.includes(tag)
         ) || [];
@@ -239,7 +281,6 @@ class PostEngine {
         return commonTags.length > 0;
       })
       .sort((a, b) => {
-        // Priorizar por tags en común
         const aCommon = a.tags?.filter(t => currentPost.tags?.includes(t)).length || 0;
         const bCommon = b.tags?.filter(t => currentPost.tags?.includes(t)).length || 0;
         return bCommon - aCommon;
@@ -290,28 +331,6 @@ class PostEngine {
     }
 
     return allResults.slice(0, limit);
-  }
-
-  /**
-   * Genera feed RSS
-   */
-  async generateRSS(language = 'es') {
-    const data = await this.loadPosts(language);
-    const recentPosts = data.posts?.slice(0, 20) || [];
-
-    return {
-      title: data.meta?.title || 'Drevaia Digital Blog',
-      description: data.meta?.description || '',
-      language,
-      lastBuildDate: new Date().toUTCString(),
-      posts: recentPosts.map(post => ({
-        title: post.title,
-        description: post.excerpt,
-        link: `/blog/${post.slug}`,
-        pubDate: new Date(post.publishedDate).toUTCString(),
-        guid: post.id,
-      })),
-    };
   }
 
   /**
