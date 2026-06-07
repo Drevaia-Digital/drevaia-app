@@ -19,7 +19,17 @@ export default defineConfig({
         entryFileNames: `assets/[name]-[hash].js`,
         chunkFileNames: `assets/[name]-[hash].js`,
         assetFileNames: `assets/[name]-[hash].[ext]`,
+        
+        // 🔥 CODE SPLITTING - Divide el bundle en chunks
+        manualChunks: {
+          'react-vendor': ['react', 'react-dom', 'react-router-dom'],
+          'ui-components': ['lucide-react'],
+          'supabase': ['@supabase/supabase-js'],
+          'seo': ['react-helmet-async'],
+        },
       },
     },
+    
+    chunkSizeWarningLimit: 500,
   },
 });
