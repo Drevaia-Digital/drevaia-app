@@ -1,11 +1,19 @@
 import path from "path";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 
 export default defineConfig({
   base: '/',
 
-  plugins: [react()],
+  plugins: [
+    react(),
+    sentryVitePlugin({
+      org: "drevaia-digital",
+      project: "drevaia-app",
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+    }),
+  ],
 
   resolve: {
     alias: {
@@ -20,7 +28,6 @@ export default defineConfig({
         chunkFileNames: `assets/[name]-[hash].js`,
         assetFileNames: `assets/[name]-[hash].[ext]`,
         
-        // 🔥 CODE SPLITTING - Divide el bundle en chunks
         manualChunks: {
           'react-vendor': ['react', 'react-dom', 'react-router-dom'],
           'ui-components': ['lucide-react'],
