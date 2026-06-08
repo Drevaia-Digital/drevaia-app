@@ -87,14 +87,27 @@ export function PortalPage() {
     return book[`title_${language}`] || book.title;
   };
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubscribe = async (e: React.FormEvent) => {
+  e.preventDefault();
+  
+  if (!email || !email.includes('@')) {
+    alert('Por favor ingresa un email válido');
+    return;
+  }
 
-    if (!email) return;
+  const { error } = await supabase
+    .from('subscribers')
+    .insert([{ email }]);
 
-    setIsSubscribed(true);
-    setEmail('');
-  };
+  if (error) {
+    console.error('Error al suscribirse:', error);
+    alert('Hubo un error. Intenta de nuevo.');
+    return;
+  }
+
+  setIsSubscribed(true);
+  setEmail('');
+};
 
   return (
     <div className="min-h-screen relative overflow-hidden bg-[#090611] text-white">
