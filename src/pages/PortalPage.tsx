@@ -96,8 +96,13 @@ export function PortalPage() {
   }
 
   const { error } = await supabase
-    .from('subscribers')
-    .insert([{ email }]);
+  .from('subscribers')
+  .insert([
+    {
+      email,
+      language
+    }
+  ]);
 
   if (error) {
     console.error('Error al suscribirse:', error);
