@@ -150,11 +150,11 @@ const goToSection = (id: string) => {
                   {language === "es" ? "Inicio" : "Home"}
                 </button>
 
-                <button onClick={() => go("/library")} className={item}>
+                <button onClick={() => go(`/${language}/library`)} className={item}>
                   {t.nav.library}
                 </button>
 
-                <button onClick={() => go("/blog")} className={item}>
+                <button onClick={() => go(`/${language}/blog`)} className={item}>
                   Blog
                 </button>
 
@@ -170,11 +170,11 @@ const goToSection = (id: string) => {
   Testimonios
 </button>
 
-                <button onClick={() => go("/portal")} className={item}>
+                <button onClick={() => go(`/${language}/portal`)} className={item}>
                   Portal
                 </button>
 
-                <button onClick={() => go("/legal")} className={item}>
+                <button onClick={() => go(`/${language}/legal`)} className={item}>
                   {t.nav.legal}
                 </button>
 
@@ -191,8 +191,11 @@ const goToSection = (id: string) => {
                 {["es", "en", "fr", "pt"].map((lang) => (
                   <button
                     key={lang}
-                    onClick={() => setLanguage(lang as any)}
-                    className={`px-2 py-1 text-[11px] rounded-full transition ${
+                    onClick={() => {
+  setLanguage(lang as any);
+  navigate(`/${lang}`);
+}}
+className={`px-2 py-1 text-[11px] rounded-full transition ${
                       language === lang
                         ? "bg-white text-black"
                         : "text-white/75 hover:text-white"
@@ -205,7 +208,7 @@ const goToSection = (id: string) => {
 
               {/* CTA */}
               <DrevaiaButton
-  onClick={() => go("/empieza")}
+  onClick={() => go(`/${language}/empieza`)}
 >
   Empezar
 </DrevaiaButton>
@@ -224,9 +227,16 @@ const goToSection = (id: string) => {
         >
 
           <button onClick={() => go(`/${language}`)}>Inicio</button>
-          <button onClick={() => go("/library")}>{t.nav.library}</button>
-          <button onClick={() => go("/blog")}>Blog</button>
-          <button onClick={() => goToSection("daily")}>
+
+<button onClick={() => go(`/${language}/library`)}>
+  {t.nav.library}
+</button>
+
+<button onClick={() => go(`/${language}/blog`)}>
+  Blog
+</button>
+
+<button onClick={() => goToSection("daily")}>
   Palabra del día
 </button>
 
@@ -237,24 +247,31 @@ const goToSection = (id: string) => {
 <button onClick={() => goToSection("testimonials")}>
   Testimonios
 </button>
-          <button onClick={() => go("/portal")}>Portal</button>
-          <button onClick={() => go("/legal")}>{t.nav.legal}</button>
 
-          <button
-            onClick={() => go("/empieza")}
-            className="mt-2 px-5 py-2 rounded-full bg-white text-black text-sm"
-          >
-            Empezar
-          </button>
+<button onClick={() => go(`/${language}/portal`)}>
+  Portal
+</button>
+
+<button onClick={() => go(`/${language}/legal`)}>
+  {t.nav.legal}
+</button>
+
+<button
+  onClick={() => go(`/${language}/empieza`)}
+  className="mt-2 px-5 py-2 rounded-full bg-white text-black text-sm"
+>
+  Empezar
+</button>
 
           <div className="flex gap-2 pt-2">
             {["es", "en", "fr", "pt"].map((lang) => (
-              <button
-                key={lang}
-                onClick={() => {
-                  setLanguage(lang as any);
-                  setOpen(false);
-                }}
+  <button
+    key={lang}
+    onClick={() => {
+      setLanguage(lang as any);
+      navigate(`/${lang}`);
+      setOpen(false);
+    }}
                 className={`px-3 py-1 rounded-full text-xs ${
                   language === lang
                     ? "bg-white text-black"

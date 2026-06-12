@@ -184,7 +184,7 @@ export function PortalPage() {
           transition={{ delay: 0.45, duration: 0.8 }}
         >
           <Button
-            onClick={() => navigate("/library")}
+            onClick={() => navigate(`/${language}/library`)}
             className="bg-gradient-to-r from-amber-400 to-orange-500 hover:from-amber-500 hover:to-orange-600 px-10 py-6 text-lg rounded-2xl shadow-2xl"
           >
             {t.explore}
@@ -216,7 +216,7 @@ export function PortalPage() {
                 title={getTitle(book)}
                 cover={book.coverImage || book.image || ""}
                 price={book.price}
-                onClick={() => navigate(`/library?book=${book.id}`)}
+                onClick={() => navigate(`/${language}/library?book=${book.id}`)}
               />
             </motion.div>
           ))}

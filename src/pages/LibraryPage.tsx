@@ -296,7 +296,7 @@ export default function LibraryPage() {
       {/* TOP */}
       <div className="max-w-7xl mx-auto px-6 pt-6">
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate(`/${language}`)}
           className="text-gray-400 hover:text-white flex items-center gap-2 transition"
         >
           <ArrowLeft className="w-4 h-4" />

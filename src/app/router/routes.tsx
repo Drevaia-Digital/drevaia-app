@@ -70,6 +70,15 @@ export function AppRoutes() {
         }
       />
       
+<Route
+  path="/:lang/library"
+  element={
+    <Suspense fallback={<PageLoader />}>
+      <LibraryPage />
+    </Suspense>
+  }
+/>
+
       {/* 🖼️ GALLERY */}
 <Route
   path="/gallery"
@@ -84,6 +93,7 @@ export function AppRoutes() {
       {/* 🔥 BLOG */}
       <Route path="/:lang/blog/:slug" element={<BlogPost />} />
       <Route path="/blog" element={<BlogIndexPage />} />
+      <Route path="/:lang/blog" element={<BlogIndexPage />} />
 
       {/* 🧠 ONBOARDING */}
       <Route path="/:lang/onboarding" element={<OnboardingPage />} />
@@ -91,9 +101,12 @@ export function AppRoutes() {
       {/* ⚖️ LEGAL */}
       <Route path="/legal" element={<LegalPage />} />
       <Route path="/legal/:section" element={<LegalPage />} />
+      <Route path="/:lang/legal" element={<LegalPage />} />
+      <Route path="/:lang/legal/:section" element={<LegalPage />} />
 
       {/* 🌐 PORTAL */}
       <Route path="/portal" element={<PortalPage />} />
+      <Route path="/:lang/portal" element={<PortalPage />} />
 
       {/* 🔐 AUTH */}
       <Route path="/auth/login" element={<AuthPage mode="login" />} />
@@ -106,6 +119,7 @@ export function AppRoutes() {
 
       {/* 🎯 LEAD */}
       <Route path="/empieza" element={<LeadMagnetPage />} />
+      <Route path="/:lang/empieza" element={<LeadMagnetPage />} />
 
       {/* 🚫 404 */}
       <Route path="*" element={<NotFoundPage />} />

@@ -59,15 +59,20 @@ export function Footer(_: any) {
 
             <ul className="space-y-2 text-purple-200 text-sm">
 
-              <li><Link to="/library" className="footer-link"><BookOpen className="w-4 h-4" /> {t.footer.ebooks}</Link></li>
-              <li><Link to="/blog" className="footer-link"><FileText className="w-4 h-4" /> {t.footer.blog}</Link></li>
-              <li><Link to="/portal" className="footer-link"><Users className="w-4 h-4" /> {t.footer.portal}</Link></li>
+              <li><Link to={`/${language}/library`} className="footer-link">
+<BookOpen className="w-4 h-4" /> {t.footer.ebooks}</Link></li>
+              <li><Link to={`/${language}/blog`} className="footer-link"><FileText className="w-4 h-4" /> {t.footer.blog}</Link></li>
+              <li><Link to={`/${language}/portal`} className="footer-link"><Users className="w-4 h-4" /> {t.footer.portal}</Link></li>
 
               <li className="mt-4 text-white font-semibold">{t.footer.legal}</li>
 
-              <li><Link to="/legal/privacy" className="footer-link"><Shield className="w-4 h-4" /> {t.footer.privacy}</Link></li>
-              <li><Link to="/legal/cookies" className="footer-link"><Shield className="w-4 h-4" /> {t.footer.cookies}</Link></li>
-              <li><Link to="/legal/refunds" className="footer-link"><Shield className="w-4 h-4" /> {t.footer.refunds}</Link></li>
+              <li><Link to={`/${language}/legal/privacy`} className="footer-link"><Shield className="w-4 h-4" /> {t.footer.privacy}</Link></li>
+              <li><Link to={`/${language}/legal/cookies`} className="footer-link"><Shield className="w-4 h-4" /> {t.footer.cookies}</Link></li>
+              <li>
+  <Link to={`/${language}/legal/refunds`} className="footer-link">
+    <Shield className="w-4 h-4" /> {t.footer.refunds}
+  </Link>
+</li>
 
               <li>
                 <a href="https://payhip.com/DrevaiaDigital" target="_blank" rel="noopener noreferrer" className="footer-link">

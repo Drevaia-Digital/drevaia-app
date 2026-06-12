@@ -115,7 +115,7 @@ export function LegalPage() {
         title={`${title} | Drevaia Digital`}
         description={legalData?.sections?.[0]?.content?.substring(0, 160) || ''}
         language={language}
-        canonicalUrl={`https://drevaia.com/legal/${currentSection}`}
+        canonicalUrl={`https://drevaia.com/${language}/legal/${currentSection}`}
       />
 
       <Navigation />
@@ -125,8 +125,8 @@ export function LegalPage() {
 
         <div className="relative max-w-4xl mx-auto px-4">
 
-          <Link 
-            to="/" 
+          <Link
+  to={`/${language}`} 
             className="inline-flex items-center gap-2 text-gray-400 hover:text-white transition-all duration-300 hover:-translate-x-1 mb-6"
           >
             <ArrowLeft className="w-4 h-4" />
@@ -164,7 +164,7 @@ export function LegalPage() {
               return (
                 <Link
                   key={sec}
-                  to={`/legal/${sec}`}
+                  to={`/${language}/legal/${sec}`}
                   className={`flex items-center gap-2 px-4 py-2 rounded-lg text-sm transition-all ${
                     currentSection === sec
                       ? 'bg-purple-500/20 text-purple-300'
