@@ -134,16 +134,34 @@ export function BookDetailPage() {
     tags: language === 'es' ? 'Etiquetas' : language === 'en' ? 'Tags' : language === 'fr' ? 'Tags' : 'Tags',
   };
 
+const bookSchema = {
+  "@context": "https://schema.org",
+  "@type": "Book",
+  name: book.title,
+  description: book.description,
+  author: {
+    "@type": "Person",
+    name: book.author || "Noa Drevaia"
+  },
+  image: book.coverImage,
+  url: `https://drevaia.com/${language}/books/${book.slug}`,
+  publisher: {
+    "@type": "Organization",
+    name: "Drevaia Digital"
+  }
+};
+
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 transition-colors duration-300">
       <SEO 
-        title={`${book.title} | Drevaia Digital`}
-        description={book.description}
-        keywords={book.tags.join(', ')}
-        ogImage={book.coverImage}
-        language={language}
-        canonicalUrl={`https://drevaia.com/${language}/books/${book.slug}`}
-      />
+  title={`${book.title} | Drevaia Digital`}
+  description={book.description}
+  keywords={book.tags.join(', ')}
+  ogImage={book.coverImage}
+  language={language}
+  canonicalUrl={`https://drevaia.com/${language}/books/${book.slug}`}
+  structuredData={bookSchema}
+/>
       
       <Navigation />
 
