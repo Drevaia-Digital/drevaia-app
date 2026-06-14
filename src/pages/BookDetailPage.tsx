@@ -325,6 +325,60 @@ const bookSchema = {
         </div>
       </section>
 
+{/* EMAIL CAPTURE */}
+
+<section className="py-16 bg-gradient-to-br from-purple-900/10 to-amber-500/10 border-t border-gray-200 dark:border-gray-700">
+  <div className="max-w-3xl mx-auto px-4 text-center">
+
+    <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+      {language === 'es'
+        ? 'Recibe reflexiones exclusivas de Drevaia'
+        : language === 'en'
+        ? 'Receive exclusive reflections from Drevaia'
+        : language === 'fr'
+        ? 'Recevez des réflexions exclusives de Drevaia'
+        : 'Receba reflexões exclusivas da Drevaia'}
+    </h2>
+
+    <p className="text-gray-600 dark:text-gray-300 mb-8">
+      {language === 'es'
+        ? 'Ideas, escritos y recursos para sanar, crecer y transformar tu vida.'
+        : language === 'en'
+        ? 'Ideas, writings and resources to heal, grow and transform your life.'
+        : language === 'fr'
+        ? 'Idées, écrits et ressources pour guérir, grandir et transformer votre vie.'
+        : 'Ideias, escritos e recursos para curar, crescer e transformar sua vida.'}
+    </p>
+
+    <div className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
+      <input
+        type="email"
+        placeholder={
+          language === 'es'
+            ? 'Tu correo electrónico'
+            : language === 'en'
+            ? 'Your email address'
+            : language === 'fr'
+            ? 'Votre adresse email'
+            : 'Seu endereço de email'
+        }
+        className="flex-1 px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+      />
+
+      <Button className="bg-purple-600 hover:bg-purple-700">
+        {language === 'es'
+          ? 'Quiero recibirlos'
+          : language === 'en'
+          ? 'Subscribe'
+          : language === 'fr'
+          ? 'S’inscrire'
+          : 'Inscrever-se'}
+      </Button>
+    </div>
+
+  </div>
+</section>
+
       {/* Related Books */}
       {relatedBooks.length > 0 && (
         <section className="py-16 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700">
