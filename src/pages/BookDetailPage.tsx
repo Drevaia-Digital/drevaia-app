@@ -6,7 +6,6 @@ import { Button } from '@/components/ui/button';
 import { Navigation } from '@/sections/Navigation';
 import { Footer } from '@/sections/Footer';
 import { SEO } from '@/partials/SEO';
-import { libraryEngine } from '@/engines/library-engine';
 import { supabase } from '@/lib/supabase';
 import { FavoriteButtonSupabase } from '@/components/FavoriteButtonSupabase';
 import { useAnalytics, usePageTracking } from '@/hooks/useAnalytics';
@@ -97,27 +96,46 @@ const handleSubscribe = async () => {
 };
 
 const loadBook = async () => {
-    if (!slug) return;
-    
-    setLoading(true);
-    const bookData = await libraryEngine.getBookBySlug(slug, language);
-    
-    if (bookData) {
-      setBook(bookData);
-      
-      // Load related books
-      const related = await libraryEngine.getRelatedBooks(bookData.id, language, 3);
-      setRelatedBooks(related);
-      
-      // Update SEO
-      document.title = `${bookData.title} | Drevaia Digital`;
-    } else {
-      // Book not found, redirect to library
-      navigate(`/${language}/library`);
-    }
-    
-    setLoading(false);
+  if (!slug) return;
+
+  setLoading(true);
+
+  const { data: bookData, error } = await supabase
+    .from("books")
+    .select("*")
+    .eq("slug", slug)
+    .eq("language", language)
+    .single();
+
+  if (error || !bookData) {
+    console.error("Book not found:", error);
+    navigate(`/${language}/library`);
+    return;
+  }
+
+  const mappedBook = {
+    ...bookData,
+    coverImage: bookData.image || "",
   };
+
+  setBook(mappedBook);
+
+  const { data: related } = await supabase
+    .from("books")
+    .select("*")
+    .eq("language", language)
+    .neq("id", bookData.id)
+    .limit(3);
+
+  setRelatedBooks(
+    (related || []).map((b) => ({
+      ...b,
+      coverImage: b.image || "",
+    }))
+  );
+
+  setLoading(false);
+};
 
   if (loading) {
     return (
