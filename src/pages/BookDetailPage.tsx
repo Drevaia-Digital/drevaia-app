@@ -282,9 +282,9 @@ const bookSchema = {
                   {book.pages} {labels.pages}
                 </span>
                 <span className="flex items-center gap-1">
-                  <Clock className="w-4 h-4" />
-                  {Math.ceil(book.pages / 30)} min read
-                </span>
+  <Clock className="w-4 h-4" />
+  {book.pages ? Math.ceil(book.pages / 30) : 0} min read
+</span>
               </div>
 
               <div className="prose dark:prose-invert max-w-none mb-8">
