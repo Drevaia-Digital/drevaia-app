@@ -7,6 +7,7 @@ import { Navigation } from '@/sections/Navigation';
 import { Footer } from '@/sections/Footer';
 import { SEO } from '@/partials/SEO';
 import { libraryEngine } from '@/engines/library-engine';
+import { supabase } from '@/lib/supabase';
 import { FavoriteButtonSupabase } from '@/components/FavoriteButtonSupabase';
 import { useAnalytics, usePageTracking } from '@/hooks/useAnalytics';
 import { useCart } from '@/hooks/useCart';
@@ -34,6 +35,8 @@ export function BookDetailPage() {
   const { language } = useLanguage();
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [isSubscribed, setIsSubscribed] = useState(false);
   const [book, setBook] = useState<Book | null>(null);
   const [relatedBooks, setRelatedBooks] = useState<Book[]>([]);
   const [loading, setLoading] = useState(true);
@@ -48,26 +51,52 @@ export function BookDetailPage() {
   }, [slug, language]);
 
   const handleAddToCart = () => {
-    if (book) {
-      const added = addItem({
-        id: book.id,
-        title: book.title,
-        description: book.description,
-        price: book.price,
-        currency: book.currency,
-        image: book.coverImage,
-        slug: book.slug,
-        type: 'book',
-      });
-      if (added) {
-        setIsAdded(true);
-        trackEvent('ecommerce', 'add_to_cart', book.title);
-        setTimeout(() => setIsAdded(false), 2000);
-      }
-    }
-  };
+  if (book) {
+    const added = addItem({
+      id: book.id,
+      title: book.title,
+      description: book.description,
+      price: book.price,
+      currency: book.currency,
+      image: book.coverImage,
+      slug: book.slug,
+      type: 'book',
+    });
 
-  const loadBook = async () => {
+    if (added) {
+      setIsAdded(true);
+      trackEvent('ecommerce', 'add_to_cart', book.title);
+      setTimeout(() => setIsAdded(false), 2000);
+    }
+  }
+};
+
+const handleSubscribe = async () => {
+  if (!email || !email.includes('@')) {
+    alert('Por favor ingresa un email válido');
+    return;
+  }
+
+  const { error } = await supabase
+    .from('subscribers')
+    .insert([
+      {
+        email,
+        language
+      }
+    ]);
+
+  if (error) {
+    console.error(error);
+    alert('Hubo un error. Intenta nuevamente.');
+    return;
+  }
+
+  setIsSubscribed(true);
+  setEmail('');
+};
+
+const loadBook = async () => {
     if (!slug) return;
     
     setLoading(true);
@@ -350,22 +379,39 @@ const bookSchema = {
         : 'Ideias, escritos e recursos para curar, crescer e transformar sua vida.'}
     </p>
 
+{isSubscribed && (
+  <p className="text-green-600 dark:text-green-400 mb-6 font-medium">
+    {language === 'es'
+      ? '✨ Ya estás dentro'
+      : language === 'en'
+      ? '✨ You are in'
+      : language === 'fr'
+      ? '✨ Vous êtes inscrit'
+      : '✨ Você entrou'}
+  </p>
+)}
+
     <div className="flex flex-col sm:flex-row gap-3 max-w-xl mx-auto">
       <input
-        type="email"
-        placeholder={
-          language === 'es'
-            ? 'Tu correo electrónico'
-            : language === 'en'
-            ? 'Your email address'
-            : language === 'fr'
-            ? 'Votre adresse email'
-            : 'Seu endereço de email'
-        }
-        className="flex-1 px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
-      />
+  type="email"
+  value={email}
+  onChange={(e) => setEmail(e.target.value)}
+  placeholder={
+    language === 'es'
+      ? 'Tu correo electrónico'
+      : language === 'en'
+      ? 'Your email address'
+      : language === 'fr'
+      ? 'Votre adresse email'
+      : 'Seu endereço de email'
+  }
+  className="flex-1 px-4 py-3 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800"
+/>
 
-      <Button className="bg-purple-600 hover:bg-purple-700">
+      <Button
+  onClick={handleSubscribe}
+  className="bg-purple-600 hover:bg-purple-700"
+>
         {language === 'es'
           ? 'Quiero recibirlos'
           : language === 'en'
