@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useLanguage } from '@/context/LanguageContext';
 import { ArrowLeft, BookOpen, ExternalLink, Star, Clock, Tag, ChevronRight, Sparkles, ShoppingCart, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Navigation } from '@/sections/Navigation';
@@ -9,13 +10,6 @@ import { libraryEngine } from '@/engines/library-engine';
 import { FavoriteButtonSupabase } from '@/components/FavoriteButtonSupabase';
 import { useAnalytics, usePageTracking } from '@/hooks/useAnalytics';
 import { useCart } from '@/hooks/useCart';
-import type { Translations, Language } from '@/i18n';
-
-interface BookDetailPageProps {
-  t: Translations;
-  language: Language;
-  changeLanguage: (lang: Language) => void;
-}
 
 interface Book {
   id: string;
@@ -36,7 +30,8 @@ interface Book {
   bestseller: boolean;
 }
 
-export function BookDetailPage({ t, language }: BookDetailPageProps) {
+export function BookDetailPage() {
+  const { language } = useLanguage();
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [book, setBook] = useState<Book | null>(null);
@@ -125,7 +120,7 @@ export function BookDetailPage({ t, language }: BookDetailPageProps) {
             </Button>
           </Link>
         </div>
-        <Footer t={t} />
+        <Footer />
       </div>
     );
   }
@@ -350,7 +345,7 @@ export function BookDetailPage({ t, language }: BookDetailPageProps) {
         </section>
       )}
 
-      <Footer t={t} />
+      <Footer />
     </div>
   );
 }

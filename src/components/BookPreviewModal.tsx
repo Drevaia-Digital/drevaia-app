@@ -1,4 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { X, BookOpen, CheckCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useLanguage } from "@/context/LanguageContext";
@@ -24,6 +25,7 @@ export function BookPreviewModal({
   onSelectBook
 }: BookPreviewModalProps) {
   const { language } = useLanguage();
+  const navigate = useNavigate();
   const [viewers, setViewers] = useState(0);
 
   useEffect(() => {
@@ -189,13 +191,22 @@ export function BookPreviewModal({
               </div>
 
               {/* FOOTER */}
-              <div className="p-4 border-t">
-                <button
-                  onClick={() => window.open(finalLink, "_blank")}
-                  className="w-full bg-purple-600 text-white py-3 rounded-xl hover:bg-purple-700 transition"
-                >
-                  {t.cta}
-                </button>
+<div className="p-4 border-t">
+
+  <Button
+  variant="outline"
+  className="w-full mb-3"
+  onClick={() => navigate(`/${language}/books/${book.slug}`)}
+>
+  Ver página completa
+</Button>
+
+  <button
+    onClick={() => window.open(finalLink, "_blank")}
+    className="w-full bg-purple-600 text-white py-3 rounded-xl hover:bg-purple-700 transition"
+  >
+    {t.cta}
+  </button>
 
                 <Button
                   variant="outline"

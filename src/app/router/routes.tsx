@@ -5,6 +5,7 @@ import OnboardingPage from '@/pages/OnboardingPage';
 import { PortalPage } from '@/pages/PortalPage';
 import HomePage from '@/pages/HomePage';
 import { EbookPage } from '@/pages/EbookPage';
+import { BookDetailPage } from '@/pages/BookDetailPage';
 import { AuthPage } from '@/pages/AuthPage';
 import { LegalPage } from '@/pages/LegalPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
@@ -77,6 +78,11 @@ export function AppRoutes() {
       <LibraryPage />
     </Suspense>
   }
+/>
+
+<Route
+  path="/:lang/books/:slug"
+  element={<BookDetailPage />}
 />
 
       {/* 🖼️ GALLERY */}
