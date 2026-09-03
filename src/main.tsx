@@ -1,10 +1,11 @@
-import './sentry'; // ← SENTRY: PRIMERA LÍNEA (IMPORTANTE)
+import './sentry';
 import './posthog';
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import './index.css';
 import App from './App';
 import { LanguageProvider } from './context/LanguageContext';
+import { HelmetProvider } from 'react-helmet-async';
 
 // 🔥 LIMPIEZA DE SERVICE WORKERS (CRÍTICO)
 if (typeof window !== "undefined" && "serviceWorker" in navigator) {
@@ -23,11 +24,16 @@ function initGA() {
   if ((window as any).gtag) return;
 
   const script = document.createElement("script");
-  script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+
+  script.src =
+    `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
+
   script.async = true;
+
   document.head.appendChild(script);
 
-  (window as any).dataLayer = (window as any).dataLayer || [];
+  (window as any).dataLayer =
+    (window as any).dataLayer || [];
 
   type GtagFunction = (...args: any[]) => void;
 
@@ -48,8 +54,10 @@ initGA();
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <LanguageProvider>
-      <App />
-    </LanguageProvider>
+    <HelmetProvider>
+      <LanguageProvider>
+        <App />
+      </LanguageProvider>
+    </HelmetProvider>
   </StrictMode>
 );

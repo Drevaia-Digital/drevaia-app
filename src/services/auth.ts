@@ -111,15 +111,16 @@ class AuthService {
   }
 
   async getProfile(userId: string): Promise<Profile | null> {
-    const { data, error } = await supabase
-      .from('profiles')
-      .select('*')
-      .eq('id', userId)
-      .single();
+  const { data, error } = await supabase
+    .from('profiles')
+    .select('*')
+    .eq('id', userId)
+    .maybeSingle();
 
-    if (error && error.code !== 'PGRST116') throw error;
-    return data;
-  }
+  if (error) throw error;
+
+  return data;
+}
 
   private async createProfile(userId: string, profile: Partial<Profile>) {
     const { error } = await supabase.from('profiles').insert({

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import { Menu } from "lucide-react";
 import { useState, useEffect } from "react";
+import { Menu, Sparkles } from "lucide-react";
 import { userProfile } from "@/utils/userProfile";
 
 type Props = {
@@ -160,21 +160,50 @@ export function Navbar({ language }: Props) {
       {/* MENÚ */}
       {open && (
         <div className="mt-3 rounded-2xl bg-[#0f0f1a]/95 backdrop-blur-xl border border-white/10 p-6 shadow-xl text-white">
-          <nav className="flex flex-col gap-4">
 
-            <Link to="/" onClick={() => setOpen(false)}>
-              {t.home}
-            </Link>
+  <nav className="flex flex-col gap-4">
 
-            <Link to="/library" onClick={() => setOpen(false)}>
-              {t.library}
-            </Link>
+  <Link to="/" onClick={() => setOpen(false)}>
+    {t.home}
+  </Link>
 
-            <Link to="/legal" onClick={() => setOpen(false)}>
-              {t.legal}
-            </Link>
+  <Link to="/library" onClick={() => setOpen(false)}>
+    {t.library}
+  </Link>
 
-          </nav>
+  <Link
+  to="/studio"
+  onClick={() => setOpen(false)}
+  className="
+  flex items-center
+  gap-2
+  rounded-lg
+  px-3
+  py-2
+  text-white
+  bg-gradient-to-r
+  from-violet-500/20
+  to-indigo-500/20
+  border
+  border-violet-500/30
+  hover:border-violet-400
+  hover:bg-violet-500/25
+  hover:text-violet-100
+  transition-all
+"
+>
+  <Sparkles
+  size={16}
+  className="text-violet-300"
+/>
+  <span>AI Studio</span>
+</Link>
+
+  <Link to="/legal" onClick={() => setOpen(false)}>
+    {t.legal}
+  </Link>
+
+</nav>
         </div>
       )}
 

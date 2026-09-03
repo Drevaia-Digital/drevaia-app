@@ -1,8 +1,132 @@
-export type Language = 'es' | 'pt' | 'fr' | 'en';
+﻿export type Language = 'es' | 'pt' | 'fr' | 'en';
 
 export const translations = {
   es: {
+    aiStudio: {
+  workspace: "Workspace",
+  title: "DREVAIA AI Studio",
+  subtitle: "Convierte una reflexión en una pieza editorial estructurada y lista para evolucionar hacia múltiples motores de contenido.",
+
+  reflection: {
+    label: "Input",
+    title: "Tu reflexión",
+    placeholder: "Escribe aquí la reflexión que quieres transformar...",
+    generate: "Generar Editorial Edition",
+    generating: "Generando Editorial Edition...",
+  },
+
+  editorial: {
+    label: "Workspace",
+    title: "Editorial Edition",
+    description:
+      "Versión editorial optimizada por DREVAIA AI. Este contenido está preparado para evolucionar hacia Blog, Newsletter, Redes Sociales y Book Engine.",
+    emptyTitle: "Tu edición editorial aparecerá aquí",
+    emptyDescription:
+      "Escribe una reflexión y pulsa Generar Editorial Edition. DREVAIA analizará el contexto, construirá una versión editorial profesional y la preparará para los siguientes motores del Workspace.",
+    ready: "Ready",
+    editor: "Editorial",
+    editorSubtitle: "Workspace Editor",
+    words: "palabras",
+    readingTime: "min lectura",
+  },
+
+  knowledge: {
+    label: "Knowledge",
+    title: "Semantic Analysis",
+    empty:
+      "DREVAIA analizará automáticamente el contenido editorial y generará conocimiento estructurado que podrá reutilizarse en futuras generaciones.",
+    score: "Knowledge Score",
+    topic: "Topic",
+    subtopic: "Subtopic",
+    emotion: "Primary Emotion",
+    emotions: "Emotional Spectrum",
+    intent: "Intent",
+    narrative: "Narrative",
+    collection: "Collection",
+    keywords: "Keywords",
+    summary: "Summary",
+  },
+
+  seo: {
+    label: "Optimization",
+    title: "SEO",
+    empty:
+      "Cuando DREVAIA termine la generación aparecerán aquí el título SEO, la descripción, las palabras clave y el slug recomendado.",
+    titleField: "Title",
+    description: "Description",
+    keywords: "Keywords",
+    slug: "Slug",
+  },
+
+  quality: {
+    label: "Editorial Analysis",
+    title: "Quality Score",
+    empty:
+      "DREVAIA evaluará automáticamente la calidad editorial, identificará fortalezas y propondrá oportunidades de mejora.",
+    overallScore: "Overall Score",
+    strengths: "Strengths",
+    improvements: "Improvements",
+  },
+
+  runtime: {
+    label: "Runtime",
+    title: "DREVAIA Runtime Inspector",
+    empty:
+      "La información del Runtime aparecerá cuando finalice la generación.",
+    workflow: "Workflow",
+    completed: "Completed",
+    execution: "Cognitive Execution",
+    model: "Model",
+    version: "Runtime Version",
+    knowledgeScore: "Knowledge Score",
+    qualityScore: "Quality Score",
+    roadmap: "Runtime Roadmap",
+    cognitivePhases: "Cognitive Phases",
+    runtimeExecution: "Runtime Execution",
+    provider: "Provider",
+    latency: "Latency",
+    tokens: "Tokens",
+    cost: "Cost",
+    cacheStatus: "Cache Status",
+    traceId: "Trace ID",
+  },
+
+  export: {
+    label: "Workspace",
+    title: "Export Engine",
+    description:
+      "Genera, copia y exporta el contenido creado por DREVAIA. Las exportaciones estarán disponibles para todos los motores del Workspace.",
+    copy: "Copiar",
+    copied: "Copiado",
+    markdown: "Markdown",
+    docx: "DOCX",
+    pdf: "PDF",
+  },
+
+  toolbar: {
+    copy: "Copiar",
+    markdown: "Markdown",
+    save: "Guardar",
+    improve: "Mejorar IA",
+  },
+
+  sidebar: {
+  description: "Tu espacio editorial inteligente.",
+  newEditorial: "Nueva Editorial",
+  history: "Historial",
+  favorites: "Favoritos",
+  library: "Biblioteca",
+  templates: "Plantillas",
+  recentProjects: "Proyectos recientes",
+  loadingProjects: "Cargando proyectos...",
+  noProjects: "Aún no hay proyectos.",
+  untitledEditorial: "Editorial sin título",
+},
+},
+
     nav: {
+
+
       home: 'Inicio',
       about: 'Nuestra Esencia',
       ebooks: 'eBooks',
@@ -47,14 +171,20 @@ export const translations = {
           subtitle: 'Desarrollo personal, liderazgo y SEO',
         },
         en: {
+
+          
           name: 'English Collection',
           subtitle: 'Personal growth, mindset and digital authority',
         },
         fr: {
+
+
           name: 'Collection Française',
           subtitle: 'Croissance personnelle et autorité numérique',
         },
         pt: {
+
+
           name: 'Coleção Português',
           subtitle: 'Liderança, mente estratégica e marketing digital',
         },
@@ -173,7 +303,32 @@ export const translations = {
       success: '¡Pago exitoso!',
       successDesc: 'Recibirás un email con los detalles de tu compra.',
     },
-    legal: {
+    blog: {
+      title: 'Blog Drevaia',
+      description: 'SanaciÃ³n emocional, autoestima, relaciones y evoluciÃ³n interior.',
+      all: 'Todos',
+      categories: {
+        selfEsteem: 'Autoestima',
+        emotionalWounds: 'Heridas emocionales',
+        relationships: 'Relaciones',
+        innerEmptiness: 'VacÃ­o interior',
+        personalGrowth: 'Crecimiento personal',
+      },
+      searchPlaceholder: 'Buscar artÃ­culos...',
+      readArticle: 'Leer artÃ­culo â†’',
+      newsletterTitle: 'Recibe guÃ­a emocional gratuita + recursos exclusivos',
+      newsletterDescription: 'Reflexiones profundas + recursos exclusivos Drevaia.',
+      emailPlaceholder: 'Tu mejor email',
+      accessFree: 'Acceder gratis',
+      sending: 'Enviando...',
+      success: 'Â¡Revisa tu email pronto!',
+      sendError: 'No se pudo enviar',
+      connectionError: 'Error de conexiÃ³n',
+      ctaTitle: 'Cambia tu historia desde dentro',
+      ctaDescription: 'Accede a ebooks y herramientas profundas para reconstruirte emocionalmente.',
+      startFree: 'Empezar gratis',
+      viewLibrary: 'Ver biblioteca',
+    },    legal: {
       badge: 'Marco Legal',
       title: 'Privacidad y Reembolsos',
       description: 'Transparencia y confianza en cada interacción con Drevaia Digital',
@@ -217,6 +372,130 @@ export const translations = {
     },
   },
   pt: {
+       aiStudio: {
+      workspace: "Workspace",
+      title: "DREVAIA AI Studio",
+      subtitle:
+        "Transforme uma reflexão em uma peça editorial estruturada, pronta para evoluir através de múltiplos motores de conteúdo.",
+
+      reflection: {
+        label: "Input",
+        title: "Sua reflexão",
+        placeholder: "Escreva aqui a reflexão que deseja transformar...",
+        generate: "Gerar Editorial Edition",
+        generating: "Gerando Editorial Edition...",
+      },
+
+      editorial: {
+        label: "Workspace",
+        title: "Editorial Edition",
+        description:
+          "Versão editorial otimizada pela DREVAIA AI. Este conteúdo está preparado para evoluir para Blog, Newsletter, Redes Sociais e Book Engine.",
+        emptyTitle: "Sua edição editorial aparecerá aqui",
+        emptyDescription:
+          "Escreva uma reflexão e clique em Gerar Editorial Edition. A DREVAIA analisará o contexto, construirá uma versão editorial profissional e a preparará para os próximos motores do Workspace.",
+        ready: "Ready",
+        editor: "Editorial",
+        editorSubtitle: "Workspace Editor",
+        words: "palavras",
+        readingTime: "min de leitura",
+      },
+
+      knowledge: {
+        label: "Knowledge",
+        title: "Semantic Analysis",
+        empty:
+          "A DREVAIA analisará automaticamente o conteúdo editorial e gerará conhecimento estruturado que poderá ser reutilizado em futuras gerações.",
+        score: "Knowledge Score",
+        topic: "Topic",
+        subtopic: "Subtopic",
+        emotion: "Primary Emotion",
+        emotions: "Emotional Spectrum",
+        intent: "Intent",
+        narrative: "Narrative",
+        collection: "Collection",
+        keywords: "Keywords",
+        summary: "Summary",
+      },
+
+      seo: {
+        label: "Optimization",
+        title: "SEO",
+        empty:
+          "Quando a DREVAIA concluir a geração, o título SEO, a descrição, as palavras-chave e o slug recomendado aparecerão aqui.",
+        titleField: "Title",
+        description: "Description",
+        keywords: "Keywords",
+        slug: "Slug",
+      },
+
+      quality: {
+        label: "Editorial Analysis",
+        title: "Quality Score",
+        empty:
+          "A DREVAIA avaliará automaticamente a qualidade editorial, identificará pontos fortes e proporá oportunidades de melhoria.",
+        overallScore: "Overall Score",
+        strengths: "Strengths",
+        improvements: "Improvements",
+      },
+
+      runtime: {
+        label: "Runtime",
+        title: "DREVAIA Runtime Inspector",
+        empty:
+          "As informações do Runtime aparecerão quando a geração for concluída.",
+        workflow: "Workflow",
+        completed: "Completed",
+        execution: "Cognitive Execution",
+        model: "Model",
+        version: "Runtime Version",
+        knowledgeScore: "Knowledge Score",
+        qualityScore: "Quality Score",
+        roadmap: "Runtime Roadmap",
+        cognitivePhases: "Cognitive Phases",
+        runtimeExecution: "Runtime Execution",
+        provider: "Provider",
+        latency: "Latency",
+        tokens: "Tokens",
+        cost: "Cost",
+        cacheStatus: "Cache Status",
+        traceId: "Trace ID",
+      },
+
+      export: {
+        label: "Workspace",
+        title: "Export Engine",
+        description:
+          "Gere, copie e exporte o conteúdo criado pela DREVAIA. As exportações estarão disponíveis para todos os motores do Workspace.",
+        copy: "Copiar",
+        copied: "Copiado",
+        markdown: "Markdown",
+        docx: "DOCX",
+        pdf: "PDF",
+      },
+
+      toolbar: {
+        copy: "Copiar",
+        markdown: "Markdown",
+        save: "Salvar",
+        improve: "Melhorar com IA",
+      },
+
+sidebar: {
+  description: "Seu espaço editorial inteligente.",
+  newEditorial: "Nova Editorial",
+  history: "Histórico",
+  favorites: "Favoritos",
+  library: "Biblioteca",
+  templates: "Modelos",
+  recentProjects: "Projetos recentes",
+  loadingProjects: "Carregando projetos...",
+  noProjects: "Ainda não há projetos.",
+  untitledEditorial: "Editorial sem título",
+},
+
+    },
+
     pwa: {
       installTitle: 'Instalar Drevaia Digital',
       installDescription: 'Adicione este app à sua tela inicial para acesso rápido e experiência offline',
@@ -419,7 +698,32 @@ export const translations = {
       stat3: 'Idiomas disponíveis',
       stat4: 'Satisfação',
     },
-    legal: {
+    blog: {
+      title: 'Blog Drevaia',
+      description: 'Cura emocional, autoestima, relacionamentos e evoluÃ§Ã£o interior.',
+      all: 'Todos',
+      categories: {
+        selfEsteem: 'Autoestima',
+        emotionalWounds: 'Feridas emocionais',
+        relationships: 'Relacionamentos',
+        innerEmptiness: 'Vazio interior',
+        personalGrowth: 'Crescimento pessoal',
+      },
+      searchPlaceholder: 'Buscar artigos...',
+      readArticle: 'Ler artigo â†’',
+      newsletterTitle: 'Receba orientaÃ§Ã£o emocional gratuita + recursos exclusivos',
+      newsletterDescription: 'ReflexÃµes profundas + recursos exclusivos Drevaia.',
+      emailPlaceholder: 'Seu melhor e-mail',
+      accessFree: 'Acessar gratuitamente',
+      sending: 'Enviando...',
+      success: 'Verifique seu e-mail em breve!',
+      sendError: 'NÃ£o foi possÃ­vel enviar',
+      connectionError: 'Erro de conexÃ£o',
+      ctaTitle: 'Mude sua histÃ³ria de dentro para fora',
+      ctaDescription: 'Acesse ebooks e ferramentas profundas para se reconstruir emocionalmente.',
+      startFree: 'ComeÃ§ar gratuitamente',
+      viewLibrary: 'Ver biblioteca',
+    },    legal: {
       badge: 'Marco Legal',
       title: 'Privacidade e Reembolsos',
       description: 'Transparência e confiança em cada interação com a Drevaia Digital',
@@ -463,6 +767,130 @@ export const translations = {
     },
   },
   fr: {
+    aiStudio: {
+  workspace: "Workspace",
+  title: "DREVAIA AI Studio",
+  subtitle:
+    "Transformez une réflexion en une pièce éditoriale structurée, prête à évoluer vers plusieurs moteurs de contenu.",
+
+  reflection: {
+    label: "Input",
+    title: "Votre réflexion",
+    placeholder: "Écrivez ici la réflexion que vous souhaitez transformer...",
+    generate: "Générer Editorial Edition",
+    generating: "Génération de l'Editorial Edition...",
+  },
+
+  editorial: {
+    label: "Workspace",
+    title: "Editorial Edition",
+    description:
+      "Version éditoriale optimisée par DREVAIA AI. Ce contenu est prêt à évoluer vers le Blog, la Newsletter, les Réseaux Sociaux et le Book Engine.",
+    emptyTitle: "Votre édition éditoriale apparaîtra ici",
+    emptyDescription:
+      "Écrivez une réflexion et cliquez sur Générer Editorial Edition. DREVAIA analysera le contexte, construira une version éditoriale professionnelle et la préparera pour les prochains moteurs du Workspace.",
+    ready: "Ready",
+    editor: "Editorial",
+    editorSubtitle: "Workspace Editor",
+    words: "mots",
+    readingTime: "min de lecture",
+  },
+
+  knowledge: {
+    label: "Knowledge",
+    title: "Semantic Analysis",
+    empty:
+      "DREVAIA analysera automatiquement le contenu éditorial et générera des connaissances structurées réutilisables dans les futures générations.",
+    score: "Knowledge Score",
+    topic: "Topic",
+    subtopic: "Subtopic",
+    emotion: "Primary Emotion",
+    emotions: "Emotional Spectrum",
+    intent: "Intent",
+    narrative: "Narrative",
+    collection: "Collection",
+    keywords: "Keywords",
+    summary: "Summary",
+  },
+
+  seo: {
+    label: "Optimization",
+    title: "SEO",
+    empty:
+      "Lorsque DREVAIA terminera la génération, le titre SEO, la description, les mots-clés et le slug recommandé apparaîtront ici.",
+    titleField: "Title",
+    description: "Description",
+    keywords: "Keywords",
+    slug: "Slug",
+  },
+
+  quality: {
+    label: "Editorial Analysis",
+    title: "Quality Score",
+    empty:
+      "DREVAIA évaluera automatiquement la qualité éditoriale, identifiera les points forts et proposera des opportunités d'amélioration.",
+    overallScore: "Overall Score",
+    strengths: "Strengths",
+    improvements: "Improvements",
+  },
+
+  runtime: {
+    label: "Runtime",
+    title: "DREVAIA Runtime Inspector",
+    empty:
+      "Les informations du Runtime apparaîtront lorsque la génération sera terminée.",
+    workflow: "Workflow",
+    completed: "Completed",
+    execution: "Cognitive Execution",
+    model: "Model",
+    version: "Runtime Version",
+    knowledgeScore: "Knowledge Score",
+    qualityScore: "Quality Score",
+    roadmap: "Runtime Roadmap",
+    cognitivePhases: "Cognitive Phases",
+    runtimeExecution: "Runtime Execution",
+    provider: "Provider",
+    latency: "Latency",
+    tokens: "Tokens",
+    cost: "Cost",
+    cacheStatus: "Cache Status",
+    traceId: "Trace ID",
+  },
+
+  export: {
+    label: "Workspace",
+    title: "Export Engine",
+    description:
+      "Générez, copiez et exportez le contenu créé par DREVAIA. Les exportations seront disponibles pour tous les moteurs du Workspace.",
+    copy: "Copier",
+    copied: "Copié",
+    markdown: "Markdown",
+    docx: "DOCX",
+    pdf: "PDF",
+  },
+
+  toolbar: {
+    copy: "Copier",
+    markdown: "Markdown",
+    save: "Enregistrer",
+    improve: "Améliorer avec l'IA",
+  },
+
+sidebar: {
+  description: "Votre espace éditorial intelligent.",
+  newEditorial: "Nouvelle Édition",
+  history: "Historique",
+  favorites: "Favoris",
+  library: "Bibliothèque",
+  templates: "Modèles",
+  recentProjects: "Projets récents",
+  loadingProjects: "Chargement des projets...",
+  noProjects: "Aucun projet pour le moment.",
+  untitledEditorial: "Éditorial sans titre",
+},
+
+},
+
     pwa: {
       installTitle: 'Installer Drevaia Digital',
       installDescription: 'Ajoutez cette app à votre écran d\'accueil pour un accès rapide et une expérience hors ligne',
@@ -665,7 +1093,32 @@ export const translations = {
       stat3: 'Langues disponibles',
       stat4: 'Satisfaction',
     },
-    legal: {
+    blog: {
+      title: 'Blog Drevaia',
+      description: 'GuÃ©rison Ã©motionnelle, estime de soi, relations et Ã©volution intÃ©rieure.',
+      all: 'Tous',
+      categories: {
+        selfEsteem: 'Estime de soi',
+        emotionalWounds: 'Blessures Ã©motionnelles',
+        relationships: 'Relations',
+        innerEmptiness: 'Vide intÃ©rieur',
+        personalGrowth: 'DÃ©veloppement personnel',
+      },
+      searchPlaceholder: 'Rechercher des articles...',
+      readArticle: 'Lire lâ€™article â†’',
+      newsletterTitle: 'Recevez gratuitement des conseils Ã©motionnels + des ressources exclusives',
+      newsletterDescription: 'RÃ©flexions profondes + ressources exclusives Drevaia.',
+      emailPlaceholder: 'Votre meilleur e-mail',
+      accessFree: 'AccÃ©der gratuitement',
+      sending: 'Envoi...',
+      success: 'VÃ©rifiez bientÃ´t votre e-mail !',
+      sendError: 'Impossible dâ€™envoyer',
+      connectionError: 'Erreur de connexion',
+      ctaTitle: 'Changez votre histoire de lâ€™intÃ©rieur',
+      ctaDescription: 'AccÃ©dez Ã  des ebooks et outils profonds pour vous reconstruire Ã©motionnellement.',
+      startFree: 'Commencer gratuitement',
+      viewLibrary: 'Voir la bibliothÃ¨que',
+    },    legal: {
       badge: 'Cadre Légal',
       title: 'Confidentialité et Remboursements',
       description: 'Transparence et confiance dans chaque interaction avec Drevaia Digital',
@@ -709,6 +1162,130 @@ export const translations = {
     },
   },
   en: {
+        aiStudio: {
+      workspace: "Workspace",
+      title: "DREVAIA AI Studio",
+      subtitle:
+        "Transform a reflection into a structured editorial piece ready to evolve across multiple content engines.",
+
+      reflection: {
+        label: "Input",
+        title: "Your Reflection",
+        placeholder: "Write the reflection you want to transform...",
+        generate: "Generate Editorial Edition",
+        generating: "Generating Editorial Edition...",
+      },
+
+      editorial: {
+        label: "Workspace",
+        title: "Editorial Edition",
+        description:
+          "An editorial version optimized by DREVAIA AI. This content is ready to evolve into Blog, Newsletter, Social Media and Book Engine.",
+        emptyTitle: "Your editorial edition will appear here",
+        emptyDescription:
+          "Write a reflection and click Generate Editorial Edition. DREVAIA will analyze the context, build a professional editorial version and prepare it for the next Workspace engines.",
+        ready: "Ready",
+        editor: "Editorial",
+        editorSubtitle: "Workspace Editor",
+        words: "words",
+        readingTime: "min read",
+      },
+
+      knowledge: {
+        label: "Knowledge",
+        title: "Semantic Analysis",
+        empty:
+          "DREVAIA will automatically analyze the editorial content and generate structured knowledge that can be reused in future generations.",
+        score: "Knowledge Score",
+        topic: "Topic",
+        subtopic: "Subtopic",
+        emotion: "Primary Emotion",
+        emotions: "Emotional Spectrum",
+        intent: "Intent",
+        narrative: "Narrative",
+        collection: "Collection",
+        keywords: "Keywords",
+        summary: "Summary",
+      },
+
+      seo: {
+        label: "Optimization",
+        title: "SEO",
+        empty:
+          "Once DREVAIA completes the generation, the SEO title, description, keywords and recommended slug will appear here.",
+        titleField: "Title",
+        description: "Description",
+        keywords: "Keywords",
+        slug: "Slug",
+      },
+
+      quality: {
+        label: "Editorial Analysis",
+        title: "Quality Score",
+        empty:
+          "DREVAIA will automatically evaluate editorial quality, identify strengths and suggest improvement opportunities.",
+        overallScore: "Overall Score",
+        strengths: "Strengths",
+        improvements: "Improvements",
+      },
+
+      runtime: {
+        label: "Runtime",
+        title: "DREVAIA Runtime Inspector",
+        empty:
+          "Runtime information will appear when generation is complete.",
+        workflow: "Workflow",
+        completed: "Completed",
+        execution: "Cognitive Execution",
+        model: "Model",
+        version: "Runtime Version",
+        knowledgeScore: "Knowledge Score",
+        qualityScore: "Quality Score",
+        roadmap: "Runtime Roadmap",
+        cognitivePhases: "Cognitive Phases",
+        runtimeExecution: "Runtime Execution",
+        provider: "Provider",
+        latency: "Latency",
+        tokens: "Tokens",
+        cost: "Cost",
+        cacheStatus: "Cache Status",
+        traceId: "Trace ID",
+      },
+
+      export: {
+        label: "Workspace",
+        title: "Export Engine",
+        description:
+          "Generate, copy and export content created by DREVAIA. Exports will be available for all Workspace engines.",
+        copy: "Copy",
+        copied: "Copied",
+        markdown: "Markdown",
+        docx: "DOCX",
+        pdf: "PDF",
+      },
+
+      toolbar: {
+        copy: "Copy",
+        markdown: "Markdown",
+        save: "Save",
+        improve: "Improve with AI",
+      },
+
+sidebar: {
+  description: "Your intelligent editorial workspace.",
+  newEditorial: "New Editorial",
+  history: "History",
+  favorites: "Favorites",
+  library: "Library",
+  templates: "Templates",
+  recentProjects: "Recent projects",
+  loadingProjects: "Loading projects...",
+  noProjects: "No projects yet.",
+  untitledEditorial: "Untitled editorial",
+},
+
+    },
+
     pwa: {
       installTitle: 'Install Drevaia Digital',
       installDescription: 'Add this app to your home screen for quick access and offline experience',
@@ -911,7 +1488,32 @@ export const translations = {
       stat3: 'Languages available',
       stat4: 'Satisfaction',
     },
-    legal: {
+    blog: {
+      title: 'Drevaia Blog',
+      description: 'Emotional healing, self-esteem, relationships, and inner growth.',
+      all: 'All',
+      categories: {
+        selfEsteem: 'Self-esteem',
+        emotionalWounds: 'Emotional wounds',
+        relationships: 'Relationships',
+        innerEmptiness: 'Inner emptiness',
+        personalGrowth: 'Personal growth',
+      },
+      searchPlaceholder: 'Search articles...',
+      readArticle: 'Read article â†’',
+      newsletterTitle: 'Receive free emotional guidance + exclusive resources',
+      newsletterDescription: 'Deep reflections + exclusive Drevaia resources.',
+      emailPlaceholder: 'Your best email',
+      accessFree: 'Access for free',
+      sending: 'Sending...',
+      success: 'Check your email soon!',
+      sendError: 'Could not send',
+      connectionError: 'Connection error',
+      ctaTitle: 'Change your story from within',
+      ctaDescription: 'Access deep ebooks and tools to rebuild yourself emotionally.',
+      startFree: 'Start for free',
+      viewLibrary: 'View library',
+    },    legal: {
       badge: 'Legal Framework',
       title: 'Privacy and Refunds',
       description: 'Transparency and trust in every interaction with Drevaia Digital',
@@ -958,3 +1560,5 @@ export const translations = {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type Translations = any;
+
+

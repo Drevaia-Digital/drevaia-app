@@ -1,2 +1,10 @@
 dist
 node_modules
+# Environment secrets
+.env
+.env.*
+!.env.example
+supabase/functions/.env
+supabase/functions/.env.*
+
+supabase/.temp/

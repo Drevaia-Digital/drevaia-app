@@ -14,33 +14,41 @@ import LeadMagnetPage from '@/pages/LeadMagnetPage';
 import BlogIndexPage from '@/pages/BlogIndexPage';
 import GalleryPage from '@/pages/gallery/GalleryPage';
 import GalleryDetailPage from '@/pages/gallery/GalleryDetailPage';
+const AIStudioPage = lazy(() => import("@/pages/AIStudioPage"));
 
+import { useLanguage } from "@/context/LanguageContext";
 import { PageLoader } from '@/components/motion/PageLoader';
+import AuthCallbackPage from '@/pages/AuthCallbackPage';
 
 const LibraryPage = lazy(() => import('@/pages/LibraryPage'));
 
 export function AppRoutes() {
+  const { language } = useLanguage();
+
   return (
     <Routes>
 
       {/* 🏠 HOME */}
-      <Route
-        path="/"
-        element={
-          <Navigate
-            to={
-              navigator.language.startsWith('fr')
-                ? '/fr'
-                : navigator.language.startsWith('pt')
-                ? '/pt'
-                : navigator.language.startsWith('en')
-                ? '/en'
-                : '/es'
-            }
-            replace
-          />
-        }
-      />
+      
+  <Route
+  path="/auth/callback"
+  element={<AuthCallbackPage />}
+/>
+
+<Route
+  path="/:lang/auth/callback"
+  element={<AuthCallbackPage />}
+/>
+
+  <Route
+  path="/"
+  element={
+    <Navigate
+      to={`/${language}`}
+      replace
+    />
+  }
+/>
 
       <Route path="/es" element={<HomePage />} />
       <Route path="/en" element={<HomePage />} />
@@ -110,15 +118,33 @@ export function AppRoutes() {
       <Route path="/:lang/legal" element={<LegalPage />} />
       <Route path="/:lang/legal/:section" element={<LegalPage />} />
 
-      {/* 🌐 PORTAL */}
+            {/* 🌐 PORTAL */}
       <Route path="/portal" element={<PortalPage />} />
       <Route path="/:lang/portal" element={<PortalPage />} />
+
+      {/* 🤖 AI STUDIO */}
+      <Route
+  path="/studio"
+  element={
+    <Suspense fallback={<PageLoader />}>
+      <AIStudioPage />
+    </Suspense>
+  }
+/>
+
+<Route
+  path="/:lang/studio"
+  element={
+    <Suspense fallback={<PageLoader />}>
+      <AIStudioPage />
+    </Suspense>
+  }
+/>
 
       {/* 🔐 AUTH */}
       <Route path="/auth/login" element={<AuthPage mode="login" />} />
       <Route path="/auth/register" element={<AuthPage mode="register" />} />
       <Route path="/auth/forgot-password" element={<AuthPage mode="forgot-password" />} />
-
       <Route path="/:lang/auth/login" element={<AuthPage mode="login" />} />
       <Route path="/:lang/auth/register" element={<AuthPage mode="register" />} />
       <Route path="/:lang/auth/forgot-password" element={<AuthPage mode="forgot-password" />} />

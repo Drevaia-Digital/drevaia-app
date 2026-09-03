@@ -1,26 +1,80 @@
-import { createContext, useContext, useState, useEffect } from 'react';
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 
-type Language = 'es' | 'en' | 'fr' | 'pt';
+import {
+  translations,
+  type Language,
+  type Translations,
+} from "@/i18n";
 
 interface LanguageContextType {
   language: Language;
   setLanguage: (lang: Language) => void;
+  t: Translations;
 }
 
-const LanguageContext = createContext<LanguageContextType>({
-  language: 'es',
-  setLanguage: () => {},
-});
+const LanguageContext =
+  createContext<LanguageContextType | undefined>(
+    undefined,
+  );
 
 function detectLanguageFromPath(): Language | null {
-  const path = window.location.pathname.toLowerCase();
+  const path =
+    window.location.pathname.toLowerCase();
 
-  if (path.startsWith('/es')) return 'es';
-  if (path.startsWith('/en')) return 'en';
-  if (path.startsWith('/fr')) return 'fr';
-  if (path.startsWith('/pt')) return 'pt';
+  if (path.startsWith("/es")) return "es";
+  if (path.startsWith("/en")) return "en";
+  if (path.startsWith("/fr")) return "fr";
+  if (path.startsWith("/pt")) return "pt";
 
   return null;
+}
+
+function detectLanguageFromBrowser(): Language {
+  const browserLanguage =
+    navigator.language.toLowerCase();
+
+  if (browserLanguage.startsWith("es")) {
+    return "es";
+  }
+
+  if (browserLanguage.startsWith("fr")) {
+    return "fr";
+  }
+
+  if (browserLanguage.startsWith("pt")) {
+    return "pt";
+  }
+
+  return "en";
+}
+
+function getInitialLanguage(): Language {
+  const pathLanguage =
+    detectLanguageFromPath();
+
+  if (pathLanguage) {
+    return pathLanguage;
+  }
+
+  const savedLanguage =
+    localStorage.getItem("language");
+
+  if (
+    savedLanguage === "es" ||
+    savedLanguage === "en" ||
+    savedLanguage === "fr" ||
+    savedLanguage === "pt"
+  ) {
+    return savedLanguage;
+  }
+
+  return detectLanguageFromBrowser();
 }
 
 export function LanguageProvider({
@@ -28,45 +82,65 @@ export function LanguageProvider({
 }: {
   children: React.ReactNode;
 }) {
-  const [language, setLanguageState] = useState<Language>('es');
+  const [language, setLanguageState] =
+    useState<Language>(() =>
+      getInitialLanguage(),
+    );
 
-  useEffect(() => {
-    // 1️⃣ PRIORIDAD ABSOLUTA: URL
-    const pathLang = detectLanguageFromPath();
+  const setLanguage = (
+    lang: Language,
+  ) => {
+    localStorage.setItem(
+      "language",
+      lang,
+    );
 
-    if (pathLang) {
-      setLanguageState(pathLang);
-      localStorage.setItem('language', pathLang);
-      return;
-    }
-
-    // 2️⃣ LOCAL STORAGE
-    const saved = localStorage.getItem('language');
-
-    if (saved && ['es', 'en', 'fr', 'pt'].includes(saved)) {
-      setLanguageState(saved as Language);
-      return;
-    }
-
-    // 3️⃣ NAVEGADOR
-    const browserLang = navigator.language.toLowerCase();
-
-    if (browserLang.startsWith('es')) setLanguageState('es');
-    else if (browserLang.startsWith('fr')) setLanguageState('fr');
-    else if (browserLang.startsWith('pt')) setLanguageState('pt');
-    else setLanguageState('en');
-  }, []);
-
-  const setLanguage = (lang: Language) => {
-    localStorage.setItem('language', lang);
     setLanguageState(lang);
   };
 
+  const t = useMemo(
+    () => translations[language],
+    [language],
+  );
+
+  useEffect(() => {
+    document.documentElement.lang =
+      language;
+
+    localStorage.setItem(
+      "language",
+      language,
+    );
+  }, [language]);
+
+  const value =
+    useMemo<LanguageContextType>(
+      () => ({
+        language,
+        setLanguage,
+        t,
+      }),
+      [language, t],
+    );
+
   return (
-    <LanguageContext.Provider value={{ language, setLanguage }}>
+    <LanguageContext.Provider
+      value={value}
+    >
       {children}
     </LanguageContext.Provider>
   );
 }
 
-export const useLanguage = () => useContext(LanguageContext);
+export function useLanguage() {
+  const context =
+    useContext(LanguageContext);
+
+  if (!context) {
+    throw new Error(
+      "useLanguage must be used within a LanguageProvider.",
+    );
+  }
+
+  return context;
+}

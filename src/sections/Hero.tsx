@@ -1,21 +1,23 @@
-import { translations } from '../i18n/translations';
-import { useEffect, useRef } from 'react';
-import { ArrowRight, Heart } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import gsap from 'gsap';
-import { Link } from 'react-router-dom';
-import { userProfile } from '@/utils/userProfile';
+import { translations } from "@/i18n";
+import { useEffect, useRef } from "react";
+import { ArrowRight, Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import gsap from "gsap";
+import { Link } from "react-router-dom";
+import { userProfile } from "@/utils/userProfile";
 
 type Props = {
-  language: 'es' | 'en' | 'fr' | 'pt';
+  language: "es" | "en" | "fr" | "pt";
 };
 
-type Emotion = 'ansiedad' | 'proposito' | 'patrones';
+type Emotion = "ansiedad" | "proposito" | "patrones";
 
 export function Hero({ language }: Props) {
 
   const t = translations[language];
-  const emotion = userProfile.getEmotion() as Emotion | null;
+
+  const emotion =
+    userProfile.getEmotion() as Emotion | null;
 
   const emotionalContent = {
     ansiedad: {
@@ -24,12 +26,14 @@ export function Hero({ language }: Props) {
       fr: "Tu n'es pas brisé. Tu es épuisé de porter trop.",
       pt: "Você não está quebrado. Está cansado de carregar demais.",
     },
+
     proposito: {
       es: "No estás perdido. Solo estás desconectado de lo que importa.",
       en: "You're not lost. You're just disconnected from what matters.",
       fr: "Tu n'es pas perdu. Tu es déconnecté de l'essentiel.",
       pt: "Você não está perdido. Está desconectado do que importa.",
     },
+
     patrones: {
       es: "No es que no avances. Es que repites lo que no has sanado.",
       en: "You're not stuck. You're repeating what hasn't healed.",
@@ -39,9 +43,26 @@ export function Hero({ language }: Props) {
   };
 
   const emotionalCTA = {
-    ansiedad: { es: "Encontrar calma", en: "Find calm", fr: "Trouver la paix", pt: "Encontrar calma" },
-    proposito: { es: "Descubrir mi camino", en: "Find my path", fr: "Trouver mon chemin", pt: "Descobrir meu caminho" },
-    patrones: { es: "Romper este ciclo", en: "Break the cycle", fr: "Briser ce cycle", pt: "Quebrar esse ciclo" },
+    ansiedad: {
+      es: "Encontrar calma",
+      en: "Find calm",
+      fr: "Trouver la paix",
+      pt: "Encontrar calma",
+    },
+
+    proposito: {
+      es: "Descubrir mi camino",
+      en: "Find my path",
+      fr: "Trouver mon chemin",
+      pt: "Descobrir meu caminho",
+    },
+
+    patrones: {
+      es: "Romper este ciclo",
+      en: "Break the cycle",
+      fr: "Briser ce cycle",
+      pt: "Quebrar esse ciclo",
+    },
   };
 
   const emotionalLinks = {
@@ -51,12 +72,14 @@ export function Hero({ language }: Props) {
       fr: "https://payhip.com/b/6xTwV",
       pt: "https://payhip.com/b/OWV4T",
     },
+
     proposito: {
       es: "https://payhip.com/b/kNSQa",
       en: "https://payhip.com/b/CdrP5",
       fr: "https://payhip.com/b/MDdsb",
       pt: "https://payhip.com/b/KGMWi",
     },
+
     patrones: {
       es: "https://payhip.com/b/Nx0cF",
       en: "https://payhip.com/b/0rjX8",
@@ -80,167 +103,479 @@ export function Hero({ language }: Props) {
       ? emotionalLinks[emotion][language]
       : null;
 
-  const contentRef = useRef<HTMLDivElement>(null);
-  const titleRef = useRef<HTMLHeadingElement>(null);
-  const descRef = useRef<HTMLParagraphElement>(null);
-  const buttonsRef = useRef<HTMLDivElement>(null);
+  const contentRef =
+    useRef<HTMLDivElement>(null);
+
+  const titleRef =
+    useRef<HTMLHeadingElement>(null);
+
+  const descRef =
+    useRef<HTMLParagraphElement>(null);
+
+  const buttonsRef =
+    useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
 
-      tl.fromTo(titleRef.current, { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 1 })
-        .fromTo(descRef.current, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.6')
-        .fromTo(buttonsRef.current, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.8 }, '-=0.4');
+    const ctx = gsap.context(() => {
+
+      const tl = gsap.timeline({
+        defaults: {
+          ease: "power3.out",
+        },
+      });
+
+      tl.fromTo(
+        titleRef.current,
+        {
+          opacity: 0,
+          y: 40,
+        },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+        },
+      )
+
+        .fromTo(
+          descRef.current,
+          {
+            opacity: 0,
+            y: 25,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+          },
+          "-=0.6",
+        )
+
+        .fromTo(
+          buttonsRef.current,
+          {
+            opacity: 0,
+            y: 25,
+          },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 0.8,
+          },
+          "-=0.4",
+        );
+
     }, contentRef);
 
     return () => ctx.revert();
+
   }, []);
 
-  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const canvasRef =
+    useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
-    const canvas = canvasRef.current;
+
+    const canvas =
+      canvasRef.current;
+
     if (!canvas) return;
 
-    const ctx = canvas.getContext('2d');
+    const ctx =
+      canvas.getContext("2d");
+
     if (!ctx) return;
 
-    let particles: any[] = [];
+    let particles: Array<{
+      x: number;
+      y: number;
+      size: number;
+      speedX: number;
+      speedY: number;
+    }> = [];
 
     const resize = () => {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
+
+      canvas.width =
+        window.innerWidth;
+
+      canvas.height =
+        window.innerHeight;
+
     };
 
     const createParticles = () => {
+
       particles = [];
+
       for (let i = 0; i < 60; i++) {
+
         particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height,
-          size: Math.random() * 2 + 1,
-          speedX: (Math.random() - 0.5) * 0.2,
-          speedY: -Math.random() * 0.3,
+          x:
+            Math.random() *
+            canvas.width,
+
+          y:
+            Math.random() *
+            canvas.height,
+
+          size:
+            Math.random() * 2 + 1,
+
+          speedX:
+            (Math.random() - 0.5) * 0.2,
+
+          speedY:
+            -Math.random() * 0.3,
         });
+
       }
+
     };
 
+    let animationFrameId: number;
+
     const animate = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      particles.forEach(p => {
-        p.x += p.speedX;
-        p.y += p.speedY;
+      ctx.clearRect(
+        0,
+        0,
+        canvas.width,
+        canvas.height,
+      );
 
-        if (p.y < 0) {
-          p.y = canvas.height;
-          p.x = Math.random() * canvas.width;
+      particles.forEach((particle) => {
+
+        particle.x +=
+          particle.speedX;
+
+        particle.y +=
+          particle.speedY;
+
+        if (particle.y < 0) {
+
+          particle.y =
+            canvas.height;
+
+          particle.x =
+            Math.random() *
+            canvas.width;
+
         }
 
         ctx.beginPath();
-        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(255, 210, 140, 0.6)';
+
+        ctx.arc(
+          particle.x,
+          particle.y,
+          particle.size,
+          0,
+          Math.PI * 2,
+        );
+
+        ctx.fillStyle =
+          "rgba(255, 210, 140, 0.6)";
+
         ctx.fill();
+
       });
 
-      requestAnimationFrame(animate);
+      animationFrameId =
+        requestAnimationFrame(
+          animate,
+        );
+
     };
 
     resize();
+
     createParticles();
+
     animate();
 
-    window.addEventListener('resize', resize);
-    return () => window.removeEventListener('resize', resize);
+    window.addEventListener(
+      "resize",
+      resize,
+    );
+
+    return () => {
+
+      window.removeEventListener(
+        "resize",
+        resize,
+      );
+
+      cancelAnimationFrame(
+        animationFrameId,
+      );
+
+    };
+
   }, []);
 
   return (
     <>
-     
-      {/* HERO */}
-      <section className="relative min-h-screen flex flex-col items-center justify-start overflow-hidden">
-
-        <div className="absolute inset-0 bg-[#050505]" />
+      <section
+        className="
+          relative
+          min-h-screen
+          flex
+          flex-col
+          items-center
+          justify-start
+          overflow-hidden
+        "
+      >
 
         <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat opacity-55"
-          style={{ backgroundImage: 'url(/hero-bg.jpg)' }}
+          className="
+            absolute
+            inset-0
+            bg-[#050505]
+          "
+        />
+
+        <div
+          className="
+            absolute
+            inset-0
+            bg-cover
+            bg-center
+            bg-no-repeat
+            opacity-55
+          "
+          style={{
+            backgroundImage:
+              "url(/hero-bg.jpg)",
+          }}
         />
 
         <div
           className="absolute inset-0"
           style={{
             background:
-  "radial-gradient(circle at center, rgba(214,164,92,0.18) 0%, rgba(214,164,92,0.08) 28%, rgba(5,5,5,0) 62%)",
+              "radial-gradient(circle at center, rgba(214,164,92,0.18) 0%, rgba(214,164,92,0.08) 28%, rgba(5,5,5,0) 62%)",
           }}
         />
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/35 via-transparent to-black/45" />
+        <div
+          className="
+            absolute
+            inset-0
+            bg-gradient-to-b
+            from-black/35
+            via-transparent
+            to-black/45
+          "
+        />
 
-        <canvas ref={canvasRef} className="absolute inset-0 pointer-events-none opacity-90" />
+        <canvas
+          ref={canvasRef}
+          className="
+            absolute
+            inset-0
+            pointer-events-none
+            opacity-90
+          "
+        />
 
-        <div ref={contentRef} className="relative z-10 text-center max-w-2xl px-4 mt-20 md:mt-24">
+        <div
+          ref={contentRef}
+          className="
+            relative
+            z-10
+            text-center
+            max-w-2xl
+            px-4
+            mt-20
+            md:mt-24
+          "
+        >
 
           <h1
-  ref={titleRef}
-  className="
-    text-5xl
-    sm:text-6xl
-    md:text-8xl
+            ref={titleRef}
+            className="
+              text-5xl
+              sm:text-6xl
+              md:text-8xl
+              font-black
+              tracking-[0.18em]
+              text-white
+              drop-shadow-[0_0_40px_rgba(214,164,92,0.12)]
+              mb-6
+            "
+          >
+            DREVAIA
+          </h1>
 
-    font-black
-
-    tracking-[0.18em]
-
-    text-white
-
-    drop-shadow-[0_0_40px_rgba(214,164,92,0.12)]
-
-    mb-6
-  "
->
-  DREVAIA
-</h1>
-
-          <p className="text-xl sm:text-2xl md:text-4xl text-primary font-semibold mb-4">
+          <p
+            className="
+              text-xl
+              sm:text-2xl
+              md:text-4xl
+              text-primary
+              font-semibold
+              mb-4
+            "
+          >
             {dynamicTitle}
           </p>
 
-          <p ref={descRef} className="text-white/80 text-sm sm:text-base">
+          <p
+            ref={descRef}
+            className="
+              text-white/80
+              text-sm
+              sm:text-base
+            "
+          >
             {t.hero.description}
           </p>
 
         </div>
 
-        <div ref={buttonsRef} className="relative z-20 mt-12 md:mt-16 w-full max-w-2xl px-6 flex flex-col items-center gap-4 md:flex-row md:justify-center md:gap-5">
+        <div
+          ref={buttonsRef}
+          className="
+            relative
+            z-20
+            mt-12
+            md:mt-16
+            w-full
+            max-w-2xl
+            px-6
+            flex
+            flex-col
+            items-center
+            gap-4
+            md:flex-row
+            md:justify-center
+            md:gap-5
+          "
+        >
 
           {dynamicLink ? (
-            <a href={dynamicLink} target="_blank" rel="noreferrer">
-              <Button className="h-14 px-7 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-white font-semibold text-base shadow-xl hover:scale-105 transition-all duration-300">
-                <Heart className="mr-2 h-5 w-5" />
+
+            <a
+              href={dynamicLink}
+              target="_blank"
+              rel="noreferrer"
+            >
+
+              <Button
+                className="
+                  h-14
+                  px-7
+                  rounded-full
+                  bg-gradient-to-r
+                  from-amber-400
+                  to-orange-500
+                  text-white
+                  font-semibold
+                  text-base
+                  shadow-xl
+                  hover:scale-105
+                  transition-all
+                  duration-300
+                "
+              >
+
+                <Heart
+                  className="
+                    mr-2
+                    h-5
+                    w-5
+                  "
+                />
+
                 {dynamicCTA}
+
               </Button>
+
             </a>
+
           ) : (
-            <Link to={`/${language}/auth/register`}>
-              <Button className="h-14 px-7 rounded-full bg-gradient-to-r from-amber-400 to-orange-500 text-white font-semibold text-base shadow-xl hover:scale-105 transition-all duration-300">
-                <Heart className="mr-2 h-5 w-5" />
+
+            <Link
+              to={`/${language}/auth/register`}
+            >
+
+              <Button
+                className="
+                  h-14
+                  px-7
+                  rounded-full
+                  bg-gradient-to-r
+                  from-amber-400
+                  to-orange-500
+                  text-white
+                  font-semibold
+                  text-base
+                  shadow-xl
+                  hover:scale-105
+                  transition-all
+                  duration-300
+                "
+              >
+
+                <Heart
+                  className="
+                    mr-2
+                    h-5
+                    w-5
+                  "
+                />
+
                 {t.hero.cta}
+
               </Button>
+
             </Link>
+
           )}
 
-          <Link to="/library">
-            <Button variant="outline" className="h-14 px-7 rounded-full border border-white/25 bg-white/10 backdrop-blur-md text-white font-medium text-base hover:bg-white/15 hover:scale-105 transition-all duration-300">
+          <Link
+            to="/library"
+          >
+
+            <Button
+              variant="outline"
+              className="
+                h-14
+                px-7
+                rounded-full
+                border
+                border-white/25
+                bg-white/10
+                backdrop-blur-md
+                text-white
+                font-medium
+                text-base
+                hover:bg-white/15
+                hover:scale-105
+                transition-all
+                duration-300
+              "
+            >
+
               {{
                 es: "Empieza gratis",
                 en: "Start free",
-                fr: "Commencer gratuit",
-                pt: "Começar grátis"
+                fr: "Commencer gratuitement",
+                pt: "Começar grátis",
               }[language]}
-              <ArrowRight className="ml-2 h-5 w-5" />
+
+              <ArrowRight
+                className="
+                  ml-2
+                  h-5
+                  w-5
+                "
+              />
+
             </Button>
+
           </Link>
 
         </div>
