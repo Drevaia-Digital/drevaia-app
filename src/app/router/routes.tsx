@@ -15,6 +15,9 @@ import BlogIndexPage from '@/pages/BlogIndexPage';
 import GalleryPage from '@/pages/gallery/GalleryPage';
 import GalleryDetailPage from '@/pages/gallery/GalleryDetailPage';
 const AIStudioPage = lazy(() => import("@/pages/AIStudioPage"));
+const AIStudioHistoryPage = lazy(
+  () => import("@/pages/AIStudioHistoryPage"),
+);
 
 import { useLanguage } from "@/context/LanguageContext";
 import { PageLoader } from '@/components/motion/PageLoader';
@@ -141,6 +144,23 @@ export function AppRoutes() {
   }
 />
 
+<Route
+  path="/studio/history"
+  element={
+    <Suspense fallback={<PageLoader />}>
+      <AIStudioHistoryPage />
+    </Suspense>
+  }
+/>
+
+<Route
+  path="/:lang/studio/history"
+  element={
+    <Suspense fallback={<PageLoader />}>
+      <AIStudioHistoryPage />
+    </Suspense>
+  }
+/>
       {/* 🔐 AUTH */}
       <Route path="/auth/login" element={<AuthPage mode="login" />} />
       <Route path="/auth/register" element={<AuthPage mode="register" />} />

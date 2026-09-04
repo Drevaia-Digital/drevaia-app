@@ -7,10 +7,16 @@ import {
 } from "lucide-react";
 
 import {
+  useNavigate,
+} from "react-router-dom";
+
+import {
   useProjects,
 } from "@/application/ai/workspace/useProjects";
 
-import { useLanguage } from "@/context/LanguageContext";
+import {
+  useLanguage,
+} from "@/context/LanguageContext";
 
 export function WorkspaceSidebar() {
   const {
@@ -18,9 +24,41 @@ export function WorkspaceSidebar() {
     loading,
   } = useProjects();
 
-  const { t } = useLanguage();
+  const {
+    language,
+  } = useLanguage();
 
-  const sidebarText = t.aiStudio.sidebar;
+  const navigate = useNavigate();
+
+  const sidebarText = {
+    description: "Tu espacio editorial inteligente.",
+    newEditorial: "Nueva Editorial",
+    history: "Historial",
+    favorites: "Favoritos",
+    library: "Biblioteca",
+    templates: "Plantillas",
+    recentProjects: "Proyectos recientes",
+    loadingProjects: "Cargando proyectos...",
+    noProjects: "No hay proyectos todavía.",
+    untitledEditorial: "Editorial sin título",
+  };
+
+  const studioPath = `/${language}/studio`;
+  const historyPath = `/${language}/studio/history`;
+
+  const handleNewEditorial = () => {
+    navigate(studioPath);
+  };
+
+  const handleHistory = () => {
+    navigate(historyPath);
+  };
+
+  const handleProject = (id: string) => {
+    navigate(
+      `${studioPath}?project=${encodeURIComponent(id)}`,
+    );
+  };
 
   return (
     <aside
@@ -31,8 +69,8 @@ export function WorkspaceSidebar() {
         border
         border-white/10
         bg-white/5
-        backdrop-blur-xl
         p-6
+        backdrop-blur-xl
       "
     >
       <div className="mb-8">
@@ -46,6 +84,8 @@ export function WorkspaceSidebar() {
       </div>
 
       <button
+        type="button"
+        onClick={handleNewEditorial}
         className="
           mb-8
           flex
@@ -74,21 +114,25 @@ export function WorkspaceSidebar() {
         <SidebarItem
           icon={<History size={18} />}
           label={sidebarText.history}
+          onClick={handleHistory}
         />
 
         <SidebarItem
           icon={<Star size={18} />}
           label={sidebarText.favorites}
+          disabled
         />
 
         <SidebarItem
           icon={<BookOpen size={18} />}
           label={sidebarText.library}
+          disabled
         />
 
         <SidebarItem
           icon={<FileText size={18} />}
           label={sidebarText.templates}
+          disabled
         />
       </nav>
 
@@ -110,6 +154,10 @@ export function WorkspaceSidebar() {
             {projects.slice(0, 5).map((project) => (
               <button
                 key={project.id}
+                type="button"
+                onClick={() =>
+                  handleProject(project.id)
+                }
                 className="
                   w-full
                   rounded-xl
@@ -124,7 +172,8 @@ export function WorkspaceSidebar() {
                 "
               >
                 <p className="truncate text-sm font-medium text-white">
-                  {project.title || sidebarText.untitledEditorial}
+                  {project.title ||
+                    sidebarText.untitledEditorial}
                 </p>
 
                 <p className="mt-1 text-xs text-zinc-500">
@@ -142,14 +191,21 @@ export function WorkspaceSidebar() {
 interface SidebarItemProps {
   icon: React.ReactNode;
   label: string;
+  onClick?: () => void;
+  disabled?: boolean;
 }
 
 function SidebarItem({
   icon,
   label,
+  onClick,
+  disabled = false,
 }: SidebarItemProps) {
   return (
     <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
       className="
         flex
         w-full
@@ -163,6 +219,10 @@ function SidebarItem({
         transition
         hover:bg-white/5
         hover:text-white
+        disabled:cursor-not-allowed
+        disabled:opacity-50
+        disabled:hover:bg-transparent
+        disabled:hover:text-zinc-300
       "
     >
       {icon}
