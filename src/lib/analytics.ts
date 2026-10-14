@@ -27,11 +27,11 @@ export async function trackEvent({
     });
 
     if (error) {
-      // Log only the database error details; do not dump event metadata,
-      // which could contain visitor-provided information.
+      // Do not log event metadata, which may contain visitor-provided data.
       console.error("Analytics insert failed", {
         code: error.code,
         message: error.message,
+        hint: error.hint,
       });
       return false;
     }
