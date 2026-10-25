@@ -143,28 +143,25 @@ export default function LibraryPage() {
 
   // 🔥 CARGAR LIBROS
   useEffect(() => {
+    
     const loadBooks = async () => {
-      const { data: booksData } = await supabase
+      const { data: booksData, error } = await supabase
         .from("books")
         .select("*");
 
-      const { data: events } = await supabase
-        .from("ebook_events")
-        .select("*");
-
-      const scoreMap: Record<string, number> = {};
-
-      (events || []).forEach((e: any) => {
-        const weight = e.event_type === "click" ? 3 : 1;
-        scoreMap[e.book_id] = (scoreMap[e.book_id] || 0) + weight;
-      });
+      if (error) {
+        console.error("Library books error:", error.message);
+        setBooks([]);
+        return;
+      }
 
       const mapped = (booksData || []).map((book: Book) => ({
         ...book,
         coverImage: book.image || "",
-        score: scoreMap[book.id] || 0,
+        score: 0,
       }));
 
+      
       setBooks(mapped);
     };
 
@@ -173,6 +170,7 @@ export default function LibraryPage() {
   }, []);
 
   // 🎯 ABRIR DESDE URL
+
   useEffect(() => {
     if (!books.length) return;
 
@@ -344,7 +342,7 @@ export default function LibraryPage() {
           {/* MOCKUP */}
           <div className="flex justify-center">
             <img
-              src="/images/mockup-vida.webp"
+              src="/images/books/no-se-que-hacer-con-mi-vida.webp"
               alt={t.heroTitle}
               className="w-full max-w-md rounded-2xl shadow-2xl hover:scale-[1.02] transition duration-500"
             />
@@ -430,7 +428,7 @@ export default function LibraryPage() {
             </button>
 
             <img
-              src="/images/mockup-vida.webp"
+              src="/images/books/no-se-que-hacer-con-mi-vida.webp"
               alt={t.heroTitle}
               className="w-40 mx-auto mb-5 rounded-xl"
             />
